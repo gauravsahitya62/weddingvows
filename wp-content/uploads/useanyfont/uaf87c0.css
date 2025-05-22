@@ -1,0 +1,49 @@
+				@font-face {
+					font-family: 'safira-march-regular';
+					src: url('700Safira-March-Regular.woff2') format('woff2'),
+						url('700Safira-March-Regular.woff') format('woff');
+					  font-display: auto;
+				}
+
+				.safira-march-regular{font-family: 'safira-march-regular' !important;}
+
+						@font-face {
+					font-family: 'le-jour-serif';
+					src: url('1469Le-Jour-Serif.woff2') format('woff2'),
+						url('1469Le-Jour-Serif.woff') format('woff');
+					  font-display: auto;
+				}
+
+				.le-jour-serif{font-family: 'le-jour-serif' !important;}
+
+						@font-face {
+					font-family: 'safira-new';
+					src: url('4778Safira-New.woff2') format('woff2'),
+						url('4778Safira-New.woff') format('woff');
+					  font-display: auto;
+				}
+
+				.safira-new{font-family: 'safira-new' !important;}
+
+						@font-face {
+					font-family: 'moontime';
+					src: url('6827moontime.woff2') format('woff2'),
+						url('6827moontime.woff') format('woff');
+					  font-display: auto;
+				}
+
+				.moontime{font-family: 'moontime' !important;}
+
+						.menu-footer-menu-footer-menu-container li a, .menu-footer-menu-footer-menu-container li span, #menu-footer-menu-footer-menu li a, #menu-footer-menu-footer-menu li span, .menu-vt_menu-left-container li a, .menu-vt_menu-left-container li span, #menu-vt_menu-left li a, #menu-vt_menu-left li span, .menu-vt_menu_right-container li a, .menu-vt_menu_right-container li span, #menu-vt_menu_right li a, #menu-vt_menu_right li span{
+					font-family: 'le-jour-serif' !important;
+				}
+						.menu-header-link-container li a, .menu-header-link-container li span, #menu-header-link li a, #menu-header-link li span, .menu-main-menu-left-container li a, .menu-main-menu-left-container li span, #menu-main-menu-left li a, #menu-main-menu-left li span, .menu-main-menu-right-container li a, .menu-main-menu-right-container li span, #menu-main-menu-right li a, #menu-main-menu-right li span, .menu-main-navigation-container li a, .menu-main-navigation-container li span, #menu-main-navigation li a, #menu-main-navigation li span, .menu-mobile-navigation-container li a, .menu-mobile-navigation-container li span, #menu-mobile-navigation li a, #menu-mobile-navigation li span{
+					font-family: 'le-jour-serif' !important;
+				}
+						.menu-footer-menu-footer-menu-container li a, .menu-footer-menu-footer-menu-container li span, #menu-footer-menu-footer-menu li a, #menu-footer-menu-footer-menu li span, .menu-footer-menu-our-stores-container li a, .menu-footer-menu-our-stores-container li span, #menu-footer-menu-our-stores li a, #menu-footer-menu-our-stores li span, .menu-footer-menu-useful-links-container li a, .menu-footer-menu-useful-links-container li span, #menu-footer-menu-useful-links li a, #menu-footer-menu-useful-links li span{
+					font-family: 'le-jour-serif' !important;
+				}
+						.widget-title{
+					font-family: 'le-jour-serif' !important;
+				}
+		
