@@ -83,13 +83,17 @@ add_action('wp_ajax_nopriv_submit_quick_contact', 'submit_quick_contact_form');
 add_action('wp_ajax_submit_quick_contact', 'submit_quick_contact_form');
 
 function submit_quick_contact_form() {
-    $name = sanitize_text_field($_POST['full_name']);
-    $phone = sanitize_text_field($_POST['phone']);
-    $email = sanitize_email($_POST['email']);
+    $name = sanitize_text_field($_POST['full_name'] ?? '');
+    $phone = sanitize_text_field($_POST['phone'] ?? '');
+    $email = sanitize_email($_POST['email'] ?? '');
+    $note = sanitize_textarea_field($_POST['message'] ?? '');
 
     $to = 'gauravsahitya62@gmail.com'; // Replace with your email
     $subject = 'New Contact Form Submission';
     $message = "Name: $name\nPhone: $phone\nEmail: $email";
+    if ($note) {
+        $message .= "\nMessage: $note";
+    }
     $headers = ['Content-Type: text/plain; charset=UTF-8'];
 
     wp_mail($to, $subject, $message, $headers);

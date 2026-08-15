@@ -17,12 +17,12 @@ while (have_posts()) :
                     <p><a href="https://wa.me/message/ECDOSKZJH772M1">Message on WhatsApp ↗</a></p>
                 </aside>
                 <div>
-                    <?php the_content(); ?>
                     <form class="quick-contact-form" id="quickContactForm">
                         <input type="hidden" name="action" value="submit_quick_contact">
                         <input type="text" name="full_name" placeholder="Your name" required>
                         <input type="text" name="phone" placeholder="Phone number" required>
                         <input type="email" name="email" placeholder="Email" required>
+                        <textarea name="message" placeholder="Your message (optional)" rows="4"></textarea>
                         <button type="submit">Send an enquiry</button>
                     </form>
                     <div id="form-message"></div>

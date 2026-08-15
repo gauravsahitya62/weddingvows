@@ -57,6 +57,14 @@ function wvn_seo_current() {
             'type'        => 'website',
         );
     }
+    if (wvn_is_udaipur_guide()) {
+        return array(
+            'title'       => 'Weddings in Udaipur: Venues, Costs & Planning | ' . $brand,
+            'description' => 'Hosting a 2-day wedding for 150 to 200 guests in Udaipur typically ranges from ₹50 lakhs to ₹3+ crores. Palace, resort and boutique venues — plus a local planner’s cost breakdown.',
+            'image'       => $img,
+            'type'        => 'website',
+        );
+    }
     if (is_post_type_archive('portfolio') || is_page('portfolio')) {
         return array(
             'title'       => 'Real Destination Weddings in Udaipur | Wedding Gallery',
@@ -116,6 +124,78 @@ function wvn_seo_current() {
         'description' => get_bloginfo('description') ?: 'Destination wedding planner in Udaipur.',
         'image'       => $img,
         'type'        => 'website',
+    );
+}
+
+function wvn_is_udaipur_guide() {
+    return is_page('weddings-in-udaipur') || is_page_template('page-weddings-udaipur.php');
+}
+
+function wvn_udaipur_guide_venues() {
+    return array(
+        array(
+            'label' => 'Heritage palaces',
+            'items' => array(
+                array('name' => 'Taj Lake Palace', 'note' => 'Island palace on Lake Pichola — intimate ceremonies and a full lake arrival.'),
+                array('name' => 'Jagmandir Island Palace', 'note' => 'Heritage island setting for pheras and evening functions on the water.'),
+                array('name' => 'The Leela Palace Udaipur', 'note' => 'Lakeside palace hotel with ceremony lawns and a strong room block for destination guests.'),
+                array('name' => 'Taj Fateh Prakash Palace', 'note' => 'City-palace heritage rooms and courtyards for a classic Udaipur wedding.'),
+                array('name' => 'The Oberoi Udaivilas', 'note' => 'Luxury palace-hotel campus when the guest list needs rooms, lawns and quiet hospitality together.'),
+            ),
+        ),
+        array(
+            'label' => 'Hilltop & luxury resorts',
+            'items' => array(
+                array('name' => 'The Ananta Udaipur', 'note' => 'Hilltop resort campus — popular for 150–200 guests who want every function on one property.'),
+                array('name' => 'Fairmont Udaipur Palace', 'note' => 'Palace-style resort above the city for large destination weddings and produced sangeets.'),
+                array('name' => 'Raffles Udaipur', 'note' => 'Island resort luxury when the celebration should feel private and highly designed.'),
+                array('name' => 'Aurika Udaipur', 'note' => 'Contemporary luxury rooms and event spaces in the Fatehpura belt.'),
+                array('name' => 'ITC Mementos Udaipur', 'note' => 'Resort-scale hospitality for families who want a full destination campus.'),
+            ),
+        ),
+        array(
+            'label' => 'Boutique heritage',
+            'items' => array(
+                array('name' => 'Chunda Palace', 'note' => 'Heritage courtyards for a warmer, more intimate Udaipur wedding.'),
+                array('name' => 'Fateh Garh Palace', 'note' => 'Hilltop heritage stay — strong for smaller guest lists and sunset views.'),
+                array('name' => 'The Lalit Laxmi Vilas Palace', 'note' => 'Palace architecture with lawns that still work for a mid-size destination wedding.'),
+            ),
+        ),
+    );
+}
+
+function wvn_udaipur_guide_costs() {
+    return array(
+        array('item' => 'Venue & accommodation (2 days, 150–200 guests)', 'range' => '₹50 lakhs – ₹3+ crores'),
+        array('item' => 'Catering (per day)', 'range' => '₹15 lakhs – ₹30 lakhs'),
+        array('item' => 'Décor, lighting & production', 'range' => '₹8 lakhs – ₹45 lakhs'),
+        array('item' => 'Photography & films', 'range' => '₹4 lakhs – ₹15 lakhs'),
+        array('item' => 'Planning, coordination & on-ground team', 'range' => 'Studio fee, scoped to the wedding'),
+    );
+}
+
+function wvn_udaipur_guide_faqs() {
+    return array(
+        array(
+            'q' => 'What is the average cost of getting married in Udaipur?',
+            'a' => 'A 2-day destination wedding for 150 to 200 guests in Udaipur typically ranges from ₹50 lakhs to ₹3+ crores. Venue and rooms are the largest line. Catering, décor and a produced sangeet move the total as much as the hotel name. Boutique heritage weddings sit lower; palace buyouts sit higher.',
+        ),
+        array(
+            'q' => 'Why is Udaipur famous for weddings?',
+            'a' => 'Udaipur combines lake palaces, heritage courtyards and luxury resorts in a compact city. Guests can fly in, stay on campus, and move between mehendi, sangeet and pheras without long transfers. The setting is the photograph; the campus is why destination families choose it.',
+        ),
+        array(
+            'q' => 'Which are the best wedding venues in Udaipur?',
+            'a' => 'Couples most often compare Taj Lake Palace, Jagmandir Island Palace, The Leela Palace Udaipur, The Ananta, Fairmont Udaipur Palace, Raffles Udaipur, Chunda Palace and Fateh Garh. The best venue is the one that fits your guest count, room block and rituals — not only the most photographed façade.',
+        ),
+        array(
+            'q' => 'How far in advance should I book a wedding in Udaipur?',
+            'a' => 'Peak palace dates fill eight to twelve months ahead. If you need 80 or more rooms in October–February, start as soon as the season is decided. Artists and décor can follow once the venue is held.',
+        ),
+        array(
+            'q' => 'Do I need a local wedding planner in Udaipur?',
+            'a' => 'A destination wedding in Udaipur is a small city for a few days: transfers, room blocks, hotel contracts, lighting, and minute-by-minute schedules. A local studio already knows which lawns hold pheras and what the package does not include. Wedding Vows by Nikhil plans and executes from Udaipur.',
+        ),
     );
 }
 
@@ -276,6 +356,8 @@ function wvn_seo_json_ld() {
         // home only
     } elseif (is_page('what-we-do') || is_page_template('page-what-we-do.php')) {
         $crumbs[] = array('name' => 'Wedding services', 'url' => $page_url);
+    } elseif (wvn_is_udaipur_guide()) {
+        $crumbs[] = array('name' => 'Weddings in Udaipur', 'url' => $page_url);
     } elseif (is_post_type_archive('portfolio') || is_singular('portfolio')) {
         $crumbs[] = array('name' => 'Real weddings', 'url' => home_url('/portfolio/'));
         if (is_singular('portfolio')) {
@@ -308,29 +390,52 @@ function wvn_seo_json_ld() {
         'itemListElement' => $crumb_items,
     );
 
-    if (is_front_page() && function_exists('wvn_faqs')) {
-        $faqs = wvn_faqs();
-        if ($faqs) {
-            $entities = array();
-            foreach ($faqs as $faq) {
-                if (empty($faq['q'])) {
-                    continue;
-                }
-                $entities[] = array(
-                    '@type' => 'Question',
-                    'name'  => $faq['q'],
-                    'acceptedAnswer' => array(
-                        '@type' => 'Answer',
-                        'text'  => $faq['a'] ?? '',
-                    ),
+    $faq_source = array();
+    if (wvn_is_udaipur_guide()) {
+        $faq_source = wvn_udaipur_guide_faqs();
+        $list_items = array();
+        $position = 1;
+        foreach (wvn_udaipur_guide_venues() as $group) {
+            foreach ($group['items'] as $venue) {
+                $list_items[] = array(
+                    '@type'    => 'ListItem',
+                    'position' => $position,
+                    'name'     => $venue['name'],
+                    'description' => $venue['note'],
                 );
+                $position++;
             }
-            if ($entities) {
-                $graph[] = array(
-                    '@type'      => 'FAQPage',
-                    'mainEntity' => $entities,
-                );
+        }
+        if ($list_items) {
+            $graph[] = array(
+                '@type'           => 'ItemList',
+                'name'            => 'Top wedding venues in Udaipur',
+                'itemListElement' => $list_items,
+            );
+        }
+    } elseif (is_front_page() && function_exists('wvn_faqs')) {
+        $faq_source = wvn_faqs();
+    }
+    if ($faq_source) {
+        $entities = array();
+        foreach ($faq_source as $faq) {
+            if (empty($faq['q'])) {
+                continue;
             }
+            $entities[] = array(
+                '@type' => 'Question',
+                'name'  => $faq['q'],
+                'acceptedAnswer' => array(
+                    '@type' => 'Answer',
+                    'text'  => $faq['a'] ?? '',
+                ),
+            );
+        }
+        if ($entities) {
+            $graph[] = array(
+                '@type'      => 'FAQPage',
+                'mainEntity' => $entities,
+            );
         }
     }
 
@@ -389,6 +494,7 @@ add_action('init', 'wvn_seo_rewrite', 20);
 function wvn_seo_sitemap_urls() {
     $urls = array(
         array('loc' => home_url('/'), 'priority' => '1.0', 'freq' => 'weekly'),
+        array('loc' => home_url('/weddings-in-udaipur/'), 'priority' => '0.95', 'freq' => 'monthly'),
         array('loc' => home_url('/what-we-do/'), 'priority' => '0.9', 'freq' => 'monthly'),
         array('loc' => home_url('/portfolio/'), 'priority' => '0.9', 'freq' => 'weekly'),
         array('loc' => home_url('/contact-us/'), 'priority' => '0.8', 'freq' => 'monthly'),
@@ -426,8 +532,13 @@ function wvn_seo_render_sitemap() {
     if ((string) get_query_var('wvn_sitemap') !== '1') {
         return;
     }
+    $file = ABSPATH . 'wvn-sitemap.xml';
     nocache_headers();
     header('Content-Type: application/xml; charset=utf-8');
+    if (is_readable($file)) {
+        readfile($file);
+        exit;
+    }
     echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
     echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
     foreach (wvn_seo_sitemap_urls() as $item) {
@@ -446,10 +557,33 @@ function wvn_seo_render_sitemap() {
 add_action('template_redirect', 'wvn_seo_render_sitemap', 0);
 
 function wvn_seo_robots($output, $public) {
-    $output .= "\nSitemap: " . home_url('/wvn-sitemap.xml') . "\n";
-    return $output;
+    if (!$public) {
+        return "User-agent: *\nDisallow: /\n";
+    }
+    $sitemap = home_url('/wvn-sitemap.xml');
+    $plain   = home_url('/sitemap.xml');
+    return "# Wedding Vows by Nikhil\n"
+        . "# Allow search engines to index public pages.\n\n"
+        . "User-agent: Googlebot\nAllow: /\n\n"
+        . "User-agent: Googlebot-Image\nAllow: /\n\n"
+        . "User-agent: Bingbot\nAllow: /\n\n"
+        . "User-agent: *\n"
+        . "Allow: /\n"
+        . "Disallow: /wp-admin/\n"
+        . "Allow: /wp-admin/admin-ajax.php\n"
+        . "Disallow: /wp-login.php\n"
+        . "Disallow: /xmlrpc.php\n"
+        . "Disallow: /readme.html\n"
+        . "Disallow: /trackback/\n"
+        . "Disallow: /feed/\n"
+        . "Disallow: /*/feed$\n"
+        . "Disallow: /?s=\n"
+        . "Disallow: /search/\n"
+        . "Disallow: /*?s=\n\n"
+        . "Sitemap: {$sitemap}\n"
+        . "Sitemap: {$plain}\n";
 }
-add_filter('robots_txt', 'wvn_seo_robots', 20, 2);
+add_filter('robots_txt', 'wvn_seo_robots', 99, 2);
 
 function wvn_seo_img_attrs($attr, $attachment, $size) {
     if (empty($attr['alt'])) {
@@ -612,3 +746,29 @@ function wvn_seed_seo_posts() {
     update_option('_wvn_seo_posts_v1', '1');
 }
 add_action('init', 'wvn_seed_seo_posts', 70);
+
+function wvn_seed_udaipur_guide_page() {
+    if (get_option('_wvn_udaipur_guide_v1')) {
+        return;
+    }
+    $page = get_page_by_path('weddings-in-udaipur');
+    if (!$page) {
+        $id = wp_insert_post(array(
+            'post_title'   => 'Weddings in Udaipur',
+            'post_name'    => 'weddings-in-udaipur',
+            'post_status'  => 'publish',
+            'post_type'    => 'page',
+            'post_content' => '',
+            'post_excerpt' => 'Hosting a 2-day wedding for 150 to 200 guests in Udaipur typically ranges from ₹50 lakhs to ₹3+ crores. Palace, resort and boutique venues, with a local planner’s cost breakdown.',
+        ));
+        $page = $id && !is_wp_error($id) ? get_post($id) : null;
+    }
+    if ($page) {
+        update_post_meta($page->ID, '_wp_page_template', 'page-weddings-udaipur.php');
+        update_post_meta($page->ID, '_yoast_wpseo_title', 'Weddings in Udaipur: Venues, Costs & Planning | Wedding Vows by Nikhil');
+        update_post_meta($page->ID, '_yoast_wpseo_metadesc', 'Hosting a 2-day wedding for 150 to 200 guests in Udaipur typically ranges from ₹50 lakhs to ₹3+ crores. Palace, resort and boutique venues — plus a local planner’s cost breakdown.');
+        update_post_meta($page->ID, '_yoast_wpseo_focuskw', 'weddings in udaipur');
+    }
+    update_option('_wvn_udaipur_guide_v1', '1');
+}
+add_action('init', 'wvn_seed_udaipur_guide_page', 75);

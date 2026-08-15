@@ -1,5 +1,29 @@
-User-agent: SiteAuditBot
-Allow:/
+# Wedding Vows by Nikhil
+# https://weddingvowsbynikhil.com
+# Allow search engines to index public pages. Keep admin and junk URLs out of the crawl.
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
 
 User-agent: *
-Disallow: /
+Allow: /
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Disallow: /wp-login.php
+Disallow: /xmlrpc.php
+Disallow: /readme.html
+Disallow: /trackback/
+Disallow: /feed/
+Disallow: /*/feed$
+Disallow: /?s=
+Disallow: /search/
+Disallow: /*?s=
+
+Sitemap: https://weddingvowsbynikhil.com/wvn-sitemap.xml
+Sitemap: https://weddingvowsbynikhil.com/sitemap.xml

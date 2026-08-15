@@ -1781,6 +1781,7 @@ body.wvn-body .wvn-blog-card.is-featured figure img {
 .wvn-contact-grid input,
 .wvn-contact-grid textarea,
 .quick-contact-form input,
+.quick-contact-form textarea,
 .wpcf7 input,
 .wpcf7 textarea {
   width: 100%;
@@ -2360,5 +2361,88 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
   .wvn-lb-prev { left: 10px; }
   .wvn-lb-next { right: 10px; }
   .wvn-lb-close { top: 14px; right: 12px; }
+}
+
+/* Weddings in Udaipur guide */
+.wvn-guide .wvn-kicker {
+  text-align: center;
+  margin: 0 0 12px;
+}
+.wvn-guide-body {
+  width: min(860px, 100%);
+}
+.wvn-guide-body h2 {
+  margin: 40px 0 14px;
+  font-size: clamp(18px, 2vw, 24px);
+  letter-spacing: 0.06em;
+}
+.wvn-guide-body h3 {
+  margin: 28px 0 12px;
+  font-size: 16px;
+  letter-spacing: 0.08em;
+}
+.wvn-guide-body p,
+.wvn-guide-body li {
+  line-height: 1.7;
+}
+.wvn-guide-venues {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.wvn-guide-venues li {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 16px 18px;
+  display: grid;
+  gap: 4px;
+}
+.wvn-guide-venues strong {
+  color: var(--teal-text);
+  letter-spacing: 0.04em;
+}
+.wvn-guide-venues span {
+  color: var(--muted);
+  font-size: 15px;
+}
+.wvn-guide-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0 16px;
+  font-size: 15px;
+}
+.wvn-guide-table th,
+.wvn-guide-table td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--cream-3);
+}
+.wvn-guide-table th {
+  color: var(--teal-text);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+.wvn-guide-table td:last-child {
+  color: var(--teal-deep);
+  white-space: nowrap;
+}
+.wvn-guide-steps {
+  margin: 12px 0 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 12px;
+}
+.wvn-guide-faq {
+  padding-top: 24px;
+}
+.wvn-guide .wvn-cta {
+  padding-left: 0;
+  padding-right: 0;
+}
+@media (max-width: 640px) {
+  .wvn-guide-table td:last-child { white-space: normal; }
 }
 
