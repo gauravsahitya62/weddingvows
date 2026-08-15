@@ -1,0 +1,4 @@
+[21-Apr-2025 12:05:19 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/ecjuez5g70ej/public_html/wp-content/themes/woodmart/index.php:2
+Stack trace:
+#0 {main}
+  thrown in /home/ecjuez5g70ej/public_html/wp-content/themes/woodmart/index.php on line 2

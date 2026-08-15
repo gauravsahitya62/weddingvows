@@ -1,0 +1,1 @@
+{"translation-revision-date":"2023-11-28 10:13:53+0000","generator":"GlotPress\/4.0.1","domain":"messages","locale_data":{"messages":{"":{"domain":"messages","plural-forms":"nplurals=2; plural=n != 1;","lang":"es_AR"},"You've successfully installed %s!":["\u00a1Instalaste %s correctamente!"],"Skip%s":["Saltar%s"]}},"comment":{"reference":"js\/dist\/installation-success.js"}}

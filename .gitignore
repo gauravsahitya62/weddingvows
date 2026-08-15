@@ -1,0 +1,33 @@
+# Secrets
+wp-config.php
+.env
+.env.*
+!.env.example
+.private/
+
+# WordPress runtime
+wp-content/uploads/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/updraft/
+wp-content/ai1wm-backups/
+wp-content/w3tc-config/
+wp-content/debug.log
+wp-content/advanced-cache.php
+debug.log
+*.log
+
+# Archives and local junk
+*.zip
+wp-admin.zip
+# Local tooling
+wordpress-mcp/
+_bts-ref/
+
+# Dependencies and OS
+node_modules/
+vendor/
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
