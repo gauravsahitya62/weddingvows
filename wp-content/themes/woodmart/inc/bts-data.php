@@ -28,21 +28,81 @@ function wvn_is_acf_layout_page($post_id = 0) {
     $front = (int) get_option('page_on_front');
     $posts = (int) get_option('page_for_posts');
     $template = get_page_template_slug($post_id);
+    $title = $post->post_title;
     return $post_id === $front
         || $post_id === $posts
         || $template === 'page-what-we-do.php'
         || $post->post_name === 'what-we-do'
         || $post->post_name === 'home'
-        || $post->post_name === 'blog';
+        || $post->post_name === 'blog'
+        || $title === 'Home'
+        || strpos($title, 'Home') === 0;
 }
 
 function wvn_hide_acf_layout_editor() {
     $post_id = isset($_GET['post']) ? (int) $_GET['post'] : (isset($_POST['post_ID']) ? (int) $_POST['post_ID'] : 0);
     if ($post_id && wvn_is_acf_layout_page($post_id)) {
         remove_post_type_support('page', 'editor');
+        // Strip Elementor builder mode every time this page is opened in wp-admin.
+        delete_post_meta($post_id, '_elementor_edit_mode');
+        delete_post_meta($post_id, '_elementor_template_type');
+    }
+
+    // If someone opens Elementor for an ACF page, send them to the field editor instead.
+    if (!empty($_GET['action']) && $_GET['action'] === 'elementor' && $post_id && wvn_is_acf_layout_page($post_id)) {
+        wp_safe_redirect(admin_url('post.php?post=' . $post_id . '&action=edit'));
+        exit;
     }
 }
 add_action('admin_init', 'wvn_hide_acf_layout_editor');
+
+function wvn_acf_missing_notice() {
+    if (function_exists('acf_add_local_field_group')) {
+        return;
+    }
+    $screen = function_exists('get_current_screen') ? get_current_screen() : null;
+    if (!$screen || $screen->base !== 'post') {
+        return;
+    }
+    echo '<div class="notice notice-error"><p><strong>Advanced Custom Fields is not active.</strong> The homepage tabs (Hero, Intro, Collective…) need the ACF plugin. Activate <em>Advanced Custom Fields</em> or <em>ACF PRO</em> under Plugins.</p></div>';
+}
+add_action('admin_notices', 'wvn_acf_missing_notice');
+
+function wvn_ensure_static_front_page() {
+    if (get_option('_wvn_front_page_fixed_v1') === '1') {
+        return;
+    }
+    $home = get_page_by_path('home');
+    if (!$home) {
+        $q = new WP_Query(array(
+            'post_type'      => 'page',
+            'post_status'    => 'publish',
+            'posts_per_page' => 20,
+            'orderby'        => 'ID',
+            'order'          => 'ASC',
+        ));
+        while ($q->have_posts()) {
+            $q->the_post();
+            if (get_the_title() === 'Home' || strpos(get_the_title(), 'Home') === 0) {
+                $home = get_post(get_the_ID());
+                break;
+            }
+        }
+        wp_reset_postdata();
+    }
+    if ($home) {
+        if (get_option('show_on_front') !== 'page') {
+            update_option('show_on_front', 'page');
+        }
+        if ((int) get_option('page_on_front') !== (int) $home->ID) {
+            update_option('page_on_front', (int) $home->ID);
+        }
+        delete_post_meta((int) $home->ID, '_elementor_edit_mode');
+        delete_post_meta((int) $home->ID, '_elementor_template_type');
+    }
+    update_option('_wvn_front_page_fixed_v1', '1');
+}
+add_action('init', 'wvn_ensure_static_front_page', 35);
 
 function wvn_acf_layout_admin_body_class($classes) {
     $post_id = isset($_GET['post']) ? (int) $_GET['post'] : 0;
@@ -78,7 +138,7 @@ function wvn_acf_layout_admin_notice() {
     if (!$post_id || !wvn_is_acf_layout_page($post_id)) {
         return;
     }
-    echo '<div class="notice notice-info"><p><strong>This page is edited from the fields below</strong> — not the old WordPress or Elementor editor. What you save here is what appears on the live page.</p></div>';
+    echo '<div class="notice notice-info"><p><strong>Edit this page with the tabs below</strong> (Hero, Intro, Collective, etc.). Elementor is turned off here on purpose — the live homepage uses these fields, not the old Elementor layout.</p></div>';
 }
 add_action('admin_notices', 'wvn_acf_layout_admin_notice');
 
@@ -89,6 +149,65 @@ function wvn_elementor_can_edit_acf_page($can_edit, $post) {
     return $can_edit;
 }
 add_filter('elementor/editor/can_edit_post', 'wvn_elementor_can_edit_acf_page', 10, 2);
+
+/**
+ * Home still has old Elementor meta, which hides the normal "Edit Page" admin-bar
+ * link and shows a dead "Edit with Elementor" state. Keep a real Edit link, and
+ * clear the stale Elementor badge on ACF-driven pages.
+ */
+function wvn_admin_bar_edit_link($wp_admin_bar) {
+    if (is_admin() || !is_singular()) {
+        return;
+    }
+    $post_id = get_queried_object_id();
+    if (!$post_id || !current_user_can('edit_post', $post_id)) {
+        return;
+    }
+    $edit_url = get_edit_post_link($post_id);
+    if (!$edit_url) {
+        return;
+    }
+    $post_type = get_post_type_object(get_post_type($post_id));
+    $title = ($post_type && !empty($post_type->labels->edit_item)) ? $post_type->labels->edit_item : __('Edit');
+
+    if (wvn_is_acf_layout_page($post_id)) {
+        $title = __('Edit page fields', 'woodmart');
+    }
+
+    $wp_admin_bar->add_node(array(
+        'id'    => 'edit',
+        'title' => $title,
+        'href'  => $edit_url,
+    ));
+}
+add_action('admin_bar_menu', 'wvn_admin_bar_edit_link', 81);
+
+function wvn_clear_stale_elementor_on_acf_pages() {
+    if (get_option('_wvn_clear_elementor_acf_v2') === '1') {
+        return;
+    }
+    $ids = array_filter(array(
+        (int) get_option('page_on_front'),
+        (int) get_option('page_for_posts'),
+    ));
+    $services = get_page_by_path('what-we-do');
+    if ($services) {
+        $ids[] = (int) $services->ID;
+    }
+    $home = get_page_by_path('home');
+    if ($home) {
+        $ids[] = (int) $home->ID;
+    }
+    foreach (array_unique($ids) as $id) {
+        if (!$id) {
+            continue;
+        }
+        delete_post_meta($id, '_elementor_edit_mode');
+        delete_post_meta($id, '_elementor_template_type');
+    }
+    update_option('_wvn_clear_elementor_acf_v2', '1');
+}
+add_action('init', 'wvn_clear_stale_elementor_on_acf_pages', 40);
 
 function wvn_elementor_editing() {
     if (!class_exists('\Elementor\Plugin')) {
@@ -137,6 +256,34 @@ function wvn_home_text($name, $default = '') {
         return $default;
     }
     return is_string($value) ? $value : $default;
+}
+
+function wvn_home_html($name, $default = '') {
+    $value = wvn_home_text($name, $default);
+    return $value !== '' ? wp_kses_post($value) : '';
+}
+
+function wvn_home_intro_html() {
+    $content = wvn_home_text('home_intro_content', '');
+    if ($content !== '') {
+        return wp_kses_post($content);
+    }
+
+    $kicker = trim(wp_strip_all_tags(wvn_home_text('home_intro_kicker', 'Destination wedding planner in Udaipur')));
+    $heading = trim(wp_strip_all_tags(wvn_home_text('home_intro_heading', 'Destination weddings in Udaipur, planned with quiet luxury.')));
+    $body = trim(wp_strip_all_tags(wvn_home_text('home_intro_text', 'Wedding Vows by Nikhil is an Udaipur-based destination wedding studio. We plan palace, lakeside and heritage weddings across Udaipur, Jaipur, Jodhpur and Goa — one team from the first venue walk to the last pheras.')));
+
+    $html = '';
+    if ($kicker !== '') {
+        $html .= '<p class="wvn-kicker">' . esc_html($kicker) . '</p>';
+    }
+    if ($heading !== '') {
+        $html .= '<h1>' . esc_html($heading) . '</h1>';
+    }
+    if ($body !== '') {
+        $html .= '<p>' . esc_html($body) . '</p>';
+    }
+    return $html;
 }
 
 function wvn_home_image($name, $default = '') {

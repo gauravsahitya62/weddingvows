@@ -9,6 +9,69 @@ function wvn_register_home_fields() {
         return;
     }
 
+    $locations = array(
+        array(
+            array(
+                'param' => 'page_type',
+                'operator' => '==',
+                'value' => 'front_page',
+            ),
+        ),
+    );
+
+    $front_id = (int) get_option('page_on_front');
+    if ($front_id) {
+        $locations[] = array(
+            array(
+                'param' => 'page',
+                'operator' => '==',
+                'value' => (string) $front_id,
+            ),
+        );
+    }
+
+    foreach (array('home', 'Home') as $slug) {
+        $page = get_page_by_path(sanitize_title($slug));
+        if ($page && (int) $page->ID !== $front_id) {
+            $locations[] = array(
+                array(
+                    'param' => 'page',
+                    'operator' => '==',
+                    'value' => (string) $page->ID,
+                ),
+            );
+        }
+    }
+
+    // Match pages titled "Home" even if Reading → front page is misconfigured.
+    $matched_ids = $front_id ? array($front_id) : array();
+    $named_q = new WP_Query(array(
+        'post_type'      => 'page',
+        'post_status'    => array('publish', 'draft', 'private'),
+        'posts_per_page' => 20,
+        'orderby'        => 'ID',
+        'order'          => 'ASC',
+    ));
+    while ($named_q->have_posts()) {
+        $named_q->the_post();
+        $pid = (int) get_the_ID();
+        $title = get_the_title();
+        $slug = get_post_field('post_name', $pid);
+        if ($title === 'Home' || $slug === 'home' || strpos($title, 'Home') === 0) {
+            if (!in_array($pid, $matched_ids, true)) {
+                $matched_ids[] = $pid;
+                $locations[] = array(
+                    array(
+                        'param' => 'page',
+                        'operator' => '==',
+                        'value' => (string) $pid,
+                    ),
+                );
+            }
+        }
+    }
+    wp_reset_postdata();
+
     acf_add_local_field_group(array(
         'key' => 'group_wvn_home',
         'title' => 'Homepage content',
@@ -17,16 +80,10 @@ function wvn_register_home_fields() {
         'label_placement' => 'top',
         'instruction_placement' => 'label',
         'description' => 'These fields are the homepage. Edit them to change the live site.',
+        'active' => true,
+        'show_in_rest' => 0,
         'hide_on_screen' => array('the_content', 'excerpt', 'discussion', 'comments'),
-        'location' => array(
-            array(
-                array(
-                    'param' => 'page_type',
-                    'operator' => '==',
-                    'value' => 'front_page',
-                ),
-            ),
-        ),
+        'location' => $locations,
         'fields' => array(
             array(
                 'key' => 'field_wvn_tab_hero',
@@ -55,24 +112,15 @@ function wvn_register_home_fields() {
                 'type' => 'tab',
             ),
             array(
-                'key' => 'field_wvn_intro_kicker',
-                'label' => 'Kicker',
-                'name' => 'home_intro_kicker',
-                'type' => 'text',
-            ),
-            array(
-                'key' => 'field_wvn_intro_heading',
-                'label' => 'Heading',
-                'name' => 'home_intro_heading',
-                'type' => 'textarea',
-                'rows' => 4,
-            ),
-            array(
-                'key' => 'field_wvn_intro_text',
-                'label' => 'Paragraph',
-                'name' => 'home_intro_text',
-                'type' => 'textarea',
-                'rows' => 4,
+                'key' => 'field_wvn_intro_content',
+                'label' => 'Intro content',
+                'name' => 'home_intro_content',
+                'type' => 'wysiwyg',
+                'instructions' => 'Use Paragraph for the kicker line, Heading 1 for the main title, and Paragraph for body copy. Switch to Text for HTML.',
+                'tabs' => 'all',
+                'toolbar' => 'full',
+                'media_upload' => 0,
+                'delay' => 0,
             ),
             array(
                 'key' => 'field_wvn_tab_collective',
@@ -96,7 +144,7 @@ function wvn_register_home_fields() {
                 'label' => 'Note',
                 'name' => 'home_collective_note',
                 'type' => 'message',
-                'message' => 'Wedding cards come from <strong>Portfolio</strong> posts (title, excerpt as venue, featured image). Add or edit those under Portfolio.',
+                'message' => 'Wedding cards come from <strong>Portfolio</strong> posts (title, excerpt as venue, featured image). Add or edit them under <strong>Portfolio</strong> in the left sidebar (heart icon).',
             ),
             array(
                 'key' => 'field_wvn_tab_planner',
@@ -612,9 +660,7 @@ function wvn_seed_home_page() {
     }
     $texts = array(
         'home_hero_copy'            => 'We work behind the scenes, because your wedding deserves to be planned beautifully.',
-        'home_intro_kicker'         => 'Your destination wedding planner in India',
-        'home_intro_heading'        => 'For couples and families who want their wedding to be extraordinary. We plan weddings that are completely stress-free and design wedding spaces that speak your language — minimal or maximal, it’s yours.',
-        'home_intro_text'           => 'Wedding Vows by Nikhil is a young, creative team working alongside first-in-class vendors, including dedicated designers who work with local artisans to craft spaces that breathe Indian heritage in your décor.',
+        'home_intro_content'        => '<p>Your destination wedding planner in India</p><h1>For couples and families who want their wedding to be extraordinary. We plan weddings that are completely stress-free and design wedding spaces that speak your language — minimal or maximal, it’s yours.</h1><p>Wedding Vows by Nikhil is a young, creative team working alongside first-in-class vendors, including dedicated designers who work with local artisans to craft spaces that breathe Indian heritage in your décor.</p>',
         'home_collective_kicker'    => 'WVN Wedding Collective',
         'home_collective_heading'   => 'Before we tell you our story, let our weddings speak for us.',
         'home_planner_heading'      => 'Meet the planner',
