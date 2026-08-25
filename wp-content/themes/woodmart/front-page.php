@@ -33,15 +33,16 @@ $service_count = count($services);
     </div>
     <div class="wvn-hero-travel" aria-hidden="true"></div>
     <section class="wvn-intro">
-      <p class="wvn-kicker"><?php echo esc_html(wvn_home_text('home_intro_kicker', 'Destination wedding planner in Udaipur')); ?></p>
-      <h1 class="wvn-display"><?php echo esc_html(wvn_home_text('home_intro_heading', 'Destination weddings in Udaipur, planned with quiet luxury.')); ?></h1>
-      <p><?php echo esc_html(wvn_home_text('home_intro_text', 'Wedding Vows by Nikhil is an Udaipur-based destination wedding studio. We plan palace, lakeside and heritage weddings across Udaipur, Jaipur, Jodhpur and Goa — one team from the first venue walk to the last pheras.')); ?></p>
+      <div class="wvn-intro-body">
+        <?php echo wvn_home_intro_html(); ?>
+      </div>
     </section>
   </section>
 
   <section class="wvn-collective">
     <p class="wvn-kicker wvn-center wvn-reveal"><?php echo esc_html(wvn_home_text('home_collective_kicker', 'WVN Wedding Collective')); ?></p>
     <h2 class="wvn-display wvn-reveal"><?php echo esc_html(wvn_home_text('home_collective_heading', 'Before we tell you our story, let our weddings speak for us.')); ?></h2>
+    <?php if ($weddings) : ?>
     <div class="wvn-coverflow" data-hscroll>
       <div class="wvn-coverflow-track">
         <?php foreach ($weddings as $wedding) : ?>
@@ -53,6 +54,9 @@ $service_count = count($services);
         <?php endforeach; ?>
       </div>
     </div>
+    <?php else : ?>
+    <p class="wvn-lede wvn-center" style="margin-top:28px;">Add weddings under <strong>Portfolio</strong> in wp-admin — each one appears here and links to its detail page.</p>
+    <?php endif; ?>
   </section>
 
   <section class="wvn-planners">

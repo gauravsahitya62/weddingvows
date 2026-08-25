@@ -326,75 +326,34 @@ function wvn_logo_src() {
 function wvn_weddings() {
     $items = array();
     $query = new WP_Query(array(
-        'post_type'      => 'portfolio',
-        'posts_per_page' => 8,
-        'post_status'    => 'publish',
-        'orderby'        => 'date',
-        'order'          => 'DESC',
+        'post_type'              => 'portfolio',
+        'posts_per_page'         => 12,
+        'post_status'            => 'publish',
+        'orderby'                => 'date',
+        'order'                  => 'DESC',
+        'ignore_sticky_posts'    => true,
+        'no_found_rows'          => true,
+        'update_post_meta_cache' => true,
+        'update_post_term_cache' => false,
     ));
     if ($query->have_posts()) {
         while ($query->have_posts()) {
             $query->the_post();
-            $thumb = get_the_post_thumbnail_url(get_the_ID(), 'large');
+            $id = get_the_ID();
+            $thumb = get_the_post_thumbnail_url($id, 'large');
+            if (!$thumb) {
+                $thumb = get_the_post_thumbnail_url($id, 'full');
+            }
             $items[] = array(
-                'title' => get_the_title(),
-                'venue' => get_the_excerpt() ?: 'Udaipur, Rajasthan',
-                'url'   => get_permalink(),
+                'title' => get_the_title($id),
+                'venue' => get_the_excerpt($id) ?: 'Udaipur, Rajasthan',
+                'url'   => get_permalink($id),
                 'image' => $thumb ?: wvn_hero_image(),
             );
         }
         wp_reset_postdata();
     }
-
-    // Only use demo cards when there are no Portfolio posts at all.
-    if ($items) {
-        return $items;
-    }
-
-    return array(
-        array(
-            'title' => 'Jehana & Kanishk',
-            'venue' => 'Udaipur, Rajasthan',
-            'url'   => home_url('/portfolio/'),
-            'image' => wvn_media('2025/04/NVP_JEHANAXKANISHK_WEDDING-1450.jpg'),
-        ),
-        array(
-            'title' => 'A Royal Evening',
-            'venue' => 'Palace Courtyard, Udaipur',
-            'url'   => home_url('/portfolio/'),
-            'image' => wvn_media('2025/04/2J0A7886-1200x800-1.jpg'),
-        ),
-        array(
-            'title' => 'Candlelit Vows',
-            'venue' => 'Heritage Venue, Udaipur',
-            'url'   => home_url('/portfolio/'),
-            'image' => wvn_media('2025/04/2J0A1820-1200x800-1.jpg'),
-        ),
-        array(
-            'title' => 'Marigold Procession',
-            'venue' => 'Udaipur, Rajasthan',
-            'url'   => home_url('/portfolio/'),
-            'image' => wvn_media('2025/04/2J0A1818.jpg'),
-        ),
-        array(
-            'title' => 'The First Look',
-            'venue' => 'Udaipur, Rajasthan',
-            'url'   => home_url('/portfolio/'),
-            'image' => wvn_media('2025/04/2J0A0682.jpg'),
-        ),
-        array(
-            'title' => 'Guest Welcome',
-            'venue' => 'Udaipur, Rajasthan',
-            'url'   => home_url('/portfolio/'),
-            'image' => wvn_media('2025/04/2J0A0986-534x800-1.jpg'),
-        ),
-        array(
-            'title' => 'Palace Vows',
-            'venue' => 'Udaipur, Rajasthan',
-            'url'   => home_url('/portfolio/'),
-            'image' => wvn_media('2025/04/2J0A2532-533x800-1.jpg'),
-        ),
-    );
+    return $items;
 }
 
 function wvn_services() {
