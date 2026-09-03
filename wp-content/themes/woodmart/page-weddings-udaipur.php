@@ -8,6 +8,14 @@ while (have_posts()) :
     $venues = wvn_udaipur_guide_venues();
     $costs  = wvn_udaipur_guide_costs();
     $faqs   = wvn_udaipur_guide_faqs();
+    $venue_links = array(
+        'Taj Lake Palace' => 'taj-lake-palace-wedding',
+        'Jagmandir Island Palace' => 'jagmandir-wedding-udaipur',
+        'The Leela Palace Udaipur' => 'leela-palace-udaipur-wedding',
+        'The Oberoi Udaivilas' => 'oberoi-udaivilas-wedding',
+        'Fairmont Udaipur Palace' => 'fairmont-udaipur-wedding',
+        'Raffles Udaipur' => 'raffles-udaipur-wedding',
+    );
     ?>
 <main id="content" class="wvn-page wvn-guide">
   <p class="wvn-kicker">Udaipur destination weddings</p>
@@ -33,6 +41,9 @@ while (have_posts()) :
       <li>
         <strong><?php echo esc_html($venue['name']); ?></strong>
         <span><?php echo esc_html($venue['note']); ?></span>
+        <?php if (!empty($venue_links[$venue['name']])) : ?>
+          <a href="<?php echo esc_url(home_url('/' . $venue_links[$venue['name']] . '/')); ?>">View the <?php echo esc_html($venue['name']); ?> wedding guide ↗</a>
+        <?php endif; ?>
       </li>
       <?php endforeach; ?>
     </ul>
