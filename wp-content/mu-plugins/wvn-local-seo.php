@@ -57,22 +57,6 @@ function wvn_local_seo_seed_pages() {
 }
 add_action('init', 'wvn_local_seo_seed_pages', 25);
 
-function wvn_local_seo_meta() {
-    if (!is_page()) {
-        return;
-    }
-    $slug = get_post_field('post_name', get_queried_object_id());
-    $pages = wvn_local_seo_pages();
-    if (empty($pages[$slug])) {
-        return;
-    }
-    $page = $pages[$slug];
-    echo '<meta name="description" content="' . esc_attr($page['description']) . '">' . "\n";
-    echo '<meta property="og:title" content="' . esc_attr($page['seo_title']) . '">' . "\n";
-    echo '<meta property="og:description" content="' . esc_attr($page['description']) . '">' . "\n";
-}
-add_action('wp_head', 'wvn_local_seo_meta', 4);
-
 function wvn_local_seo_title($parts) {
     if (!is_page()) {
         return $parts;
@@ -82,6 +66,18 @@ function wvn_local_seo_title($parts) {
     return !empty($pages[$slug]['seo_title']) ? array('title' => $pages[$slug]['seo_title']) : $parts;
 }
 add_filter('document_title_parts', 'wvn_local_seo_title', 70);
+add_filter('wpseo_title', function ($title) {
+    if (!is_page()) { return $title; }
+    $slug = get_post_field('post_name', get_queried_object_id());
+    $pages = wvn_local_seo_pages();
+    return !empty($pages[$slug]['seo_title']) ? $pages[$slug]['seo_title'] : $title;
+}, 70);
+add_filter('wpseo_metadesc', function ($description) {
+    if (!is_page()) { return $description; }
+    $slug = get_post_field('post_name', get_queried_object_id());
+    $pages = wvn_local_seo_pages();
+    return !empty($pages[$slug]['description']) ? $pages[$slug]['description'] : $description;
+}, 70);
 
 function wvn_local_seo_schema() {
     if (!is_page()) {
