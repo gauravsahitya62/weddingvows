@@ -1,15 +1,6 @@
 # Wedding Vows by Nikhil
 # https://weddingvowsbynikhil.com
-# Allow search engines to index public pages. Keep admin and junk URLs out of the crawl.
-
-User-agent: Googlebot
-Allow: /
-
-User-agent: Googlebot-Image
-Allow: /
-
-User-agent: Bingbot
-Allow: /
+# Public pages are crawlable; admin, search and runtime endpoints are not.
 
 User-agent: *
 Allow: /
@@ -21,9 +12,7 @@ Disallow: /readme.html
 Disallow: /trackback/
 Disallow: /feed/
 Disallow: /*/feed$
-Disallow: /?s=
 Disallow: /search/
 Disallow: /*?s=
 
-# Single canonical sitemap endpoint.
 Sitemap: https://weddingvowsbynikhil.com/wvn-sitemap.xml
