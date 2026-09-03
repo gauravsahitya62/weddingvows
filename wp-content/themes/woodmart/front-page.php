@@ -62,7 +62,7 @@ $service_count = count($services);
   <section class="wvn-planners">
     <div class="wvn-planners-card">
       <div class="wvn-planners-photo">
-        <img src="<?php echo esc_url(wvn_founder_image()); ?>" alt="Nikhil Salvi, destination wedding planner in Udaipur">
+        <img src="<?php echo esc_url(wvn_founder_image()); ?>" alt="Nikhil Salvi, destination wedding planner in Udaipur" loading="lazy" decoding="async">
       </div>
       <div class="wvn-planners-copy">
         <h2 class="wvn-display"><?php echo esc_html(wvn_home_text('home_planner_heading', 'Meet the planner')); ?></h2>
@@ -87,7 +87,7 @@ $service_count = count($services);
             <div class="wvn-pressbook-sheet<?php echo !empty($sheet['cover']) ? ' is-cover' : ''; ?>" data-sheet="<?php echo (int) $sheet_i; ?>">
               <?php if (!empty($sheet['cover'])) : ?>
                 <button class="wvn-pressbook-face is-front" type="button" data-book-toggle>
-                  <img src="<?php echo esc_url($sheet['front']['image']); ?>" alt="<?php echo esc_attr($sheet['front']['title']); ?>">
+                  <img src="<?php echo esc_url($sheet['front']['image']); ?>" alt="<?php echo esc_attr($sheet['front']['title']); ?>" loading="lazy" decoding="async">
                   <span><?php echo esc_html($sheet['front']['title']); ?></span>
                   <small><?php echo esc_html($sheet['front']['note']); ?></small>
                 </button>
@@ -128,7 +128,7 @@ $service_count = count($services);
           <article class="wvn-service-card" data-service-card>
             <p class="wvn-kicker">Services</p>
             <h3 class="wvn-display"><?php echo esc_html($item['title']); ?></h3>
-            <figure><img src="<?php echo esc_url($item['image']); ?>" alt="<?php echo esc_attr($item['title']); ?>"></figure>
+            <figure><img src="<?php echo esc_url($item['image']); ?>" alt="<?php echo esc_attr($item['title'] . ' — wedding planning service in Udaipur'); ?>" loading="lazy" decoding="async"></figure>
             <p><?php echo esc_html($item['text']); ?></p>
           </article>
         <?php endforeach; ?>
@@ -145,7 +145,7 @@ $service_count = count($services);
     <div class="wvn-showreel-row">
       <b>©<?php echo esc_html(date('Y')); ?></b>
       <button class="wvn-showreel-frame" type="button" data-open-showreel>
-        <img src="<?php echo esc_url(wvn_home_image('home_showreel_image', $gallery[4] ?? wvn_hero_image())); ?>" alt="Showreel">
+        <img src="<?php echo esc_url(wvn_home_image('home_showreel_image', $gallery[4] ?? wvn_hero_image())); ?>" alt="Wedding Vows by Nikhil destination wedding showreel in Udaipur" loading="lazy" decoding="async">
         <em><?php echo esc_html(wvn_home_text('home_showreel_caption', 'The Real Story Behind a Dream Wedding')); ?></em>
       </button>
       <b>Showreel</b>
@@ -187,7 +187,7 @@ $service_count = count($services);
     <div class="wvn-stories-grid">
       <?php foreach (array_slice($stories, 0, 3) as $story) : ?>
         <figure class="wvn-story">
-          <img src="<?php echo esc_url($story['image']); ?>" alt="<?php echo esc_attr($story['title']); ?>">
+          <img src="<?php echo esc_url($story['image']); ?>" alt="<?php echo esc_attr($story['title']); ?>" loading="lazy" decoding="async">
           <?php if (!empty($story['video'])) : ?>
             <video playsinline preload="metadata" src="<?php echo esc_url($story['video']); ?>"></video>
             <button class="wvn-story-play" type="button" data-story-play aria-label="Play story"></button>
@@ -206,8 +206,8 @@ $service_count = count($services);
     <h2 class="wvn-display wvn-center"><?php echo esc_html(wvn_home_text('home_gallery_heading', 'Moments, captured behind the scenes')); ?></h2>
     <p class="wvn-lede"><?php echo esc_html(wvn_home_text('home_gallery_lede', 'A glimpse into the celebrations we have quietly orchestrated — from first looks to the last dance.')); ?></p>
     <div class="wvn-mosaic">
-      <?php foreach ($gallery as $image) : ?>
-        <a href="<?php echo esc_url($image); ?>" data-wvn-lightbox><img src="<?php echo esc_url($image); ?>" alt="Destination wedding in Udaipur — Wedding Vows by Nikhil" loading="lazy" decoding="async"></a>
+      <?php foreach ($gallery as $index => $image) : ?>
+        <a href="<?php echo esc_url($image); ?>" data-wvn-lightbox><img src="<?php echo esc_url($image); ?>" alt="Wedding Vows by Nikhil — Udaipur destination wedding moment <?php echo (int) ($index + 1); ?>" loading="lazy" decoding="async"></a>
       <?php endforeach; ?>
     </div>
   </section>
