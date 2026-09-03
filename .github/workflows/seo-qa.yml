@@ -1,0 +1,48 @@
+name: SEO QA
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, 'seo/**']
+
+jobs:
+  seo-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check SEO implementation files
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f wp-content/themes/woodmart/inc/seo.php
+          test -f wp-content/mu-plugins/wvn-local-seo.php
+          test -f wp-content/mu-plugins/wvn-sitemap.php
+          test -f wp-content/mu-plugins/wvn-final-seo-hardening.php
+          test ! -f wvn-sitemap.xml
+
+      - name: Check sitemap and robots references
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q "wvn-sitemap.xml" robots.txt
+          grep -q "wvn_sitemap" wp-content/mu-plugins/wvn-sitemap.php
+          grep -q "remove_action('template_redirect', 'wvn_seo_render_sitemap'" wp-content/mu-plugins/wvn-final-seo-hardening.php
+
+      - name: Check priority landing URLs
+        shell: bash
+        run: |
+          set -euo pipefail
+          for slug in \
+            wedding-planner-udaipur \
+            destination-wedding-planner-udaipur \
+            luxury-wedding-planner-udaipur \
+            destination-wedding-udaipur \
+            weddings-in-udaipur \
+            wedding-venues-udaipur \
+            udaipur-wedding-cost \
+            palace-wedding-venues-in-udaipur; do
+            grep -R -q "$slug" wp-content/themes/woodmart wp-content/mu-plugins
+          done
