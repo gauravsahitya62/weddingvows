@@ -24,30 +24,15 @@ function wvn_local_seo_add_venue_links($content) {
         return $content;
     }
 
-    $links = wvn_local_seo_venue_links();
     $items = array();
-    foreach ($links as $label => $url) {
+    foreach (wvn_local_seo_venue_links() as $label => $url) {
         $items[] = '<li><a href="' . esc_url($url) . '">' . esc_html($label) . '</a></li>';
     }
 
-    $section = '<section class="wvn-venue-links" aria-labelledby="wvn-venue-links-title">'
+    return $content
+        . '<section class="wvn-venue-links" aria-labelledby="wvn-venue-links-title">'
         . '<h2 id="wvn-venue-links-title">Explore individual Udaipur wedding venues</h2>'
         . '<ul>' . implode('', $items) . '</ul>'
         . '</section>';
-
-    return $content . $section;
 }
 add_filter('the_content', 'wvn_local_seo_add_venue_links', 25);
-
-function wvn_local_seo_add_venue_links_to_homepage() {
-    if (!is_front_page()) {
-        return;
-    }
-    $links = wvn_local_seo_venue_links();
-    echo '<nav class="wvn-home-venue-links" aria-label="Udaipur wedding venue guides" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">';
-    foreach ($links as $label => $url) {
-        echo '<a href="' . esc_url($url) . '">' . esc_html($label) . '</a>';
-    }
-    echo '</nav>';
-}
-add_action('wp_footer', 'wvn_local_seo_add_venue_links_to_homepage', 5);
