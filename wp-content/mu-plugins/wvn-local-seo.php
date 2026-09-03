@@ -90,9 +90,35 @@ function wvn_local_seo_schema() {
     }
     $page = $pages[$slug];
     $url = trailingslashit(get_permalink());
+    $home = trailingslashit(home_url('/'));
     $graph = array(
-        array('@type' => 'WebPage', '@id' => $url . '#webpage', 'url' => $url, 'name' => $page['title'], 'description' => $page['description'], 'inLanguage' => 'en-IN'),
-        array('@type' => 'Service', '@id' => $url . '#service', 'name' => $page['title'], 'serviceType' => $page['title'], 'description' => $page['description'], 'areaServed' => array('@type' => 'City', 'name' => 'Udaipur'), 'provider' => array('@id' => trailingslashit(home_url('/')) . '#organization')),
+        array(
+            '@type' => 'WebPage',
+            '@id' => $url . '#webpage',
+            'url' => $url,
+            'name' => $page['title'],
+            'description' => $page['description'],
+            'inLanguage' => 'en-IN',
+            'isPartOf' => array('@id' => $home . '#website'),
+            'breadcrumb' => array('@id' => $url . '#breadcrumb'),
+        ),
+        array(
+            '@type' => 'Service',
+            '@id' => $url . '#service',
+            'name' => $page['title'],
+            'serviceType' => $page['title'],
+            'description' => $page['description'],
+            'areaServed' => array('@type' => 'City', 'name' => 'Udaipur'),
+            'provider' => array('@id' => $home . '#organization'),
+        ),
+        array(
+            '@type' => 'BreadcrumbList',
+            '@id' => $url . '#breadcrumb',
+            'itemListElement' => array(
+                array('@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => $home),
+                array('@type' => 'ListItem', 'position' => 2, 'name' => $page['title'], 'item' => $url),
+            ),
+        ),
     );
     echo '<script type="application/ld+json">' . wp_json_encode(array('@context' => 'https://schema.org', '@graph' => $graph), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . '</script>' . "\n";
 }
