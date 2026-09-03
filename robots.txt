@@ -25,5 +25,5 @@ Disallow: /?s=
 Disallow: /search/
 Disallow: /*?s=
 
+# Use one canonical, dynamically generated sitemap.
 Sitemap: https://weddingvowsbynikhil.com/wvn-sitemap.xml
-Sitemap: https://weddingvowsbynikhil.com/sitemap.xml
