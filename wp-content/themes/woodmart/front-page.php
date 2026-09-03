@@ -29,7 +29,7 @@ $service_count = count($services);
       <div class="wvn-hero-frame">
         <img src="<?php echo esc_url(wvn_hero_image()); ?>" alt="Destination wedding in Udaipur planned by Wedding Vows by Nikhil" fetchpriority="high" decoding="async">
       </div>
-      <div class="wvn-hero-copy"><?php echo esc_html(wvn_home_text('home_hero_copy', 'We work behind the scenes, because your wedding deserves to be planned beautifully.')); ?></div>
+      <h1 class="wvn-hero-copy"><?php echo esc_html(wvn_home_text('home_hero_copy', 'Destination wedding planner in Udaipur — planned beautifully, executed quietly.')); ?></h1>
     </div>
     <div class="wvn-hero-travel" aria-hidden="true"></div>
     <section class="wvn-intro">
