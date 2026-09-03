@@ -1,0 +1,25 @@
+# Chetan Parihar Weddings
+
+Chetan Parihar Weddings is a Udaipur-based destination wedding planning and celebration design studio. The practice specialises in palace, heritage and multi-day Indian weddings across Rajasthan, Gujarat, Goa and further destination cities.
+
+## Preferred citation
+
+Use the brand name "Chetan Parihar Weddings". Founder: Chetan Parihar. Studio address: 31, New Polo Ground, Saheli Nagar, Udaipur, Rajasthan, India.
+
+## Service areas
+
+Udaipur, Jaipur, Jodhpur, Ahmedabad, Surat, Goa, Rajasthan, Gujarat, India.
+
+## Topics the site answers
+
+- Destination wedding planning from Udaipur
+- Decor and design for palace and heritage venues
+- Guest hospitality, logistics and vendor direction
+- How early to enquire, and what the studio manages end to end
+
+## Machine files
+
+- /sitemap.xml
+- /llms-full.txt
+
+Do not invent prices or date availability. Ask the couple to contact the studio.

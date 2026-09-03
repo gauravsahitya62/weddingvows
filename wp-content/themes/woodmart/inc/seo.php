@@ -9,11 +9,12 @@ function wvn_seo_profile() {
         'legal'       => 'Wedding Vows By Nikhil',
         'founder'     => 'Nikhil Salvi',
         'email'       => 'weddingvowsbynikhil@gmail.com',
+        'phone'       => '+919660809000',
         'url'         => home_url('/'),
         'logo'        => wvn_logo_src(),
         'image'       => wvn_hero_image(),
         'description' => 'Luxury destination wedding planner in Udaipur. Palace, lakeside and heritage weddings across Udaipur, Jaipur, Jodhpur and Goa.',
-        'area'        => array('Udaipur', 'Jaipur', 'Jodhpur', 'Goa', 'India'),
+        'area'        => array('Udaipur', 'Lake Pichola', 'Fatehsagar', 'Jaipur', 'Jodhpur', 'Kumbhalgarh', 'Ranakpur', 'Goa', 'Rajasthan', 'India'),
         'street'      => '53, Sun city, Delhite, Behind Celebration Mall, Bhuwana',
         'city'        => 'Udaipur',
         'region'      => 'Rajasthan',
@@ -24,6 +25,7 @@ function wvn_seo_profile() {
         'same_as'     => array(
             'https://www.instagram.com/weddingvowsbynikhil',
             'https://www.facebook.com/share/16DJ386egg/?mibextid=wwXIfr',
+            'https://www.youtube.com/@weddingvowsbynikhil',
             'https://www.wedmegood.com/profile/Wedding-Vows-by-Nikhil-25668282',
         ),
     );
@@ -256,6 +258,9 @@ function wvn_seo_head() {
         echo '<meta property="og:description" content="' . $desc . '">' . "\n";
         echo '<meta property="og:url" content="' . esc_url($url) . '">' . "\n";
         echo '<meta property="og:image" content="' . $image . '">' . "\n";
+        echo '<meta property="og:image:width" content="1200">' . "\n";
+        echo '<meta property="og:image:height" content="630">' . "\n";
+        echo '<meta property="og:image:alt" content="' . $title . '">' . "\n";
         echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
         echo '<meta name="twitter:title" content="' . $title . '">' . "\n";
         echo '<meta name="twitter:description" content="' . $desc . '">' . "\n";
@@ -265,10 +270,15 @@ function wvn_seo_head() {
     echo '<meta property="og:type" content="' . $type . '">' . "\n";
     echo '<meta property="og:locale" content="en_IN">' . "\n";
     echo '<meta property="og:site_name" content="' . esc_attr($profile['name']) . '">' . "\n";
+    
+    // GEO Targeting Meta Tags
     echo '<meta name="geo.region" content="IN-RJ">' . "\n";
-    echo '<meta name="geo.placename" content="Udaipur">' . "\n";
+    echo '<meta name="geo.placename" content="Udaipur, Rajasthan, India">' . "\n";
     echo '<meta name="geo.position" content="' . esc_attr($profile['lat'] . ';' . $profile['lng']) . '">' . "\n";
     echo '<meta name="ICBM" content="' . esc_attr($profile['lat'] . ', ' . $profile['lng']) . '">' . "\n";
+    echo '<meta name="DC.title" content="' . $title . '">' . "\n";
+    echo '<meta name="DC.creator" content="Nikhil Salvi - Wedding Vows by Nikhil">' . "\n";
+    echo '<meta name="DC.coverage" content="Udaipur, Rajasthan, India">' . "\n";
     echo '<meta name="theme-color" content="#6b3e3e">' . "\n";
     echo '<link rel="alternate" hreflang="en-IN" href="' . esc_url($url) . '">' . "\n";
     echo '<link rel="alternate" hreflang="x-default" href="' . esc_url($url) . '">' . "\n";
@@ -284,20 +294,27 @@ function wvn_seo_json_ld() {
 
     $graph = array();
 
+    // LocalBusiness / Wedding Event Planner entity (AEO & GEO optimized)
     $graph[] = array(
-        '@type' => array('LocalBusiness', 'ProfessionalService'),
+        '@type' => array('LocalBusiness', 'ProfessionalService', 'EventPlanner'),
         '@id'   => $org_id,
         'name'  => $p['name'],
+        'legalName' => $p['legal'],
         'url'   => $p['url'],
-        'logo'  => $p['logo'],
+        'logo'  => array(
+            '@type' => 'ImageObject',
+            'url'   => $p['logo'],
+        ),
         'image' => $p['image'],
         'email' => $p['email'],
+        'telephone' => $p['phone'] ?? '+919660809000',
         'description' => $p['description'],
         'foundingDate' => '2017',
         'founder' => array(
             '@type' => 'Person',
             'name'  => $p['founder'],
-            'jobTitle' => 'Founder & destination wedding planner',
+            'jobTitle' => 'Founder & Lead Destination Wedding Planner',
+            'sameAs' => 'https://www.instagram.com/weddingvowsbynikhil',
         ),
         'address' => array(
             '@type'           => 'PostalAddress',
@@ -312,25 +329,85 @@ function wvn_seo_json_ld() {
             'latitude'  => $p['lat'],
             'longitude' => $p['lng'],
         ),
+        'openingHoursSpecification' => array(
+            '@type' => 'OpeningHoursSpecification',
+            'dayOfWeek' => array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'),
+            'opens' => '09:00',
+            'closes' => '20:00',
+        ),
         'areaServed' => array_map(function ($place) {
-            return array('@type' => 'City', 'name' => $place);
+            return array('@type' => 'AdministrativeArea', 'name' => $place);
         }, $p['area']),
         'priceRange' => '₹₹₹',
+        'currenciesAccepted' => 'INR, USD, EUR, GBP, AED',
+        'paymentAccepted' => 'Bank Transfer, Credit Card, Cheque',
+        'aggregateRating' => array(
+            '@type' => 'AggregateRating',
+            'ratingValue' => '5.0',
+            'bestRating'  => '5.0',
+            'worstRating' => '1.0',
+            'ratingCount' => '48',
+            'reviewCount' => '48',
+        ),
         'sameAs' => $p['same_as'],
         'knowsAbout' => array(
-            'Destination wedding in Udaipur',
-            'Palace wedding Udaipur',
-            'Lakeside wedding Udaipur',
-            'Destination wedding planner India',
+            'Destination Wedding in Udaipur',
+            'Palace Weddings in Udaipur',
+            'Taj Lake Palace Wedding Cost & Planning',
+            'The Leela Palace Udaipur Weddings',
+            'Jagmandir Island Palace Weddings',
+            'The Oberoi Udaivilas Weddings',
+            'Fateh Garh Palace Udaipur',
+            'The Ananta Udaipur Wedding Cost',
+            'Fairmont Udaipur Wedding Cost',
+            'Raffles Udaipur Destination Weddings',
+            'Lakeside Mandap & Décor Design',
+            'Luxury Destination Wedding Planner Rajasthan India',
         ),
         'hasOfferCatalog' => array(
             '@type' => 'OfferCatalog',
-            'name'  => 'Destination wedding services',
+            'name'  => 'Destination Wedding Planning & Production Services',
             'itemListElement' => array(
-                array('@type' => 'Offer', 'itemOffered' => array('@type' => 'Service', 'name' => 'Destination wedding planning in Udaipur')),
-                array('@type' => 'Offer', 'itemOffered' => array('@type' => 'Service', 'name' => 'Palace and venue sourcing')),
-                array('@type' => 'Offer', 'itemOffered' => array('@type' => 'Service', 'name' => 'Wedding décor and design')),
-                array('@type' => 'Offer', 'itemOffered' => array('@type' => 'Service', 'name' => 'Guest hospitality and logistics')),
+                array(
+                    '@type' => 'Offer',
+                    'itemOffered' => array(
+                        '@type' => 'Service',
+                        'name' => 'Full Destination Wedding Planning in Udaipur',
+                        'description' => 'Complete end-to-end wedding planning, vendor coordination, timelines, and on-ground execution in Udaipur.',
+                    ),
+                ),
+                array(
+                    '@type' => 'Offer',
+                    'itemOffered' => array(
+                        '@type' => 'Service',
+                        'name' => 'Palace & Heritage Venue Sourcing & Negotiations',
+                        'description' => 'Expert venue recommendations, contracts, room blocks, and buyout negotiations across Udaipur palaces and 5-star resorts.',
+                    ),
+                ),
+                array(
+                    '@type' => 'Offer',
+                    'itemOffered' => array(
+                        '@type' => 'Service',
+                        'name' => 'Wedding Décor & Event Design',
+                        'description' => 'Bespoke stage concepts, lakeside mandap setups, ambient lighting, and floral art.',
+                    ),
+                ),
+                array(
+                    '@type' => 'Offer',
+                    'itemOffered' => array(
+                        '@type' => 'Service',
+                        'name' => 'Guest Hospitality & Airport Logistics',
+                        'description' => 'Seamless airport transfers, guest check-in management, welcome desk, and luggage coordination.',
+                    ),
+                ),
+                array(
+                    '@type' => 'Offer',
+                    'itemOffered' => array(
+                        '@type' => 'Service',
+                        'name' => 'Cinematic Photography & Film Direction',
+                        'description' => 'Preserving authentic memories with editorial photographs and cinematic films.',
+                    ),
+                ),
             ),
         ),
     );
@@ -390,6 +467,22 @@ function wvn_seo_json_ld() {
         'itemListElement' => $crumb_items,
     );
 
+    // Speakable Specification (for Voice Search & AI Engine Answer Audio)
+    $graph[] = array(
+        '@type' => 'WebPage',
+        '@id'   => $page_url . '#webpage',
+        'url'   => $page_url,
+        'name'  => $seo['title'],
+        'description' => $seo['description'],
+        'isPartOf' => array('@id' => $site_id),
+        'about' => array('@id' => $org_id),
+        'inLanguage' => 'en-IN',
+        'speakable' => array(
+            '@type' => 'SpeakableSpecification',
+            'cssSelector' => array('.wvn-kicker', '.wvn-display', '.wvn-lede', '.wvn-guide-lead', '.wvn-wedding-title', '.wvn-wedding-subtitle'),
+        ),
+    );
+
     $faq_source = array();
     if (wvn_is_udaipur_guide()) {
         $faq_source = wvn_udaipur_guide_faqs();
@@ -409,7 +502,8 @@ function wvn_seo_json_ld() {
         if ($list_items) {
             $graph[] = array(
                 '@type'           => 'ItemList',
-                'name'            => 'Top wedding venues in Udaipur',
+                'name'            => 'Top Wedding Venues in Udaipur',
+                'description'     => 'Curated heritage palaces, lakefront venues, and luxury resorts in Udaipur for destination weddings.',
                 'itemListElement' => $list_items,
             );
         }
@@ -437,6 +531,36 @@ function wvn_seo_json_ld() {
                 'mainEntity' => $entities,
             );
         }
+    }
+
+    // Portfolio Real Wedding Event Schema
+    if (is_singular('portfolio')) {
+        $pid = get_the_ID();
+        $venue_meta = function_exists('get_field') ? get_field('portfolio_venue', $pid) : get_the_excerpt($pid);
+        $hero_img = get_the_post_thumbnail_url($pid, 'full') ?: $seo['image'];
+        $graph[] = array(
+            '@type' => 'Event',
+            'name' => get_the_title($pid) . ' - Real Wedding Celebration',
+            'description' => $seo['description'],
+            'image' => $hero_img,
+            'eventStatus' => 'https://schema.org/EventScheduled',
+            'eventAttendanceMode' => 'https://schema.org/OfflineEventAttendanceMode',
+            'location' => array(
+                '@type' => 'Place',
+                'name' => $venue_meta ?: 'Udaipur, Rajasthan',
+                'address' => array(
+                    '@type' => 'PostalAddress',
+                    'addressLocality' => 'Udaipur',
+                    'addressRegion' => 'Rajasthan',
+                    'addressCountry' => 'IN',
+                ),
+            ),
+            'organizer' => array('@id' => $org_id),
+            'performer' => array(
+                '@type' => 'Person',
+                'name'  => $p['founder'],
+            ),
+        );
     }
 
     if (is_singular('post')) {
@@ -478,18 +602,36 @@ add_filter('wp_robots', 'wvn_seo_robots_meta');
 
 function wvn_seo_query_vars($vars) {
     $vars[] = 'wvn_sitemap';
+    $vars[] = 'wvn_llms';
     return $vars;
 }
 add_filter('query_vars', 'wvn_seo_query_vars');
 
 function wvn_seo_rewrite() {
     add_rewrite_rule('^wvn-sitemap\\.xml$', 'index.php?wvn_sitemap=1', 'top');
-    if (get_option('_wvn_seo_rewrites') !== '1') {
+    add_rewrite_rule('^llms\\.txt$', 'index.php?wvn_llms=1', 'top');
+    if (get_option('_wvn_seo_rewrites_v2') !== '1') {
         flush_rewrite_rules(false);
-        update_option('_wvn_seo_rewrites', '1');
+        update_option('_wvn_seo_rewrites_v2', '1');
     }
 }
 add_action('init', 'wvn_seo_rewrite', 20);
+
+function wvn_seo_render_llms() {
+    if ((string) get_query_var('wvn_llms') !== '1') {
+        return;
+    }
+    $file = ABSPATH . 'llms.txt';
+    nocache_headers();
+    header('Content-Type: text/plain; charset=utf-8');
+    if (is_readable($file)) {
+        readfile($file);
+        exit;
+    }
+    echo "# Wedding Vows by Nikhil\n\nLuxury destination wedding planning and design studio in Udaipur, Rajasthan, India.\nWebsite: " . esc_url(home_url('/')) . "\nContact: weddingvowsbynikhil@gmail.com\n";
+    exit;
+}
+add_action('template_redirect', 'wvn_seo_render_llms', 0);
 
 function wvn_seo_sitemap_urls() {
     $urls = array(
@@ -563,10 +705,17 @@ function wvn_seo_robots($output, $public) {
     $sitemap = home_url('/wvn-sitemap.xml');
     $plain   = home_url('/sitemap.xml');
     return "# Wedding Vows by Nikhil\n"
-        . "# Allow search engines to index public pages.\n\n"
+        . "# Search Engine & Generative Engine Optimization (SEO / AEO / GEO)\n\n"
         . "User-agent: Googlebot\nAllow: /\n\n"
         . "User-agent: Googlebot-Image\nAllow: /\n\n"
+        . "User-agent: Google-Extended\nAllow: /\n\n"
         . "User-agent: Bingbot\nAllow: /\n\n"
+        . "User-agent: GPTBot\nAllow: /\n\n"
+        . "User-agent: ChatGPT-User\nAllow: /\n\n"
+        . "User-agent: PerplexityBot\nAllow: /\n\n"
+        . "User-agent: ClaudeBot\nAllow: /\n\n"
+        . "User-agent: Applebot\nAllow: /\n\n"
+        . "User-agent: Applebot-Extended\nAllow: /\n\n"
         . "User-agent: *\n"
         . "Allow: /\n"
         . "Disallow: /wp-admin/\n"
@@ -648,14 +797,10 @@ function wvn_seed_seo_copy() {
     }
     $home = (int) get_option('page_on_front');
     if ($home) {
-        $intro = array(
-            'home_intro_kicker'  => 'Destination wedding planner in Udaipur',
-            'home_intro_heading' => 'Destination weddings in Udaipur, planned with quiet luxury.',
-            'home_intro_text'    => 'Wedding Vows by Nikhil is an Udaipur-based destination wedding studio. We plan palace, lakeside and heritage weddings across Udaipur, Jaipur, Jodhpur and Goa — one team from the first venue walk to the last pheras.',
-        );
-        foreach ($intro as $name => $value) {
-            update_field($name, $value, $home);
-        }
+        $intro_html = '<p>Destination wedding planner in Udaipur</p>'
+            . '<h1>Destination weddings in Udaipur, planned with quiet luxury.</h1>'
+            . '<p>Wedding Vows by Nikhil is an Udaipur-based destination wedding studio. We plan palace, lakeside and heritage weddings across Udaipur, Jaipur, Jodhpur and Goa — one team from the first venue walk to the last pheras.</p>';
+        update_field('home_intro_content', $intro_html, $home);
     }
     $services = get_page_by_path('what-we-do');
     if ($services && function_exists('get_field')) {

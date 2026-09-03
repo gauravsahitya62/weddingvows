@@ -1,0 +1,48 @@
+# Chetan Parihar Weddings
+# SEO / AEO / GEO crawling policy
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: *
+Allow: /
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Disallow: /wp-login.php
+Disallow: /xmlrpc.php
+Disallow: /readme.html
+Disallow: /trackback/
+Disallow: /feed/
+Disallow: /*/feed$
+Disallow: /?s=
+Disallow: /search/
+
+Sitemap: /sitemap.xml
+Sitemap: /wbc-sitemap.xml

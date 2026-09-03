@@ -343,21 +343,52 @@
       askInput?.focus();
     });
   });
+  // Background autoplay for stories videos (silent overlay)
+  document.querySelectorAll(".wvn-story video").forEach((v) => {
+    v.muted = true;
+    v.loop = true;
+    v.playsInline = true;
+    const playPromise = v.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Autoplay policy fallback: starts when user scrolls/taps
+      });
+    }
+  });
+
   document.querySelectorAll("[data-story-play]").forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
       const card = btn.closest(".wvn-story");
       const video = card?.querySelector("video");
       if (!video) return;
-      document.querySelectorAll(".wvn-story.is-playing video").forEach((other) => {
-        if (other !== video) {
-          other.pause();
-          other.closest(".wvn-story")?.classList.remove("is-playing");
-        }
-      });
-      card.classList.add("is-playing");
-      video.controls = true;
-      video.play();
-      video.onended = () => card.classList.remove("is-playing");
+
+      const isSoundActive = card.classList.contains("is-playing") && !video.muted;
+
+      if (isSoundActive) {
+        // Mute and continue silent background loop
+        video.muted = true;
+        card.classList.remove("is-playing");
+      } else {
+        // Mute any other active story videos
+        document.querySelectorAll(".wvn-story.is-playing video").forEach((other) => {
+          if (other !== video) {
+            other.muted = true;
+            other.closest(".wvn-story")?.classList.remove("is-playing");
+          }
+        });
+
+        video.muted = false;
+        video.volume = 1;
+        video.play();
+        card.classList.add("is-playing");
+      }
+
+      video.onended = () => {
+        video.muted = true;
+        card.classList.remove("is-playing");
+        video.play();
+      };
     });
   });
   document.querySelectorAll("[data-open-showreel]").forEach((el) => {
@@ -501,8 +532,18 @@
     if (e.key === "Escape") closeModals();
   });
 
+  // Testimonial read more / read less toggle
+  document.querySelectorAll("[data-quote-toggle]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const card = btn.closest("[data-quote-card]");
+      if (!card) return;
+      const isExpanded = card.classList.toggle("is-expanded");
+      btn.textContent = isExpanded ? "Show less" : "Read full review";
+    });
+  });
+
   (function initLightbox() {
-    const groups = document.querySelectorAll(".wvn-mosaic, .gallery-lightbox");
+    const groups = document.querySelectorAll(".wvn-mosaic, .gallery-lightbox, .wvn-wedding-collage, .wvn-wedding-mosaic");
     if (!groups.length) return;
 
     const box = document.createElement("div");

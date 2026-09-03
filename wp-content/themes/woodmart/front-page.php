@@ -150,6 +150,18 @@ $service_count = count($services);
       </button>
       <b>Showreel</b>
     </div>
+    <?php
+    $showreel_url = wvn_home_text('home_showreel_button_url', '');
+    $showreel_txt = wvn_home_text('home_showreel_button_text', 'See more');
+    if (!empty($showreel_url)) : ?>
+      <div class="wvn-showreel-action">
+        <a class="wvn-showreel-btn" href="<?php echo esc_url($showreel_url); ?>" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          <span><?php echo esc_html($showreel_txt); ?></span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    <?php endif; ?>
   </section>
 
   <section class="wvn-quotes">
@@ -157,8 +169,11 @@ $service_count = count($services);
     <h2 class="wvn-display wvn-center"><?php echo esc_html(wvn_home_text('home_quotes_heading', 'See what our couples say')); ?></h2>
     <p class="wvn-lede"><?php echo esc_html(wvn_home_text('home_quotes_lede', 'Real stories from the families we’ve had the honour to celebrate with.')); ?></p>
     <div class="wvn-masonry">
-      <?php foreach ($quotes as $quote) : ?>
-        <article class="wvn-quote<?php echo !empty($quote['dark']) ? ' is-dark' : ''; ?>">
+      <?php foreach ($quotes as $quote) :
+          $text = trim($quote['text'] ?? '');
+          $is_long = mb_strlen($text) > 170;
+          ?>
+        <article class="wvn-quote<?php echo !empty($quote['dark']) ? ' is-dark' : ''; ?><?php echo $is_long ? ' has-more' : ''; ?>" data-quote-card>
           <header>
             <strong><?php echo esc_html($quote['name']); ?></strong>
             <span><?php echo esc_html($quote['time']); ?></span>
@@ -167,7 +182,12 @@ $service_count = count($services);
           <div class="wvn-tags">
             <?php foreach ($quote['tags'] as $tag) : ?><span><?php echo esc_html($tag); ?></span><?php endforeach; ?>
           </div>
-          <p><?php echo esc_html($quote['text']); ?></p>
+          <div class="wvn-quote-body">
+            <p><?php echo nl2br(esc_html($text)); ?></p>
+          </div>
+          <?php if ($is_long) : ?>
+            <button type="button" class="wvn-quote-toggle" data-quote-toggle aria-label="Toggle full testimonial">Read full review</button>
+          <?php endif; ?>
         </article>
       <?php endforeach; ?>
     </div>
@@ -185,12 +205,19 @@ $service_count = count($services);
     <p class="wvn-kicker wvn-center"><?php echo esc_html(wvn_home_text('home_stories_kicker', 'Couple stories')); ?></p>
     <h2 class="wvn-display wvn-center"><?php echo esc_html(wvn_home_text('home_stories_heading', 'Hear it straight from our couples')); ?></h2>
     <div class="wvn-stories-grid">
-      <?php foreach (array_slice($stories, 0, 3) as $story) : ?>
-        <figure class="wvn-story">
-          <img src="<?php echo esc_url($story['image']); ?>" alt="<?php echo esc_attr($story['title']); ?>">
-          <?php if (!empty($story['video'])) : ?>
-            <video playsinline preload="metadata" src="<?php echo esc_url($story['video']); ?>"></video>
-            <button class="wvn-story-play" type="button" data-story-play aria-label="Play story"></button>
+      <?php foreach (array_slice($stories, 0, 3) as $story) :
+          $has_video = !empty($story['video']);
+          ?>
+        <figure class="wvn-story<?php echo $has_video ? ' has-video' : ''; ?>">
+          <?php if (!empty($story['image'])) : ?>
+            <img src="<?php echo esc_url($story['image']); ?>" alt="<?php echo esc_attr($story['title']); ?>" loading="lazy">
+          <?php endif; ?>
+          <?php if ($has_video) : ?>
+            <video playsinline autoplay muted loop preload="auto" src="<?php echo esc_url($story['video']); ?>"></video>
+            <div class="wvn-story-overlay" aria-hidden="true"></div>
+            <button class="wvn-story-play" type="button" data-story-play aria-label="Toggle sound and play">
+              <span class="wvn-story-play-icon"></span>
+            </button>
           <?php endif; ?>
           <figcaption>
             <strong><?php echo esc_html($story['title']); ?></strong><br>

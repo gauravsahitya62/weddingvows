@@ -1,0 +1,49 @@
+services:
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-weddingsbychetan}
+      MYSQL_USER: ${MYSQL_USER:-wbc_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-wbc_password}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
+    volumes:
+      - wbc_db:/var/lib/mysql
+
+  wordpress:
+    image: wordpress:php8.2-apache
+    depends_on:
+      - db
+    restart: unless-stopped
+    ports:
+      - "8088:80"
+    environment:
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST:-db:3306}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME:-weddingsbychetan}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER:-wbc_user}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD:-wbc_password}
+    volumes:
+      - wbc_wp:/var/www/html
+      - ./wp-content:/var/www/html/wp-content
+
+  wpcli:
+    image: wordpress:cli
+    depends_on:
+      - wordpress
+      - db
+    user: "33:33"
+    environment:
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST:-db:3306}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME:-weddingsbychetan}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER:-wbc_user}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD:-wbc_password}
+    volumes:
+      - wbc_wp:/var/www/html
+      - ./wp-content:/var/www/html/wp-content
+    profiles:
+      - setup
+
+volumes:
+  wbc_db:
+  wbc_wp:
