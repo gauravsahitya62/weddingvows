@@ -101,3 +101,30 @@ function submit_quick_contact_form() {
     echo 'success';
     wp_die();
 }
+
+/**
+ * Keep the virtual WordPress robots.txt endpoint aligned with the canonical sitemap.
+ * The repository also contains a physical robots.txt, which takes precedence on typical Apache setups.
+ */
+function wvn_theme_robots_override($output, $public) {
+    if (!$public) {
+        return "User-agent: *\nDisallow: /\n";
+    }
+
+    return "# Wedding Vows by Nikhil\n"
+        . "# https://weddingvowsbynikhil.com\n\n"
+        . "User-agent: *\n"
+        . "Allow: /\n"
+        . "Disallow: /wp-admin/\n"
+        . "Allow: /wp-admin/admin-ajax.php\n"
+        . "Disallow: /wp-login.php\n"
+        . "Disallow: /xmlrpc.php\n"
+        . "Disallow: /readme.html\n"
+        . "Disallow: /trackback/\n"
+        . "Disallow: /feed/\n"
+        . "Disallow: /*/feed$\n"
+        . "Disallow: /search/\n"
+        . "Disallow: /*?s=\n\n"
+        . "Sitemap: " . home_url('/wvn-sitemap.xml') . "\n";
+}
+add_filter('robots_txt', 'wvn_theme_robots_override', 110, 2);
