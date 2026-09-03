@@ -35,14 +35,23 @@ if (!$images) {
 }
 ?>
 <main id="content" class="wedding-gallery-single wvn-page">
-  <p class="wvn-kicker wvn-center">Real wedding</p>
+  <p class="wvn-kicker wvn-center">Real destination wedding in Udaipur</p>
   <h1 class="title"><?php the_title(); ?></h1>
+  <?php if (has_excerpt() || trim(wp_strip_all_tags(get_the_content())) !== '') : ?>
+    <div class="wvn-gallery-story">
+      <?php if (has_excerpt()) : ?><p class="wvn-lede"><?php echo esc_html(get_the_excerpt()); ?></p><?php endif; ?>
+      <?php if (trim(wp_strip_all_tags(get_the_content())) !== '') : ?>
+        <div class="wvn-story-copy"><?php the_content(); ?></div>
+      <?php endif; ?>
+    </div>
+  <?php endif; ?>
   <div class="wvn-mosaic">
-    <?php foreach ($images as $image) : ?>
+    <?php foreach ($images as $index => $image) : ?>
       <a href="<?php echo esc_url($image); ?>" data-wvn-lightbox>
-        <img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+        <img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr(get_the_title() . ' — destination wedding in Udaipur, moment ' . ($index + 1)); ?>" <?php echo $index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'; ?> decoding="async">
       </a>
     <?php endforeach; ?>
   </div>
+  <p class="wvn-center" style="margin-top:32px;"><a class="wvn-textlink" href="<?php echo esc_url(home_url('/contact-us/')); ?>">Plan a destination wedding in Udaipur ↗</a></p>
 </main>
 <?php get_footer(); ?>
