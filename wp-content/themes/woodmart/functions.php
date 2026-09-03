@@ -252,7 +252,6 @@ function wvn_landing_schema() {
         return;
     }
     $url = trailingslashit(get_permalink());
-    $profile = function_exists('wvn_seo_profile') ? wvn_seo_profile() : array();
     $schema = array(
         '@context' => 'https://schema.org',
         '@graph' => array(
@@ -282,3 +281,60 @@ function wvn_landing_schema() {
     echo '<script type="application/ld+json">' . wp_json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . '</script>' . "\n";
 }
 add_action('wp_head', 'wvn_landing_schema', 30);
+
+/**
+ * Publish a small set of evergreen planning articles once. These target
+ * informational searches and feed authority into the commercial landing pages.
+ */
+function wvn_seed_seo_articles() {
+    if (get_option('wvn_seo_articles_v1') === '1') {
+        return;
+    }
+
+    $articles = array(
+        array(
+            'slug' => 'best-time-destination-wedding-udaipur',
+            'title' => 'Best Time for a Destination Wedding in Udaipur',
+            'excerpt' => 'A practical guide to wedding seasons in Udaipur, from weather and guest comfort to venue demand and booking timelines.',
+            'content' => '<p>Udaipur works beautifully for destination weddings because the city combines lake views, heritage architecture and luxury hospitality. The month you choose still changes the guest experience, venue demand and how comfortably you can plan outdoor functions.</p><h2>October to February: the most sought-after season</h2><p>For many couples, the cooler months are the easiest period for outdoor ceremonies, welcome evenings and multi-function celebrations. This is also when popular palace and resort dates can become difficult to secure, so venue research should start early.</p><h2>March to June: warmer celebrations</h2><p>Spring and early summer can work when the venue has strong indoor options and the schedule is designed around the heat. Evening functions, shaded areas, cooling and guest transport become more important planning details.</p><h2>July to September: monsoon character</h2><p>Monsoon can bring a different visual mood to Rajasthan, but weather contingency planning matters. Before choosing a date, check the venue’s covered function spaces, rain plans and guest movement between rooms and events.</p><h2>How far ahead should you book?</h2><p>If your wedding needs a large room block or a high-demand palace venue, start roughly 8 to 12 months ahead. Peak dates can require more lead time. Once the venue is held, the rest of the production calendar becomes much easier to build.</p><p>Need help choosing dates and venues? See our <a href="' . esc_url(home_url('/destination-wedding-udaipur/')) . '">destination wedding in Udaipur guide</a> or <a href="' . esc_url(home_url('/contact-us/')) . '">talk to our planning team</a>.</p>',
+        ),
+        array(
+            'slug' => 'udaipur-destination-wedding-cost-guide',
+            'title' => 'Udaipur Destination Wedding Cost: A Practical Planning Guide',
+            'excerpt' => 'Understand the major cost heads behind a destination wedding in Udaipur and where your guest count changes the budget.',
+            'content' => '<p>There is no single price for a destination wedding in Udaipur. A 2-day celebration for around 150 to 200 guests can range broadly from about ₹50 lakhs to ₹3+ crores depending on the hotel, rooms, food, décor, production and entertainment.</p><h2>The major cost buckets</h2><ul><li><strong>Venue and accommodation:</strong> often the largest commitment, especially when a large room block is required.</li><li><strong>Catering:</strong> menu, number of meals, beverage service and guest count all affect the total.</li><li><strong>Décor and production:</strong> florals, structures, lighting, sound, staging and power requirements can change significantly by function.</li><li><strong>Photography and films:</strong> coverage, team size and deliverables vary by studio.</li><li><strong>Planning and coordination:</strong> the fee depends on scope, functions, guest count and execution complexity.</li></ul><h2>Start with the venue, not the décor</h2><p>Before building mood boards, compare room inventory, function capacities, venue restrictions, food arrangements and guest transfers. A venue that looks less expensive can become more costly once rooms, production access or transportation are added.</p><h2>Build a working budget</h2><p>Keep separate allowances for venue and rooms, food, décor and production, entertainment, photography, hospitality and planning. Then keep a contingency for changes that happen once vendors and venues are locked.</p><p>For venue comparisons, visit our <a href="' . esc_url(home_url('/weddings-in-udaipur/')) . '">Udaipur wedding guide</a>. If you want a planner to build the budget with you, <a href="' . esc_url(home_url('/contact-us/')) . '">book a consultation</a>.</p>',
+        ),
+        array(
+            'slug' => 'udaipur-palace-wedding-guide',
+            'title' => 'Palace Wedding in Udaipur: How to Choose the Right Venue',
+            'excerpt' => 'How to compare Udaipur palace wedding venues by guest count, rooms, function spaces, logistics and guest experience.',
+            'content' => '<p>A palace wedding in Udaipur is about more than a beautiful backdrop. The right property needs enough rooms, practical function spaces and a layout that lets guests move comfortably between celebrations.</p><h2>Start with your guest count</h2><p>Ask how many rooms the property can realistically allocate to your wedding, which rooms are available on your dates and where each function can happen. A beautiful venue becomes difficult when the guest block and event capacities do not match.</p><h2>Compare the full wedding journey</h2><p>Look at airport transfers, check-in, welcome events, mehendi, haldi, sangeet and the wedding ceremony as one journey. Island or heritage properties may create extraordinary arrivals, while larger resort campuses can make logistics easier for bigger groups.</p><h2>Questions to ask every palace venue</h2><ul><li>What is the room inventory for the wedding dates?</li><li>Which spaces can host each function?</li><li>What are the venue’s décor, sound and production rules?</li><li>How are outside vendors handled?</li><li>What happens if an outdoor function needs a rain or heat backup?</li></ul><p>Compare properties in our <a href="' . esc_url(home_url('/weddings-in-udaipur/')) . '">Udaipur wedding venues guide</a>, or <a href="' . esc_url(home_url('/wedding-planner-udaipur/')) . '">work with a local wedding planner in Udaipur</a> to shortlist the right fit.</p>',
+        ),
+        array(
+            'slug' => 'udaipur-wedding-planning-checklist',
+            'title' => 'Udaipur Destination Wedding Planning Checklist',
+            'excerpt' => 'A practical destination wedding checklist covering venue, rooms, guests, vendors, design, production and the wedding-week schedule.',
+            'content' => '<p>Planning a destination wedding in Udaipur becomes much easier when decisions are made in the right order. Use this checklist as a working sequence rather than trying to solve every detail at once.</p><h2>8–12 months before</h2><ul><li>Set the guest-count range and preferred dates.</li><li>Shortlist venues and compare room blocks.</li><li>Hold the venue before committing to major vendors.</li><li>Choose your planner and build the master budget.</li></ul><h2>5–8 months before</h2><ul><li>Lock décor direction and production requirements.</li><li>Book photography, films and entertainment.</li><li>Map guest travel, rooms and hospitality touchpoints.</li><li>Build the first function-by-function schedule.</li></ul><h2>2–4 months before</h2><ul><li>Confirm menus and guest preferences.</li><li>Finalize stationery, signage and room drops.</li><li>Confirm vendor arrival times and venue access.</li><li>Share the guest itinerary and transport plan.</li></ul><h2>Wedding week</h2><p>Run one master schedule covering guests, venue teams, décor, production, transport and family responsibilities. The planner’s job is to keep that schedule moving while the family enjoys the celebration.</p><p>For a complete venue and cost overview, read <a href="' . esc_url(home_url('/weddings-in-udaipur/')) . '">Weddings in Udaipur</a>. For full-service execution, explore our <a href="' . esc_url(home_url('/destination-wedding-planner-udaipur/')) . '">destination wedding planning service</a>.</p>',
+        ),
+    );
+
+    foreach ($articles as $article) {
+        if (get_page_by_path($article['slug'], OBJECT, 'post')) {
+            continue;
+        }
+        $post_id = wp_insert_post(wp_slash(array(
+            'post_title' => $article['title'],
+            'post_name' => $article['slug'],
+            'post_excerpt' => $article['excerpt'],
+            'post_content' => $article['content'],
+            'post_status' => 'publish',
+            'post_type' => 'post',
+            'comment_status' => 'closed',
+        )), true);
+        if (!is_wp_error($post_id)) {
+            update_post_meta($post_id, '_wvn_seo_seeded', '1');
+        }
+    }
+    update_option('wvn_seo_articles_v1', '1', false);
+}
+add_action('init', 'wvn_seed_seo_articles', 31);
