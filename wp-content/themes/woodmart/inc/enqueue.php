@@ -27,6 +27,22 @@ add_action('wp_enqueue_scripts', 'theme_files');
 add_action('init', 'register_menus');
 
 /**
+ * Prioritize the actual LCP hero image and establish connections for the
+ * external font providers used by the visual identity.
+ */
+function wvn_frontend_resource_hints() {
+    if (!is_admin()) {
+        echo '<link rel="preconnect" href="https://fonts.googleapis.com">' . "\n";
+        echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
+        echo '<link rel="preconnect" href="https://use.typekit.net" crossorigin>' . "\n";
+    }
+    if (is_front_page() && function_exists('wvn_hero_image')) {
+        echo '<link rel="preload" as="image" href="' . esc_url(wvn_hero_image()) . '" fetchpriority="high">' . "\n";
+    }
+}
+add_action('wp_head', 'wvn_frontend_resource_hints', 1);
+
+/**
  * Keep third-party frontend assets out of the blocking path where possible.
  * Dependencies remain declared so WordPress preserves execution order.
  */
