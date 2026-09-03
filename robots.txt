@@ -25,5 +25,5 @@ Disallow: /?s=
 Disallow: /search/
 Disallow: /*?s=
 
-# Use one canonical, dynamically generated sitemap.
+# Single canonical sitemap endpoint.
 Sitemap: https://weddingvowsbynikhil.com/wvn-sitemap.xml
