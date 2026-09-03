@@ -1,0 +1,18 @@
+name: PHP lint
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, 'seo/**']
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: PHP syntax check
+        run: |
+          find wp-content -type f -name '*.php' -print0 \
+            | xargs -0 -n1 php -l

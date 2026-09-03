@@ -1,13 +1,6 @@
-# Serve static sitemaps before WordPress (avoids plugin 500s)
-<IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteRule ^(sitemap|wvn-sitemap)\.xml$ - [L]
-</IfModule>
-
 # BEGIN WordPress
 # The directives (lines) between "BEGIN WordPress" and "END WordPress" are
 # dynamically generated, and should only be modified via WordPress filters.
-# Any changes to the directives between these markers will be overwritten.
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

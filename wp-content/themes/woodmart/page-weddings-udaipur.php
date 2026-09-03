@@ -45,6 +45,14 @@ while (have_posts()) :
     $cta_text    = get_field('guide_cta_text', $pid) ?: 'Share your season, guest count, and whether you are looking at a palace, a lakeside hotel, or a heritage courtyard. We will reply with a clear next step.';
     $cta_btn_txt = get_field('guide_cta_btn_text', $pid) ?: 'Book a consultation ↗';
     $cta_btn_url = get_field('guide_cta_btn_url', $pid) ?: home_url('/contact-us/');
+    $venue_links = array(
+        'Taj Lake Palace' => 'taj-lake-palace-wedding',
+        'Jagmandir Island Palace' => 'jagmandir-wedding-udaipur',
+        'The Leela Palace Udaipur' => 'leela-palace-udaipur-wedding',
+        'The Oberoi Udaivilas' => 'oberoi-udaivilas-wedding',
+        'Fairmont Udaipur Palace' => 'fairmont-udaipur-wedding',
+        'Raffles Udaipur' => 'raffles-udaipur-wedding',
+    );
     ?>
 <main id="content" class="wvn-page wvn-guide">
   <p class="wvn-kicker"><?php echo esc_html($kicker); ?></p>
@@ -84,6 +92,9 @@ while (have_posts()) :
             <li>
               <strong><?php echo esc_html($venue['name'] ?? ''); ?></strong>
               <span><?php echo esc_html($venue['note'] ?? ''); ?></span>
+              <?php if (!empty($venue['name']) && !empty($venue_links[$venue['name']])) : ?>
+                <a href="<?php echo esc_url(home_url('/' . $venue_links[$venue['name']] . '/')); ?>">View the <?php echo esc_html($venue['name']); ?> wedding guide ↗</a>
+              <?php endif; ?>
             </li>
             <?php endforeach; ?>
           </ul>

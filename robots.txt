@@ -1,6 +1,7 @@
 # Wedding Vows by Nikhil
 # https://weddingvowsbynikhil.com
 # Search Engine & Generative Engine Optimization (SEO / AEO / GEO)
+# Public pages are crawlable; admin, search and runtime endpoints are not.
 
 User-agent: Googlebot
 Allow: /
@@ -45,9 +46,7 @@ Disallow: /readme.html
 Disallow: /trackback/
 Disallow: /feed/
 Disallow: /*/feed$
-Disallow: /?s=
 Disallow: /search/
 Disallow: /*?s=
 
 Sitemap: https://weddingvowsbynikhil.com/wvn-sitemap.xml
-Sitemap: https://weddingvowsbynikhil.com/sitemap.xml

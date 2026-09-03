@@ -21,6 +21,13 @@
             <?php endforeach;
         else : ?>
           <li><a href="<?php echo esc_url(home_url('/weddings-in-udaipur/')); ?>">Weddings in Udaipur</a></li>
+          <li><a href="<?php echo esc_url(home_url('/wedding-planner-udaipur/')); ?>">Wedding planner in Udaipur</a></li>
+          <li><a href="<?php echo esc_url(home_url('/destination-wedding-planner-udaipur/')); ?>">Destination wedding planner</a></li>
+          <li><a href="<?php echo esc_url(home_url('/luxury-wedding-planner-udaipur/')); ?>">Luxury wedding planner</a></li>
+          <li><a href="<?php echo esc_url(home_url('/destination-wedding-udaipur/')); ?>">Destination wedding in Udaipur</a></li>
+          <li><a href="<?php echo esc_url(home_url('/wedding-venues-udaipur/')); ?>">Wedding venues in Udaipur</a></li>
+          <li><a href="<?php echo esc_url(home_url('/palace-wedding-venues-in-udaipur/')); ?>">Palace wedding venues</a></li>
+          <li><a href="<?php echo esc_url(home_url('/udaipur-wedding-cost/')); ?>">Udaipur wedding cost</a></li>
           <li><a href="<?php echo esc_url(home_url('/portfolio/')); ?>">Real Udaipur weddings</a></li>
           <li><a href="<?php echo esc_url(home_url('/what-we-do/')); ?>">Wedding planning services</a></li>
         <?php endif; ?>

@@ -242,7 +242,7 @@ function wvn_seo_language_attributes($output) {
 add_filter('language_attributes', 'wvn_seo_language_attributes');
 
 function wvn_seo_head() {
-    $seo = wvn_seo_current();
+    $seo = apply_filters('wvn_seo_current', wvn_seo_current());
     $url = wp_get_canonical_url() ?: home_url(add_query_arg(array(), $GLOBALS['wp']->request));
     $url = trailingslashit(esc_url($url));
     $title = esc_attr($seo['title']);
@@ -287,7 +287,7 @@ add_action('wp_head', 'wvn_seo_head', 5);
 
 function wvn_seo_json_ld() {
     $p = wvn_seo_profile();
-    $seo = wvn_seo_current();
+    $seo = apply_filters('wvn_seo_current', wvn_seo_current());
     $page_url = wp_get_canonical_url() ?: home_url('/');
     $org_id = trailingslashit($p['url']) . '#organization';
     $site_id = trailingslashit($p['url']) . '#website';
@@ -656,12 +656,25 @@ function wvn_seo_sitemap_urls() {
         'order'          => 'DESC',
     ));
     $skip = array((int) get_option('page_on_front'), (int) get_option('page_for_posts'));
+    $seen = array();
+    foreach ($urls as $item) {
+        $seen[untrailingslashit($item['loc'])] = true;
+    }
     foreach ($posts as $post) {
         if (in_array((int) $post->ID, $skip, true)) {
             continue;
         }
+        $loc = get_permalink($post);
+        if (!$loc) {
+            continue;
+        }
+        $key = untrailingslashit($loc);
+        if (isset($seen[$key])) {
+            continue;
+        }
+        $seen[$key] = true;
         $urls[] = array(
-            'loc'      => get_permalink($post),
+            'loc'      => $loc,
             'priority' => $post->post_type === 'page' ? '0.7' : '0.65',
             'freq'     => 'monthly',
             'lastmod'  => get_the_modified_date('c', $post),
