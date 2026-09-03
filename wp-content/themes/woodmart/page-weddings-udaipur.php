@@ -24,7 +24,7 @@ while (have_posts()) :
     <p>Peak season (October–February, plus selected monsoon dates for lakeside photographs) fills eight to twelve months ahead. If the guest list is 150+, start with rooms and ceremony lawns, not the Instagram still.</p>
 
     <h2>Top wedding venues in Udaipur</h2>
-    <p>These are the properties couples ask for most often. The right one depends on guest count, whether you need a full hotel buyout, and which rituals need a lawn versus a courtyard. We walk sites with you — <a href="<?php echo esc_url(home_url('/palace-wedding-venues-in-udaipur/')); ?>">how we help you choose a palace</a>.</p>
+    <p>These are the properties couples ask for most often. The right one depends on guest count, whether you need a full hotel buyout, and which rituals need a lawn versus a courtyard. <a href="<?php echo esc_url(home_url('/wedding-planner-udaipur/')); ?>">Work with a local wedding planner in Udaipur</a> to compare the practical fit, not just the photographs.</p>
 
     <?php foreach ($venues as $group) : ?>
     <h3><?php echo esc_html($group['label']); ?></h3>
@@ -57,11 +57,12 @@ while (have_posts()) :
       </tbody>
     </table>
     <p>A quieter boutique wedding can sit near the lower end. A palace or hilltop resort with a full room block, destination catering, and a produced sangeet sits toward the upper end. We put every line in writing before artists are booked.</p>
+    <p>For planning support, see our <a href="<?php echo esc_url(home_url('/destination-wedding-planner-udaipur/')); ?>">destination wedding planning service</a>.</p>
 
     <h2>How a destination wedding in Udaipur is planned</h2>
     <ol class="wvn-guide-steps">
       <li><strong>Dates and headcount.</strong> Season and rooms decide the venue list. Peak palace weekends in Udaipur are often held a year out.</li>
-      <li><strong>Venue walk.</strong> Ceremony lawn, sangeet indoor option, and how many rooms you must block. See <a href="<?php echo esc_url(home_url('/how-to-plan-a-destination-wedding-in-udaipur/')); ?>">how to plan a destination wedding in Udaipur</a>.</li>
+      <li><strong>Venue walk.</strong> Ceremony lawn, sangeet indoor option, and how many rooms you must block.</li>
       <li><strong>Guest journey.</strong> Airport transfers, welcome dinner, and a quiet morning before pheras — the parts directories rarely price.</li>
       <li><strong>Design and vendors.</strong> Mandap, lighting, hospitality desks, and the artists. <a href="<?php echo esc_url(home_url('/what-we-do/')); ?>">What our studio handles</a>.</li>
       <li><strong>On-ground days.</strong> One team on the floor until the last farewell. <a href="<?php echo esc_url(home_url('/portfolio/')); ?>">Real Udaipur weddings</a>.</li>
