@@ -26,23 +26,20 @@ $theme_includes = array(
     '/acf-services.php',
     '/blog.php',
     '/seo.php',
-    '/custom-post-types.php',                   // Register Custom Post types & Taxonomies
-    '/nav-walker.php',                          // Register Menu Walkers 
-    '/enqueue.php',                             // Enqueue scripts and styles.
-    '/widgets.php',                             // Contains the Widgets
-    '/templates.php',                           // Contains the Templates
-    '/patterns.php',                            // Contains Patterns
-    '/theme-features.php',                      // Contains the Theme Features
-    '/block-styles.php',                        // Contains the Updated Block Styles
+    '/custom-post-types.php',
+    '/nav-walker.php',
+    '/enqueue.php',
+    '/widgets.php',
+    '/templates.php',
+    '/patterns.php',
+    '/theme-features.php',
+    '/block-styles.php',
 );
 foreach ($theme_includes as $file) {
     require_once get_theme_file_path($theme_inc_dir . $file);
 }
-// Register Standard Blocks
 require_once get_theme_file_path($theme_inc_dir . '/acf-standard-blocks.php');
 add_action('acf/init', 'hfm_acf_init_standard_blocks');
-
-// Register Custom Blocks
 require_once get_theme_file_path($theme_inc_dir . '/acf-custom-blocks.php');
 add_action('acf/init', 'hfm_acf_init_custom_blocks');
 
@@ -50,9 +47,8 @@ add_action('acf/init', 'hfm_acf_init_custom_blocks');
 @ini_set('post_max_size', '256M');
 @ini_set('max_execution_time', '300');
 
-
 add_filter('wpseo_breadcrumb_separator', function () {
-    return '<i class="fa fa-chevron-right" aria-hidden="true"></i>'; // Replace with your preferred Font Awesome icon class
+    return '<i class="fa fa-chevron-right" aria-hidden="true"></i>';
 });
 
 function register_menus() {
@@ -71,7 +67,7 @@ function create_wedding_portfolio_post_type() {
             ),
             'public' => true,
             'has_archive' => true,
-            'rewrite' => array('slug' => 'portfolio'), // Change slug to portfolio
+            'rewrite' => array('slug' => 'portfolio'),
             'supports' => array('title', 'editor', 'thumbnail', 'excerpt'),
             'show_in_rest' => true,
         )
@@ -88,7 +84,7 @@ function submit_quick_contact_form() {
     $email = sanitize_email($_POST['email'] ?? '');
     $note = sanitize_textarea_field($_POST['message'] ?? '');
 
-    $to = 'gauravsahitya62@gmail.com'; // Replace with your email
+    $to = 'gauravsahitya62@gmail.com';
     $subject = 'New Contact Form Submission';
     $message = "Name: $name\nPhone: $phone\nEmail: $email";
     if ($note) {
@@ -101,30 +97,3 @@ function submit_quick_contact_form() {
     echo 'success';
     wp_die();
 }
-
-/**
- * Keep the virtual WordPress robots.txt endpoint aligned with the canonical sitemap.
- * The repository also contains a physical robots.txt, which takes precedence on typical Apache setups.
- */
-function wvn_theme_robots_override($output, $public) {
-    if (!$public) {
-        return "User-agent: *\nDisallow: /\n";
-    }
-
-    return "# Wedding Vows by Nikhil\n"
-        . "# https://weddingvowsbynikhil.com\n\n"
-        . "User-agent: *\n"
-        . "Allow: /\n"
-        . "Disallow: /wp-admin/\n"
-        . "Allow: /wp-admin/admin-ajax.php\n"
-        . "Disallow: /wp-login.php\n"
-        . "Disallow: /xmlrpc.php\n"
-        . "Disallow: /readme.html\n"
-        . "Disallow: /trackback/\n"
-        . "Disallow: /feed/\n"
-        . "Disallow: /*/feed$\n"
-        . "Disallow: /search/\n"
-        . "Disallow: /*?s=\n\n"
-        . "Sitemap: " . home_url('/wvn-sitemap.xml') . "\n";
-}
-add_filter('robots_txt', 'wvn_theme_robots_override', 110, 2);
