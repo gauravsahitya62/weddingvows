@@ -7,11 +7,12 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('WBC_THEME_VERSION', '2.7.0');
+define('WBC_THEME_VERSION', '3.1.8');
 define('WBC_THEME_DIR', get_template_directory());
 define('WBC_THEME_URI', get_template_directory_uri());
 
 require WBC_THEME_DIR . '/inc/helpers.php';
+require WBC_THEME_DIR . '/inc/fields.php';
 require WBC_THEME_DIR . '/inc/admin.php';
 require WBC_THEME_DIR . '/inc/seo.php';
 
@@ -54,6 +55,9 @@ function wbc_body_classes($classes) {
     if (is_front_page()) {
         $classes[] = 'is-home';
     }
+    if (wbc_has_band()) {
+        $classes[] = 'has-band';
+    }
     return $classes;
 }
 add_filter('body_class', 'wbc_body_classes');
@@ -73,13 +77,13 @@ function wbc_after_switch_theme() {
 add_action('after_switch_theme', 'wbc_after_switch_theme');
 
 function wbc_rewrite_flush_once() {
-    if (get_option('wbc_rewrite_flushed_v2')) {
+    if (get_option('wbc_rewrite_flushed_v3')) {
         return;
     }
     wbc_register_post_types();
     wbc_register_taxonomies();
     flush_rewrite_rules(false);
-    update_option('wbc_rewrite_flushed_v2', '1');
+    update_option('wbc_rewrite_flushed_v3', '1');
 }
 add_action('init', 'wbc_rewrite_flush_once', 99);
 

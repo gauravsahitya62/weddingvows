@@ -4,7 +4,6 @@ $weddings = wbc_get_ordered_posts('wbc_wedding', 6);
 $services = wbc_get_ordered_posts('wbc_service', 8);
 $destinations = wbc_get_ordered_posts('wbc_destination', 8);
 $steps = wbc_get_ordered_posts('wbc_process', 6);
-$press = wbc_get_ordered_posts('wbc_press', 6);
 $testimonials = wbc_get_ordered_posts('wbc_testimonial', 6);
 $faqs = wbc_get_ordered_posts('wbc_faq', 10);
 $founder = wbc_mod('wbc_founder_image', wbc_default_image('founder'));
@@ -20,26 +19,54 @@ $more_quotes = $testimonials ? array_slice($testimonials, 1) : array();
                 'eager'    => true,
             )); ?>
         </div>
+        <div class="wbc-hero-copy">
+            <p class="wbc-kicker is-light"><?php echo esc_html(wbc_mod('wbc_hero_kicker', 'Udaipur, India')); ?></p>
+            <p class="wbc-hero-title"><?php echo esc_html(wbc_mod('wbc_hero_title', 'Destination weddings, held with stillness.')); ?></p>
+            <p class="wbc-hero-lead"><?php echo esc_html(wbc_mod('wbc_hero_text', 'Palace, heritage, and celebration design — planned in-house from the first story to the last farewell.')); ?></p>
+            <a class="wbc-textlink is-light" href="<?php echo esc_url(wbc_contact_url()); ?>"><?php echo esc_html(wbc_mod('wbc_hero_cta', 'Begin the conversation')); ?></a>
+        </div>
         <a class="wbc-scroll" href="#intro">Scroll to Explore</a>
     </section>
 
-    <?php if ($press) : ?>
-    <section class="wbc-seen">
-        <p>As seen in</p>
-        <div class="wbc-seen-mask" data-marquee>
-            <div class="wbc-seen-run">
-                <?php foreach ($press as $item) : ?>
-                    <span><?php echo esc_html(wbc_meta($item->ID, 'wbc_publication', get_the_title($item))); ?></span>
-                <?php endforeach; ?>
-            </div>
+    <?php
+    $intro = wbc_intro_defaults();
+    $intro_icons = wbc_intro_icons();
+    $intro_image = wbc_intro_image();
+    ?>
+    <section id="intro" class="wbc-art" aria-label="<?php echo esc_attr(wbc_intro_value('title', 'wbc_intro_title')); ?>">
+        <?php if ($intro_image) : ?>
+        <div class="wbc-art-media" aria-hidden="true">
+            <img src="<?php echo esc_url($intro_image); ?>" alt="" width="1920" height="1080" loading="eager" decoding="async">
         </div>
-    </section>
-    <?php endif; ?>
-
-    <section id="intro" class="wbc-intro">
-        <p class="wbc-kicker"><?php echo esc_html(wbc_mod('wbc_intro_kicker', 'Destination wedding planner in Udaipur, India')); ?></p>
-        <h1 class="wbc-display"><?php echo esc_html(wbc_mod('wbc_intro_title', 'You want a wedding that feels elegant, effortless, and completely your own.')); ?></h1>
-        <p class="wbc-answer"><?php echo esc_html(wbc_mod('wbc_intro_text', 'Chetan Parihar Weddings plans destination celebrations from Udaipur across Rajasthan, Gujarat, Goa and beyond. One team designs the rooms, holds the vendors, and stays on the ground until the last farewell.')); ?></p>
+        <span class="wbc-art-veil" aria-hidden="true"></span>
+        <?php endif; ?>
+        <div class="wbc-art-inner">
+            <div class="wbc-art-copy">
+                <p class="wbc-kicker"><?php echo esc_html(wbc_intro_value('kicker', 'wbc_intro_kicker')); ?></p>
+                <h1><?php echo esc_html(wbc_intro_value('title', 'wbc_intro_title')); ?></h1>
+                <p><?php echo esc_html(wbc_intro_value('text', 'wbc_intro_text')); ?></p>
+                <a class="wbc-art-cta" href="<?php echo esc_url(wbc_intro_cta_url()); ?>">
+                    <span><?php echo esc_html(wbc_mod('wbc_intro_cta', $intro['cta'])); ?></span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+            </div>
+            <?php if ($intro_icons) : ?>
+            <ul class="wbc-art-icons">
+                <?php foreach ($intro_icons as $item) : ?>
+                    <li>
+                        <?php if (!empty($item['url'])) : ?><a href="<?php echo esc_url($item['url']); ?>"><?php endif; ?>
+                            <?php if (!empty($item['icon'])) : ?>
+                                <img src="<?php echo esc_url($item['icon']); ?>" alt="" width="58" height="58">
+                            <?php endif; ?>
+                            <?php if (!empty($item['label'])) : ?>
+                                <span><?php echo esc_html($item['label']); ?></span>
+                            <?php endif; ?>
+                        <?php if (!empty($item['url'])) : ?></a><?php endif; ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+            <?php endif; ?>
+        </div>
     </section>
 
     <section class="wbc-section wbc-latest">
@@ -138,12 +165,12 @@ $more_quotes = $testimonials ? array_slice($testimonials, 1) : array();
             <a class="wbc-textlink" href="<?php echo esc_url(wbc_services_url()); ?>">All services</a>
         </div>
         <div class="wbc-stats">
-            <?php for ($s = 1; $s <= 4; $s++) : ?>
+            <?php foreach (wbc_default_stats() as $s => $stat) : ?>
                 <div>
-                    <strong><?php echo esc_html(wbc_mod('wbc_stat_' . $s . '_value', $s === 1 ? '1' : '8+')); ?></strong>
-                    <span><?php echo esc_html(wbc_mod('wbc_stat_' . $s . '_label', $s === 1 ? 'Team, end to end' : 'Cities planned')); ?></span>
+                    <strong><?php echo esc_html(wbc_mod('wbc_stat_' . $s . '_value', $stat['value'])); ?></strong>
+                    <span><?php echo esc_html(wbc_mod('wbc_stat_' . $s . '_label', $stat['label'])); ?></span>
                 </div>
-            <?php endfor; ?>
+            <?php endforeach; ?>
         </div>
         <div class="wbc-svc-tiles">
             <?php foreach ($services as $i => $service) : ?>
@@ -156,35 +183,33 @@ $more_quotes = $testimonials ? array_slice($testimonials, 1) : array();
         </div>
     </section>
 
-    <section class="wbc-frame">
-        <div class="wbc-frame-inner">
-            <div class="wbc-frame-media<?php echo wbc_slot_uses_video('process') ? ' is-embed' : ''; ?>" data-parallax>
-                <?php wbc_render_band_media('process', array(
-                    'alt'      => wbc_mod('wbc_process_kicker', 'A uniquely comprehensive process'),
-                    'fallback' => 'process',
-                )); ?>
-            </div>
-            <div class="wbc-frame-box">
+    <section id="process" class="wbc-process-block">
+        <div class="wbc-process-bg<?php echo wbc_slot_uses_video('process') ? ' is-embed' : ''; ?>" data-parallax>
+            <?php wbc_render_band_media('process', array(
+                'alt'      => wbc_mod('wbc_process_kicker', 'A uniquely comprehensive process'),
+                'fallback' => 'process',
+            )); ?>
+            <span class="wbc-process-veil" aria-hidden="true"></span>
+        </div>
+        <div class="wbc-section wbc-process">
+            <div class="wbc-section-head is-center">
                 <p class="wbc-kicker is-light"><?php echo esc_html(wbc_mod('wbc_process_kicker', 'A uniquely comprehensive process')); ?></p>
                 <h2><?php echo esc_html(wbc_mod('wbc_process_title', 'From the first story to the last farewell.')); ?></h2>
-                <p><?php echo esc_html(wbc_mod('wbc_process_text', 'Impeccable logistics, inspired creative direction, and design held in-house — from story to soirée.')); ?></p>
+                <p class="wbc-answer"><?php echo esc_html(wbc_mod('wbc_process_text', 'Impeccable logistics, inspired creative direction, and design held in-house — from story to soirée.')); ?></p>
             </div>
+            <?php if ($steps) : ?>
+            <ol class="wbc-steps">
+                <?php foreach ($steps as $step) : ?>
+                    <li>
+                        <span><?php echo esc_html(wbc_meta($step->ID, 'wbc_step_label', 'STEP')); ?></span>
+                        <h3><?php echo esc_html(get_the_title($step)); ?></h3>
+                        <p><?php echo esc_html(wp_strip_all_tags($step->post_content)); ?></p>
+                    </li>
+                <?php endforeach; ?>
+            </ol>
+            <?php endif; ?>
         </div>
     </section>
-
-    <?php if ($steps) : ?>
-    <section class="wbc-section wbc-process">
-        <ol class="wbc-steps">
-            <?php foreach ($steps as $step) : ?>
-                <li>
-                    <span><?php echo esc_html(wbc_meta($step->ID, 'wbc_step_label', 'STEP')); ?></span>
-                    <h3><?php echo esc_html(get_the_title($step)); ?></h3>
-                    <p><?php echo esc_html(wp_strip_all_tags($step->post_content)); ?></p>
-                </li>
-            <?php endforeach; ?>
-        </ol>
-    </section>
-    <?php endif; ?>
 
     <section class="wbc-editorial">
         <figure class="<?php echo wbc_slot_uses_video('editorial') ? 'is-embed' : ''; ?>">
@@ -220,18 +245,27 @@ $more_quotes = $testimonials ? array_slice($testimonials, 1) : array();
     <?php endif; ?>
 
     <?php if ($faqs) : ?>
-    <section class="wbc-section wbc-faq">
-        <div class="wbc-section-head">
-            <p class="wbc-kicker">Answers</p>
-            <h2>Questions couples ask before they book.</h2>
+    <?php $faq_image = wbc_faq_image(); ?>
+    <section id="faq" class="wbc-faq-block<?php echo $faq_image ? '' : ' is-plain'; ?>">
+        <?php if ($faq_image) : ?>
+        <div class="wbc-faq-bg" data-parallax>
+            <img src="<?php echo esc_url($faq_image); ?>" alt="<?php echo esc_attr(wbc_mod('wbc_faq_title', 'Questions couples ask before they book.')); ?>" loading="lazy" decoding="async">
+            <span class="wbc-faq-veil" aria-hidden="true"></span>
         </div>
-        <div class="wbc-faq-list">
-            <?php foreach ($faqs as $faq) : ?>
-                <details>
-                    <summary><?php echo esc_html(get_the_title($faq)); ?></summary>
-                    <p class="wbc-answer"><?php echo esc_html(wp_strip_all_tags($faq->post_content)); ?></p>
-                </details>
-            <?php endforeach; ?>
+        <?php endif; ?>
+        <div class="wbc-section wbc-faq">
+            <div class="wbc-section-head">
+                <p class="wbc-kicker<?php echo $faq_image ? ' is-light' : ''; ?>"><?php echo esc_html(wbc_mod('wbc_faq_kicker', 'Answers')); ?></p>
+                <h2><?php echo esc_html(wbc_mod('wbc_faq_title', 'Questions couples ask before they book.')); ?></h2>
+            </div>
+            <div class="wbc-faq-list">
+                <?php foreach ($faqs as $faq) : ?>
+                    <details>
+                        <summary><?php echo esc_html(get_the_title($faq)); ?></summary>
+                        <p class="wbc-answer"><?php echo esc_html(wp_strip_all_tags($faq->post_content)); ?></p>
+                    </details>
+                <?php endforeach; ?>
+            </div>
         </div>
     </section>
     <?php endif; ?>

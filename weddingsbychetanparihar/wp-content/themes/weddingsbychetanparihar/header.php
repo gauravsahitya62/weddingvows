@@ -26,11 +26,15 @@ $brand_script = $brand_parts[0] && $brand_parts[1] ? $brand_parts[1] : 'weddings
     </a>
     <nav class="wbc-nav" id="site-nav" data-nav aria-label="<?php esc_attr_e('Primary navigation', 'weddingsbychetanparihar'); ?>">
         <?php foreach (wbc_header_nav_items() as $item) : ?>
-            <?php if (!empty($item['script'])) : ?>
+            <?php
+            $is_cta = !empty($item['script']);
+            $classes = trim(($is_cta ? 'wbc-nav-cta ' : '') . (wbc_nav_is_active($item) ? 'is-active' : ''));
+            ?>
+            <?php if ($is_cta) : ?>
                 <span class="wbc-nav-rule" aria-hidden="true"></span>
             <?php endif; ?>
-            <a class="<?php echo esc_attr(trim((!empty($item['script']) ? 'is-script ' : '') . (wbc_nav_is_active($item) ? 'is-active' : ''))); ?>" href="<?php echo esc_url($item['url']); ?>">
-                <?php echo esc_html($item['label']); ?>
+            <a class="<?php echo esc_attr($classes); ?>" href="<?php echo esc_url($item['url']); ?>">
+                <?php echo esc_html($is_cta ? 'Contact' : $item['label']); ?>
             </a>
         <?php endforeach; ?>
     </nav>

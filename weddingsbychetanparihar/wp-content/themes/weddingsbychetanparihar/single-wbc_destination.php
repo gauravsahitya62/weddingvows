@@ -18,6 +18,7 @@
             </div>
             <div class="wbc-content"><?php the_content(); ?></div>
         </article>
+        <?php wbc_render_faq_list(wbc_place_faq_items(get_the_ID()), 'Planning a wedding in ' . get_the_title()); ?>
     <?php endwhile; ?>
 </main>
 <?php get_footer(); ?>

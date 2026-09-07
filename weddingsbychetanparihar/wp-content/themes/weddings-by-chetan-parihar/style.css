@@ -1,0 +1,49 @@
+/*
+Theme Name: Weddings by Chetan Parihar
+Theme URI: https://github.com/gauravsahitya62/Weddingsbychetanparihar
+Author: Weddings by Chetan Parihar
+Description: Custom theme that replicates the approved client designs.
+Version: 0.1.0
+Requires at least: 6.6
+Tested up to: 6.7
+Requires PHP: 8.2
+Text Domain: wcp
+*/
+
+:root {
+  --wcp-black: #050505;
+  --wcp-gold: #c5a059;
+  --wcp-cream: #f3ead8;
+  --wcp-ink: #4a3424;
+  --wcp-white: #f7f2ea;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--wcp-black);
+  color: var(--wcp-white);
+}
+
+.wcp-setup {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.wcp-setup h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--wcp-gold);
+}
+
+.wcp-setup p {
+  max-width: 36rem;
+  margin: 0 auto;
+  line-height: 1.7;
+  color: #d8d0c4;
+}

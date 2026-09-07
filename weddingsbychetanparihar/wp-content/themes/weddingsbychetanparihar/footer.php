@@ -1,45 +1,73 @@
 <?php if (!is_page('contact')) { wbc_render_cta(); } ?>
 <?php
 $socials = wbc_footer_socials();
-$strip = array_slice(array_merge(
-    wbc_get_ordered_posts('wbc_wedding', 4),
-    wbc_get_ordered_posts('wbc_destination', 3)
-), 0, 5);
+$strip = wbc_footer_strip();
 $year = wbc_mod('wbc_founding_year', '2018');
-$mono = strtoupper(substr(wbc_brand_name(), 0, 1));
-$email = wbc_mod('wbc_email', get_option('admin_email'));
+$mono = wbc_footer_mark();
+$logo = wbc_footer_logo();
+$links = wbc_footer_links();
+$email = wbc_studio_email();
 $phone = wbc_mod('wbc_phone', '+91 76667 78899');
 ?>
 <footer class="wbc-footer">
     <div class="wbc-footer-top">
         <div class="wbc-social">
             <?php foreach ($socials as $item) : ?>
-                <a href="<?php echo esc_url($item['url']); ?>"<?php echo $item['url'] !== '#' ? ' target="_blank" rel="noopener"' : ''; ?> aria-label="<?php echo esc_attr(ucfirst($item['name'])); ?>">
-                    <?php echo wbc_svg_icon($item['name']); ?>
-                </a>
+                <?php if ($item['url']) : ?>
+                    <a href="<?php echo esc_url($item['url']); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr(ucfirst($item['name'])); ?>">
+                        <?php echo wbc_svg_icon($item['name']); ?>
+                    </a>
+                <?php else : ?>
+                    <span aria-label="<?php echo esc_attr(ucfirst($item['name'])); ?>"><?php echo wbc_svg_icon($item['name']); ?></span>
+                <?php endif; ?>
             <?php endforeach; ?>
         </div>
-        <a class="wbc-mono" href="<?php echo esc_url(home_url('/')); ?>" aria-label="<?php echo esc_attr(wbc_brand_name()); ?>">
-            <svg class="wbc-mono-wreath" viewBox="0 0 140 140" fill="none" aria-hidden="true">
-                <path d="M70 16c-24 8-40 34-41 54 1 22 17 46 41 54" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-                <path d="M70 16c24 8 40 34 41 54-1 22-17 46-41 54" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-                <path d="M56 22c-7 1-12 8-9 14M46 32c-8 3-12 12-7 18M39 46c-8 5-10 14-4 20M35 64c-8 5-8 16-1 22M36 84c-7 6-4 16 4 20M42 102c-5 7 0 14 8 16M54 118c-4 4 2 8 8 7M84 22c7 1 12 8 9 14M94 32c8 3 12 12 7 18M101 46c8 5 10 14 4 20M105 64c8 5 8 16 1 22M104 84c7 6 4 16-4 20M98 102c5 7 0 14-8 16M86 118c4 4-2 8-8 7" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
-            </svg>
-            <span><?php echo esc_html($mono); ?></span>
-            <small>Est. <?php echo esc_html($year); ?></small>
+        <a class="wbc-mono<?php echo $logo ? ' is-logo' : ''; ?>" href="<?php echo esc_url(home_url('/')); ?>" aria-label="<?php echo esc_attr(wbc_brand_name()); ?>">
+            <?php if ($logo) : ?>
+                <img src="<?php echo esc_url($logo); ?>" alt="<?php echo esc_attr(wbc_brand_name()); ?>">
+            <?php else : ?>
+                <svg class="wbc-mono-wreath" viewBox="0 0 140 140" fill="none" aria-hidden="true">
+                    <path d="M70 16c-24 8-40 34-41 54 1 22 17 46 41 54" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                    <path d="M70 16c24 8 40 34 41 54-1 22-17 46-41 54" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                    <path d="M56 22c-7 1-12 8-9 14M46 32c-8 3-12 12-7 18M39 46c-8 5-10 14-4 20M35 64c-8 5-8 16-1 22M36 84c-7 6-4 16 4 20M42 102c-5 7 0 14 8 16M54 118c-4 4 2 8 8 7M84 22c7 1 12 8 9 14M94 32c8 3 12 12 7 18M101 46c8 5 10 14 4 20M105 64c8 5 8 16 1 22M104 84c7 6 4 16-4 20M98 102c5 7 0 14-8 16M86 118c4 4-2 8-8 7" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+                </svg>
+                <span><?php echo esc_html($mono); ?></span>
+                <small>Est. <?php echo esc_html($year); ?></small>
+            <?php endif; ?>
         </a>
-        <form class="wbc-footer-search" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>">
-            <button type="submit" aria-label="<?php esc_attr_e('Search', 'weddingsbychetanparihar'); ?>"><?php echo wbc_svg_icon('search'); ?></button>
-            <input type="search" name="s" placeholder="Search" value="<?php echo esc_attr(get_search_query()); ?>">
-        </form>
+        <?php if ($links) : ?>
+        <div class="wbc-footer-actions">
+            <?php foreach ($links as $item) : ?>
+                <?php if ($item['url']) : ?>
+                    <a href="<?php echo esc_url($item['url']); ?>"<?php echo strpos($item['url'], 'http') === 0 ? ' target="_blank" rel="noopener"' : ''; ?> aria-label="<?php echo esc_attr($item['label'] ?: 'Link'); ?>">
+                        <?php if ($item['icon']) : ?>
+                            <img src="<?php echo esc_url($item['icon']); ?>" alt="">
+                        <?php else : ?>
+                            <span><?php echo esc_html($item['label'] ?: 'Link'); ?></span>
+                        <?php endif; ?>
+                    </a>
+                <?php elseif ($item['icon']) : ?>
+                    <span aria-hidden="true"><img src="<?php echo esc_url($item['icon']); ?>" alt=""></span>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+        <?php else : ?>
+        <div class="wbc-footer-spacer" aria-hidden="true"></div>
+        <?php endif; ?>
     </div>
     <div class="wbc-footer-base">
         <?php if ($strip) : ?>
         <div class="wbc-footer-strip">
-            <?php foreach ($strip as $i => $item) : ?>
-                <a href="<?php echo esc_url(get_permalink($item)); ?>">
-                    <img src="<?php echo esc_url(wbc_default_image('strip-' . ($i + 1))); ?>" alt="<?php echo esc_attr(get_the_title($item)); ?>" loading="lazy">
-                </a>
+            <?php foreach ($strip as $item) : ?>
+                <?php if ($item['url']) : ?>
+                    <a href="<?php echo esc_url($item['url']); ?>">
+                        <img src="<?php echo esc_url($item['image']); ?>" alt="<?php echo esc_attr($item['alt']); ?>" loading="lazy">
+                    </a>
+                <?php else : ?>
+                    <span>
+                        <img src="<?php echo esc_url($item['image']); ?>" alt="<?php echo esc_attr($item['alt']); ?>" loading="lazy">
+                    </span>
+                <?php endif; ?>
             <?php endforeach; ?>
         </div>
         <?php endif; ?>

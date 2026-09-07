@@ -1,0 +1,1 @@
+define('WBC_THEME_VERSION', '2.9.5');

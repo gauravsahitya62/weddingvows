@@ -3,7 +3,7 @@
     <section class="wbc-page-hero">
         <p class="wbc-kicker">Destinations</p>
         <h1>Wedding cities we plan, from Udaipur outward.</h1>
-        <p class="wbc-answer">Each destination page is written for couples — and for search and answer engines — with season, venue types and local planning notes. Edit them under Destinations in wp-admin.</p>
+        <p class="wbc-answer">Chetan Parihar Weddings plans destination weddings from Udaipur across Rajasthan, Gujarat, Goa and other Indian wedding cities. Each city page covers season, venues and how the studio works on the ground.</p>
     </section>
     <section class="wbc-dest-grid is-page">
         <?php $i = 0; while (have_posts()) : the_post(); $i++; ?>

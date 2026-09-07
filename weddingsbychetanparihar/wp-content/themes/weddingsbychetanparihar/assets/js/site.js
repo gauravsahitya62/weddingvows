@@ -21,8 +21,11 @@
     if (!reduce) {
       parallaxLayers.forEach((media) => {
         const box = media.closest("[data-parallax]") || media.parentElement;
-        const offset = Math.round(box.getBoundingClientRect().top * 0.28);
-        media.style.transform = "translate3d(0, " + offset + "px, 0) scale(1.08)";
+        const boxH = box.clientHeight || 1;
+        const slack = Math.max(24, boxH * 0.32);
+        const raw = box.getBoundingClientRect().top * 0.18;
+        const offset = Math.round(Math.max(-slack, Math.min(slack, raw)));
+        media.style.transform = "translate3d(0, " + offset + "px, 0)";
       });
     }
     lastY = y;
@@ -42,12 +45,6 @@
       });
     });
   }
-
-  document.querySelectorAll("[data-marquee]").forEach((mask) => {
-    const run = mask.querySelector(".wbc-seen-run");
-    if (!run || run.children.length < 1) return;
-    run.innerHTML += run.innerHTML;
-  });
 
   document.querySelectorAll("[data-film]").forEach((scroller) => {
     const track = scroller.querySelector(".wbc-film-track");
@@ -244,6 +241,12 @@
       ".wbc-frame-box",
       ".wbc-contact-intro",
       ".wbc-list-card",
+      ".wbc-story-card",
+      ".wbc-svc-cover",
+      ".wbc-pillar",
+      ".wbc-gallery a",
+      ".wbc-details",
+      ".wbc-note",
       ".wbc-page-hero > *",
       ".wbc-contact-grid > *",
     ].join(","));
@@ -270,6 +273,8 @@
       document.querySelectorAll(".wbc-faq details").forEach((other) => {
         if (other !== detail) other.removeAttribute("open");
       });
+      // Accordion height changes — refresh parallax offsets without waiting for scroll.
+      onScroll();
     });
   });
 
@@ -295,7 +300,15 @@
       overlay.className = "wbc-lightbox";
       overlay.innerHTML = '<button type="button" aria-label="Close">×</button><img alt="">';
       overlay.querySelector("img").src = link.href;
-      overlay.addEventListener("click", () => overlay.remove());
+      const close = () => {
+        overlay.remove();
+        document.removeEventListener("keydown", onKey);
+      };
+      const onKey = (keyEvent) => {
+        if (keyEvent.key === "Escape") close();
+      };
+      overlay.addEventListener("click", close);
+      document.addEventListener("keydown", onKey);
       document.body.appendChild(overlay);
     });
   });

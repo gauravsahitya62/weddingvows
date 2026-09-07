@@ -1,7 +1,11 @@
 <?php
 get_header();
 $cities = array();
-foreach (wbc_get_ordered_posts('wbc_wedding') as $wedding) {
+$weddings = array();
+while (have_posts()) {
+    the_post();
+    $wedding = get_post();
+    $weddings[] = $wedding;
     $city = wbc_meta($wedding->ID, 'wbc_location');
     if ($city) {
         $cities[$city] = $city;
@@ -9,11 +13,18 @@ foreach (wbc_get_ordered_posts('wbc_wedding') as $wedding) {
 }
 ?>
 <main id="content" class="wbc-archive">
-    <section class="wbc-page-hero">
-        <p class="wbc-kicker">Portfolio</p>
-        <h1>Real weddings by <?php echo esc_html(wbc_brand_name()); ?></h1>
-        <p>Palace, heritage, lakeside and destination celebrations — each story is edited from wp-admin with venue, city, gallery and planning notes.</p>
-    </section>
+    <?php
+    wbc_render_page_band(array(
+        'kicker'   => wbc_listing_mod('weddings', 'kicker'),
+        'title'    => wbc_listing_mod('weddings', 'title'),
+        'lead'     => wbc_listing_mod('weddings', 'text'),
+        'cta'      => wbc_listing_mod('weddings', 'cta'),
+        'cta_url'  => wbc_contact_url(),
+        'image'    => wbc_listing_mod('weddings', 'image'),
+        'fallback' => 'wedding-1',
+    ));
+    ?>
+
     <?php if ($cities) : ?>
     <div class="wbc-filters" data-filters>
         <button type="button" class="is-active" data-filter="all">All</button>
@@ -22,17 +33,18 @@ foreach (wbc_get_ordered_posts('wbc_wedding') as $wedding) {
         <?php endforeach; ?>
     </div>
     <?php endif; ?>
-    <section class="wbc-listing">
-        <?php while (have_posts()) : the_post(); ?>
-            <article class="wbc-list-card" data-city="<?php echo esc_attr(sanitize_title(wbc_meta(get_the_ID(), 'wbc_location'))); ?>">
-                <a href="<?php the_permalink(); ?>">
-                    <img src="<?php echo esc_url(wbc_image_url(get_the_ID(), 'couple')); ?>" alt="<?php the_title_attribute(); ?>" loading="lazy">
-                    <span><?php echo esc_html(wbc_meta(get_the_ID(), 'wbc_location', 'India')); ?></span>
-                    <h2><?php the_title(); ?></h2>
-                    <p><?php echo esc_html(wbc_excerpt(get_the_ID(), 22)); ?></p>
-                </a>
-            </article>
-        <?php endwhile; ?>
+
+    <section class="wbc-story-grid">
+        <?php foreach ($weddings as $i => $wedding) : ?>
+            <?php
+            wbc_render_story_card($wedding, array(
+                'meta'     => wbc_meta($wedding->ID, 'wbc_location', 'India'),
+                'city'     => sanitize_title(wbc_meta($wedding->ID, 'wbc_location')),
+                'fallback' => 'wedding-' . (($i % 4) + 1),
+                'eager'    => $i < 3,
+            ));
+            ?>
+        <?php endforeach; ?>
     </section>
     <?php the_posts_pagination(); ?>
 </main>

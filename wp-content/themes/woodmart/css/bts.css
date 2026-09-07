@@ -662,8 +662,8 @@ button { font-family: inherit; cursor: pointer; }
 .wvn-pressbook {
   --book-closed-w: 268px;
   --book-closed-h: 358px;
-  --book-open-w: min(860px, 92vw);
-  --book-open-h: min(500px, 56vh);
+  --book-open-w: min(1040px, 94vw);
+  --book-open-h: min(620px, 72vh);
   --book-ease: cubic-bezier(0.645, 0.045, 0.355, 1);
   margin: 36px auto 28px;
 }
@@ -810,25 +810,41 @@ button { font-family: inherit; cursor: pointer; }
 }
 .wvn-pressbook-leaf {
   height: 100%;
-  padding: 22px 26px;
-  overflow: auto;
+  padding: clamp(16px, 2.2vw, 28px) clamp(16px, 2.4vw, 30px);
+  overflow: hidden;
   color: #1b1b1b;
   text-align: left;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+.wvn-pressbook-leaf > *:not(img) {
+  flex: 0 0 auto;
 }
 .wvn-pressbook-leaf h3 {
   font-family: var(--font);
-  font-size: clamp(15px, 1.6vw, 18px);
+  font-size: clamp(15px, 1.5vw, 20px);
   line-height: 1.25;
   margin: 8px 0 12px;
   text-transform: none;
   letter-spacing: 0;
 }
-.wvn-pressbook-leaf p { margin: 0 0 10px; font-size: 13px; line-height: 1.5; letter-spacing: 0; text-transform: none; }
+.wvn-pressbook-leaf p {
+  margin: 0 0 10px;
+  font-size: clamp(12px, 1.05vw, 14px);
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-transform: none;
+}
 .wvn-pressbook-leaf img {
-  width: 100%;
-  height: min(160px, 32%);
+  display: block;
+  width: 100% !important;
+  max-width: 100%;
+  flex: 1 1 auto;
+  min-height: clamp(150px, 28vh, 300px);
+  height: auto !important;
   object-fit: cover;
+  object-position: center;
   border-radius: 8px;
   margin: 8px 0 12px;
   filter: grayscale(0.2);
@@ -2630,8 +2646,16 @@ body.wvn-body #wpadminbar { z-index: 200; }
     --book-open-w: min(92vw, 640px);
     --book-open-h: min(70vw, 420px);
   }
-  .wvn-pressbook-leaf { padding: 16px 14px; }
-  .wvn-pressbook-leaf img { height: 110px; }
+  .wvn-pressbook-leaf {
+    padding: 16px 14px;
+    overflow: auto;
+  }
+  .wvn-pressbook-leaf img {
+    flex: 0 0 auto;
+    min-height: 0;
+    height: 110px !important;
+  }
+  .wvn-pressbook-leaf p { font-size: 13px; }
 }
 
 /* Legacy ACF blocks, restyled to match the new site */

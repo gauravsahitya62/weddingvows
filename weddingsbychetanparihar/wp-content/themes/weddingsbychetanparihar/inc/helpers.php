@@ -45,6 +45,7 @@ function wbc_default_image($key = 'hero') {
         'service-4'  => wbc_unsplash('1774020040429-50604124854a', 1600),
         'service-5'  => wbc_unsplash('1666916990615-51537445e50b', 1600),
         'service-6'  => wbc_unsplash('1774024872805-5a73cc24a721', 1600),
+        'faq'        => WBC_THEME_URI . '/assets/img/faq.jpg',
         'journal-1'  => wbc_unsplash('1599661046289-e31897846e41', 1600),
         'journal-2'  => wbc_unsplash('1548013146-72479768bada', 1600),
         'extra-1'    => wbc_unsplash('1727430334014-3f3c90400455', 1400),
@@ -123,6 +124,80 @@ function wbc_mod($name, $default = '') {
     return $value === '' || $value === false || $value === null ? $default : $value;
 }
 
+function wbc_default_stats() {
+    return array(
+        1 => array('value' => '1', 'label' => 'Team, end to end'),
+        2 => array('value' => '8+', 'label' => 'Cities planned'),
+        3 => array('value' => 'Pin to plane', 'label' => 'Planning depth'),
+        4 => array('value' => 'Udaipur', 'label' => 'Home studio'),
+    );
+}
+
+function wbc_default_pillars() {
+    return array(
+        1 => array(
+            'label' => '01',
+            'title' => 'One studio',
+            'text'  => 'Design, logistics and guest care held as a single conversation — never twelve vendors stitched together.',
+        ),
+        2 => array(
+            'label' => '02',
+            'title' => 'Design first',
+            'text'  => 'Rooms, rituals and light are shaped before production. The weekend should feel like the couple, not a catalogue.',
+        ),
+        3 => array(
+            'label' => '03',
+            'title' => 'On the ground',
+            'text'  => 'The same team stays until the last farewell. Families move; we hold the cues, hospitality and calm.',
+        ),
+        4 => array(
+            'label' => '04',
+            'title' => 'Udaipur home',
+            'text'  => 'A studio rooted in Rajasthan, with a map that reaches Jaipur, Jodhpur, Goa and beyond.',
+        ),
+    );
+}
+
+function wbc_listing_defaults($slot) {
+    $map = array(
+        'services' => array(
+            'kicker' => 'Planning & design',
+            'title'  => 'Wedding planning, design and guest care — one studio.',
+            'text'   => 'Venue, decor, production, hospitality and vendors are held as a single conversation so families are never stitching twelve teams together.',
+            'cta'    => 'Start an enquiry',
+            'image'  => wbc_default_image('service-1'),
+        ),
+        'weddings' => array(
+            'kicker' => 'Portfolio',
+            'title'  => 'Real weddings by ' . wbc_brand_name(),
+            'text'   => 'Palace, heritage, lakeside and destination celebrations — each story told through rooms, rituals and light.',
+            'cta'    => 'Plan a weekend',
+            'image'  => wbc_default_image('wedding-1'),
+        ),
+        'journal' => array(
+            'kicker' => 'Journal',
+            'title'  => 'Wedding planning notes for thoughtful celebrations.',
+            'text'   => 'Destination guides, design notes, venue thinking and practical timelines from ' . wbc_brand_name() . '.',
+            'cta'    => 'Read the latest note',
+            'image'  => wbc_default_image('journal-1'),
+        ),
+    );
+    return isset($map[$slot]) ? $map[$slot] : array();
+}
+
+function wbc_listing_key($slot, $field) {
+    if ($slot === 'journal') {
+        return 'wbc_journal_' . $field;
+    }
+    return 'wbc_' . $slot . '_page_' . $field;
+}
+
+function wbc_listing_mod($slot, $field) {
+    $defaults = wbc_listing_defaults($slot);
+    $default = isset($defaults[$field]) ? $defaults[$field] : '';
+    return wbc_mod(wbc_listing_key($slot, $field), $default);
+}
+
 function wbc_brand_name() {
     return wbc_mod('wbc_brand_name', 'Chetan Parihar Weddings');
 }
@@ -151,16 +226,29 @@ function wbc_vimeo_id($url) {
     return '';
 }
 
+function wbc_slot_setting($slot, $kind, $default = '') {
+    $key = 'wbc_' . $slot . '_' . $kind;
+    $value = wbc_mod($key, '');
+    if ($value === '') {
+        $front_id = (int) get_option('page_on_front');
+        if ($front_id) {
+            $value = wbc_meta($front_id, $key, '');
+        }
+    }
+    return $value !== '' ? $value : $default;
+}
+
 function wbc_slot_image($slot, $fallback = 'hero') {
-    return wbc_mod('wbc_' . $slot . '_image', wbc_default_image($fallback));
+    return wbc_slot_setting($slot, 'image', wbc_default_image($fallback));
 }
 
 function wbc_slot_video($slot) {
-    return wbc_mod('wbc_' . $slot . '_video', wbc_default_video($slot));
+    return wbc_slot_setting($slot, 'video', wbc_default_video($slot));
 }
 
 function wbc_slot_uses_video($slot) {
-    return wbc_mod('wbc_' . $slot . '_media_type', 'photo') === 'video' && wbc_slot_video($slot);
+    $type = wbc_slot_setting($slot, 'media_type', 'photo');
+    return $type === 'video' && wbc_slot_video($slot);
 }
 
 function wbc_render_band_media($slot, $args = array()) {
@@ -191,6 +279,131 @@ function wbc_render_band_media($slot, $args = array()) {
 
     $eager = $args['eager'] ? ' fetchpriority="high"' : ' loading="lazy"';
     echo '<img src="' . esc_url($image) . '" alt="' . esc_attr($args['alt']) . '"' . $eager . ' decoding="async">';
+}
+
+function wbc_has_band() {
+    if (is_front_page() || is_page('contact')) {
+        return false;
+    }
+    return is_page('about')
+        || is_home()
+        || is_singular(array('post', 'wbc_wedding', 'wbc_service'))
+        || is_post_type_archive(array('wbc_wedding', 'wbc_service'));
+}
+
+function wbc_render_page_band($args = array()) {
+    $args = wp_parse_args($args, array(
+        'kicker'   => '',
+        'title'    => '',
+        'lead'     => '',
+        'cta'      => '',
+        'cta_url'  => '',
+        'image'    => '',
+        'alt'      => '',
+        'fallback' => 'hero',
+        'eager'    => true,
+    ));
+    $image = $args['image'] ?: wbc_default_image($args['fallback']);
+    $alt = $args['alt'] ?: wp_strip_all_tags($args['title']);
+    $eager = $args['eager'] ? ' fetchpriority="high"' : ' loading="lazy"';
+    ?>
+    <section class="wbc-band">
+        <div class="wbc-band-media" data-parallax>
+            <img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($alt); ?>"<?php echo $eager; ?> decoding="async">
+        </div>
+        <div class="wbc-band-copy">
+            <?php if ($args['kicker']) : ?>
+                <p class="wbc-kicker is-light"><?php echo esc_html($args['kicker']); ?></p>
+            <?php endif; ?>
+            <h1 class="wbc-hero-title"><?php echo esc_html($args['title']); ?></h1>
+            <?php if ($args['lead']) : ?>
+                <p class="wbc-hero-lead"><?php echo esc_html($args['lead']); ?></p>
+            <?php endif; ?>
+            <?php if ($args['cta'] && $args['cta_url']) : ?>
+                <a class="wbc-textlink is-light" href="<?php echo esc_url($args['cta_url']); ?>"><?php echo esc_html($args['cta']); ?></a>
+            <?php endif; ?>
+        </div>
+    </section>
+    <?php
+}
+
+function wbc_render_story_card($post, $args = array()) {
+    $args = wp_parse_args($args, array(
+        'meta'     => '',
+        'city'     => '',
+        'fallback' => 'couple',
+        'eager'    => false,
+    ));
+    $city_attr = $args['city'] !== '' ? ' data-city="' . esc_attr($args['city']) . '"' : '';
+    $loading = $args['eager'] ? 'eager' : 'lazy';
+    ?>
+    <article class="wbc-story-card"<?php echo $city_attr; ?>>
+        <a href="<?php echo esc_url(get_permalink($post)); ?>">
+            <figure>
+                <img src="<?php echo esc_url(wbc_image_url($post->ID, $args['fallback'])); ?>" alt="<?php echo esc_attr(get_the_title($post)); ?>" loading="<?php echo esc_attr($loading); ?>" decoding="async">
+            </figure>
+            <?php if ($args['meta']) : ?>
+                <span><?php echo esc_html($args['meta']); ?></span>
+            <?php endif; ?>
+            <h3><?php echo esc_html(get_the_title($post)); ?></h3>
+        </a>
+    </article>
+    <?php
+}
+
+function wbc_related_posts($post_id, $type = '', $limit = 4) {
+    $type = $type ?: get_post_type($post_id);
+    return get_posts(array(
+        'post_type'      => $type,
+        'post_status'    => 'publish',
+        'posts_per_page' => $limit,
+        'post__not_in'   => array((int) $post_id),
+        'orderby'        => array('menu_order' => 'ASC', 'date' => 'DESC'),
+    ));
+}
+
+function wbc_render_related_film($posts, $args = array()) {
+    $args = wp_parse_args($args, array(
+        'kicker'   => 'Continue',
+        'title'    => 'More from the studio.',
+        'link'     => '',
+        'label'    => '',
+        'meta_key' => '',
+        'fallback' => 'couple',
+    ));
+    if (!$posts) {
+        return;
+    }
+    ?>
+    <section class="wbc-section wbc-latest">
+        <div class="wbc-section-head is-center">
+            <p class="wbc-kicker"><?php echo esc_html($args['kicker']); ?></p>
+            <h2><?php echo esc_html($args['title']); ?></h2>
+        </div>
+        <div class="wbc-film" data-film>
+            <div class="wbc-film-track">
+                <?php foreach ($posts as $i => $item) : ?>
+                    <a class="wbc-film-card" href="<?php echo esc_url(get_permalink($item)); ?>">
+                        <figure>
+                            <img src="<?php echo esc_url(wbc_image_url($item->ID, $args['fallback'])); ?>" alt="<?php echo esc_attr(get_the_title($item)); ?>" loading="<?php echo $i < 2 ? 'eager' : 'lazy'; ?>" decoding="async">
+                        </figure>
+                        <?php if ($args['meta_key']) : ?>
+                            <span><?php echo esc_html(wbc_meta($item->ID, $args['meta_key'], get_the_date('', $item))); ?></span>
+                        <?php else : ?>
+                            <span><?php echo esc_html(get_the_date('', $item)); ?></span>
+                        <?php endif; ?>
+                        <h3><?php echo esc_html(get_the_title($item)); ?></h3>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <?php if ($args['link'] && $args['label']) : ?>
+            <div class="wbc-center-link">
+                <a class="wbc-textlink" href="<?php echo esc_url($args['link']); ?>"><?php echo esc_html($args['label']); ?></a>
+            </div>
+        <?php endif; ?>
+    </section>
+    <?php
 }
 
 function wbc_logo_url() {
@@ -268,8 +481,89 @@ function wbc_page_url($slug, $fallback = '') {
     return $page ? get_permalink($page) : ($fallback ?: home_url('/' . trim($slug, '/') . '/'));
 }
 
+function wbc_faq_image() {
+    $image = (string) get_theme_mod('wbc_faq_image', '');
+    if ($image === '' || $image === 'none') {
+        return '';
+    }
+    // Drop the old Unsplash placeholder so cleared / migrated sites can use parchment.
+    if (strpos($image, 'photo-1661877574666') !== false) {
+        return '';
+    }
+    return $image;
+}
+
+function wbc_footer_strip() {
+    $linked = array_slice(array_merge(
+        wbc_get_ordered_posts('wbc_wedding', 4),
+        wbc_get_ordered_posts('wbc_destination', 3)
+    ), 0, 5);
+    $items = array();
+    for ($i = 1; $i <= 5; $i++) {
+        $item = $linked[$i - 1] ?? null;
+        $items[] = array(
+            'url'   => $item ? get_permalink($item) : '',
+            'alt'   => $item ? get_the_title($item) : wbc_brand_name(),
+            'image' => wbc_mod('wbc_footer_image_' . $i, wbc_default_image('strip-' . $i)),
+        );
+    }
+    return $items;
+}
+
 function wbc_contact_url() {
     return wbc_page_url('contact');
+}
+
+function wbc_contact_page_id() {
+    $page = get_page_by_path('contact');
+    return $page ? (int) $page->ID : 0;
+}
+
+function wbc_contact_setting($key, $default = '') {
+    return wbc_editor_value(wbc_contact_page_id(), $key) ?: $default;
+}
+
+function wbc_studio_email() {
+    $email = sanitize_email(wbc_contact_setting('wbc_email', 'hello@chetanpariharweddings.com'));
+    return $email ?: get_option('admin_email');
+}
+
+function wbc_contact_form_fields() {
+    return array(
+        'name'    => array('label' => 'Name', 'type' => 'text', 'autocomplete' => 'name', 'required' => true, 'locked' => true),
+        'email'   => array('label' => 'Email', 'type' => 'email', 'autocomplete' => 'email'),
+        'phone'   => array('label' => 'Phone', 'type' => 'tel', 'autocomplete' => 'tel'),
+        'date'    => array('label' => 'Wedding date', 'type' => 'date'),
+        'city'    => array('label' => 'City / destination', 'type' => 'text', 'placeholder' => 'Udaipur, Jaipur, Goa…'),
+        'guests'  => array('label' => 'Guest count', 'type' => 'text', 'placeholder' => '180'),
+        'budget'  => array('label' => 'Approximate budget', 'type' => 'text', 'placeholder' => 'Planning + decor range'),
+        'message' => array('label' => 'Message', 'type' => 'textarea', 'placeholder' => 'Rituals, venues you love, guest cities…', 'wide' => true),
+    );
+}
+
+function wbc_contact_field($key) {
+    $fields = wbc_contact_form_fields();
+    if (!isset($fields[$key])) {
+        return null;
+    }
+    $field = $fields[$key];
+    $field['key'] = $key;
+    $field['label'] = wbc_contact_setting('wbc_form_' . $key . '_label', $field['label']);
+    $field['placeholder'] = wbc_contact_setting('wbc_form_' . $key . '_placeholder', $field['placeholder'] ?? '');
+    $show = !empty($field['locked']) ? 'yes' : wbc_contact_setting('wbc_form_' . $key . '_show', 'yes');
+    $field['show'] = $show !== 'no';
+    return $field;
+}
+
+function wbc_visible_contact_fields() {
+    $visible = array();
+    foreach (array_keys(wbc_contact_form_fields()) as $key) {
+        $field = wbc_contact_field($key);
+        if ($field && $field['show']) {
+            $visible[$key] = $field;
+        }
+    }
+    return $visible;
 }
 
 function wbc_about_url() {
@@ -410,10 +704,168 @@ function wbc_footer_socials() {
     $order = array('pinterest', 'facebook', 'instagram', 'tiktok');
     $items = array();
     foreach ($order as $name) {
-        $url = wbc_mod('wbc_' . $name, '');
+        $url = esc_url_raw(wbc_mod('wbc_' . $name, ''));
         $items[] = array(
             'name' => $name,
-            'url'  => $url ?: '#',
+            'url'  => $url,
+        );
+    }
+    return $items;
+}
+
+function wbc_footer_mark() {
+    $mark = wbc_mod('wbc_footer_mark', '');
+    if ($mark === '') {
+        $mark = strtoupper(substr(wbc_brand_name(), 0, 1));
+    }
+    return $mark;
+}
+
+function wbc_footer_logo() {
+    return wbc_mod('wbc_footer_logo', '');
+}
+
+function wbc_intro_defaults() {
+    return array(
+        'kicker' => 'Our Services',
+        'title'  => 'The Art of the Celebration',
+        'text'   => 'Full-service wedding planning and design for extraordinary people and unforgettable moments.',
+        'cta'    => 'Explore Services',
+        'alt'    => 'A twilight celebration pavilion planned by Chetan Parihar Weddings',
+    );
+}
+
+function wbc_intro_legacy($key) {
+    $legacy = array(
+        'kicker' => array('Destination wedding planner in Udaipur, India'),
+        'title'  => array(
+            'You want a wedding that feels elegant, effortless, and completely your own.',
+            'For couples and families who want a wedding that feels extraordinary — and completely calm.',
+        ),
+        'text'   => array(
+            'Chetan Parihar Weddings plans destination celebrations from Udaipur across Rajasthan, Gujarat, Goa and beyond. One team designs the rooms, holds the vendors, and stays on the ground until the last farewell.',
+        ),
+    );
+    return isset($legacy[$key]) ? $legacy[$key] : array();
+}
+
+function wbc_intro_value($key, $mod_key) {
+    $defaults = wbc_intro_defaults();
+    $fallback = isset($defaults[$key]) ? $defaults[$key] : '';
+    $value = wbc_mod($mod_key, '');
+    if ($value === '' || in_array($value, wbc_intro_legacy($key), true)) {
+        return $fallback;
+    }
+    return $value;
+}
+
+function wbc_intro_image() {
+    $image = wbc_mod('wbc_intro_image', '');
+    return $image !== '' ? $image : wbc_default_image('ceremony');
+}
+
+function wbc_intro_cta_url() {
+    $url = wbc_mod('wbc_intro_cta_url', '');
+    return $url !== '' ? $url : wbc_services_url();
+}
+
+function wbc_default_intro_icons() {
+    $kinds = array(
+        'planning'      => 'Planning',
+        'design'        => 'Design & Decor',
+        'destination'   => 'Destination',
+        'hospitality'   => 'Hospitality',
+        'entertainment' => 'Entertainment',
+        'photography'   => 'Photography',
+    );
+    $items = array();
+    foreach ($kinds as $kind => $label) {
+        $items[] = array(
+            'kind'  => $kind,
+            'label' => $label,
+            'url'   => '',
+            'icon'  => WBC_THEME_URI . '/assets/img/icons/' . $kind . '.svg',
+        );
+    }
+    return $items;
+}
+
+function wbc_intro_icons() {
+    $raw = get_theme_mod('wbc_intro_icons', array());
+    if (empty($raw)) {
+        $front_id = (int) get_option('page_on_front');
+        if ($front_id) {
+            $meta = get_post_meta($front_id, 'wbc_intro_icons', true);
+            if ($meta !== '' && $meta !== false) {
+                $raw = $meta;
+            }
+        }
+    }
+    if (is_string($raw)) {
+        $decoded = json_decode($raw, true);
+        $raw = is_array($decoded) ? $decoded : array();
+    }
+    if (!is_array($raw) || !$raw) {
+        return wbc_default_intro_icons();
+    }
+    $items = array();
+    foreach ($raw as $item) {
+        if (!is_array($item)) {
+            continue;
+        }
+        $icon = isset($item['icon']) ? esc_url_raw($item['icon']) : '';
+        $url = isset($item['url']) ? esc_url_raw($item['url']) : '';
+        $label = isset($item['label']) ? sanitize_text_field($item['label']) : '';
+        $kind = isset($item['kind']) ? sanitize_key($item['kind']) : '';
+        if ($icon === '' && $kind !== '') {
+            $icon = WBC_THEME_URI . '/assets/img/icons/' . $kind . '.svg';
+        }
+        if ($icon === '' && $label === '') {
+            continue;
+        }
+        $items[] = array(
+            'kind'  => $kind,
+            'icon'  => $icon,
+            'url'   => $url,
+            'label' => $label,
+        );
+    }
+    return $items ? $items : wbc_default_intro_icons();
+}
+
+function wbc_footer_links() {
+    $raw = get_theme_mod('wbc_footer_links', array());
+    if (empty($raw)) {
+        $front_id = (int) get_option('page_on_front');
+        if ($front_id) {
+            $meta = get_post_meta($front_id, 'wbc_footer_links', true);
+            if ($meta !== '' && $meta !== false) {
+                $raw = $meta;
+            }
+        }
+    }
+    if (is_string($raw)) {
+        $decoded = json_decode($raw, true);
+        $raw = is_array($decoded) ? $decoded : array();
+    }
+    if (!is_array($raw)) {
+        return array();
+    }
+    $items = array();
+    foreach ($raw as $item) {
+        if (!is_array($item)) {
+            continue;
+        }
+        $icon = isset($item['icon']) ? esc_url_raw($item['icon']) : '';
+        $url = isset($item['url']) ? esc_url_raw($item['url']) : '';
+        $label = isset($item['label']) ? sanitize_text_field($item['label']) : '';
+        if ($icon === '' && $url === '') {
+            continue;
+        }
+        $items[] = array(
+            'icon'  => $icon,
+            'url'   => $url,
+            'label' => $label,
         );
     }
     return $items;
@@ -616,7 +1068,7 @@ function wbc_seed_content() {
 
     $faqs = array(
         array('What does Chetan Parihar Weddings manage?', 'The studio can manage venue shortlisting, decor direction, planning, hospitality, logistics, vendor coordination, entertainment and on-ground wedding execution for destination and city celebrations.'),
-        array('Where do you plan weddings?', 'The studio is based in Udaipur and regularly plans in Jaipur, Jodhpur, Ahmedabad, Surat, Goa and other destination wedding cities. Service areas can be updated by the admin in Customizer and Destinations.'),
+        array('Where do you plan weddings?', 'The studio is based in Udaipur and regularly plans destination weddings in Jaipur, Jodhpur, Ahmedabad, Surat, Goa and other Indian wedding cities.'),
         array('How early should we enquire?', 'For peak-season palace and destination weddings, enquire eight to twelve months ahead when possible. Intimate weekends can sometimes be planned on shorter timelines.'),
         array('Is everything on this website editable?', 'Yes. Weddings, services, destinations, process steps, press, testimonials, FAQs, journal articles, contact leads and brand settings are all managed from WordPress admin — no code required.'),
         array('Do you only plan luxury palace weddings?', 'Palace and heritage weddings are a strength, but the studio also plans intimate destination weekends and family-led city celebrations. The approach stays the same: one team, clear decisions, calm ground.'),

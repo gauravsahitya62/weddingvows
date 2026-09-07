@@ -1,0 +1,248 @@
+.wbc-home-edit #postdivrich,
+.wbc-home-edit #postimagediv,
+.wbc-home-edit #commentstatusdiv,
+.wbc-home-edit #commentsdiv,
+.wbc-home-edit #postcustom,
+.wbc-section-edit #postimagediv,
+.wbc-section-edit #commentstatusdiv,
+.wbc-section-edit #commentsdiv,
+.wbc-section-edit #postcustom,
+.wbc-journal-edit #postdivrich,
+.wbc-entry-edit #postimagediv,
+.wbc-entry-edit #wbc_wedding_details,
+.wbc-entry-edit #wbc_service_details {
+  display: none !important;
+}
+
+.wbc-home-edit #wbc_media_box {
+  margin-top: 12px;
+}
+
+.wbc-tabs-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 16px;
+  padding: 0 0 12px;
+  border-bottom: 1px solid #e4ddd2;
+}
+
+.wbc-tabs-btn {
+  appearance: none;
+  margin: 0;
+  padding: 8px 14px;
+  border: 1px solid #e4ddd2;
+  background: #fff;
+  color: #3a342c;
+  font-size: 13px;
+  line-height: 1.2;
+  cursor: pointer;
+  border-radius: 999px;
+}
+
+.wbc-tabs-btn:hover {
+  border-color: #b49668;
+  color: #1b1713;
+}
+
+.wbc-tabs-btn.is-on {
+  background: #5c6a4e;
+  border-color: #5c6a4e;
+  color: #fff;
+}
+
+.wbc-tabs-panel {
+  display: none;
+}
+
+.wbc-tabs-panel.is-on {
+  display: block;
+}
+
+.wbc-admin-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+@media (max-width: 1100px) {
+  .wbc-admin-cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wbc-admin-lead {
+  margin: 0 0 14px;
+  color: #5c564e;
+}
+
+.wbc-admin-note {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  background: #f7f3ec;
+  border-left: 3px solid #b49668;
+}
+
+.wbc-admin-set {
+  margin: 0 0 18px;
+  padding: 16px 16px 6px;
+  border: 1px solid #e4ddd2;
+  background: #fffdf8;
+}
+
+.wbc-admin-set legend {
+  padding: 0 8px;
+  color: #5c6a4e;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.wbc-admin-field {
+  margin: 0 0 14px;
+}
+
+.wbc-admin-field label,
+.wbc-admin-field strong {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.wbc-admin-field .description {
+  display: block;
+  margin-top: 6px;
+}
+
+.wbc-admin-radios {
+  display: flex;
+  gap: 18px;
+  margin-top: 6px;
+}
+
+.wbc-admin-radios label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+
+.wbc-admin-media {
+  margin: 0 0 18px;
+}
+
+.wbc-admin-media-actions {
+  margin: 10px 0 0;
+}
+
+.wbc-admin-media-actions .button {
+  margin-right: 10px;
+}
+
+.wbc-admin-preview {
+  max-width: 420px;
+  min-height: 80px;
+  background: #1b1713;
+  border: 1px solid #e4ddd2;
+}
+
+.wbc-admin-preview:empty {
+  display: none;
+}
+
+.wbc-admin-preview img,
+.wbc-admin-preview video,
+.wbc-admin-preview iframe {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 280px;
+  object-fit: cover;
+  background: #1b1713;
+  border: 0;
+}
+
+.wbc-admin-preview video,
+.wbc-admin-preview iframe {
+  aspect-ratio: 16 / 9;
+  max-height: none;
+}
+
+#wbc_media_box .inside,
+#wbc_wedding_details .inside,
+#wbc_destination_details .inside,
+#wbc_seo_box .inside,
+.wbc-listing-admin .postbox .inside {
+  padding-top: 12px;
+}
+
+.wbc-admin-gallery-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+
+.wbc-admin-gallery-thumbs:empty {
+  display: none;
+}
+
+.wbc-admin-gallery-thumbs img {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  background: #1b1713;
+}
+
+.post-type-wbc_lead .page-title-action,
+.post-type-wbc_lead #minor-publishing,
+.post-type-wbc_lead #titlediv {
+  display: none !important;
+}
+
+.wbc-lead-view {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 18px;
+}
+
+.wbc-lead-view p {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 10px 12px;
+  background: #fffdf8;
+  border: 1px solid #e4ddd2;
+}
+
+.wbc-lead-view strong {
+  color: #5c6a4e;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+#wbc_lead_status {
+  min-width: 180px;
+}
+
+.wbc-admin-repeat {
+  margin: 0 0 22px;
+}
+
+.wbc-admin-repeat-row {
+  margin: 0 0 14px;
+  padding: 14px 16px 8px;
+  border: 1px solid #e4ddd2;
+  background: #fffdf8;
+}
+
+.wbc-admin-repeat-row .wbc-admin-preview {
+  max-width: 96px;
+  min-height: 48px;
+}
+
+.wbc-admin-repeat-row .wbc-admin-preview img {
+  max-height: 72px;
+  object-fit: contain;
+}

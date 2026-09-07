@@ -1,0 +1,1 @@
+    wcp_admin_media('wcp_services_image', 'Framed photo', '', 'Shown inside the scalloped gold cutout.');

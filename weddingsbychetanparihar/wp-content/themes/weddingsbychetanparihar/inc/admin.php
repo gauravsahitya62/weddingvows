@@ -102,12 +102,17 @@ function wbc_register_post_types() {
         'labels' => array(
             'name' => __('Contact Leads', 'weddingsbychetanparihar'),
             'singular_name' => __('Contact Lead', 'weddingsbychetanparihar'),
+            'add_new_item' => __('Add Lead', 'weddingsbychetanparihar'),
+            'edit_item' => __('Enquiry', 'weddingsbychetanparihar'),
+            'search_items' => __('Search enquiries', 'weddingsbychetanparihar'),
+            'not_found' => __('No enquiries yet.', 'weddingsbychetanparihar'),
         ),
         'public' => false,
         'show_ui' => true,
+        'show_in_menu' => true,
         'menu_icon' => 'dashicons-email-alt2',
         'capability_type' => 'post',
-        'supports' => array('title', 'editor', 'custom-fields'),
+        'supports' => array('title'),
     ));
 }
 add_action('init', 'wbc_register_post_types', 5);
@@ -141,6 +146,12 @@ function wbc_meta_boxes() {
 }
 add_action('add_meta_boxes', 'wbc_meta_boxes');
 
+function wbc_remove_moved_boxes() {
+    remove_meta_box('wbc_wedding_details', 'wbc_wedding', 'normal');
+    remove_meta_box('wbc_service_details', 'wbc_service', 'side');
+}
+add_action('add_meta_boxes', 'wbc_remove_moved_boxes', 20);
+
 function wbc_field($post_id, $key, $label, $type = 'text', $help = '') {
     $value = wbc_meta($post_id, $key);
     echo '<p class="wbc-admin-field"><label for="' . esc_attr($key) . '"><strong>' . esc_html($label) . '</strong></label>';
@@ -158,7 +169,12 @@ function wbc_field($post_id, $key, $label, $type = 'text', $help = '') {
 function wbc_seo_box($post) {
     wp_nonce_field('wbc_save_meta', 'wbc_meta_nonce');
     wbc_field($post->ID, 'wbc_seo_title', 'SEO title', 'text', 'Leave blank to use the automatic title. Keep under 60 characters.');
-    wbc_field($post->ID, 'wbc_seo_description', 'Meta / AEO description', 'textarea', 'The sentence search and answer engines should quote. 140–160 characters.');
+    wbc_field($post->ID, 'wbc_seo_description', 'Meta description', 'textarea', 'The sentence search results should show. 140–160 characters.');
+    wbc_field($post->ID, 'wbc_seo_answer', 'Direct answer (AEO / GEO)', 'textarea', 'One sentence an answer engine or AI assistant can quote.');
+    wbc_field($post->ID, 'wbc_seo_focus', 'Focus topic', 'text', 'e.g. Udaipur destination wedding planner');
+    wbc_field($post->ID, 'wbc_seo_image', 'Share image URL', 'url', 'Optional. Overrides the featured image for Google, WhatsApp and social shares.');
+    $noindex = wbc_meta($post->ID, 'wbc_seo_noindex') === '1';
+    echo '<p class="wbc-admin-field"><label><input name="wbc_seo_noindex" type="checkbox" value="1"' . checked($noindex, true, false) . '> Hide this page from search and sitemaps</label></p>';
 }
 
 function wbc_wedding_details_box($post) {
@@ -210,12 +226,35 @@ function wbc_testimonial_details_box($post) {
 }
 
 function wbc_lead_details_box($post) {
-    echo '<p><strong>Email:</strong> ' . esc_html(wbc_meta($post->ID, 'email')) . '</p>';
-    echo '<p><strong>Phone:</strong> ' . esc_html(wbc_meta($post->ID, 'phone')) . '</p>';
-    echo '<p><strong>Date:</strong> ' . esc_html(wbc_meta($post->ID, 'date')) . '</p>';
-    echo '<p><strong>City:</strong> ' . esc_html(wbc_meta($post->ID, 'city')) . '</p>';
-    echo '<p><strong>Guests:</strong> ' . esc_html(wbc_meta($post->ID, 'guests')) . '</p>';
-    echo '<p><strong>Budget:</strong> ' . esc_html(wbc_meta($post->ID, 'budget')) . '</p>';
+    wp_nonce_field('wbc_save_lead', 'wbc_lead_nonce');
+    $rows = array(
+        'name'    => 'Name',
+        'email'   => 'Email',
+        'phone'   => 'Phone',
+        'date'    => 'Wedding date',
+        'city'    => 'City / destination',
+        'guests'  => 'Guest count',
+        'budget'  => 'Budget',
+        'message' => 'Message',
+    );
+    echo '<div class="wbc-lead-view">';
+    foreach ($rows as $key => $label) {
+        $value = $key === 'message' ? $post->post_content : wbc_meta($post->ID, $key);
+        if ($key === 'name' && $value === '') {
+            $value = get_the_title($post);
+        }
+        echo '<p><strong>' . esc_html($label) . '</strong><span>' . ($value !== '' ? nl2br(esc_html($value)) : '—') . '</span></p>';
+    }
+    echo '</div>';
+    $status = wbc_meta($post->ID, 'wbc_lead_status', 'new');
+    echo '<p class="wbc-admin-field"><label for="wbc_lead_status"><strong>Status</strong></label>';
+    echo '<select id="wbc_lead_status" name="wbc_lead_status">';
+    foreach (array('new' => 'New', 'open' => 'In progress', 'done' => 'Closed') as $value => $label) {
+        echo '<option value="' . esc_attr($value) . '"' . selected($status, $value, false) . '>' . esc_html($label) . '</option>';
+    }
+    echo '</select></p>';
+    echo '<p class="wbc-admin-field"><label for="wbc_lead_note"><strong>Studio note</strong></label>';
+    echo '<textarea id="wbc_lead_note" name="wbc_lead_note" rows="4" class="widefat">' . esc_textarea(wbc_meta($post->ID, 'wbc_lead_note')) . '</textarea></p>';
 }
 
 function wbc_save_post_meta($post_id) {
@@ -230,13 +269,13 @@ function wbc_save_post_meta($post_id) {
     }
 
     $text = array(
-        'wbc_seo_title', 'wbc_couple', 'wbc_venue', 'wbc_location', 'wbc_season', 'wbc_guest_count',
+        'wbc_seo_title', 'wbc_seo_focus', 'wbc_couple', 'wbc_venue', 'wbc_location', 'wbc_season', 'wbc_guest_count',
         'wbc_style', 'wbc_gallery_ids', 'wbc_service_kicker', 'wbc_region', 'wbc_best_season',
         'wbc_venue_types', 'wbc_latitude', 'wbc_longitude', 'wbc_step_label', 'wbc_publication',
         'wbc_year', 'wbc_rating', 'wbc_event',
     );
-    $long = array('wbc_seo_description', 'wbc_planner_note');
-    $urls = array('wbc_video_url', 'wbc_press_url');
+    $long = array('wbc_seo_description', 'wbc_seo_answer', 'wbc_planner_note');
+    $urls = array('wbc_video_url', 'wbc_press_url', 'wbc_seo_image');
 
     foreach ($text as $key) {
         if (isset($_POST[$key])) {
@@ -253,46 +292,130 @@ function wbc_save_post_meta($post_id) {
             update_post_meta($post_id, $key, esc_url_raw(wp_unslash($_POST[$key])));
         }
     }
+    if (isset($_POST['wbc_meta_nonce'])) {
+        update_post_meta($post_id, 'wbc_seo_noindex', isset($_POST['wbc_seo_noindex']) ? '1' : '');
+    }
 }
 add_action('save_post', 'wbc_save_post_meta');
 
 function wbc_admin_assets($hook) {
-    if (!in_array($hook, array('post.php', 'post-new.php'), true)) {
+    $listing = in_array($hook, array(
+        'wbc_service_page_wbc-services-listing',
+        'wbc_wedding_page_wbc-weddings-listing',
+    ), true);
+    $screen = function_exists('get_current_screen') ? get_current_screen() : null;
+    $leads = $screen && $screen->post_type === 'wbc_lead';
+    if (!in_array($hook, array('post.php', 'post-new.php'), true) && !$listing && !$leads) {
         return;
     }
     wp_enqueue_media();
-    wp_add_inline_script('jquery', "
-        jQuery(function($){
-            $(document).on('click','[data-wbc-gallery]',function(e){
-                e.preventDefault();
-                var frame = wp.media({ title:'Select gallery images', multiple:true, library:{ type:'image' } });
-                frame.on('select', function(){
-                    var ids = frame.state().get('selection').map(function(a){ return a.id; });
-                    $('#wbc_gallery_ids').val(ids.join(','));
-                });
-                frame.open();
-            });
-        });
-    ");
+    wp_enqueue_style('wbc-admin', WBC_THEME_URI . '/assets/css/admin.css', array(), WBC_THEME_VERSION);
+    wp_enqueue_script('wbc-admin', WBC_THEME_URI . '/assets/js/admin.js', array('jquery'), WBC_THEME_VERSION, true);
 }
 add_action('admin_enqueue_scripts', 'wbc_admin_assets');
 
 function wbc_lead_columns($columns) {
+    unset($columns['date']);
     $columns['email'] = 'Email';
     $columns['phone'] = 'Phone';
     $columns['city'] = 'City';
     $columns['date_wanted'] = 'Wedding date';
+    $columns['status'] = 'Status';
+    $columns['received'] = 'Received';
     return $columns;
 }
 add_filter('manage_wbc_lead_posts_columns', 'wbc_lead_columns');
 
 function wbc_lead_column_content($column, $post_id) {
+    if ($column === 'status') {
+        $labels = array('new' => 'New', 'open' => 'In progress', 'done' => 'Closed');
+        $status = wbc_meta($post_id, 'wbc_lead_status', 'new');
+        echo esc_html($labels[$status] ?? 'New');
+        return;
+    }
+    if ($column === 'received') {
+        echo esc_html(get_the_date('Y-m-d H:i', $post_id));
+        return;
+    }
     $map = array('email' => 'email', 'phone' => 'phone', 'city' => 'city', 'date_wanted' => 'date');
     if (isset($map[$column])) {
         echo esc_html(wbc_meta($post_id, $map[$column]));
     }
 }
 add_action('manage_wbc_lead_posts_custom_column', 'wbc_lead_column_content', 10, 2);
+
+function wbc_save_lead_meta($post_id) {
+    if (!isset($_POST['wbc_lead_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['wbc_lead_nonce'])), 'wbc_save_lead')) {
+        return;
+    }
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+    $status = isset($_POST['wbc_lead_status']) ? sanitize_key(wp_unslash($_POST['wbc_lead_status'])) : 'new';
+    if (!in_array($status, array('new', 'open', 'done'), true)) {
+        $status = 'new';
+    }
+    update_post_meta($post_id, 'wbc_lead_status', $status);
+    if (isset($_POST['wbc_lead_note'])) {
+        update_post_meta($post_id, 'wbc_lead_note', sanitize_textarea_field(wp_unslash($_POST['wbc_lead_note'])));
+    }
+}
+add_action('save_post_wbc_lead', 'wbc_save_lead_meta');
+
+function wbc_lead_admin_menu() {
+    $page = wbc_contact_page_id();
+    if ($page) {
+        add_submenu_page(
+            'edit.php?post_type=wbc_lead',
+            __('Form & email', 'weddingsbychetanparihar'),
+            __('Form & email', 'weddingsbychetanparihar'),
+            'edit_pages',
+            'wbc-contact-form',
+            '__return_null'
+        );
+    }
+    remove_submenu_page('edit.php?post_type=wbc_lead', 'post-new.php?post_type=wbc_lead');
+}
+add_action('admin_menu', 'wbc_lead_admin_menu', 20);
+
+function wbc_lead_form_settings_redirect() {
+    if (!isset($_GET['page']) || $_GET['page'] !== 'wbc-contact-form') {
+        return;
+    }
+    $page = wbc_contact_page_id();
+    if ($page) {
+        wp_safe_redirect(admin_url('post.php?post=' . $page . '&action=edit'));
+        exit;
+    }
+}
+add_action('admin_init', 'wbc_lead_form_settings_redirect');
+
+function wbc_lead_list_notice() {
+    $screen = function_exists('get_current_screen') ? get_current_screen() : null;
+    if (!$screen || $screen->id !== 'edit-wbc_lead') {
+        return;
+    }
+    $page = wbc_contact_page_id();
+    $to = wbc_studio_email();
+    echo '<div class="notice notice-info"><p>Enquiries from the contact form are listed here. They are also emailed to <strong>' . esc_html($to) . '</strong>.';
+    if ($page) {
+        echo ' <a href="' . esc_url(admin_url('post.php?post=' . $page . '&action=edit')) . '">Edit the form and recipient email</a>.';
+    }
+    echo '</p></div>';
+}
+add_action('admin_notices', 'wbc_lead_list_notice');
+
+function wbc_lead_row_actions($actions, $post) {
+    if ($post->post_type !== 'wbc_lead') {
+        return $actions;
+    }
+    unset($actions['inline hide-if-no-js']);
+    return $actions;
+}
+add_filter('post_row_actions', 'wbc_lead_row_actions', 10, 2);
 
 function wbc_customize_register($wp_customize) {
     $wp_customize->add_panel('wbc_panel', array(
@@ -337,9 +460,10 @@ function wbc_customize_register($wp_customize) {
         ),
         'wbc_home' => array(
             'wbc_hero_line' => array('Hero line over image', 'We work behind the scenes, because your wedding deserves to be planned beautifully.', 'textarea'),
-            'wbc_intro_kicker' => array('Intro kicker', 'Destination wedding planner in Udaipur, India', 'text'),
-            'wbc_intro_title' => array('Intro title', 'For couples and families who want a wedding that feels extraordinary — and completely calm.', 'textarea'),
-            'wbc_intro_text' => array('Intro text', 'Chetan Parihar Weddings plans destination celebrations from Udaipur across Rajasthan, Gujarat, Goa and beyond. One team designs the rooms, holds the vendors, and stays on the ground until the last farewell.', 'textarea'),
+            'wbc_intro_kicker' => array('Intro kicker', 'Our Services', 'text'),
+            'wbc_intro_title' => array('Intro title', 'The Art of the Celebration', 'textarea'),
+            'wbc_intro_text' => array('Intro text', 'Full-service wedding planning and design for extraordinary people and unforgettable moments.', 'textarea'),
+            'wbc_intro_cta' => array('Intro button', 'Explore Services', 'text'),
             'wbc_portfolio_kicker' => array('Portfolio kicker', 'The work', 'text'),
             'wbc_portfolio_title' => array('Portfolio title', 'Before we tell you our story, let the weddings speak.', 'textarea'),
             'wbc_services_kicker' => array('Services kicker', 'What we manage', 'text'),
@@ -388,12 +512,25 @@ function wbc_customize_register($wp_customize) {
         ),
         'wbc_seo' => array(
             'wbc_seo_description' => array('Default meta description', 'Chetan Parihar Weddings is a Udaipur destination wedding planner specialising in palace, heritage and celebration design across Rajasthan, Gujarat, Goa and India.', 'textarea'),
+            'wbc_seo_knowledge' => array('Entity statement (AEO / GEO)', 'Chetan Parihar Weddings is a destination wedding planning and decor studio based in Udaipur, Rajasthan, India. Founder Chetan Parihar leads one in-house team for venue, design, hospitality, vendors and on-ground execution.', 'textarea'),
+            'wbc_seo_home_title' => array('Homepage title fallback', 'Destination Wedding Planner in Udaipur | Chetan Parihar Weddings', 'text'),
+            'wbc_seo_weddings_title' => array('Weddings archive title', 'Real Destination Weddings & Portfolio | Chetan Parihar Weddings', 'text'),
+            'wbc_seo_weddings_description' => array('Weddings archive description', 'Explore palace, heritage, lakeside and destination wedding stories planned from Udaipur across Rajasthan, Goa and India.', 'textarea'),
+            'wbc_seo_services_title' => array('Services archive title', 'Wedding Planning, Decor & Hospitality | Chetan Parihar Weddings', 'text'),
+            'wbc_seo_services_description' => array('Services archive description', 'Venue curation, decor and design, planning, hospitality, vendors and on-ground execution from a Udaipur studio.', 'textarea'),
+            'wbc_seo_destinations_title' => array('Destinations archive title', 'Destination Wedding Cities in India | Chetan Parihar Weddings', 'text'),
+            'wbc_seo_destinations_description' => array('Destinations archive description', 'Destination wedding planning in Udaipur, Jaipur, Jodhpur, Goa, Ahmedabad and Surat with a Udaipur-based studio.', 'textarea'),
+            'wbc_seo_journal_title' => array('Journal title', 'Wedding Planning Journal | Chetan Parihar Weddings', 'text'),
+            'wbc_seo_journal_description' => array('Journal description', 'Guides for destination wedding planning, venue selection, decor, guest hospitality and Indian wedding timelines.', 'textarea'),
             'wbc_service_area' => array('Service areas', 'Udaipur, Jaipur, Jodhpur, Ahmedabad, Surat, Goa, Rajasthan, Gujarat, India', 'textarea'),
             'wbc_price_range' => array('Price range', '₹₹₹', 'text'),
             'wbc_latitude' => array('Studio latitude', '24.5854', 'text'),
             'wbc_longitude' => array('Studio longitude', '73.7125', 'text'),
             'wbc_geo_region' => array('Geo region code', 'IN-RJ', 'text'),
             'wbc_founding_year' => array('Founding year', '2018', 'text'),
+            'wbc_twitter_handle' => array('Twitter / X handle', '', 'text'),
+            'wbc_google_site_verification' => array('Google Search Console code', '', 'text'),
+            'wbc_bing_site_verification' => array('Bing Webmaster code', '', 'text'),
         ),
     );
 
@@ -440,23 +577,30 @@ add_action('customize_register', 'wbc_customize_register');
 
 function wbc_handle_contact() {
     check_ajax_referer('wbc_contact', 'nonce');
-    $name = sanitize_text_field(wp_unslash($_POST['name'] ?? ''));
-    $email = sanitize_email(wp_unslash($_POST['email'] ?? ''));
-    $phone = sanitize_text_field(wp_unslash($_POST['phone'] ?? ''));
-    $date = sanitize_text_field(wp_unslash($_POST['date'] ?? ''));
-    $city = sanitize_text_field(wp_unslash($_POST['city'] ?? ''));
-    $guests = sanitize_text_field(wp_unslash($_POST['guests'] ?? ''));
-    $budget = sanitize_text_field(wp_unslash($_POST['budget'] ?? ''));
-    $message = sanitize_textarea_field(wp_unslash($_POST['message'] ?? ''));
     $honeypot = sanitize_text_field(wp_unslash($_POST['company'] ?? ''));
-
+    $success = wbc_contact_setting('wbc_form_success', 'Thank you. Your enquiry has reached the studio.');
     if ($honeypot !== '') {
-        wp_send_json_success(array('message' => 'Thank you. Your enquiry has been received.'));
-    }
-    if (!$name || (!$email && !$phone)) {
-        wp_send_json_error(array('message' => 'Please share your name and either email or phone.'));
+        wp_send_json_success(array('message' => $success));
     }
 
+    $visible = wbc_visible_contact_fields();
+    $values = array();
+    foreach ($visible as $key => $field) {
+        $raw = wp_unslash($_POST[$key] ?? '');
+        $values[$key] = $field['type'] === 'textarea' ? sanitize_textarea_field($raw) : ($key === 'email' ? sanitize_email($raw) : sanitize_text_field($raw));
+    }
+
+    $name = $values['name'] ?? '';
+    $email = $values['email'] ?? '';
+    $phone = $values['phone'] ?? '';
+    $has_email_field = isset($visible['email']);
+    $has_phone_field = isset($visible['phone']);
+    $needs_contact = ($has_email_field || $has_phone_field) && !$email && !$phone;
+    if (!$name || $needs_contact) {
+        wp_send_json_error(array('message' => wbc_contact_setting('wbc_form_error', 'Please share your name and either email or phone.')));
+    }
+
+    $message = $values['message'] ?? '';
     $lead_id = wp_insert_post(array(
         'post_type' => 'wbc_lead',
         'post_status' => 'private',
@@ -464,17 +608,24 @@ function wbc_handle_contact() {
         'post_content' => $message,
     ));
     if ($lead_id && !is_wp_error($lead_id)) {
-        foreach (compact('email', 'phone', 'date', 'city', 'guests', 'budget') as $key => $value) {
-            update_post_meta($lead_id, $key, $value);
+        update_post_meta($lead_id, 'name', $name);
+        update_post_meta($lead_id, 'wbc_lead_status', 'new');
+        foreach ($values as $key => $value) {
+            if ($key !== 'message') {
+                update_post_meta($lead_id, $key, $value);
+            }
         }
     }
 
-    $to = wbc_mod('wbc_email', get_option('admin_email'));
-    $subject = 'New wedding enquiry from ' . $name;
-    $body = "Name: {$name}\nEmail: {$email}\nPhone: {$phone}\nDate: {$date}\nCity: {$city}\nGuests: {$guests}\nBudget: {$budget}\n\n{$message}";
-    wp_mail($to, $subject, $body, array('Content-Type: text/plain; charset=UTF-8'));
+    $to = wbc_studio_email();
+    $subject = str_replace('{name}', $name, wbc_contact_setting('wbc_form_subject', 'New wedding enquiry from {name}'));
+    $lines = array();
+    foreach ($visible as $key => $field) {
+        $lines[] = $field['label'] . ': ' . ($values[$key] ?? '');
+    }
+    wp_mail($to, $subject, implode("\n", $lines), array('Content-Type: text/plain; charset=UTF-8'));
 
-    wp_send_json_success(array('message' => 'Thank you. Your enquiry has reached the studio.'));
+    wp_send_json_success(array('message' => $success));
 }
 add_action('wp_ajax_wbc_contact', 'wbc_handle_contact');
 add_action('wp_ajax_nopriv_wbc_contact', 'wbc_handle_contact');
