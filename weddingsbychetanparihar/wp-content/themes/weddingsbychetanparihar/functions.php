@@ -15,6 +15,7 @@ require WBC_THEME_DIR . '/inc/helpers.php';
 require WBC_THEME_DIR . '/inc/fields.php';
 require WBC_THEME_DIR . '/inc/admin.php';
 require WBC_THEME_DIR . '/inc/seo.php';
+require WBC_THEME_DIR . '/inc/journal-automation.php';
 
 function wbc_theme_setup() {
     add_theme_support('title-tag');
