@@ -1,0 +1,78 @@
+name: Deploy WordPress Theme to Live
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'weddingsbychetanparihar/wp-content/**'
+      - '.github/workflows/deploy-live.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate PHP
+        run: |
+          set -euo pipefail
+          find weddingsbychetanparihar/wp-content -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: Configure SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          test -n "$SSH_PRIVATE_KEY" || { echo 'Missing DEPLOY_SSH_KEY'; exit 1; }
+          test -n "$SSH_KNOWN_HOSTS" || { echo 'Missing DEPLOY_KNOWN_HOSTS'; exit 1; }
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Verify remote access
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+        run: |
+          set -euo pipefail
+          test -n "$DEPLOY_HOST" || { echo 'Missing DEPLOY_HOST'; exit 1; }
+          test -n "$DEPLOY_USER" || { echo 'Missing DEPLOY_USER'; exit 1; }
+          ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes "$DEPLOY_USER@$DEPLOY_HOST" 'printf "SSH connection OK\\n"'
+
+      - name: Prepare remote wp-content directory
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          set -euo pipefail
+          test -n "$DEPLOY_PATH" || { echo 'Missing DEPLOY_PATH'; exit 1; }
+          ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p '$DEPLOY_PATH/wp-content'"
+
+      - name: Deploy wp-content
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          set -euo pipefail
+          rsync -az --omit-dir-times \
+            -e 'ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes' \
+            weddingsbychetanparihar/wp-content/ \
+            "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/wp-content/"
+
+      - name: Report deployment
+        run: echo "Live deployment completed for commit $GITHUB_SHA"
