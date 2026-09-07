@@ -1,7 +1,0 @@
-  .wbc-whatsapp { bottom: 20px; }
-}
-
-@media (max-width: 640px) {
-  .wbc-art-icons { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .wbc-art-frame { width: min(100%, 300px); }
-}

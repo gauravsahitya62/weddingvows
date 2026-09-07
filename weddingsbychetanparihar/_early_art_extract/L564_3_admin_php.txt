@@ -1,4 +1,0 @@
-            'wbc_intro_kicker' => array('Intro kicker', 'Our Services', 'text'),
-            'wbc_intro_title' => array('Intro title', 'The Art of the Celebration', 'textarea'),
-            'wbc_intro_text' => array('Intro text', 'Full-service wedding planning and design for extraordinary people and unforgettable moments.', 'textarea'),
-            'wbc_intro_cta' => array('Intro button', 'Explore Services', 'text'),
