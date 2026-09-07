@@ -2745,21 +2745,24 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
 .wvn-svc-core,
 .wvn-svc-glance,
 .wvn-svc-why {
-  padding: 88px clamp(20px, 5vw, 72px);
+  width: min(1180px, calc(100% - 40px));
+  margin-left: auto;
+  margin-right: auto;
+  padding: 64px 0;
 }
 .wvn-svc-intro .wvn-display,
 .wvn-svc-core .wvn-display,
 .wvn-svc-glance .wvn-display,
 .wvn-svc-why .wvn-display {
   font-size: clamp(26px, 3.4vw, 42px);
-  max-width: 18em;
-  margin: 8px 0 28px;
+  max-width: 22em;
+  margin: 8px 0 20px;
 }
 .wvn-svc-intro-cols {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 40px 56px;
-  max-width: 980px;
+  gap: 28px 48px;
+  width: 100%;
 }
 .wvn-svc-intro-cols p,
 .wvn-svc-core-head > p,
@@ -2769,14 +2772,15 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
   font-size: 16px;
   line-height: 1.75;
   color: #4a3838;
-  max-width: 62ch;
+  max-width: none;
 }
 .wvn-svc-stats {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 24px;
-  margin-top: 56px;
-  padding-top: 36px;
+  gap: 24px 32px;
+  width: 100%;
+  margin-top: 40px;
+  padding-top: 32px;
   border-top: 1px solid rgba(107, 62, 62, 0.16);
 }
 .wvn-svc-stats strong {
@@ -2795,7 +2799,8 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
   text-transform: uppercase;
   color: #6b5555;
 }
-.wvn-svc-core-head { margin-bottom: 40px; }
+.wvn-svc-core-head { margin-bottom: 36px; max-width: none; }
+.wvn-svc-core-head > p { max-width: 62ch; }
 .wvn-svc-bento {
   display: grid;
   grid-template-columns: 1.08fr 1fr 1fr 1fr;
@@ -2984,12 +2989,14 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
 .wvn-svc-tile.is-brand { flex-direction: row; align-items: center; justify-content: center; gap: 12px; }
 .wvn-svc-star { width: 28px; height: 28px; fill: currentColor; flex: 0 0 auto; }
 .wvn-svc-tile.is-star .wvn-svc-star { width: 48px; height: 48px; }
+.wvn-svc-glance-lede { max-width: 62ch; }
 .wvn-svc-glance-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 48px 64px;
-  margin-top: 40px;
-  padding-top: 32px;
+  gap: 28px 48px;
+  width: 100%;
+  margin-top: 32px;
+  padding-top: 28px;
   border-top: 1px solid rgba(107, 62, 62, 0.16);
 }
 .wvn-svc-colhead {
@@ -3007,11 +3014,13 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
   color: #5a4545;
 }
 .wvn-svc-glance li strong { color: var(--teal-deep); font-weight: 400; font-family: var(--font); }
+.wvn-svc-why-lede { max-width: 62ch; }
 .wvn-svc-why-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 36px 48px;
-  margin: 48px 0 56px;
+  gap: 36px 40px;
+  width: 100%;
+  margin: 36px 0 48px;
 }
 .wvn-svc-why-icon { color: var(--teal); display: inline-flex; margin-bottom: 12px; }
 .wvn-svc-why-grid h3 {

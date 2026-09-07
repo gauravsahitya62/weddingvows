@@ -28,6 +28,7 @@ $theme_includes = array(
     '/acf-guide.php',
     '/blog.php',
     '/seo.php',
+    '/seo-blogs.php',
     '/custom-post-types.php',                   // Register Custom Post types & Taxonomies
     '/nav-walker.php',                          // Register Menu Walkers 
     '/enqueue.php',                             // Enqueue scripts and styles.

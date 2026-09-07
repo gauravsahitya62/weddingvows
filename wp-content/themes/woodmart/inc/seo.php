@@ -509,6 +509,8 @@ function wvn_seo_json_ld() {
         }
     } elseif (is_front_page() && function_exists('wvn_faqs')) {
         $faq_source = wvn_faqs();
+    } elseif (is_singular('post') && function_exists('wvn_post_meta')) {
+        $faq_source = wvn_post_meta(get_the_ID())['faqs'];
     }
     if ($faq_source) {
         $entities = array();
