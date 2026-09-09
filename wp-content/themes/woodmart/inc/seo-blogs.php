@@ -7,7 +7,13 @@ function wvn_seed_high_reach_seo_blogs() {
     if (get_option('_wvn_seo_blogs_v3')) {
         return;
     }
+    if (!defined('WP_CLI') && !(function_exists('is_admin') && is_admin())) {
+        return;
+    }
     if (!function_exists('wvn_blog_ensure_categories')) {
+        return;
+    }
+    if (!file_exists(ABSPATH . 'wp-admin/includes/media.php')) {
         return;
     }
     wvn_blog_ensure_categories();

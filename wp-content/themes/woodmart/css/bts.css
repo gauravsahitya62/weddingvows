@@ -2742,13 +2742,17 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
   color: rgba(255, 255, 255, 0.9);
 }
 .wvn-svc-intro,
-.wvn-svc-core,
 .wvn-svc-glance,
 .wvn-svc-why {
   width: min(1180px, calc(100% - 40px));
   margin-left: auto;
   margin-right: auto;
   padding: 64px 0;
+}
+.wvn-svc-core {
+  width: 100%;
+  margin: 0;
+  padding: 64px clamp(14px, 2.4vw, 28px);
 }
 .wvn-svc-intro .wvn-display,
 .wvn-svc-core .wvn-display,
@@ -2799,7 +2803,11 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
   text-transform: uppercase;
   color: #6b5555;
 }
-.wvn-svc-core-head { margin-bottom: 36px; max-width: none; }
+.wvn-svc-core-head {
+  width: min(1180px, 100%);
+  margin: 0 auto 36px;
+  max-width: none;
+}
 .wvn-svc-core-head > p { max-width: 62ch; }
 .wvn-svc-bento {
   display: grid;
@@ -2819,8 +2827,9 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
   min-height: 220px;
   color: #fff;
 }
-.wvn-svc-card.is-venue { background: var(--teal-deep); padding: 28px 24px; display: flex; flex-direction: column; justify-content: flex-end; }
-.wvn-svc-card.is-tags { background: #e4d3c4; color: var(--teal-deep); padding: 28px 28px 24px; }
+.wvn-svc-card.is-venue { background: var(--teal-deep); padding: 28px 24px; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; text-align: center; }
+.wvn-svc-card.is-venue .wvn-svc-card-copy { width: 100%; text-align: center; }
+.wvn-svc-card.is-tags { background: #e4d3c4; color: var(--teal-deep); padding: 28px 28px 24px; text-align: center; }
 .wvn-svc-card.is-photo img {
   position: absolute;
   inset: 0;
@@ -2835,12 +2844,13 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
   height: 55%;
   background: linear-gradient(180deg, transparent, rgba(20, 12, 12, 0.72));
 }
-.wvn-svc-card-copy { position: relative; z-index: 1; }
+.wvn-svc-card-copy { position: relative; z-index: 1; text-align: center; }
 .wvn-svc-card.is-photo .wvn-svc-card-copy {
   position: absolute;
-  left: 20px;
+  left: 16px;
   right: 16px;
   bottom: 18px;
+  text-align: center;
 }
 .wvn-svc-label {
   margin: 0 0 8px;
@@ -2859,6 +2869,7 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
 .wvn-svc-polaroids {
   position: relative;
   height: 58%;
+  width: 100%;
   margin: 0 0 28px;
 }
 .wvn-svc-polaroids figure {
@@ -2882,7 +2893,7 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
   text-transform: uppercase;
   text-align: center;
 }
-.wvn-svc-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+.wvn-svc-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 22px; }
 .wvn-svc-tags span {
   background: #fff;
   color: var(--teal-deep);
@@ -2893,11 +2904,11 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
 }
 .wvn-svc-specials {
   background: var(--teal-deep);
-  padding: 72px clamp(16px, 4vw, 48px);
+  padding: 72px clamp(12px, 2vw, 24px);
 }
 .wvn-svc-mosaic {
-  width: min(1180px, 100%);
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
   display: grid;
   grid-template-columns: 1.1fr 0.95fr 1.1fr;
   grid-auto-rows: minmax(160px, 1fr);
@@ -2952,12 +2963,13 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
   place-items: center;
   font-size: 12px;
 }
-.wvn-svc-tile-copy { position: relative; z-index: 1; padding: 22px; }
+.wvn-svc-tile-copy { position: relative; z-index: 1; padding: 22px; text-align: center; }
 .wvn-svc-tile.is-photo .wvn-svc-tile-copy {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
+  text-align: center;
 }
 .wvn-svc-tile .wvn-display {
   font-size: clamp(18px, 1.6vw, 26px);
@@ -2980,6 +2992,8 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
+  text-align: center;
   padding: 22px;
 }
 .wvn-svc-tile.is-intro .wvn-svc-tile-copy,
