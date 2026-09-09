@@ -45,16 +45,17 @@ jobs:
 
       - name: Configure SSH
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          SSH_PRIVATE_KEY_B64: ${{ secrets.DEPLOY_SSH_KEY_B64 }}
           SSH_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
         run: |
           set -euo pipefail
-          test -n "$SSH_PRIVATE_KEY" || { echo 'Missing DEPLOY_SSH_KEY'; exit 1; }
+          test -n "$SSH_PRIVATE_KEY_B64" || { echo 'Missing DEPLOY_SSH_KEY_B64'; exit 1; }
           test -n "$SSH_KNOWN_HOSTS" || { echo 'Missing DEPLOY_KNOWN_HOSTS'; exit 1; }
           mkdir -p ~/.ssh
-          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          printf '%s' "$SSH_PRIVATE_KEY_B64" | base64 --decode > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null
 
       - name: Verify SSH access
         run: |
