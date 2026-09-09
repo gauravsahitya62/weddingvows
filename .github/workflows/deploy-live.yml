@@ -1,10 +1,10 @@
-name: Deploy WordPress Theme to Live
+name: Deploy WordPress Code to Hostinger
 
 on:
   push:
     branches: [main]
     paths:
-      - 'weddingsbychetanparihar/wp-content/**'
+      - 'wp-content/**'
       - '.github/workflows/deploy-live.yml'
   workflow_dispatch:
 
@@ -27,7 +27,7 @@ jobs:
       - name: Validate PHP
         run: |
           set -euo pipefail
-          find weddingsbychetanparihar/wp-content -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+          find wp-content -type f -name '*.php' -print0 | xargs -0 -n1 php -l
 
       - name: Configure SSH
         env:
@@ -42,7 +42,7 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
 
-      - name: Verify remote access
+      - name: Verify SSH access
         env:
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
@@ -52,7 +52,7 @@ jobs:
           test -n "$DEPLOY_USER" || { echo 'Missing DEPLOY_USER'; exit 1; }
           ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes "$DEPLOY_USER@$DEPLOY_HOST" 'printf "SSH connection OK\\n"'
 
-      - name: Prepare remote wp-content directory
+      - name: Deploy wp-content to Hostinger
         env:
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
@@ -60,18 +60,9 @@ jobs:
         run: |
           set -euo pipefail
           test -n "$DEPLOY_PATH" || { echo 'Missing DEPLOY_PATH'; exit 1; }
-          ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p '$DEPLOY_PATH/wp-content'"
-
-      - name: Deploy wp-content
-        env:
-          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
-        run: |
-          set -euo pipefail
           rsync -az --omit-dir-times \
             -e 'ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes' \
-            weddingsbychetanparihar/wp-content/ \
+            wp-content/ \
             "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/wp-content/"
 
       - name: Report deployment
