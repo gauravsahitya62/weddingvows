@@ -15,6 +15,12 @@ concurrency:
   group: production-deploy
   cancel-in-progress: false
 
+env:
+  DEPLOY_HOST: 82.25.120.254
+  DEPLOY_USER: u412935172
+  DEPLOY_PORT: '65002'
+  DEPLOY_PATH: /home/u412935172/domains/weddingvowsbynikhil.com/public_html
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -43,25 +49,21 @@ jobs:
           printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
 
       - name: Verify SSH access
-        env:
-          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
         run: |
           set -euo pipefail
-          test -n "$DEPLOY_HOST" || { echo 'Missing DEPLOY_HOST'; exit 1; }
-          test -n "$DEPLOY_USER" || { echo 'Missing DEPLOY_USER'; exit 1; }
-          ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes "$DEPLOY_USER@$DEPLOY_HOST" 'printf "SSH connection OK\\n"'
+          ssh -p "$DEPLOY_PORT" -i ~/.ssh/deploy_key -o IdentitiesOnly=yes "$DEPLOY_USER@$DEPLOY_HOST" 'printf "SSH connection OK\\n"'
+
+      - name: Verify live WordPress directory
+        run: |
+          set -euo pipefail
+          ssh -p "$DEPLOY_PORT" -i ~/.ssh/deploy_key -o IdentitiesOnly=yes "$DEPLOY_USER@$DEPLOY_HOST" \
+            "test -d '$DEPLOY_PATH/wp-content'"
 
       - name: Deploy wp-content to Hostinger
-        env:
-          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
           set -euo pipefail
-          test -n "$DEPLOY_PATH" || { echo 'Missing DEPLOY_PATH'; exit 1; }
           rsync -az --omit-dir-times \
-            -e 'ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes' \
+            -e "ssh -p $DEPLOY_PORT -i ~/.ssh/deploy_key -o IdentitiesOnly=yes" \
             wp-content/ \
             "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/wp-content/"
 
