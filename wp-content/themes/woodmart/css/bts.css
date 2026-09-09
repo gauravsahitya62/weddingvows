@@ -2752,7 +2752,7 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
 .wvn-svc-core {
   width: 100%;
   margin: 0;
-  padding: 64px clamp(14px, 2.4vw, 28px);
+  padding: 64px clamp(16px, 3vw, 40px);
 }
 .wvn-svc-intro .wvn-display,
 .wvn-svc-core .wvn-display,
@@ -2804,8 +2804,8 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
   color: #6b5555;
 }
 .wvn-svc-core-head {
-  width: min(1180px, 100%);
-  margin: 0 auto 36px;
+  width: 100%;
+  margin: 0 0 36px;
   max-width: none;
 }
 .wvn-svc-core-head > p { max-width: 62ch; }
@@ -2827,9 +2827,8 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
   min-height: 220px;
   color: #fff;
 }
-.wvn-svc-card.is-venue { background: var(--teal-deep); padding: 28px 24px; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; text-align: center; }
-.wvn-svc-card.is-venue .wvn-svc-card-copy { width: 100%; text-align: center; }
-.wvn-svc-card.is-tags { background: #e4d3c4; color: var(--teal-deep); padding: 28px 28px 24px; text-align: center; }
+.wvn-svc-card.is-venue { background: var(--teal-deep); padding: 28px 24px; display: flex; flex-direction: column; justify-content: flex-end; }
+.wvn-svc-card.is-tags { background: #e4d3c4; color: var(--teal-deep); padding: 28px 28px 24px; }
 .wvn-svc-card.is-photo img {
   position: absolute;
   inset: 0;
@@ -2844,13 +2843,12 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
   height: 55%;
   background: linear-gradient(180deg, transparent, rgba(20, 12, 12, 0.72));
 }
-.wvn-svc-card-copy { position: relative; z-index: 1; text-align: center; }
+.wvn-svc-card-copy { position: relative; z-index: 1; }
 .wvn-svc-card.is-photo .wvn-svc-card-copy {
   position: absolute;
-  left: 16px;
+  left: 20px;
   right: 16px;
   bottom: 18px;
-  text-align: center;
 }
 .wvn-svc-label {
   margin: 0 0 8px;
@@ -2893,7 +2891,7 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
   text-transform: uppercase;
   text-align: center;
 }
-.wvn-svc-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 22px; }
+.wvn-svc-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
 .wvn-svc-tags span {
   background: #fff;
   color: var(--teal-deep);
@@ -2904,7 +2902,7 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
 }
 .wvn-svc-specials {
   background: var(--teal-deep);
-  padding: 72px clamp(12px, 2vw, 24px);
+  padding: 64px clamp(16px, 3vw, 40px);
 }
 .wvn-svc-mosaic {
   width: 100%;
@@ -2963,7 +2961,7 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
   place-items: center;
   font-size: 12px;
 }
-.wvn-svc-tile-copy { position: relative; z-index: 1; padding: 22px; text-align: center; }
+.wvn-svc-tile-copy { position: relative; z-index: 1; padding: 22px; }
 .wvn-svc-tile.is-photo .wvn-svc-tile-copy {
   position: absolute;
   left: 0;
@@ -2992,8 +2990,6 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
-  text-align: center;
   padding: 22px;
 }
 .wvn-svc-tile.is-intro .wvn-svc-tile-copy,
