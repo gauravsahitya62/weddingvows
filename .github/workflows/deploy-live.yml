@@ -16,10 +16,10 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  DEPLOY_HOST: 82.25.120.254
-  DEPLOY_USER: u412935172
-  DEPLOY_PORT: '65002'
-  DEPLOY_PATH: /home/u412935172/domains/weddingvowsbynikhil.com/public_html
+  DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+  DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+  DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+  DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
 
 jobs:
   deploy:
@@ -34,6 +34,14 @@ jobs:
         run: |
           set -euo pipefail
           find wp-content -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: Validate deployment settings
+        run: |
+          set -euo pipefail
+          test -n "$DEPLOY_HOST" || { echo 'Missing DEPLOY_HOST'; exit 1; }
+          test -n "$DEPLOY_USER" || { echo 'Missing DEPLOY_USER'; exit 1; }
+          test -n "$DEPLOY_PORT" || { echo 'Missing DEPLOY_PORT'; exit 1; }
+          test -n "$DEPLOY_PATH" || { echo 'Missing DEPLOY_PATH'; exit 1; }
 
       - name: Configure SSH
         env:
