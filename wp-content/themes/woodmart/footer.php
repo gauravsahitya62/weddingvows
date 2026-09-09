@@ -4,9 +4,15 @@
       <h2>Wedding Vows<br>by Nikhil</h2>
       <p><?php echo esc_html(wvn_home_text('home_footer_tagline', 'Destination wedding planner in Udaipur — palace, lakeside and heritage celebrations across Rajasthan and India.')); ?></p>
       <div class="wvn-social">
-        <a href="https://www.instagram.com/weddingvowsbynikhil" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.facebook.com/share/16DJ386egg/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://wa.me/message/ECDOSKZJH772M1" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.instagram.com/weddingvowsbynikhil" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.25" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.7" r="1.1"/></svg>
+        </a>
+        <a href="https://www.facebook.com/share/16DJ386egg/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 20v-7h2.4l.4-2.8h-2.8V8.4c0-.8.2-1.4 1.4-1.4h1.5V4.5c-.3 0-1.1-.1-2-.1-2 0-3.4 1.2-3.4 3.5v2.3H8.7V13H11v7h2.5Z" fill="currentColor"/></svg>
+        </a>
+        <a href="https://wa.me/message/ECDOSKZJH772M1" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.4 5.6A8.9 8.9 0 0 0 12.1 3a8.98 8.98 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 0 0 21 12a8.95 8.95 0 0 0-2.6-6.4Zm-6.3 13.5h-.1a7.45 7.45 0 0 1-3.8-1l-.3-.2-2.7.7.7-2.7-.2-.3a7.45 7.45 0 0 1-1.1-3.9 7.5 7.5 0 0 1 12.8-5.3 7.48 7.48 0 0 1 2.2 5.3 7.5 7.5 0 0 1-7.5 7.4Zm4.1-5.6c-.2-.1-1.3-.6-1.5-.7-.2-.1-.4-.1-.5.1-.2.2-.6.7-.7.9-.1.1-.3.2-.5.1-.2-.1-.9-.3-1.8-1.1-.7-.6-1.1-1.3-1.3-1.5-.1-.2 0-.3.1-.4l.3-.4.2-.4c.1-.1 0-.3 0-.4-.1-.1-.5-1.2-.7-1.7-.2-.4-.4-.4-.5-.4h-.4c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.3c.1.2 1.6 2.4 3.8 3.4.5.2.9.4 1.3.5.5.2 1 .1 1.4.1.4-.1 1.3-.5 1.5-1.1.2-.5.2-1 .1-1.1-.1-.1-.2-.1-.4-.2Z" fill="currentColor"/></svg>
+        </a>
       </div>
     </div>
     <div>
@@ -63,6 +69,7 @@
   <div class="wvn-legal">
     <span>© <?php echo esc_html(date('Y')); ?> Wedding Vows By Nikhil. All rights reserved.</span>
     <span><?php echo esc_html(wvn_home_text('home_footer_address', '53, Sun city, Delhite, Behind Celebration Mall, Bhuwana, Udaipur, Rajasthan 313001')); ?></span>
+    <span class="wvn-developed">Developed by <a href="https://dhventa.com/" target="_blank" rel="noopener">Dhventa</a></span>
   </div>
 </footer>
 
