@@ -1,0 +1,124 @@
+/* Wedding Vows by Nikhil — layout and footer refinements */
+
+/* Wider editorial sections */
+.wvn-cta,
+.wvn-gallery,
+.wvn-stories,
+.wvn-quotes,
+.wvn-collective {
+  width: min(1720px, calc(100% - 48px));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.wvn-cta-box {
+  width: 100%;
+}
+
+.wvn-gallery {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Keep gallery copy centered while letting the image mosaic breathe */
+.wvn-gallery > .wvn-kicker,
+.wvn-gallery > .wvn-display,
+.wvn-gallery > .wvn-lede {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Footer: wider grid, stronger spacing and reliable social icons */
+.wvn-footer {
+  width: 100%;
+}
+
+.wvn-footer-grid {
+  width: min(1720px, calc(100% - 48px));
+  margin: 0 auto;
+  grid-template-columns: minmax(240px, 1.35fr) minmax(220px, 1fr) minmax(220px, 1fr) minmax(220px, 1fr);
+  column-gap: 56px;
+}
+
+.wvn-footer .wvn-social {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.wvn-footer .wvn-social a {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255,255,255,.45);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--cream);
+  transition: transform .2s ease, background-color .2s ease, color .2s ease;
+}
+
+.wvn-footer .wvn-social a:hover {
+  transform: translateY(-2px);
+  background: var(--cream);
+  color: var(--teal-deep);
+}
+
+.wvn-footer .wvn-social svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+  fill: currentColor;
+}
+
+.wvn-footer .wvn-legal {
+  width: min(1720px, calc(100% - 48px));
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+.wvn-footer .wvn-developed {
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.wvn-footer .wvn-developed a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 1100px) {
+  .wvn-footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .wvn-cta,
+  .wvn-gallery,
+  .wvn-stories,
+  .wvn-quotes,
+  .wvn-collective,
+  .wvn-footer-grid,
+  .wvn-footer .wvn-legal {
+    width: min(100%, calc(100% - 28px));
+  }
+
+  .wvn-footer-grid {
+    grid-template-columns: 1fr;
+    row-gap: 34px;
+  }
+
+  .wvn-footer .wvn-legal {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .wvn-footer .wvn-developed {
+    margin-left: 0;
+    white-space: normal;
+  }
+}
