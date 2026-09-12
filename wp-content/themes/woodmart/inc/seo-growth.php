@@ -30,21 +30,39 @@ function wvn_growth_landing_seo($value, $type = 'title') {
     return $value;
 }
 
+function wvn_growth_event_planner_seo($value, $type = 'title') {
+    if (!is_page('event-planner-udaipur')) {
+        return $value;
+    }
+
+    if ($type === 'title') {
+        return 'Best Event Planner in Udaipur | Wedding Vows by Nikhil';
+    }
+
+    return 'Event planner in Udaipur for weddings, private celebrations and destination events. Wedding Vows by Nikhil handles planning, design, production, hospitality and on-ground coordination.';
+}
+
 function wvn_growth_document_title($parts) {
+    $event_title = wvn_growth_event_planner_seo('', 'title');
+    if ($event_title) {
+        return array('title' => $event_title);
+    }
     $title = wvn_growth_landing_seo('', 'title');
     return $title ? array('title' => $title) : $parts;
 }
 add_filter('document_title_parts', 'wvn_growth_document_title', 45);
 
 function wvn_growth_wpseo_title($title) {
-    return wvn_growth_landing_seo($title, 'title');
+    $event_title = wvn_growth_event_planner_seo('', 'title');
+    return $event_title ?: wvn_growth_landing_seo($title, 'title');
 }
 add_filter('wpseo_title', 'wvn_growth_wpseo_title', 45);
 add_filter('wpseo_opengraph_title', 'wvn_growth_wpseo_title', 45);
 add_filter('wpseo_twitter_title', 'wvn_growth_wpseo_title', 45);
 
 function wvn_growth_wpseo_desc($desc) {
-    return wvn_growth_landing_seo($desc, 'description');
+    $event_desc = wvn_growth_event_planner_seo('', 'description');
+    return $event_desc ?: wvn_growth_landing_seo($desc, 'description');
 }
 add_filter('wpseo_metadesc', 'wvn_growth_wpseo_desc', 45);
 add_filter('wpseo_opengraph_desc', 'wvn_growth_wpseo_desc', 45);
@@ -69,6 +87,43 @@ function wvn_growth_post_meta() {
 }
 add_action('wp_head', 'wvn_growth_post_meta', 6);
 
+function wvn_growth_event_planner_schema() {
+    if (!is_page('event-planner-udaipur')) {
+        return;
+    }
+
+    $faqs = array(
+        array('q' => 'What does an event planner in Udaipur handle?', 'a' => 'An event planner can coordinate venue sourcing, planning timelines, décor and production, entertainment, guest hospitality, vendor management and on-ground execution. The exact scope depends on the event.'),
+        array('q' => 'Do you only plan weddings?', 'a' => 'Wedding Vows by Nikhil is focused on wedding and destination-event experiences, and the planning approach can also support private celebrations and selected destination events.'),
+        array('q' => 'Why hire a local event planner in Udaipur?', 'a' => 'A local planning team can work directly with venues, vendors, production teams and guest logistics in the city, which helps reduce coordination gaps during the event.'),
+        array('q' => 'Can you manage both planning and event-day execution?', 'a' => 'Yes. The planning scope can cover pre-event coordination and a detailed event-day run sheet, with the on-ground team responsible for keeping vendors, timelines and guest movement aligned.'),
+    );
+
+    $faq_entities = array();
+    foreach ($faqs as $faq) {
+        $faq_entities[] = array(
+            '@type' => 'Question',
+            'name' => $faq['q'],
+            'acceptedAnswer' => array('@type' => 'Answer', 'text' => $faq['a']),
+        );
+    }
+
+    $graph = array(
+        '@context' => 'https://schema.org',
+        '@type' => 'Service',
+        'name' => 'Event Planning in Udaipur',
+        'serviceType' => 'Event Planning',
+        'areaServed' => array('@type' => 'City', 'name' => 'Udaipur'),
+        'provider' => array('@type' => 'ProfessionalService', 'name' => 'Wedding Vows by Nikhil', 'url' => home_url('/')),
+        'url' => home_url('/event-planner-udaipur/'),
+        'description' => wvn_growth_event_planner_seo('', 'description'),
+    );
+
+    echo '<script type="application/ld+json">' . wp_json_encode($graph, JSON_UNESCAPED_SLASHES) . '</script>' . "\n";
+    echo '<script type="application/ld+json">' . wp_json_encode(array('@context' => 'https://schema.org', '@type' => 'FAQPage', 'mainEntity' => $faq_entities), JSON_UNESCAPED_SLASHES) . '</script>' . "\n";
+}
+add_action('wp_head', 'wvn_growth_event_planner_schema', 18);
+
 function wvn_growth_related_links($content) {
     if (is_admin() || !is_singular('post') || !in_the_loop() || !is_main_query()) {
         return $content;
@@ -76,6 +131,8 @@ function wvn_growth_related_links($content) {
 
     $links = array(
         array('label' => 'Weddings in Udaipur: venues, costs & planning', 'url' => home_url('/weddings-in-udaipur/')),
+        array('label' => 'Wedding planner in Udaipur', 'url' => home_url('/wedding-planner-udaipur/')),
+        array('label' => 'Event planner in Udaipur', 'url' => home_url('/event-planner-udaipur/')),
         array('label' => 'Destination wedding planner in Udaipur', 'url' => home_url('/destination-wedding-planner-udaipur/')),
         array('label' => 'Wedding planning services', 'url' => home_url('/what-we-do/')),
         array('label' => 'Real Udaipur weddings', 'url' => home_url('/portfolio/')),
@@ -87,14 +144,17 @@ function wvn_growth_related_links($content) {
         if (strpos($title, 'destination wedding planner') !== false && strpos($link['label'], 'Destination wedding planner') !== false) {
             continue;
         }
+        if (strpos($title, 'event planner') !== false && strpos($link['label'], 'Event planner') !== false) {
+            continue;
+        }
         $filtered[] = $link;
     }
 
-    $html = '<aside class="wvn-seo-related" aria-label="Related Udaipur wedding planning resources">';
+    $html = '<aside class="wvn-seo-related" aria-label="Related Udaipur wedding and event planning resources">';
     $html .= '<p class="wvn-seo-related-kicker">Continue planning</p>';
-    $html .= '<h2>Udaipur wedding planning guides</h2>';
+    $html .= '<h2>Udaipur wedding & event planning guides</h2>';
     $html .= '<div class="wvn-seo-related-grid">';
-    foreach (array_slice($filtered, 0, 4) as $link) {
+    foreach (array_slice($filtered, 0, 5) as $link) {
         $html .= '<a href="' . esc_url($link['url']) . '">' . esc_html($link['label']) . ' <span aria-hidden="true">↗</span></a>';
     }
     $html .= '</div></aside>';
@@ -108,6 +168,49 @@ function wvn_growth_ping_core_sitemaps() {
         return;
     }
 }
+
+/** Create a focused event-planner landing page once. */
+function wvn_seed_event_planner_page() {
+    if (get_option('wvn_event_planner_page_v1') === '1') {
+        return;
+    }
+
+    $slug = 'event-planner-udaipur';
+    $existing = get_page_by_path($slug, OBJECT, 'page');
+    if ($existing) {
+        update_option('wvn_event_planner_page_v1', '1', false);
+        return;
+    }
+
+    $content = '<p>Wedding Vows by Nikhil plans weddings and destination events in Udaipur with a single team coordinating the venue, design, vendors, guest experience and event-day execution.</p>'
+        . '<h2>Event planning in Udaipur, from brief to execution</h2>'
+        . '<p>A strong event planner is more than a vendor list. The work is turning a brief into a schedule, giving every team a clear responsibility, and making sure the guest experience survives the realities of the venue and event day.</p>'
+        . '<h2>What we can coordinate</h2>'
+        . '<ul><li>Venue research, selection and coordination</li><li>Event concept, décor and styling</li><li>Production, lighting, sound and stage requirements</li><li>Entertainment and artist coordination</li><li>Guest hospitality, movement and timelines</li><li>Vendor management and on-ground execution</li></ul>'
+        . '<h2>Why local Udaipur knowledge matters</h2>'
+        . '<p>Udaipur events often involve heritage properties, palace hotels, resort campuses, guest transfers and detailed production schedules. A local planning team can coordinate directly with the venue and city-based vendors instead of managing the event entirely from another city.</p>'
+        . '<h2>For weddings, private celebrations and destination events</h2>'
+        . '<p>Our core work is wedding and destination planning, so the same production discipline can be applied to selected private and destination events that need a polished guest experience and detailed on-ground management.</p>'
+        . '<h2>See the work before you decide</h2>'
+        . '<p>Explore our <a href="' . esc_url(home_url('/portfolio/')) . '">real wedding portfolio</a>, read the <a href="' . esc_url(home_url('/weddings-in-udaipur/')) . '">Udaipur wedding planning guide</a>, or compare our <a href="' . esc_url(home_url('/wedding-planner-udaipur/')) . '">wedding planning services</a>.</p>'
+        . '<p><a href="' . esc_url(home_url('/contact-us/')) . '">Tell us about your event</a> and we can discuss your date, guest count, venue and planning scope.</p>';
+
+    $page_id = wp_insert_post(wp_slash(array(
+        'post_title' => 'Event Planner in Udaipur',
+        'post_name' => $slug,
+        'post_content' => $content,
+        'post_excerpt' => 'Event planner in Udaipur for weddings, private celebrations and destination events, with planning, design, production, hospitality and on-ground coordination.',
+        'post_status' => 'publish',
+        'post_type' => 'page',
+        'comment_status' => 'closed',
+    )), true);
+
+    if (!is_wp_error($page_id)) {
+        update_post_meta($page_id, '_wvn_seo_seeded', '1');
+        update_option('wvn_event_planner_page_v1', '1', false);
+    }
+}
+add_action('init', 'wvn_seed_event_planner_page', 33);
 
 /**
  * Add one distinct, evergreen Journal article without touching existing posts.
