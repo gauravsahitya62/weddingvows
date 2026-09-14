@@ -52,4 +52,47 @@ $icons = array(
         </svg>
         <span class="wvn-book-arrow">↗</span>
     </a>
+    <button class="wvn-mobile-toggle" type="button" aria-label="Open navigation" aria-controls="wvn-mobile-panel" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
 </header>
+
+<div class="wvn-mobile-backdrop" data-wvn-mobile-close></div>
+<aside class="wvn-mobile-panel" id="wvn-mobile-panel" aria-label="Mobile navigation" aria-hidden="true">
+    <div class="wvn-mobile-panel-header">
+        <p class="wvn-mobile-panel-title">Wedding Vows</p>
+        <button class="wvn-mobile-close" type="button" aria-label="Close navigation" data-wvn-mobile-close>×</button>
+    </div>
+    <nav class="wvn-mobile-links">
+        <?php foreach ($nav as $item) : ?>
+            <a href="<?php echo esc_url($item['url']); ?>">
+                <span><?php echo esc_html($item['label']); ?></span>
+                <span aria-hidden="true">↗</span>
+            </a>
+        <?php endforeach; ?>
+    </nav>
+    <a class="wvn-mobile-cta" href="<?php echo esc_url(home_url('/contact-us/')); ?>">Book a Consultation ↗</a>
+</aside>
+
+<script>
+(function () {
+    var toggle = document.querySelector('.wvn-mobile-toggle');
+    var panel = document.getElementById('wvn-mobile-panel');
+    var closers = document.querySelectorAll('[data-wvn-mobile-close]');
+    if (!toggle || !panel) return;
+
+    function setOpen(open) {
+        document.body.classList.toggle('wvn-mobile-open', open);
+        panel.classList.toggle('is-open', open);
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        panel.setAttribute('aria-hidden', open ? 'false' : 'true');
+    }
+
+    toggle.addEventListener('click', function () { setOpen(true); });
+    closers.forEach(function (el) { el.addEventListener('click', function () { setOpen(false); }); });
+    panel.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', function () { setOpen(false); }); });
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') setOpen(false);
+    });
+})();
+</script>
