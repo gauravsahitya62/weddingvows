@@ -8,10 +8,24 @@ while (have_posts()) :
     the_post();
     $slug = get_post_field('post_name', get_the_ID());
     $config = function_exists('wvn_seo_landing_config') ? wvn_seo_landing_config($slug) : array();
-    $hero_image = !empty($config['image']) ? $config['image'] : wvn_hero_image();
+    $image_map = array(
+        'wedding-planner-udaipur' => '2025/04/NVP_JEHANAXKANISHK_WEDDING-1450.jpg',
+        'destination-wedding-planner-udaipur' => '2025/04/2J0A2532-533x800-1.jpg',
+        'luxury-wedding-planner-udaipur' => '2025/04/2J0A7886-1200x800-1.jpg',
+        'destination-wedding-udaipur' => '2025/04/2J0A1820-1200x800-1.jpg',
+        'wedding-venues-udaipur' => '2025/04/2J0A0682.jpg',
+        'palace-wedding-venues-in-udaipur' => '2025/04/2J0A2532-533x800-1.jpg',
+        'udaipur-wedding-cost' => '2025/04/2J0A1818.jpg',
+        'event-planner-udaipur' => '2025/04/NVP_JEHANAXKANISHK_WEDDING-1450.jpg',
+    );
+    $image_path = isset($image_map[$slug]) ? $image_map[$slug] : '';
+    $page_image = ($image_path && function_exists('wvn_media')) ? wvn_media($image_path) : '';
+    if (!$page_image) {
+        $page_image = !empty($config['image']) ? $config['image'] : wvn_hero_image();
+    }
     ?>
 <main id="content" class="wvn-seo-landing wvn-money-page">
-  <section class="wvn-money-hero" style="--svc-hero:url('<?php echo esc_url($hero_image); ?>')">
+  <section class="wvn-money-hero" style="--svc-hero:url('<?php echo esc_url($page_image); ?>')">
     <div class="wvn-money-hero-media" aria-hidden="true"></div>
     <div class="wvn-money-hero-overlay"></div>
     <div class="wvn-money-hero-inner">
@@ -47,14 +61,21 @@ while (have_posts()) :
       <div class="wvn-money-content">
         <?php the_content(); ?>
       </div>
+      <aside class="wvn-money-contact-card">
+        <p class="wvn-money-card-kicker">Let’s plan together</p>
+        <h2 class="wvn-display">Tell us what you’re imagining.</h2>
+        <p>Share your date, guest count and the kind of celebration you want. We will help you understand the right venue, timeline and next steps.</p>
+        <a class="wvn-money-card-btn" href="<?php echo esc_url(home_url('/contact-us/')); ?>">Request a Consultation <span aria-hidden="true">↗</span></a>
+        <p class="wvn-money-card-note">Prefer to speak directly? <a href="tel:+919660809000">+91 96608 09000</a></p>
+      </aside>
     </div>
-    <aside class="wvn-money-contact-card">
-      <p class="wvn-money-card-kicker">Let’s plan together</p>
-      <h2 class="wvn-display">Tell us what you’re imagining.</h2>
-      <p>Share your date, guest count and the kind of celebration you want. We will help you understand the right venue, timeline and next steps.</p>
-      <a class="wvn-money-card-btn" href="<?php echo esc_url(home_url('/contact-us/')); ?>">Request a Consultation <span aria-hidden="true">↗</span></a>
-      <p class="wvn-money-card-note">Prefer to speak directly? <a href="tel:+919660809000">+91 96608 09000</a></p>
-    </aside>
+    <figure class="wvn-money-intro-media">
+      <img src="<?php echo esc_url($page_image); ?>" alt="<?php echo esc_attr(get_the_title()); ?> in Udaipur — Wedding Vows by Nikhil" loading="lazy">
+      <figcaption class="wvn-money-intro-media-caption">
+        <strong>Udaipur, planned from the inside.</strong>
+        Local venue knowledge, trusted vendors and on-ground execution brought together by one team.
+      </figcaption>
+    </figure>
   </section>
 
   <?php if (!empty($config['highlights'])) : ?>
@@ -92,19 +113,18 @@ while (have_posts()) :
 
   <?php if (!empty($config['faqs'])) : ?>
   <section class="wvn-money-faq">
-    <div class="wvn-money-section-head wvn-money-faq-head">
-      <div>
-        <p class="wvn-kicker">Questions, answered</p>
-        <h2 class="wvn-display">Planning an Udaipur wedding?</h2>
+    <div class="wvn-money-faq-visual" style="background-image:url('<?php echo esc_url($page_image); ?>')" aria-hidden="true"></div>
+    <div class="wvn-money-faq-inner">
+      <p class="wvn-kicker">Questions, answered</p>
+      <h2 class="wvn-display">Planning an Udaipur wedding?</h2>
+      <div class="wvn-money-faq-grid">
+        <?php foreach ($config['faqs'] as $faq) : ?>
+          <details>
+            <summary><?php echo esc_html($faq['q']); ?></summary>
+            <p><?php echo esc_html($faq['a']); ?></p>
+          </details>
+        <?php endforeach; ?>
       </div>
-    </div>
-    <div class="wvn-money-faq-grid">
-      <?php foreach ($config['faqs'] as $faq) : ?>
-        <details>
-          <summary><?php echo esc_html($faq['q']); ?></summary>
-          <p><?php echo esc_html($faq['a']); ?></p>
-        </details>
-      <?php endforeach; ?>
     </div>
   </section>
   <?php endif; ?>
