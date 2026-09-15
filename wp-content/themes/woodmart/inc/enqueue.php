@@ -70,3 +70,6 @@ add_action('after_setup_theme', 'wvn_editor_support');
 
 /* SEO growth layer: landing-page metadata + contextual internal links. */
 require_once get_theme_file_path('/inc/seo-growth.php');
+
+/* Verified real-wedding case-study publisher. */
+require_once get_theme_file_path('/inc/real-wedding-case-study.php');
