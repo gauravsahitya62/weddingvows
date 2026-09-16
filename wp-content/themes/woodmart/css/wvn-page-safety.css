@@ -1,0 +1,23 @@
+/* Stable rendering layer for standard WordPress pages. */
+.wvn-content-page,
+.wvn-standard-page,
+.wvn-standard-page-inner,
+.wvn-standard-page-content{width:100%;min-width:0;box-sizing:border-box}
+.wvn-content-page{position:relative;z-index:1;overflow:clip;background:var(--cream,#f0ede4);color:var(--teal-text,#3a2727);padding-top:0}
+.wvn-standard-page-inner{width:min(1280px,calc(100% - 48px));margin:0 auto;padding:150px 0 110px}
+.wvn-standard-page-header{max-width:960px;margin:0 0 54px;padding-top:8px}
+.wvn-standard-page-header .wvn-kicker{margin-bottom:14px}
+.wvn-standard-page-header h1{font-size:clamp(44px,6vw,86px);line-height:1.02;overflow-wrap:anywhere}
+.wvn-standard-page-content{font-size:16px;line-height:1.8;color:var(--muted,#8a7373)}
+.wvn-standard-page-content>*{max-width:900px}
+.wvn-standard-page-content h2,.wvn-standard-page-content h3,.wvn-standard-page-content h4{color:var(--teal-text,#3a2727);line-height:1.15;overflow-wrap:anywhere}
+.wvn-standard-page-content h2{font-size:clamp(28px,3vw,44px);margin:48px 0 16px}
+.wvn-standard-page-content h3{font-size:24px;margin:36px 0 12px}
+.wvn-standard-page-content p,.wvn-standard-page-content ul,.wvn-standard-page-content ol{margin:0 0 20px}
+.wvn-standard-page-content img,.wvn-standard-page-content video,.wvn-standard-page-content iframe{max-width:100%;height:auto}
+.wvn-standard-page-content table{width:100%;display:block;overflow-x:auto}
+.wvn-standard-page-content a{color:var(--teal-deep,#6b3e3e);text-decoration:underline;text-underline-offset:3px}
+body.wvn-body #content.wvn-content-page{max-width:none;margin:0;padding-left:0;padding-right:0}
+@media(max-width:1020px){.wvn-standard-page-inner{width:calc(100% - 44px);padding-top:132px}}
+@media(max-width:700px){.wvn-standard-page-inner{width:calc(100% - 32px);padding-top:116px;padding-bottom:72px}.wvn-standard-page-header{margin-bottom:36px}.wvn-standard-page-header h1{font-size:clamp(38px,11vw,62px)}.wvn-standard-page-content{font-size:15px;line-height:1.72}}
+@media(max-width:420px){.wvn-standard-page-inner{width:calc(100% - 24px);padding-top:108px}}
