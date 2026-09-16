@@ -73,3 +73,6 @@ require_once get_theme_file_path('/inc/seo-growth.php');
 
 /* Verified real-wedding case-study publisher. */
 require_once get_theme_file_path('/inc/real-wedding-case-study.php');
+
+/* One-time SEO Journal publisher for the current content run. */
+require_once get_theme_file_path('/inc/seo-blog-20260916.php');
