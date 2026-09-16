@@ -10,6 +10,7 @@ function theme_files() {
     wp_enqueue_style('wvn-overrides', get_theme_file_uri('/css/wvn-overrides.css'), array('wvn-bts'), '1.0.0');
     wp_enqueue_style('wvn-seo-growth', get_theme_file_uri('/css/wvn-seo-growth.css'), array('wvn-overrides'), '1.0.0');
     wp_enqueue_style('wvn-money-responsive', get_theme_file_uri('/css/wvn-money-responsive.css'), array('wvn-seo-growth'), '1.0.0');
+    wp_enqueue_style('wvn-page-safety', get_theme_file_uri('/css/wvn-page-safety.css'), array('wvn-money-responsive'), '1.0.1');
     wp_enqueue_style('custom-swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', array(), '11');
     wp_enqueue_script('swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', array(), '11', true);
     wp_enqueue_script('jqueryui', 'https://code.jquery.com/jquery-3.6.3.min.js', array('jquery'), '3.6.3', true);
