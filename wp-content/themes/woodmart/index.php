@@ -2,12 +2,13 @@
 get_header();
 ?>
 
-<main id="content">
-   
-    <?php the_content(); ?>
-   
+<main id="content" class="wvn-content-page">
+    <?php
+    while (have_posts()) :
+        the_post();
+        the_content();
+    endwhile;
+    ?>
 </main>
 
-<?php 
-    get_footer();
-?>
+<?php get_footer(); ?>
