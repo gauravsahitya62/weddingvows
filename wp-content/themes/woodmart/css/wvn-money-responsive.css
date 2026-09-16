@@ -1,309 +1,135 @@
-/* Wedding Vows by Nikhil — money-page responsive polish + mobile navigation */
+/* Wedding Vows by Nikhil — unified money-page responsive layer */
 
-/* =========================
-   Mobile navigation
-   ========================= */
-.wvn-mobile-toggle {
-  display: none;
-  width: 46px;
-  height: 46px;
-  border: 1px solid rgba(45,32,32,.18);
-  border-radius: 50%;
-  background: rgba(255,253,249,.94);
-  color: #2d2020;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 0;
-  z-index: 10002;
-}
-.wvn-mobile-toggle svg { width: 20px; height: 20px; }
-.wvn-mobile-backdrop {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(19,14,14,.52);
-  z-index: 9998;
-}
-.wvn-mobile-panel {
-  display: none;
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: min(88vw, 360px);
-  height: 100dvh;
-  background: #fffdf9;
-  z-index: 10000;
-  padding: 92px 26px 26px;
-  box-shadow: -24px 0 70px rgba(35,22,22,.16);
-  transform: translateX(100%);
-  transition: transform .28s ease;
-  overflow-y: auto;
-}
-.wvn-mobile-panel.is-open { transform: translateX(0); }
-.wvn-mobile-panel-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 22px;
-  margin-bottom: 8px;
-  border-bottom: 1px solid rgba(45,32,32,.12);
-}
-.wvn-mobile-panel-title {
-  margin: 0;
-  color: #2d2020;
-  font-family: var(--font, Georgia, serif);
-  font-size: 18px;
-  font-weight: 400;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-.wvn-mobile-close {
-  width: 38px;
-  height: 38px;
-  border: 1px solid rgba(45,32,32,.14);
-  border-radius: 50%;
-  background: #f4eee6;
-  color: #2d2020;
-  cursor: pointer;
-  font-size: 20px;
-  line-height: 1;
-}
-.wvn-mobile-links {
-  display: grid;
-  gap: 6px;
-}
-.wvn-mobile-links a {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 15px 6px;
-  color: #2d2020;
-  border-bottom: 1px solid rgba(45,32,32,.10);
-  text-decoration: none;
-  font-size: 13px;
-  letter-spacing: .10em;
-  text-transform: uppercase;
-}
-.wvn-mobile-links a span:last-child { opacity: .45; }
-.wvn-mobile-cta {
-  margin-top: 24px;
-  width: 100%;
-  min-height: 52px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: #ad6f6f;
-  color: #fff;
-  text-decoration: none;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-}
-body.wvn-mobile-open { overflow: hidden; }
-body.wvn-mobile-open .wvn-mobile-backdrop { display: block; }
-body.wvn-mobile-open .wvn-mobile-panel { display: block; }
+/* Mobile navigation */
+.wvn-mobile-toggle{display:none;width:46px;height:46px;border:1px solid rgba(45,32,32,.18);border-radius:50%;background:rgba(255,253,249,.94);color:#2d2020;align-items:center;justify-content:center;cursor:pointer;padding:0;z-index:10002}
+.wvn-mobile-toggle svg{width:20px;height:20px}
+.wvn-mobile-backdrop{display:none;position:fixed;inset:0;background:rgba(19,14,14,.52);z-index:9998}
+.wvn-mobile-panel{display:none;position:fixed;top:0;right:0;width:min(88vw,360px);height:100dvh;background:#fffdf9;z-index:10000;padding:92px 26px 26px;box-shadow:-24px 0 70px rgba(35,22,22,.16);transform:translateX(100%);transition:transform .28s ease;overflow-y:auto}
+.wvn-mobile-panel.is-open{transform:translateX(0)}
+.wvn-mobile-panel-header{display:flex;align-items:center;justify-content:space-between;padding-bottom:22px;margin-bottom:8px;border-bottom:1px solid rgba(45,32,32,.12)}
+.wvn-mobile-panel-title{margin:0;color:#2d2020;font-family:var(--font,Georgia,serif);font-size:18px;font-weight:400;letter-spacing:.08em;text-transform:uppercase}
+.wvn-mobile-close{width:38px;height:38px;border:1px solid rgba(45,32,32,.14);border-radius:50%;background:#f4eee6;color:#2d2020;cursor:pointer;font-size:20px;line-height:1}
+.wvn-mobile-links{display:grid;gap:6px}
+.wvn-mobile-links a{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 6px;color:#2d2020;border-bottom:1px solid rgba(45,32,32,.1);text-decoration:none;font-size:13px;letter-spacing:.1em;text-transform:uppercase}
+.wvn-mobile-links a span:last-child{opacity:.45}
+.wvn-mobile-cta{margin-top:24px;width:100%;min-height:52px;display:inline-flex;align-items:center;justify-content:center;background:#ad6f6f;color:#fff;text-decoration:none;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+body.wvn-mobile-open{overflow:hidden}
+body.wvn-mobile-open .wvn-mobile-backdrop{display:block}
+body.wvn-mobile-open .wvn-mobile-panel{display:block}
 
-/* =========================
-   Money-page structure
-   ========================= */
-.wvn-money-page { overflow: clip; }
-.wvn-money-page .wvn-money-hero { min-height: min(760px, 76vh); }
-.wvn-money-page .wvn-money-hero-media { background-position: center center; }
-.wvn-money-page .wvn-money-hero-copy { max-width: 900px; }
-.wvn-money-page .wvn-money-intro { grid-template-columns: minmax(0, 1.08fr) minmax(340px, .92fr); }
-.wvn-money-intro-media {
-  position: relative;
-  min-height: 560px;
-  overflow: hidden;
-  background: #e8e0d7;
-  box-shadow: 0 22px 70px rgba(38,25,25,.10);
-}
-.wvn-money-intro-media img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 560px;
-  object-fit: cover;
-  object-position: center;
-}
-.wvn-money-intro-media-caption {
-  position: absolute;
-  left: 26px;
-  right: 26px;
-  bottom: 24px;
-  padding: 18px 20px;
-  background: rgba(255,253,249,.94);
-  border: 1px solid rgba(45,32,32,.10);
-  box-shadow: 0 12px 40px rgba(38,25,25,.10);
-  color: #6e5d5d;
-  font-size: 13px;
-  line-height: 1.55;
-}
-.wvn-money-intro-media-caption strong {
-  display: block;
-  color: #2d2020;
-  margin-bottom: 4px;
-  font-family: var(--font, Georgia, serif);
-  font-size: 19px;
-  font-weight: 400;
-}
-.wvn-money-intro-copy { align-self: center; }
-.wvn-money-page .wvn-money-content { max-width: 820px; }
-.wvn-money-page .wvn-money-content > p:first-child { margin-top: 0; }
-.wvn-money-page .wvn-money-contact-card {
-  position: static;
-  max-width: 460px;
-  margin-top: 34px;
+/* Shared containment */
+.wvn-money-page{overflow-x:clip;max-width:100%}
+.wvn-money-page img{max-width:100%;height:auto}
+.wvn-money-page .wvn-money-hero-inner,.wvn-money-page .wvn-money-intro,.wvn-money-page .wvn-money-services>*,.wvn-money-page .wvn-money-faq-inner,.wvn-money-page .wvn-money-proof-cta,.wvn-money-page .wvn-money-final-cta{box-sizing:border-box}
+.wvn-money-page .wvn-money-content,.wvn-money-page .wvn-money-content p,.wvn-money-page .wvn-money-content li{overflow-wrap:anywhere}
+.wvn-money-page .wvn-money-actions{display:flex;flex-wrap:wrap;gap:12px}
+.wvn-money-page .wvn-money-btn{box-sizing:border-box;max-width:100%}
+
+/* Hero */
+.wvn-money-page .wvn-money-hero{min-height:min(760px,76vh)}
+.wvn-money-page .wvn-money-hero-media{background-position:center center}
+.wvn-money-page .wvn-money-hero-copy{max-width:900px;min-width:0}
+.wvn-money-page .wvn-money-hero h1,.wvn-money-page .wvn-money-hero-lede{overflow-wrap:anywhere}
+
+/* Intro */
+.wvn-money-page .wvn-money-intro{grid-template-columns:minmax(0,1.08fr) minmax(280px,.92fr);min-width:0}
+.wvn-money-intro-copy{min-width:0;align-self:center}
+.wvn-money-intro-media{position:relative;min-height:560px;overflow:hidden;background:#e8e0d7;box-shadow:0 22px 70px rgba(38,25,25,.1);min-width:0}
+.wvn-money-intro-media img{display:block;width:100%;height:100%;min-height:560px;object-fit:cover;object-position:center}
+.wvn-money-intro-media-caption{position:absolute;left:26px;right:26px;bottom:24px;padding:18px 20px;background:rgba(255,253,249,.94);border:1px solid rgba(45,32,32,.1);box-shadow:0 12px 40px rgba(38,25,25,.1);color:#6e5d5d;font-size:13px;line-height:1.55}
+.wvn-money-intro-media-caption strong{display:block;color:#2d2020;margin-bottom:4px;font-family:var(--font,Georgia,serif);font-size:19px;font-weight:400}
+.wvn-money-page .wvn-money-content{max-width:820px;min-width:0}
+.wvn-money-page .wvn-money-content>p:first-child{margin-top:0}
+.wvn-money-page .wvn-money-contact-card{position:static;max-width:460px;margin-top:34px;box-sizing:border-box}
+
+/* Services */
+.wvn-money-page .wvn-money-services{background:#efe9df}
+.wvn-money-page .wvn-money-services-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.wvn-money-page .wvn-money-service-card{min-width:0;background:#fffdf9;color:#2d2020;border-color:rgba(45,32,32,.12);box-sizing:border-box}
+.wvn-money-page .wvn-money-service-card h3{color:#2d2020;overflow-wrap:anywhere}
+.wvn-money-page .wvn-money-service-card>p:last-child{color:#6e5d5d}
+
+/* FAQ */
+.wvn-money-page .wvn-money-faq{width:100%;padding:0;background:#6e3f3f;color:#fff;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:stretch}
+.wvn-money-faq-visual{min-height:560px;background-position:center;background-size:cover;position:relative;min-width:0}
+.wvn-money-faq-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(54,30,30,.06),rgba(54,30,30,.34))}
+.wvn-money-page .wvn-money-faq-inner{width:min(720px,calc(100% - 64px));margin:0 auto;padding:96px 0 92px;min-width:0}
+.wvn-money-page .wvn-money-faq .wvn-kicker{color:#e8c0c0}
+.wvn-money-page .wvn-money-faq h2{color:#fff;margin:0 0 28px;overflow-wrap:anywhere}
+.wvn-money-page .wvn-money-faq-grid{margin-top:0;border-top:1px solid rgba(255,255,255,.28)}
+.wvn-money-page .wvn-money-faq-grid details{border-bottom:1px solid rgba(255,255,255,.28)}
+.wvn-money-page .wvn-money-faq-grid summary{color:#fff;font-family:var(--font,Georgia,serif);font-size:20px;padding:22px 42px 22px 0;overflow-wrap:anywhere}
+.wvn-money-page .wvn-money-faq-grid summary::after{color:#e7b3b3}
+.wvn-money-page .wvn-money-faq-grid details p{color:rgba(255,255,255,.78);margin-bottom:22px;overflow-wrap:anywhere}
+
+.wvn-money-page .wvn-money-final-cta{margin-top:0;border-radius:0;background:#fffdf9;border-top:1px solid rgba(45,32,32,.1);border-bottom:1px solid rgba(45,32,32,.1);box-sizing:border-box}
+
+/* Tablet */
+@media(max-width:1020px){
+  .wvn-pillnav{display:none!important}
+  .wvn-mobile-toggle{display:inline-flex}
+  .wvn-header{padding:10px 18px}
+  .wvn-logo img{max-width:155px}
+  .wvn-money-page .wvn-money-hero{min-height:680px}
+  .wvn-money-page .wvn-money-hero-inner{width:min(100%,calc(100% - 44px));padding:72px 0 44px;grid-template-columns:1fr;gap:26px}
+  .wvn-money-page .wvn-money-hero-side{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-left:0;border-top:1px solid rgba(255,255,255,.28);padding:8px 0 0}
+  .wvn-money-page .wvn-money-hero-side div{padding:12px 12px 12px 0;min-width:0}
+  .wvn-money-page .wvn-money-proof{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .wvn-money-page .wvn-money-intro{grid-template-columns:1fr;width:min(100%,calc(100% - 44px))}
+  .wvn-money-intro-media{order:-1;min-height:440px}
+  .wvn-money-intro-media img{min-height:440px}
+  .wvn-money-page .wvn-money-services-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .wvn-money-page .wvn-money-faq{grid-template-columns:1fr}
+  .wvn-money-faq-visual{min-height:360px}
+  .wvn-money-page .wvn-money-faq-inner{width:min(100%,calc(100% - 44px));padding:72px 0 74px}
 }
 
-/* Service cards should remain dark/readable on the light paper section. */
-.wvn-money-page .wvn-money-services { background: #efe9df; }
-.wvn-money-page .wvn-money-service-card {
-  background: #fffdf9;
-  color: #2d2020;
-  border-color: rgba(45,32,32,.12);
-}
-.wvn-money-page .wvn-money-service-card h3 { color: #2d2020; }
-.wvn-money-page .wvn-money-service-card > p:last-child { color: #6e5d5d; }
-
-/* FAQ block: deep editorial panel, matching the reference direction. */
-.wvn-money-page .wvn-money-faq {
-  width: 100%;
-  padding: 96px 0 0;
-  background: #6e3f3f;
-  color: #fff;
-  display: grid;
-  grid-template-columns: minmax(320px, .9fr) minmax(0, 1.1fr);
-  align-items: stretch;
-}
-.wvn-money-faq-visual {
-  min-height: 560px;
-  background-position: center;
-  background-size: cover;
-  position: relative;
-}
-.wvn-money-faq-visual::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(54,30,30,.06), rgba(54,30,30,.34));
-}
-.wvn-money-page .wvn-money-faq-inner {
-  width: min(720px, calc(100% - 64px));
-  margin: 0 auto;
-  padding: 18px 0 92px;
-}
-.wvn-money-page .wvn-money-faq .wvn-kicker { color: #e8c0c0; }
-.wvn-money-page .wvn-money-faq h2 { color: #fff; margin: 0 0 28px; }
-.wvn-money-page .wvn-money-faq-grid { margin-top: 0; border-top: 1px solid rgba(255,255,255,.28); }
-.wvn-money-page .wvn-money-faq-grid details { border-bottom: 1px solid rgba(255,255,255,.28); }
-.wvn-money-page .wvn-money-faq-grid summary {
-  color: #fff;
-  font-family: var(--font, Georgia, serif);
-  font-size: 20px;
-  padding: 22px 42px 22px 0;
-}
-.wvn-money-page .wvn-money-faq-grid summary::after { color: #e7b3b3; }
-.wvn-money-page .wvn-money-faq-grid details p { color: rgba(255,255,255,.78); margin-bottom: 22px; }
-
-.wvn-money-page .wvn-money-final-cta {
-  margin-top: 0;
-  margin-bottom: 96px;
-  border-radius: 0;
-  background: #fffdf9;
-  border-top: 1px solid rgba(45,32,32,.10);
-  border-bottom: 1px solid rgba(45,32,32,.10);
+/* Mobile */
+@media(max-width:700px){
+  .wvn-book{width:48px;height:48px}
+  .wvn-mobile-toggle{width:44px;height:44px}
+  .wvn-logo img{max-width:138px}
+  .wvn-money-page .wvn-money-hero{min-height:650px}
+  .wvn-money-page .wvn-money-hero-inner{width:calc(100% - 32px);padding:58px 0 30px}
+  .wvn-money-page .wvn-money-hero h1{font-size:clamp(42px,11vw,62px);line-height:1}
+  .wvn-money-page .wvn-money-hero-lede{font-size:16px;line-height:1.5;margin-top:18px}
+  .wvn-money-page .wvn-money-actions{display:grid;grid-template-columns:1fr;gap:10px}
+  .wvn-money-page .wvn-money-btn{width:100%;min-width:0}
+  .wvn-money-page .wvn-money-hero-side{grid-template-columns:1fr 1fr}
+  .wvn-money-page .wvn-money-hero-side div{font-size:10px;padding-right:8px}
+  .wvn-money-page .wvn-money-proof{grid-template-columns:1fr 1fr}
+  .wvn-money-page .wvn-money-proof>div{padding:18px 12px;min-width:0}
+  .wvn-money-page .wvn-money-proof strong{font-size:16px}
+  .wvn-money-page .wvn-money-proof span{font-size:8px;letter-spacing:.1em}
+  .wvn-money-page .wvn-money-intro{width:calc(100% - 32px);padding:58px 0 56px;gap:34px;display:block}
+  .wvn-money-intro-media,.wvn-money-intro-media img{min-height:360px}
+  .wvn-money-intro-media-caption{left:14px;right:14px;bottom:14px;padding:14px 15px;font-size:12px}
+  .wvn-money-intro-media-caption strong{font-size:17px}
+  .wvn-money-page .wvn-money-content{font-size:15px;line-height:1.72}
+  .wvn-money-page .wvn-money-contact-card{width:100%;max-width:none;padding:24px;margin-top:30px}
+  .wvn-money-page .wvn-money-services{padding:62px 0}
+  .wvn-money-page .wvn-money-services>*,.wvn-money-page .wvn-money-faq>*,.wvn-money-page .wvn-money-proof-cta{width:calc(100% - 32px)}
+  .wvn-money-page .wvn-money-section-head{grid-template-columns:1fr;gap:16px}
+  .wvn-money-page .wvn-money-services-grid{grid-template-columns:1fr;gap:12px;margin-top:30px}
+  .wvn-money-page .wvn-money-service-card{min-height:0;padding:24px}
+  .wvn-money-page .wvn-money-service-card .wvn-svc-label{margin-top:28px}
+  .wvn-money-page .wvn-money-faq{grid-template-columns:1fr}
+  .wvn-money-faq-visual{min-height:280px}
+  .wvn-money-page .wvn-money-faq-inner{width:calc(100% - 32px);padding:40px 0 54px}
+  .wvn-money-page .wvn-money-faq summary{font-size:18px;padding-right:34px}
+  .wvn-money-page .wvn-money-faq-grid details p{font-size:14px}
+  .wvn-money-page .wvn-money-proof-cta,.wvn-money-page .wvn-money-final-cta{width:calc(100% - 32px);margin-left:auto;margin-right:auto;padding:32px 22px;flex-direction:column;align-items:stretch}
+  .wvn-money-page .wvn-money-proof-cta{margin-top:62px;margin-bottom:62px}
+  .wvn-money-page .wvn-money-final-cta{margin-bottom:62px}
+  .wvn-money-page .wvn-money-proof-links{min-width:0}
 }
 
-/* =========================
-   Tablet / mobile
-   ========================= */
-@media (max-width: 1020px) {
-  .wvn-pillnav { display: none !important; }
-  .wvn-mobile-toggle { display: inline-flex; }
-  .wvn-header { padding: 10px 18px; }
-  .wvn-logo img { max-width: 155px; }
-  .wvn-money-page .wvn-money-hero { min-height: 680px; }
-  .wvn-money-hero-inner {
-    width: min(100%, calc(100% - 44px));
-    padding: 72px 0 44px;
-    grid-template-columns: 1fr;
-    gap: 26px;
-  }
-  .wvn-money-hero-side {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0,1fr));
-    border-left: 0;
-    border-top: 1px solid rgba(255,255,255,.28);
-    padding: 8px 0 0;
-  }
-  .wvn-money-hero-side div { padding: 12px 12px 12px 0; }
-  .wvn-money-proof { grid-template-columns: repeat(2, 1fr); }
-  .wvn-money-proof > div:nth-child(2) { border-right: 0; }
-  .wvn-money-proof > div:nth-child(-n+2) { border-bottom: 1px solid var(--money-line); }
-  .wvn-money-page .wvn-money-intro { grid-template-columns: 1fr; width: min(100%, calc(100% - 44px)); }
-  .wvn-money-intro-media { order: -1; min-height: 440px; }
-  .wvn-money-intro-media img { min-height: 440px; }
-  .wvn-money-services-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-  .wvn-money-page .wvn-money-faq { grid-template-columns: 1fr; }
-  .wvn-money-faq-visual { min-height: 360px; }
-  .wvn-money-page .wvn-money-faq-inner { width: min(100%, calc(100% - 44px)); }
-}
-
-@media (max-width: 700px) {
-  .wvn-book { width: 48px; height: 48px; }
-  .wvn-mobile-toggle { width: 44px; height: 44px; }
-  .wvn-logo img { max-width: 138px; }
-
-  .wvn-money-page .wvn-money-hero { min-height: 650px; }
-  .wvn-money-hero-inner { width: calc(100% - 32px); padding: 58px 0 30px; }
-  .wvn-money-hero h1 { font-size: clamp(42px, 11vw, 62px); line-height: 1.0; }
-  .wvn-money-hero-lede { font-size: 16px; line-height: 1.5; margin-top: 18px; }
-  .wvn-money-actions { display: grid; grid-template-columns: 1fr; }
-  .wvn-money-btn { width: 100%; }
-  .wvn-money-hero-side { grid-template-columns: 1fr 1fr; }
-  .wvn-money-hero-side div { font-size: 10px; padding-right: 8px; }
-
-  .wvn-money-proof { grid-template-columns: 1fr 1fr; }
-  .wvn-money-proof > div { padding: 18px 12px; }
-  .wvn-money-proof strong { font-size: 16px; }
-  .wvn-money-proof span { font-size: 8px; letter-spacing: .10em; }
-
-  .wvn-money-page .wvn-money-intro { width: calc(100% - 32px); padding: 58px 0 56px; gap: 34px; }
-  .wvn-money-intro-media,
-  .wvn-money-intro-media img { min-height: 360px; }
-  .wvn-money-intro-media-caption { left: 14px; right: 14px; bottom: 14px; padding: 14px 15px; font-size: 12px; }
-  .wvn-money-intro-media-caption strong { font-size: 17px; }
-  .wvn-money-intro-copy > h2,
-  .wvn-money-services h2,
-  .wvn-money-final-cta h2 { font-size: clamp(34px, 10vw, 48px); }
-  .wvn-money-content { font-size: 15px; line-height: 1.72; }
-  .wvn-money-contact-card { padding: 24px; }
-
-  .wvn-money-services { padding: 62px 0; }
-  .wvn-money-services > *, .wvn-money-faq > *, .wvn-money-proof-cta { width: calc(100% - 32px); }
-  .wvn-money-section-head { grid-template-columns: 1fr; gap: 16px; }
-  .wvn-money-services-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 30px; }
-  .wvn-money-service-card { min-height: 0; padding: 24px; }
-  .wvn-money-service-card .wvn-svc-label { margin-top: 28px; }
-
-  .wvn-money-page .wvn-money-faq { padding-top: 0; }
-  .wvn-money-faq-visual { min-height: 280px; }
-  .wvn-money-page .wvn-money-faq-inner { width: calc(100% - 32px); padding: 40px 0 54px; }
-  .wvn-money-page .wvn-money-faq summary { font-size: 18px; padding-right: 34px; }
-  .wvn-money-page .wvn-money-faq-grid details p { font-size: 14px; }
-
-  .wvn-money-proof-cta { margin-top: 62px; margin-bottom: 62px; padding: 32px 22px; flex-direction: column; align-items: stretch; }
-  .wvn-money-proof-links { min-width: 0; }
-  .wvn-money-final-cta { width: calc(100% - 32px); margin-bottom: 62px; padding: 34px 22px; flex-direction: column; align-items: stretch; }
-}
-
-@media (max-width: 420px) {
-  .wvn-money-proof { grid-template-columns: 1fr; }
-  .wvn-money-proof > div { border-right: 0 !important; border-bottom: 1px solid var(--money-line); }
-  .wvn-money-proof > div:last-child { border-bottom: 0; }
-  .wvn-money-hero-side { grid-template-columns: 1fr; }
+/* Small phones */
+@media(max-width:420px){
+  .wvn-mobile-panel{width:92vw;padding-left:20px;padding-right:20px}
+  .wvn-money-page .wvn-money-hero-inner,.wvn-money-page .wvn-money-intro,.wvn-money-page .wvn-money-services>*,.wvn-money-page .wvn-money-faq-inner,.wvn-money-page .wvn-money-proof-cta,.wvn-money-page .wvn-money-final-cta{width:calc(100% - 24px)}
+  .wvn-money-page .wvn-money-hero-side{grid-template-columns:1fr}
+  .wvn-money-page .wvn-money-proof{grid-template-columns:1fr}
+  .wvn-money-page .wvn-money-proof>div{border-right:0!important;border-bottom:1px solid var(--money-line)}
+  .wvn-money-page .wvn-money-proof>div:last-child{border-bottom:0}
 }
