@@ -1,10 +1,10 @@
-/* Isolated cinematic prototype — does not modify homepage styles. */
+/* Isolated cinematic prototype — mobile experience refined from supplied reference recording. Homepage remains untouched. */
 .wvn-cinematic-test{--cine-ink:#2c2020;--cine-paper:#f7f3ee;--cine-muted:#786a66;--cine-accent:#a86f6d;background:var(--cine-paper);color:var(--cine-ink);overflow:clip}
 .wvn-cinematic-test *{box-sizing:border-box}
 .wvn-cinematic-test img{display:block;width:100%;height:auto}
 .wvn-cine-hero{position:relative;min-height:100svh;overflow:hidden;background:#1f1717;color:#fff;display:flex;align-items:flex-end}
-.wvn-cine-hero-media{position:absolute;inset:-7%;background-size:cover;background-position:center;transform:scale(1.05);will-change:transform}
-.wvn-cine-vignette{position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,12,12,.12) 0%,rgba(18,12,12,.10) 38%,rgba(18,12,12,.76) 100%)}
+.wvn-cine-hero-media{position:absolute;inset:-8%;background-size:cover;background-position:center;transform:scale(1.055);will-change:transform}
+.wvn-cine-vignette{position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,12,12,.08) 0%,rgba(18,12,12,.12) 36%,rgba(18,12,12,.82) 100%)}
 .wvn-cine-hero-copy{position:relative;z-index:2;width:min(1180px,calc(100% - 48px));margin:0 auto;padding:0 0 11vh}
 .wvn-cine-eyebrow{font-size:11px;line-height:1.4;letter-spacing:.28em;text-transform:uppercase;margin:0 0 18px;opacity:.78}
 .wvn-cine-hero h1{margin:0;max-width:900px;font-family:Georgia,'Times New Roman',serif;font-weight:400;font-size:clamp(62px,10vw,160px);line-height:.9;letter-spacing:-.03em}
@@ -54,4 +54,48 @@
 @keyframes cineScroll{0%{transform:translateY(0);opacity:0}25%{opacity:1}75%{opacity:1}100%{transform:translateY(102px);opacity:0}}
 @media (prefers-reduced-motion:reduce){.wvn-cinematic-test .wvn-cine-reveal{opacity:1;transform:none;transition:none}.wvn-cine-scroll i:after{animation:none}.wvn-cine-mosaic-item img,.wvn-cine-hero-media,.wvn-cine-full-image img{transform:none!important;transition:none}}
 @media (max-width:900px){.wvn-cine-intro{grid-template-columns:1fr;gap:9vh;padding:12vh 0}.wvn-cine-intro-copy{padding-top:0}.wvn-cine-image-split{grid-template-columns:1fr;padding-bottom:12vh}.wvn-cine-image-caption{padding:8px 0 0;max-width:none}.wvn-cine-quote{padding:12vh 0 16vh}.wvn-cine-story{grid-template-columns:1fr;gap:50px;padding:12vh 0}.wvn-cine-story-copy{padding-left:0}.wvn-cine-mosaic{grid-template-columns:1fr 1fr;grid-template-rows:44vw 34vw;gap:12px}.mosaic-0{grid-column:1 / span 2}.mosaic-1{grid-column:2;grid-row:2}.mosaic-2{grid-column:1;grid-row:2}.mosaic-3{display:none}.wvn-cine-scroll{right:18px}.wvn-cine-hero-copy{width:min(100% - 32px,1180px);padding-bottom:12vh}}
-@media (max-width:560px){.wvn-cine-hero{min-height:92svh}.wvn-cine-hero-copy{padding-bottom:12vh}.wvn-cine-hero h1{font-size:clamp(54px,16vw,84px)}.wvn-cine-lede{font-size:15px}.wvn-cine-cta{width:100%}.wvn-cine-intro,.wvn-cine-image-split,.wvn-cine-story,.wvn-cine-mosaic,.wvn-cine-quote{width:calc(100% - 32px)}.wvn-cine-intro-word{font-size:20vw}.wvn-cine-intro-copy h2,.wvn-cine-story-copy h2{font-size:clamp(40px,12vw,56px)}.wvn-cine-image{min-height:62vh}.wvn-cine-image img{min-height:62vh}.wvn-cine-image-caption p{font-size:24px}.wvn-cine-quote blockquote{font-size:clamp(38px,11vw,58px)}.wvn-cine-full-image,.wvn-cine-full-image img{min-height:78svh}.wvn-cine-full-image-copy{left:22px;bottom:40px}.wvn-cine-full-image-copy h2{font-size:18vw}.wvn-cine-story-image,.wvn-cine-story-image img{min-height:58vh}.wvn-cine-mosaic{grid-template-rows:58vw 48vw}.wvn-cine-close{min-height:74svh;padding:10vh 16px}.wvn-cine-close h2{font-size:17vw}}
+@media (max-width:560px){
+  .wvn-cine-hero{min-height:100svh;align-items:flex-end}
+  .wvn-cine-hero-media{inset:-10%;background-position:56% center;transform:scale(1.065)}
+  .wvn-cine-vignette{background:linear-gradient(180deg,rgba(18,12,12,.08) 0%,rgba(18,12,12,.18) 48%,rgba(18,12,12,.86) 100%)}
+  .wvn-cine-hero-copy{width:calc(100% - 36px);padding-bottom:11svh}
+  .wvn-cine-hero h1{font-size:clamp(54px,16vw,84px);line-height:.92;max-width:95%}
+  .wvn-cine-eyebrow{font-size:9px;letter-spacing:.22em;margin-bottom:15px}
+  .wvn-cine-lede{font-size:15px;line-height:1.55;margin-top:18px;max-width:33rem}
+  .wvn-cine-cta{width:100%;min-height:54px;margin-top:24px;padding:16px 17px}
+  .wvn-cine-scroll{right:16px;bottom:22px;gap:7px;font-size:8px}
+  .wvn-cine-scroll i{height:50px}
+  .wvn-cine-intro{width:calc(100% - 36px);min-height:auto;padding:18vh 0 15vh;gap:12vh}
+  .wvn-cine-intro-word{font-size:20vw;line-height:.86;max-width:8em}
+  .wvn-cine-intro-copy{max-width:none}
+  .wvn-cine-intro-copy h2,.wvn-cine-story-copy h2{font-size:clamp(40px,12vw,56px);line-height:.95;margin-bottom:22px}
+  .wvn-cine-intro-copy p:last-child,.wvn-cine-story-copy p:last-child{font-size:15px;line-height:1.72}
+  .wvn-cine-image-split{width:100%;padding:0 0 16vh;display:block}
+  .wvn-cine-image{min-height:74svh}
+  .wvn-cine-image img{min-height:74svh;object-position:center}
+  .wvn-cine-image-caption{padding:18px 18px 0;max-width:100%}
+  .wvn-cine-image-caption p{font-size:23px;line-height:1.14;margin-top:13px}
+  .wvn-cine-quote{width:calc(100% - 36px);padding:18vh 0 20vh}
+  .wvn-cine-quote blockquote{font-size:clamp(38px,11vw,58px);line-height:.98}
+  .wvn-cine-full-image{min-height:84svh}
+  .wvn-cine-full-image img{min-height:84svh;transform:scale(1.075)}
+  .wvn-cine-full-image-copy{left:20px;right:20px;bottom:38px}
+  .wvn-cine-full-image-copy h2{font-size:18vw;line-height:.9}
+  .wvn-cine-story{width:calc(100% - 36px);grid-template-columns:1fr;gap:42px;padding:18vh 0}
+  .wvn-cine-story-image,.wvn-cine-story-image img{min-height:68svh}
+  .wvn-cine-mosaic{width:100%;padding:4vh 18px 18vh;grid-template-columns:1fr 1fr;grid-template-rows:62vw 54vw;gap:10px}
+  .mosaic-0{grid-column:1 / span 2}
+  .mosaic-1{grid-column:2;grid-row:2}
+  .mosaic-2{grid-column:1;grid-row:2}
+  .mosaic-3{display:none}
+  .wvn-cine-close{min-height:82svh;padding:12vh 18px}
+  .wvn-cine-close h2{font-size:17vw;line-height:.91}
+}
+@media (max-width:380px){
+  .wvn-cine-hero-copy{width:calc(100% - 30px)}
+  .wvn-cine-hero h1{font-size:15vw}
+  .wvn-cine-lede{font-size:14px}
+  .wvn-cine-intro{width:calc(100% - 30px);gap:10vh}
+  .wvn-cine-quote{width:calc(100% - 30px)}
+  .wvn-cine-story{width:calc(100% - 30px)}
+}
