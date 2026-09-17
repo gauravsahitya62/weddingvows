@@ -18,6 +18,7 @@ Server-rendered WordPress theme redesign for a Udaipur destination wedding studi
 - Primary blush `#b67a7a`, rose `#b52d50`, deep crimson `#8b001a`, gold `#ffd700`, warm paper `#f7f3ec`, ink `#2d2020`.
 - Playfair/le-jour serif display type, Aboreto kicker type, and Open Sans/Jost body type.
 - Motion uses CSS transitions plus the existing progressive-enhancement `bts.js` behaviors; `wvn-redesign.js` adds scroll progress, reveals, header state, and pointer depth. Reduced motion disables visual movement.
+- Mobile homepage behavior keeps the header available, pauses off-screen wedding motion, disables autoplaying coverflow movement on touch devices, and replaces the long pinned service sequence with a horizontal snap carousel and explicit controls.
 
 ## Auth and integrations
 No custom authentication or third-party API integration was added. Existing WordPress admin authentication and any currently installed plugins remain the source of truth.
