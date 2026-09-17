@@ -10,11 +10,11 @@ function wvn_create_cinematic_test_page() {
     }
 
     $page_id = wp_insert_post(array(
-        'post_title'  => 'Cinematic Test — Wedding Vows by Nikhil',
-        'post_name'   => 'cinematic-test',
-        'post_status' => 'publish',
-        'post_type'   => 'page',
-        'post_content'=> '',
+        'post_title'   => 'Cinematic Test — Wedding Vows by Nikhil',
+        'post_name'    => 'cinematic-test',
+        'post_status'  => 'publish',
+        'post_type'    => 'page',
+        'post_content' => '',
     ));
 
     if ($page_id && !is_wp_error($page_id)) {
