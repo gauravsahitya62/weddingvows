@@ -11,9 +11,16 @@ function theme_files() {
     wp_enqueue_style('wvn-seo-growth', get_theme_file_uri('/css/wvn-seo-growth.css'), array('wvn-overrides'), '1.0.0');
     wp_enqueue_style('wvn-money-responsive', get_theme_file_uri('/css/wvn-money-responsive.css'), array('wvn-seo-growth'), '1.0.0');
     wp_enqueue_style('wvn-page-safety', get_theme_file_uri('/css/wvn-page-safety.css'), array('wvn-money-responsive'), '1.0.1');
+
     if (is_page_template('page-cinematic-test.php')) {
-        wp_enqueue_style('wvn-cinematic-test', get_theme_file_uri('/css/wvn-cinematic-test.css'), array('wvn-page-safety'), '1.0.0');
+        wp_enqueue_style(
+            'wvn-cinematic-test',
+            get_theme_file_uri('/css/wvn-cinematic-test.css'),
+            array('wvn-page-safety'),
+            filemtime(get_theme_file_path('/css/wvn-cinematic-test.css'))
+        );
     }
+
     wp_enqueue_style('custom-swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', array(), '11');
     wp_enqueue_script('swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', array(), '11', true);
     wp_enqueue_script('jqueryui', 'https://code.jquery.com/jquery-3.6.3.min.js', array('jquery'), '3.6.3', true);
@@ -26,18 +33,49 @@ function theme_files() {
     wp_enqueue_script('custom-carousel-init', get_theme_file_uri('/js/carousel-init.js'), array('jquery', 'owl-carousel-js'), null, true);
     wp_enqueue_style('lightgallery', 'https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/css/lightgallery-bundle.min.css', array(), '2.7.1');
     wp_enqueue_script('lightgallery', 'https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/lightgallery.umd.js', array('jquery'), '2.7.1', true);
-    if(is_user_logged_in()) {
+    if (is_user_logged_in()) {
         wp_enqueue_style('loggedin-styles', get_theme_file_uri('css/logged-in.css'));
     }
     wp_deregister_style('classic-theme-styles');
     wp_dequeue_style('classic-theme-styles');
 }
 add_action('wp_enqueue_scripts', 'theme_files');
+
 add_action('wp_enqueue_scripts', function () {
-    if (is_page_template('page-cinematic-test.php')) {
-        wp_enqueue_script('wvn-cinematic-test', get_theme_file_uri('/js/wvn-cinematic-test.js'), array(), '1.0.0', true);
+    if (!is_page_template('page-cinematic-test.php')) {
+        return;
     }
+
+    wp_enqueue_script(
+        'gsap',
+        'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js',
+        array(),
+        '3.12.5',
+        true
+    );
+    wp_enqueue_script(
+        'gsap-scrolltrigger',
+        'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js',
+        array('gsap'),
+        '3.12.5',
+        true
+    );
+    wp_enqueue_script(
+        'lenis',
+        'https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js',
+        array(),
+        '1.1.20',
+        true
+    );
+    wp_enqueue_script(
+        'wvn-cinematic-test',
+        get_theme_file_uri('/js/wvn-cinematic-test.js'),
+        array('gsap', 'gsap-scrolltrigger', 'lenis'),
+        filemtime(get_theme_file_path('/js/wvn-cinematic-test.js')),
+        true
+    );
 }, 20);
+
 add_action('init', 'register_menus');
 
 /* Create the isolated cinematic test page once. */
@@ -66,7 +104,19 @@ add_action('wp_head', 'wvn_frontend_resource_hints', 1);
  * Dependencies remain declared so WordPress preserves execution order.
  */
 function wvn_defer_frontend_scripts($tag, $handle, $src) {
-    $defer = array('swiper', 'bootstrap-scripts', 'custom-scripts', 'wvn-bts', 'owl-carousel-js', 'custom-carousel-init', 'lightgallery');
+    $defer = array(
+        'swiper',
+        'bootstrap-scripts',
+        'custom-scripts',
+        'wvn-bts',
+        'owl-carousel-js',
+        'custom-carousel-init',
+        'lightgallery',
+        'gsap',
+        'gsap-scrolltrigger',
+        'lenis',
+        'wvn-cinematic-test',
+    );
     if (in_array($handle, $defer, true) && false === strpos($tag, ' defer')) {
         return '<script src="' . esc_url($src) . '" defer></script>';
     }
