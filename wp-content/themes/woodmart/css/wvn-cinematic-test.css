@@ -1,0 +1,57 @@
+/* Isolated cinematic prototype — does not modify homepage styles. */
+.wvn-cinematic-test{--cine-ink:#2c2020;--cine-paper:#f7f3ee;--cine-muted:#786a66;--cine-accent:#a86f6d;background:var(--cine-paper);color:var(--cine-ink);overflow:clip}
+.wvn-cinematic-test *{box-sizing:border-box}
+.wvn-cinematic-test img{display:block;width:100%;height:auto}
+.wvn-cine-hero{position:relative;min-height:100svh;overflow:hidden;background:#1f1717;color:#fff;display:flex;align-items:flex-end}
+.wvn-cine-hero-media{position:absolute;inset:-7%;background-size:cover;background-position:center;transform:scale(1.05);will-change:transform}
+.wvn-cine-vignette{position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,12,12,.12) 0%,rgba(18,12,12,.10) 38%,rgba(18,12,12,.76) 100%)}
+.wvn-cine-hero-copy{position:relative;z-index:2;width:min(1180px,calc(100% - 48px));margin:0 auto;padding:0 0 11vh}
+.wvn-cine-eyebrow{font-size:11px;line-height:1.4;letter-spacing:.28em;text-transform:uppercase;margin:0 0 18px;opacity:.78}
+.wvn-cine-hero h1{margin:0;max-width:900px;font-family:Georgia,'Times New Roman',serif;font-weight:400;font-size:clamp(62px,10vw,160px);line-height:.9;letter-spacing:-.03em}
+.wvn-cine-hero h1 em,.wvn-cine-intro-word em,.wvn-cine-full-image-copy em,.wvn-cine-close h2 em{font-style:italic;font-weight:400}
+.wvn-cine-lede{max-width:620px;margin:26px 0 0;font-size:clamp(16px,1.5vw,21px);line-height:1.6;color:rgba(255,255,255,.84)}
+.wvn-cine-cta{display:inline-flex;align-items:center;justify-content:space-between;gap:26px;margin-top:28px;min-width:210px;padding:15px 18px;border:1px solid rgba(255,255,255,.58);color:#fff;text-decoration:none;font-size:11px;letter-spacing:.16em;text-transform:uppercase;transition:transform .35s ease,background .35s ease,border-color .35s ease}
+.wvn-cine-cta:hover{transform:translateY(-3px);background:rgba(255,255,255,.10);border-color:#fff;color:#fff}
+.wvn-cine-scroll{position:absolute;right:32px;bottom:28px;z-index:2;display:flex;flex-direction:column;align-items:center;gap:10px;font-size:9px;letter-spacing:.18em;text-transform:uppercase;opacity:.72}
+.wvn-cine-scroll i{display:block;width:1px;height:74px;background:rgba(255,255,255,.5);position:relative;overflow:hidden}
+.wvn-cine-scroll i:after{content:"";position:absolute;left:0;top:-28px;width:1px;height:28px;background:#fff;animation:cineScroll 2.1s ease-in-out infinite}
+.wvn-cine-section{position:relative}
+.wvn-cine-intro{min-height:92vh;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr);gap:8vw;align-items:center;width:min(1280px,calc(100% - 64px));margin:0 auto;padding:13vh 0}
+.wvn-cine-intro-word{font-family:Georgia,'Times New Roman',serif;font-size:clamp(64px,10vw,150px);line-height:.84;letter-spacing:-.04em}
+.wvn-cine-intro-copy{max-width:460px;padding-top:6vh}
+.wvn-cine-intro-copy h2,.wvn-cine-story-copy h2{font-family:Georgia,'Times New Roman',serif;font-size:clamp(42px,5vw,78px);font-weight:400;line-height:.96;letter-spacing:-.025em;margin:0 0 28px}
+.wvn-cine-intro-copy p:last-child,.wvn-cine-story-copy p:last-child{font-size:16px;line-height:1.82;color:var(--cine-muted);margin:0}
+.wvn-cine-image-split{width:min(1220px,calc(100% - 64px));margin:0 auto;padding:0 0 12vh;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(220px,.55fr);gap:28px;align-items:end}
+.wvn-cine-image{overflow:hidden;background:#ddd;min-height:72vh}
+.wvn-cine-image img{height:100%;min-height:72vh;object-fit:cover;object-position:center}
+.wvn-cine-image-caption{padding:0 0 12px 4px;max-width:280px}
+.wvn-cine-image-caption span,.wvn-cine-full-image-copy span{font-size:10px;letter-spacing:.2em;color:var(--cine-muted)}
+.wvn-cine-image-caption p{font-family:Georgia,'Times New Roman',serif;font-size:28px;line-height:1.15;margin:16px 0 0}
+.wvn-cine-quote{width:min(1100px,calc(100% - 64px));margin:0 auto;padding:16vh 0 20vh}
+.wvn-cine-quote blockquote{margin:0;font-family:Georgia,'Times New Roman',serif;font-size:clamp(44px,6vw,88px);line-height:.98;letter-spacing:-.03em;max-width:1020px}
+.wvn-cine-full-image{min-height:92vh;overflow:hidden;background:#222}
+.wvn-cine-full-image img{width:100%;height:100%;min-height:92vh;object-fit:cover;object-position:center;transform:scale(1.08);will-change:transform}
+.wvn-cine-full-image:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(24,17,17,.08),rgba(24,17,17,.58))}
+.wvn-cine-full-image-copy{position:absolute;left:6vw;bottom:9vh;z-index:2;color:#fff}
+.wvn-cine-full-image-copy h2{font-family:Georgia,'Times New Roman',serif;font-size:clamp(60px,8vw,132px);font-weight:400;line-height:.88;letter-spacing:-.04em;margin:12px 0 0}
+.wvn-cine-story{width:min(1200px,calc(100% - 64px));margin:0 auto;padding:15vh 0;display:grid;grid-template-columns:minmax(300px,.8fr) minmax(0,1.2fr);gap:9vw;align-items:center}
+.wvn-cine-story-copy{max-width:440px;padding-left:2vw}
+.wvn-cine-story-image{overflow:hidden;min-height:70vh}
+.wvn-cine-story-image img{height:100%;min-height:70vh;object-fit:cover}
+.wvn-cine-mosaic{width:min(1260px,calc(100% - 64px));margin:0 auto;padding:4vh 0 16vh;display:grid;grid-template-columns:1fr .74fr 1.04fr;grid-template-rows:390px 240px;gap:18px;align-items:stretch}
+.wvn-cine-mosaic-item{margin:0;overflow:hidden;background:#ddd;min-width:0}
+.wvn-cine-mosaic-item img{height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.65,.3,1)}
+.wvn-cine-mosaic-item:hover img{transform:scale(1.035)}
+.mosaic-0{grid-column:1 / span 2}
+.mosaic-1{grid-column:3;grid-row:1 / span 2}
+.mosaic-2{grid-column:1;grid-row:2}
+.mosaic-3{grid-column:2;grid-row:2}
+.wvn-cine-close{min-height:86vh;background:#2b2020;color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;padding:12vh 24px}
+.wvn-cine-close h2{font-family:Georgia,'Times New Roman',serif;font-size:clamp(54px,8vw,120px);font-weight:400;line-height:.9;letter-spacing:-.04em;margin:0}
+.wvn-cine-close .wvn-cine-eyebrow{color:#fff}
+.wvn-cinematic-test .wvn-cine-reveal{opacity:0;transform:translateY(56px);transition:opacity 1s cubic-bezier(.2,.65,.3,1),transform 1s cubic-bezier(.2,.65,.3,1);will-change:opacity,transform}
+.wvn-cinematic-test .wvn-cine-reveal.is-visible{opacity:1;transform:none}
+@keyframes cineScroll{0%{transform:translateY(0);opacity:0}25%{opacity:1}75%{opacity:1}100%{transform:translateY(102px);opacity:0}}
+@media (prefers-reduced-motion:reduce){.wvn-cinematic-test .wvn-cine-reveal{opacity:1;transform:none;transition:none}.wvn-cine-scroll i:after{animation:none}.wvn-cine-mosaic-item img,.wvn-cine-hero-media,.wvn-cine-full-image img{transform:none!important;transition:none}}
+@media (max-width:900px){.wvn-cine-intro{grid-template-columns:1fr;gap:9vh;padding:12vh 0}.wvn-cine-intro-copy{padding-top:0}.wvn-cine-image-split{grid-template-columns:1fr;padding-bottom:12vh}.wvn-cine-image-caption{padding:8px 0 0;max-width:none}.wvn-cine-quote{padding:12vh 0 16vh}.wvn-cine-story{grid-template-columns:1fr;gap:50px;padding:12vh 0}.wvn-cine-story-copy{padding-left:0}.wvn-cine-mosaic{grid-template-columns:1fr 1fr;grid-template-rows:44vw 34vw;gap:12px}.mosaic-0{grid-column:1 / span 2}.mosaic-1{grid-column:2;grid-row:2}.mosaic-2{grid-column:1;grid-row:2}.mosaic-3{display:none}.wvn-cine-scroll{right:18px}.wvn-cine-hero-copy{width:min(100% - 32px,1180px);padding-bottom:12vh}}
+@media (max-width:560px){.wvn-cine-hero{min-height:92svh}.wvn-cine-hero-copy{padding-bottom:12vh}.wvn-cine-hero h1{font-size:clamp(54px,16vw,84px)}.wvn-cine-lede{font-size:15px}.wvn-cine-cta{width:100%}.wvn-cine-intro,.wvn-cine-image-split,.wvn-cine-story,.wvn-cine-mosaic,.wvn-cine-quote{width:calc(100% - 32px)}.wvn-cine-intro-word{font-size:20vw}.wvn-cine-intro-copy h2,.wvn-cine-story-copy h2{font-size:clamp(40px,12vw,56px)}.wvn-cine-image{min-height:62vh}.wvn-cine-image img{min-height:62vh}.wvn-cine-image-caption p{font-size:24px}.wvn-cine-quote blockquote{font-size:clamp(38px,11vw,58px)}.wvn-cine-full-image,.wvn-cine-full-image img{min-height:78svh}.wvn-cine-full-image-copy{left:22px;bottom:40px}.wvn-cine-full-image-copy h2{font-size:18vw}.wvn-cine-story-image,.wvn-cine-story-image img{min-height:58vh}.wvn-cine-mosaic{grid-template-rows:58vw 48vw}.wvn-cine-close{min-height:74svh;padding:10vh 16px}.wvn-cine-close h2{font-size:17vw}}
