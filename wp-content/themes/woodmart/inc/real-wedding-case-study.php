@@ -122,3 +122,247 @@ add_filter('wpseo_opengraph_desc', function ($description) {
 add_filter('wpseo_twitter_description', function ($description) {
     return wvn_jehana_kanishk_case_study_seo($description, 'description');
 }, 70);
+
+/**
+ * Current run: publish one additional, distinct case study directly from a
+ * published portfolio record. All wedding-specific facts are read from ACF
+ * fields at runtime; blank fields are omitted rather than guessed.
+ */
+function wvn_seed_verified_portfolio_case_study_run_20260917() {
+    if (get_option('wvn_verified_portfolio_case_study_run_20260917_v1') === '1') {
+        return;
+    }
+
+    $portfolio_posts = get_posts(array(
+        'post_type' => 'portfolio',
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'orderby' => 'modified',
+        'order' => 'DESC',
+        'no_found_rows' => true,
+    ));
+
+    if (!$portfolio_posts) {
+        return;
+    }
+
+    $used_source_ids = get_posts(array(
+        'post_type' => 'post',
+        'post_status' => array('publish', 'draft', 'pending', 'private'),
+        'posts_per_page' => -1,
+        'fields' => 'ids',
+        'meta_key' => '_wvn_source_portfolio_id',
+        'no_found_rows' => true,
+    ));
+    $used_source_ids = array_map('intval', $used_source_ids);
+
+    $source = null;
+    foreach ($portfolio_posts as $candidate) {
+        if (in_array((int) $candidate->ID, $used_source_ids, true)) {
+            continue;
+        }
+        if (stripos($candidate->post_title, 'Jehana') !== false && stripos($candidate->post_title, 'Kanishk') !== false) {
+            continue;
+        }
+        $source = $candidate;
+        break;
+    }
+
+    if (!$source) {
+        return;
+    }
+
+    if (!function_exists('get_field')) {
+        return;
+    }
+
+    $title = trim(wp_strip_all_tags($source->post_title));
+    if ($title === '') {
+        return;
+    }
+
+    $venue = trim(wp_strip_all_tags((string) get_field('portfolio_venue', $source->ID)));
+    $date = trim(wp_strip_all_tags((string) get_field('portfolio_date', $source->ID)));
+    $subtitle = trim(wp_strip_all_tags((string) get_field('portfolio_subtitle', $source->ID)));
+    $story_heading = trim(wp_strip_all_tags((string) get_field('portfolio_story_heading', $source->ID)));
+    $story_intro = trim((string) get_field('portfolio_story_intro', $source->ID));
+    $planner = trim(wp_strip_all_tags((string) get_field('portfolio_planner', $source->ID)));
+    $decor = trim(wp_strip_all_tags((string) get_field('portfolio_decor', $source->ID)));
+    $photography = trim(wp_strip_all_tags((string) get_field('portfolio_photography', $source->ID)));
+    $makeup = trim(wp_strip_all_tags((string) get_field('portfolio_makeup', $source->ID)));
+    $pills = trim(wp_strip_all_tags((string) get_field('portfolio_pills', $source->ID)));
+
+    $parts = preg_split('/\s*[•|,]\s*/u', $pills, -1, PREG_SPLIT_NO_EMPTY);
+    $location = 'Udaipur, Rajasthan';
+    foreach ((array) $parts as $part) {
+        if (preg_match('/udaipur|rajasthan/i', $part)) {
+            $location = $part;
+            break;
+        }
+    }
+
+    $slug_base = sanitize_title($title . '-' . ($venue ?: $location));
+    $slug = sanitize_title($slug_base . '-real-wedding');
+    if (get_page_by_path($slug, OBJECT, 'post')) {
+        update_option('wvn_verified_portfolio_case_study_run_20260917_v1', '1', false);
+        return;
+    }
+
+    $guide = esc_url(home_url('/weddings-in-udaipur/'));
+    $planner_page = esc_url(home_url('/wedding-planner-udaipur/'));
+    $destination = esc_url(home_url('/destination-wedding-planner-udaipur/'));
+    $portfolio_url = esc_url(home_url('/portfolio/'));
+    $contact = esc_url(home_url('/contact-us/'));
+
+    $content = '';
+    if ($story_intro !== '') {
+        $content .= '<p>' . wp_kses_post(wpautop($story_intro)) . '</p>';
+    } else {
+        $content .= '<p>This case study is drawn directly from Wedding Vows by Nikhil’s published portfolio record for <strong>' . esc_html($title) . '</strong>. The story below uses only the wedding-specific information recorded for that portfolio entry; details that are not present in the source are intentionally not added.</p>';
+    }
+
+    $content .= '<h2>' . esc_html($story_heading ?: ('The ' . $location . ' wedding story')) . '</h2>';
+    if ($subtitle !== '') {
+        $content .= '<p>' . esc_html($subtitle) . '</p>';
+    }
+    if ($venue !== '' || $date !== '' || $location !== '') {
+        $content .= '<p><strong>Wedding details:</strong> ';
+        $detail_bits = array();
+        if ($location !== '') { $detail_bits[] = esc_html($location); }
+        if ($venue !== '') { $detail_bits[] = esc_html($venue); }
+        if ($date !== '') { $detail_bits[] = esc_html($date); }
+        $content .= implode(' &middot; ', $detail_bits) . '</p>';
+    }
+
+    $events = get_field('portfolio_events', $source->ID);
+    if (is_array($events) && $events) {
+        $event_count = 0;
+        foreach ($events as $event) {
+            if ($event_count >= 3) { break; }
+            $event_title = trim(wp_strip_all_tags((string) ($event['event_title'] ?? '')));
+            $event_desc = trim((string) ($event['event_description'] ?? ''));
+            $event_theme = trim(wp_strip_all_tags((string) ($event['event_theme'] ?? '')));
+            $event_tag = trim(wp_strip_all_tags((string) ($event['event_tag'] ?? '')));
+            if ($event_title === '' && $event_desc === '') { continue; }
+            $content .= '<h2>' . esc_html($event_title ?: ($event_tag ?: 'Wedding function')) . '</h2>';
+            if ($event_desc !== '') {
+                $content .= '<p>' . wp_kses_post($event_desc) . '</p>';
+            }
+            if ($event_theme !== '') {
+                $content .= '<p><strong>Recorded detail:</strong> ' . esc_html($event_theme) . '</p>';
+            }
+            $event_count++;
+        }
+    }
+
+    $credits = array();
+    if ($planner !== '') { $credits[] = 'Planner &amp; concept: ' . esc_html($planner); }
+    if ($decor !== '') { $credits[] = 'Décor &amp; production: ' . esc_html($decor); }
+    if ($photography !== '') { $credits[] = 'Photography &amp; cinematography: ' . esc_html($photography); }
+    if ($makeup !== '') { $credits[] = 'Bridal makeup &amp; styling: ' . esc_html($makeup); }
+    $custom_credits = get_field('portfolio_custom_credits', $source->ID);
+    if (is_array($custom_credits)) {
+        foreach ($custom_credits as $credit) {
+            $label = trim(wp_strip_all_tags((string) ($credit['label'] ?? '')));
+            $value = trim(wp_strip_all_tags((string) ($credit['value'] ?? '')));
+            if ($label !== '' && $value !== '') {
+                $credits[] = esc_html($label) . ': ' . esc_html($value);
+            }
+        }
+    }
+    if ($credits) {
+        $content .= '<h2>Recorded planning and vendor details</h2><ul><li>' . implode('</li><li>', $credits) . '</li></ul>';
+    }
+
+    $content .= '<h2>Planning the same kind of Udaipur celebration</h2>'
+        . '<p>Every Udaipur wedding needs to be planned around its actual venue, guest experience and event requirements. Our <a href="' . $guide . '">Weddings in Udaipur guide</a> covers venue and planning considerations, while our <a href="' . $planner_page . '">Udaipur wedding planning service</a> and <a href="' . $destination . '">destination wedding planning service</a> explain how we approach the work.</p>'
+        . '<p>See more <a href="' . $portfolio_url . '">real weddings from the portfolio</a>, then <a href="' . $contact . '">contact Wedding Vows by Nikhil</a> to discuss your own celebration.</p>';
+
+    $excerpt = 'A verified Wedding Vows by Nikhil portfolio story about ' . $title . ($venue ? ' at ' . $venue : ' in ' . $location) . ', using the published wedding record and no unsupported details.';
+    $post_id = wp_insert_post(wp_slash(array(
+        'post_title' => $title . ($venue ? ': A ' . $venue . ' Wedding Story' : ': A Udaipur Wedding Story'),
+        'post_name' => $slug,
+        'post_excerpt' => $excerpt,
+        'post_content' => $content,
+        'post_status' => 'publish',
+        'post_type' => 'post',
+        'comment_status' => 'closed',
+    )), true);
+
+    if (is_wp_error($post_id) || !$post_id) {
+        return;
+    }
+
+    wp_set_object_terms($post_id, 'real-weddings', 'category');
+    update_post_meta($post_id, '_wvn_source_portfolio_id', (int) $source->ID);
+    update_post_meta($post_id, '_wvn_source_portfolio_slug', $source->post_name);
+    update_post_meta($post_id, '_wvn_seo_focus', $title . ' ' . $location . ' wedding');
+    update_post_meta($post_id, '_wvn_seo_description', 'Verified Wedding Vows by Nikhil portfolio story for ' . $title . ($venue ? ' at ' . $venue : ' in ' . $location) . ', with planning details taken from the published wedding record.');
+    update_post_meta($post_id, 'post_overlay_title', $title);
+    update_post_meta($post_id, 'post_overlay_sub', $venue ? $venue : $location);
+    update_post_meta($post_id, 'post_cta_heading', 'Planning your Udaipur wedding?');
+    update_post_meta($post_id, 'post_cta_text', 'Tell us your date, guest count and preferred setting, and we can discuss the planning scope.');
+    update_post_meta($post_id, 'post_cta_button', 'Plan my wedding ↗');
+
+    $hero = get_field('portfolio_hero_image', $source->ID);
+    $featured = get_post_thumbnail_id($source->ID);
+    $image_id = 0;
+    if (is_array($hero) && !empty($hero['ID'])) {
+        $image_id = (int) $hero['ID'];
+    } elseif (is_numeric($hero)) {
+        $image_id = (int) $hero;
+    } elseif ($featured) {
+        $image_id = (int) $featured;
+    }
+    if ($image_id) {
+        set_post_thumbnail($post_id, $image_id);
+        $alt = trim((string) get_post_meta($image_id, '_wp_attachment_image_alt', true));
+        if ($alt === '') {
+            $alt = $title . ' wedding in ' . $location;
+            if ($venue !== '') { $alt .= ' at ' . $venue; }
+            update_post_meta($image_id, '_wp_attachment_image_alt', $alt);
+        }
+    }
+
+    update_option('wvn_verified_portfolio_case_study_run_20260917_v1', '1', false);
+}
+add_action('init', 'wvn_seed_verified_portfolio_case_study_run_20260917', 35);
+
+function wvn_verified_portfolio_case_study_run_20260917_seo($value, $type = 'title') {
+    if (!is_singular('post')) {
+        return $value;
+    }
+    $post_id = get_queried_object_id();
+    if (!get_post_meta($post_id, '_wvn_source_portfolio_id', true)) {
+        return $value;
+    }
+    $title = get_the_title($post_id);
+    if ($type === 'title') {
+        return $title . ' | Wedding Vows by Nikhil';
+    }
+    $description = get_post_meta($post_id, '_wvn_seo_description', true);
+    return $description ?: $value;
+}
+
+add_filter('document_title_parts', function ($parts) {
+    $title = wvn_verified_portfolio_case_study_run_20260917_seo('', 'title');
+    return $title ? array('title' => $title) : $parts;
+}, 71);
+add_filter('wpseo_title', function ($title) {
+    return wvn_verified_portfolio_case_study_run_20260917_seo($title, 'title');
+}, 71);
+add_filter('wpseo_opengraph_title', function ($title) {
+    return wvn_verified_portfolio_case_study_run_20260917_seo($title, 'title');
+}, 71);
+add_filter('wpseo_twitter_title', function ($title) {
+    return wvn_verified_portfolio_case_study_run_20260917_seo($title, 'title');
+}, 71);
+add_filter('wpseo_metadesc', function ($description) {
+    return wvn_verified_portfolio_case_study_run_20260917_seo($description, 'description');
+}, 71);
+add_filter('wpseo_opengraph_desc', function ($description) {
+    return wvn_verified_portfolio_case_study_run_20260917_seo($description, 'description');
+}, 71);
+add_filter('wpseo_twitter_description', function ($description) {
+    return wvn_verified_portfolio_case_study_run_20260917_seo($description, 'description');
+}, 71);
