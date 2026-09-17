@@ -40,6 +40,9 @@ add_action('wp_enqueue_scripts', function () {
 }, 20);
 add_action('init', 'register_menus');
 
+/* Create the isolated cinematic test page once. */
+require_once get_theme_file_path('/inc/cinematic-test-page.php');
+
 /**
  * Prioritize the actual LCP hero image and establish connections for the
  * external providers used by the visual identity and frontend components.
