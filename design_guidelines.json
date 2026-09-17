@@ -1,0 +1,237 @@
+{
+  "project_info": {
+    "name": "Wedding Vows by Nikhil - Cinematic WordPress Redesign Strategy",
+    "theme_folder": "/app/wp-content/themes/woodmart",
+    "site_url": "https://weddingvowsbynikhil.com",
+    "persona": "E1 - The Anti-AI Designer",
+    "archetype": "LUXURY & CINEMATIC HERITAGE (Udaipur Destination Weddings)",
+    "current_date": "July 2026"
+  },
+  "brand_identity_and_preservation": {
+    "primary_brand_color": "#b67a7a",
+    "accent_brand_color": "#b52d50",
+    "deep_brand_color": "#8b001a",
+    "gold_accent": "#ffd700",
+    "dark_ink": "#2d2020",
+    "muted_tone": "#6e5d5d",
+    "paper_bg": "#f7f3ec",
+    "paper_secondary_bg": "#efe9df",
+    "pure_white": "#fffdf9",
+    "rule_of_preservation": "All current brand colors, logo assets (logo-2-removebg.png), and custom ACF options keys MUST be preserved exactly so WordPress admin users can continue managing content natively without breaking existing database options."
+  },
+  "typography": {
+    "headings": {
+      "font_family": "'Playfair Display', 'le-jour-serif', Georgia, serif",
+      "weights": ["400", "500", "600", "700"],
+      "usage": "H1, H2, H3, Page Headers, Card Titles, Pressbook Sheets",
+      "letter_spacing": "0.02em to 0.05em",
+      "line_height": "1.05 to 1.15"
+    },
+    "subtitles_and_kickers": {
+      "font_family": "'Aboreto', 'Cormorant Garamond', serif",
+      "weights": ["400", "600"],
+      "letter_spacing": "0.2em to 0.28em",
+      "casing": "UPPERCASE",
+      "usage": "Kickers, Category labels, Step labels, Section metadata"
+    },
+    "body": {
+      "font_family": "'Open Sans', 'Jost', sans-serif",
+      "weights": ["400", "500", "600"],
+      "line_height": "1.6 to 1.8",
+      "usage": "Paragraphs, Testimonial text, FAQ answers, Form inputs, Footer text"
+    },
+    "size_scale": {
+      "hero_h1": "clamp(48px, 6vw, 92px)",
+      "section_h2": "clamp(36px, 4.6vw, 68px)",
+      "card_h3": "clamp(22px, 2vw, 32px)",
+      "body_text": "16px (mobile: 15px)",
+      "kicker": "10px - 12px"
+    }
+  },
+  "colors": {
+    "background_primary": "#f7f3ec",
+    "background_dark": "#2d2020",
+    "background_white": "#fffdf9",
+    "text_primary": "#2d2020",
+    "text_muted": "#6e5d5d",
+    "text_dark_bg": "#ffffff",
+    "border_light": "rgba(61, 42, 42, 0.14)",
+    "border_dark_bg": "rgba(255, 255, 255, 0.28)",
+    "button_primary_bg": "#b67a7a",
+    "button_primary_hover": "#8b001a",
+    "button_ghost_border": "rgba(255, 255, 255, 0.56)"
+  },
+  "routes_and_page_architecture": {
+    "homepage": {
+      "route": "/",
+      "template": "front-page.php",
+      "sections": [
+        "1. Hero Opening with Parallax Scale Image and Editorial Reveal",
+        "2. WVN Wedding Collective (Coverflow Horizontal Drag Grid)",
+        "3. Meet the Planner (Nikhil Salvi Founder Story Card)",
+        "4. Interactive 3D Pressbook / Achievements Sheet Flip",
+        "5. Pinned Services Carousel (End-to-End One Team)",
+        "6. Cinematic Showreel Trigger Banner with Fullscreen Video Modal",
+        "7. Masonry Testimonials Grid with Expandable Reviews",
+        "8. High-Impact Consultation Booking CTA",
+        "9. Video Couple Stories Grid with Sound Toggle",
+        "10. Lightbox Wedding Gallery Mosaic",
+        "11. Accordion FAQs",
+        "12. Editorial Heritage Footer"
+      ]
+    },
+    "what_we_do": {
+      "route": "/what-we-do/",
+      "template": "page-what-we-do.php",
+      "sections": [
+        "1. Hero Header with Full-width Imagery & Breadcrumbs",
+        "2. Editorial Introduction & High-Level Philosophy",
+        "3. Core Services Bento Grid (Venue Sourcing, Decor, Hospitality, Logistics)",
+        "4. Specialized Experiences Mosaic (Palace Weddings, Royal Welcome, Sangeet Production)",
+        "5. Process at a Glance (Numbered Step-by-Step Breakdown)",
+        "6. Why Choose WVN Feature Grid & In-depth Articles with Expand Toggle"
+      ]
+    },
+    "portfolio": {
+      "route": "/portfolio/",
+      "template": "archive-portfolio.php / single-portfolio.php",
+      "sections": [
+        "1. Real Weddings Hero with Category Filter Pills",
+        "2. Grid Layout of Real Udaipur Celebrations",
+        "3. Single Wedding Storytelling Layout (Couple Vows, Venue Details, Image Masonry Lightbox, Vendor Credits)"
+      ]
+    },
+    "money_pages": {
+      "routes": [
+        "/weddings-in-udaipur/",
+        "/wedding-planner-udaipur/",
+        "/wedding-venues-udaipur/",
+        "/palace-wedding-venues-in-udaipur/",
+        "/udaipur-wedding-cost/"
+      ],
+      "template": "page-money-landing.php",
+      "sections": [
+        "1. High-Impact Hero with Sticky Contact Card",
+        "2. Social Proof Bar (Weddings Planned, Venues Managed, Couple Rating)",
+        "3. Detailed SEO Content & Planning Guide with Inline Internal Links",
+        "4. Venue & Cost Matrix Grid",
+        "5. FAQ Section & Instant Consultation CTA"
+      ]
+    },
+    "blog": {
+      "route": "/blog/",
+      "template": "home.php / single.php",
+      "sections": [
+        "1. Journal Hero Banner",
+        "2. Featured Post Spotlight",
+        "3. Article Cards Grid with Category Badges",
+        "4. Single Post Template with Reading Progress Bar & Author Bio"
+      ]
+    },
+    "contact": {
+      "route": "/contact-us/",
+      "template": "page.php with Contact Form 7 / ACF Hero Contact",
+      "sections": [
+        "1. Hero Banner with Contact Title",
+        "2. Quick Inquiry Form (CF7 integrated)",
+        "3. Direct Studio Details (WhatsApp, Office Address, Call CTA)",
+        "4. Interactive Google Map / Location Showcase"
+      ]
+    }
+  },
+  "motion_and_scroll_effects": {
+    "engine": "Lenis smooth scrolling + GSAP 3 ScrollTrigger + CSS 3D Transforms",
+    "effects": [
+      {
+        "name": "Opening Hero Parallax",
+        "selector": ".wvn-hero-frame img",
+        "behavior": "Smooth scale animation from 1.05 to 1.0 on scroll, accompanied by fade-in editorial copy"
+      },
+      {
+        "name": "Horizontal Coverflow Drag/Scroll",
+        "selector": ".wvn-coverflow-track",
+        "behavior": "Horizontal inertia scroll for wedding cards with smooth snap and hover lift"
+      },
+      {
+        "name": "Interactive 3D Pressbook Sheet Flip",
+        "selector": ".wvn-pressbook-sheet",
+        "behavior": "CSS perspective 1200px 3D page flip animation with next/prev buttons and click toggles"
+      },
+      {
+        "name": "Services Pinned Sticky Section",
+        "selector": ".wvn-services-sticky",
+        "behavior": "Sticky position pin while scrolling through horizontal service cards and dynamic background crossfades"
+      },
+      {
+        "name": "Testimonial Card Expand",
+        "selector": ".wvn-quote-toggle",
+        "behavior": "Smooth height transition for long testimonials with 'Read full review' state toggle"
+      },
+      {
+        "name": "Video Story Auto-play & Sound Control",
+        "selector": ".wvn-story.has-video",
+        "behavior": "Hover/Tap play trigger with volume toggle overlay button"
+      },
+      {
+        "name": "Quick Search Modal & Floating Floating Contact Buttons",
+        "selector": ".wvn-ask, .wvn-float-wa, .wvn-theme",
+        "behavior": "Glassmorphism floating pills with smooth backdrop blur fade and micro-bounce on click"
+      }
+    ]
+  },
+  "wordpress_admin_content_strategy": {
+    "acf_field_groups": [
+      {
+        "group": "Homepage Text & Images",
+        "key": "wvn_home_text",
+        "fields": ["home_hero_copy", "home_collective_heading", "home_planner_heading", "home_planner_text", "home_cta_heading", "home_showreel_button_url"]
+      },
+      {
+        "group": "Services Page Repeating Sections",
+        "key": "wvn_services_sections",
+        "fields": ["layout", "crumb", "heading", "text", "image", "cards", "stats", "features"]
+      },
+      {
+        "group": "Weddings / Portfolio Custom CPT",
+        "key": "wvn_weddings",
+        "fields": ["title", "venue", "image", "url", "gallery"]
+      },
+      {
+        "group": "Testimonials",
+        "key": "wvn_testimonials",
+        "fields": ["name", "time", "text", "tags", "dark"]
+      }
+    ],
+    "elementor_compatibility": "Fully guarded with wvn_elementor_editing() condition to allow full page overrides whenever an admin chooses to build custom pages using Elementor."
+  },
+  "responsive_and_accessibility_guardrails": {
+    "contrast": "Strict WCAG AA minimum 4.5:1 for body copy against paper backgrounds, minimum 3:1 for large display titles.",
+    "touch_targets": "All navigation links, theme toggles, and modal buttons have minimum 48px height x 48px width touch areas.",
+    "header_navigation": "Pill navigation remains visible on desktop. Mobile hamburger converts to slide-over panel with backdrop blur, full screen aria-hidden and keyboard ESC dismiss.",
+    "reduced_motion": "CSS media query @media (prefers-reduced-motion: reduce) disables GSAP scroll scrub and heavy 3D rotations gracefully.",
+    "performance": "Hero image preloaded with fetchpriority='high'. All secondary section images use loading='lazy' and decoding='async'."
+  },
+  "curated_media_assets": {
+    "hero_city_palace": "https://images.unsplash.com/photo-1695956353120-54ce5e91632b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzl8MHwxfHNlYXJjaHwyfHx1ZGFpcHVyJTIwbHV4dXJ5JTIwcGFsYWNlJTIwd2VkZGluZ3xlbnwwfHx8fDE3ODk2NzUyNTB8MA&ixlib=rb-4.1.0&q=85",
+    "palace_courtyard_pool": "https://images.unsplash.com/photo-1724947053227-2335bf21d0ae?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzl8MHwxfHNlYXJjaHwxfHx1ZGFpcHVyJTIwbHV4dXJ5JTIwcGFsYWNlJTIwd2VkZGluZ3xlbnwwfHx8fDE3ODk2NzUyNTB8MA&ixlib=rb-4.1.0&q=85",
+    "wedding_table_decor": "https://images.unsplash.com/photo-1524777313293-86d2ab467344?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHwxfHxpbmRpYW4lMjB3ZWRkaW5nJTIwZGVjb3IlMjBzdW5zZXR8ZW58MHx8fHwxNzg5Njc1MjcwfDA&ixlib=rb-4.1.0&q=85",
+    "palace_event_setup": "https://images.pexels.com/photos/33361433/pexels-photo-33361433.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "royal_couple_attire": "https://images.pexels.com/photos/39538045/pexels-photo-39538045.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+  },
+  "testing_attributes": {
+    "rule": "All interactive elements, buttons, nav items, search inputs, modal toggles, and CF7 form controls MUST include kebab-case role-based data-testid attributes.",
+    "examples": [
+      "data-testid=\"header-logo-link\"",
+      "data-testid=\"primary-nav-item-home\"",
+      "data-testid=\"primary-nav-item-what-we-do\"",
+      "data-testid=\"book-consultation-button\"",
+      "data-testid=\"mobile-nav-toggle-button\"",
+      "data-testid=\"quick-search-trigger-button\"",
+      "data-testid=\"theme-toggle-button\"",
+      "data-testid=\"whatsapp-floating-button\"",
+      "data-testid=\"pressbook-next-page-button\"",
+      "data-testid=\"testimonial-read-more-button\"",
+      "data-testid=\"contact-form-submit-button\""
+    ]
+  }
+}
