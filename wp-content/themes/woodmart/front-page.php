@@ -232,44 +232,120 @@ $service_count = count($services);
     </div>
   </section>
 
+  <?php
+  $cin_quotes = array_values(array_filter($quotes, function ($q) {
+      return !empty($q['text']) && !empty($q['name']);
+  }));
+  if (!$cin_quotes) {
+      $cin_quotes = array(
+          array(
+              'name' => 'Rinita Jain',
+              'time' => 'Family of the Bride — Taj Lalit Bagh, Udaipur',
+              'text' => 'Your dedication, creativity, meticulous planning, and calm presence ensured that every detail was perfectly executed. The wedding was everything we had hoped for and more.',
+          ),
+          array(
+              'name' => 'Aarti & Leon',
+              'time' => 'Three-Day Wedding — Aurika, Udaipur',
+              'text' => 'The decor was nothing short of magical. Every corner of our venue was transformed into a dreamy paradise, and the team anticipated our needs before we even voiced them.',
+          ),
+          array(
+              'name' => 'Naman Singh',
+              'time' => 'Destination Wedding — Udaipur',
+              'text' => 'It was even better than what we had imagined. Right from the flowers to the decor to the music, everything was spot on. You took a major burden off our shoulders.',
+          ),
+          array(
+              'name' => 'Mansi & Aneel',
+              'time' => 'Palace Wedding — Udaipur',
+              'text' => 'Every detail was handled before we even thought to ask. From the first venue visit to the final pheras, the team made a palace wedding feel completely stress-free.',
+          ),
+      );
+  }
+  $cin_quotes = array_slice($cin_quotes, 0, 6);
+  $cin_gallery = array_values(array_filter($gallery));
+  if (!$cin_gallery) {
+      $cin_gallery = array(
+          $cin_base . '/2026/08/LKY06126-scaled.jpeg',
+          $cin_base . '/2026/08/IMG_5234.jpg',
+          $cin_base . '/2026/08/IMG_5222.jpg',
+          $cin_base . '/2026/08/IMG_5231.jpg',
+      );
+  }
+  $cin_story_videos = array();
+  foreach (array_slice($stories, 0, 6) as $st) {
+      $cin_story_videos[] = !empty($st['video']) ? $st['video'] : '';
+  }
+  ?>
   <section class="wvn-cin-cites" id="testimonials" data-wvn-cin-cites aria-label="Testimonials">
+    <div class="wvn-cin-cites__atmosphere" aria-hidden="true">
+      <div class="wvn-cin-cites__glow"></div>
+      <div class="wvn-cin-cites__grain"></div>
+    </div>
+
     <div class="wvn-cin-cites__inner">
-      <p class="wvn-cin-cites__eyebrow">Testimonials</p>
-      <h2 class="wvn-cin-cites__title">
-        <span>See What</span>
-        <span>Our Couples Say</span>
-      </h2>
-      <div class="wvn-cin-cites__stars" aria-hidden="true">★★★★★</div>
-      <div class="wvn-cin-cites__stage" data-wvn-cin-cites-stage aria-live="polite">
-        <blockquote class="wvn-cin-cites__slide is-active" data-wvn-cin-cites-slide>
-          <span class="wvn-cin-cites__mark" aria-hidden="true">“</span>
-          <p class="wvn-cin-cites__quote">Your dedication, creativity, meticulous planning, and calm presence ensured that every detail was perfectly executed. The wedding was everything we had hoped for and more.</p>
-          <div class="wvn-cin-cites__rule" aria-hidden="true"></div>
-          <cite class="wvn-cin-cites__name">Rinita Jain</cite>
-          <p class="wvn-cin-cites__meta">Family of the Bride — Taj Lalit Bagh, Udaipur</p>
-        </blockquote>
-        <blockquote class="wvn-cin-cites__slide" data-wvn-cin-cites-slide hidden>
-          <span class="wvn-cin-cites__mark" aria-hidden="true">“</span>
-          <p class="wvn-cin-cites__quote">The decor was nothing short of magical. Every corner of our venue was transformed into a dreamy paradise, and the team anticipated our needs before we even voiced them.</p>
-          <div class="wvn-cin-cites__rule" aria-hidden="true"></div>
-          <cite class="wvn-cin-cites__name">Aarti &amp; Leon</cite>
-          <p class="wvn-cin-cites__meta">Three-Day Wedding — Aurika, Udaipur</p>
-        </blockquote>
-        <blockquote class="wvn-cin-cites__slide" data-wvn-cin-cites-slide hidden>
-          <span class="wvn-cin-cites__mark" aria-hidden="true">“</span>
-          <p class="wvn-cin-cites__quote">It was even better than what we had imagined. Right from the flowers to the decor to the music, everything was spot on. You took a major burden off our shoulders.</p>
-          <div class="wvn-cin-cites__rule" aria-hidden="true"></div>
-          <cite class="wvn-cin-cites__name">Naman Singh</cite>
-          <p class="wvn-cin-cites__meta">Destination Wedding — Udaipur</p>
-        </blockquote>
-      </div>
-      <div class="wvn-cin-cites__nav">
-        <button type="button" class="wvn-cin-cites__btn" data-wvn-cin-cites-prev aria-label="Previous testimonial">←</button>
-        <div class="wvn-cin-cites__pager">
-          <span class="wvn-cin-cites__count" data-wvn-cin-cites-count>01 / 03</span>
-          <div class="wvn-cin-cites__bar" aria-hidden="true"><span data-wvn-cin-cites-bar></span></div>
+      <header class="wvn-cin-cites__head">
+        <p class="wvn-cin-cites__eyebrow">In Their Words</p>
+        <h2 class="wvn-cin-cites__title">Stories whispered <em>after the last dance.</em></h2>
+      </header>
+
+      <div class="wvn-cin-cites__deck" data-wvn-cin-cites-deck>
+        <div class="wvn-cin-cites__rail" aria-hidden="true"></div>
+        <div class="wvn-cin-cites__stage" data-wvn-cin-cites-stage>
+          <?php foreach ($cin_quotes as $i => $quote) :
+              $meta = trim($quote['time'] ?? '');
+              if (!$meta && !empty($quote['tags']) && is_array($quote['tags'])) {
+                  $meta = implode(' · ', array_slice($quote['tags'], 0, 2));
+              }
+              $img = $cin_gallery[$i % count($cin_gallery)];
+              $vid = $cin_story_videos[$i] ?? '';
+              ?>
+            <article
+              class="wvn-cin-cites__card<?php echo $i === 0 ? ' is-active' : ''; ?>"
+              data-wvn-cin-cites-card
+              data-index="<?php echo (int) $i; ?>"
+              style="--o: <?php echo (int) ($i); ?>"
+              role="group"
+              aria-roledescription="slide"
+              aria-label="<?php echo esc_attr(($i + 1) . ' of ' . count($cin_quotes)); ?>"
+              <?php echo $i === 0 ? '' : ' aria-hidden="true"'; ?>
+            >
+              <div class="wvn-cin-cites__card-media">
+                <img src="<?php echo esc_url($img); ?>" alt="" loading="lazy" decoding="async">
+                <?php if ($vid) : ?>
+                  <button type="button" class="wvn-cin-cites__play" data-wvn-cin-cites-play data-video="<?php echo esc_url($vid); ?>" aria-label="Play story video">
+                    <span></span>
+                  </button>
+                <?php endif; ?>
+              </div>
+              <div class="wvn-cin-cites__card-body">
+                <p class="wvn-cin-cites__kicker">Couple story</p>
+                <blockquote class="wvn-cin-cites__quote">“<?php echo esc_html($quote['text']); ?>”</blockquote>
+                <div class="wvn-cin-cites__credit">
+                  <cite class="wvn-cin-cites__name"><?php echo esc_html($quote['name']); ?></cite>
+                  <?php if ($meta) : ?>
+                    <span class="wvn-cin-cites__meta"><?php echo esc_html($meta); ?></span>
+                  <?php endif; ?>
+                </div>
+              </div>
+            </article>
+          <?php endforeach; ?>
         </div>
-        <button type="button" class="wvn-cin-cites__btn" data-wvn-cin-cites-next aria-label="Next testimonial">→</button>
+      </div>
+
+      <div class="wvn-cin-cites__nav">
+        <button type="button" class="wvn-cin-cites__btn" data-wvn-cin-cites-prev aria-label="Previous story">←</button>
+        <div class="wvn-cin-cites__dots" data-wvn-cin-cites-dots role="tablist" aria-label="Choose a story">
+          <?php foreach ($cin_quotes as $i => $quote) : ?>
+            <button
+              type="button"
+              class="wvn-cin-cites__dot<?php echo $i === 0 ? ' is-active' : ''; ?>"
+              data-wvn-cin-cites-dot
+              data-index="<?php echo (int) $i; ?>"
+              aria-label="Go to story <?php echo (int) ($i + 1); ?>"
+              <?php echo $i === 0 ? ' aria-current="true"' : ''; ?>
+            ></button>
+          <?php endforeach; ?>
+        </div>
+        <button type="button" class="wvn-cin-cites__btn" data-wvn-cin-cites-next aria-label="Next story">→</button>
       </div>
     </div>
   </section>

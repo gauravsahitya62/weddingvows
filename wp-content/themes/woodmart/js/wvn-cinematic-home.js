@@ -186,43 +186,78 @@
     if (!root || root.__wvnBound) return;
     root.__wvnBound = true;
 
-    var slides = Array.prototype.slice.call(root.querySelectorAll("[data-wvn-cin-cites-slide]"));
+    var cards = Array.prototype.slice.call(root.querySelectorAll("[data-wvn-cin-cites-card]"));
+    var dots = Array.prototype.slice.call(root.querySelectorAll("[data-wvn-cin-cites-dot]"));
+    var deck = root.querySelector("[data-wvn-cin-cites-deck]");
     var prev = root.querySelector("[data-wvn-cin-cites-prev]");
     var next = root.querySelector("[data-wvn-cin-cites-next]");
-    var count = root.querySelector("[data-wvn-cin-cites-count]");
-    var bar = root.querySelector("[data-wvn-cin-cites-bar]");
+    var total = cards.length;
     var index = 0;
-    var busy = false;
     var timer = null;
-    var total = slides.length;
+    var duration = 5500;
+    var dragging = false;
+    var startX = 0;
+    var deltaX = 0;
 
-    function pad(n) {
-      return (n < 10 ? "0" : "") + n;
+    if (!total) return;
+
+    function wrap(n) {
+      return ((n % total) + total) % total;
     }
 
-    function setCount() {
-      if (count) count.textContent = pad(index + 1) + " / " + pad(total);
-      if (bar) bar.style.transform = "translate3d(" + index * 100 + "%,0,0)";
+    function shortestOffset(i, active) {
+      var raw = i - active;
+      if (raw > total / 2) raw -= total;
+      if (raw < -total / 2) raw += total;
+      return raw;
     }
 
-    function go(dir) {
-      if (busy || total < 2) return;
-      busy = true;
-      var from = slides[index];
-      index = (index + dir + total) % total;
-      var to = slides[index];
-      from.classList.remove("is-active");
-      from.classList.add("is-leave");
-      to.hidden = false;
-      to.classList.remove("is-leave");
-      void to.offsetWidth;
-      to.classList.add("is-active");
-      setCount();
-      window.setTimeout(function () {
-        from.classList.remove("is-leave");
-        from.hidden = true;
-        busy = false;
-      }, reduce ? 0 : 620);
+    function render() {
+      var vw = window.innerWidth || 1200;
+      var cardW = Math.min(380, vw * 0.82);
+      if (vw < 900) cardW = Math.min(340, vw * 0.78);
+      if (vw < 640) cardW = Math.min(300, vw * 0.78);
+      var gap = vw < 640 ? 18 : 28;
+      var step = cardW + gap;
+
+      cards.forEach(function (card, i) {
+        var o = shortestOffset(i, index);
+        var abs = Math.abs(o);
+        var x = o * step;
+        var s = abs === 0 ? 1 : Math.max(0.88, 1 - abs * 0.06);
+        var opacity = abs === 0 ? 1 : Math.max(0.4, 1 - abs * 0.28);
+        var z = abs === 0 ? 40 : 30 - abs * 5;
+
+        if (abs > 2 || (vw < 640 && abs > 1)) {
+          opacity = 0;
+          z = 1;
+        }
+
+        card.style.setProperty("--o", String(o));
+        card.style.setProperty("--x", x.toFixed(1) + "px");
+        card.style.setProperty("--s", s.toFixed(3));
+        card.style.opacity = String(opacity);
+        card.style.zIndex = String(z);
+        card.dataset.abs = String(abs);
+        card.dataset.far = opacity === 0 ? "1" : "0";
+        card.classList.toggle("is-active", o === 0);
+        card.setAttribute("aria-hidden", o === 0 ? "false" : "true");
+      });
+      dots.forEach(function (dot, i) {
+        var on = i === index;
+        dot.classList.toggle("is-active", on);
+        if (on) dot.setAttribute("aria-current", "true");
+        else dot.removeAttribute("aria-current");
+      });
+    }
+
+    function go(to) {
+      index = wrap(to);
+      render();
+    }
+
+    function step(dir) {
+      go(index + dir);
     }
 
     function stopAuto() {
@@ -234,29 +269,122 @@
 
     function startAuto() {
       stopAuto();
-      if (reduce) return;
+      if (reduce || total < 2) return;
       timer = window.setInterval(function () {
-        go(1);
-      }, 7000);
+        step(1);
+      }, duration);
     }
 
     if (prev) prev.addEventListener("click", function () {
-      go(-1);
+      step(-1);
       startAuto();
     });
     if (next) next.addEventListener("click", function () {
-      go(1);
+      step(1);
       startAuto();
     });
-    root.addEventListener("mouseenter", stopAuto);
-    root.addEventListener("mouseleave", startAuto);
-    root.addEventListener("focusin", stopAuto);
-    root.addEventListener("focusout", function (e) {
-      if (!root.contains(e.relatedTarget)) startAuto();
+
+    cards.forEach(function (card) {
+      card.addEventListener("click", function () {
+        if (dragging || Math.abs(deltaX) > 8) return;
+        var i = parseInt(card.getAttribute("data-index"), 10);
+        if (!isNaN(i) && i !== index) {
+          go(i);
+          startAuto();
+        }
+      });
     });
 
-    setCount();
-    startAuto();
+    dots.forEach(function (dot) {
+      dot.addEventListener("click", function () {
+        var i = parseInt(dot.getAttribute("data-index"), 10);
+        if (!isNaN(i)) {
+          go(i);
+          startAuto();
+        }
+      });
+    });
+
+    root.querySelectorAll("[data-wvn-cin-cites-play]").forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var url = btn.getAttribute("data-video");
+        if (url) window.open(url, "_blank", "noopener");
+      });
+    });
+
+    window.addEventListener("resize", function () {
+      render();
+    }, { passive: true });
+
+    function onPointerDown(x) {
+      dragging = true;
+      startX = x;
+      deltaX = 0;
+      if (deck) deck.classList.add("is-dragging");
+      stopAuto();
+    }
+
+    function onPointerMove(x) {
+      if (!dragging) return;
+      deltaX = x - startX;
+    }
+
+    function onPointerUp() {
+      if (!dragging) return;
+      dragging = false;
+      if (deck) deck.classList.remove("is-dragging");
+      if (Math.abs(deltaX) > 48) step(deltaX < 0 ? 1 : -1);
+      deltaX = 0;
+      startAuto();
+    }
+
+    if (deck) {
+      deck.addEventListener("pointerdown", function (e) {
+        if (e.button && e.button !== 0) return;
+        onPointerDown(e.clientX);
+        try { deck.setPointerCapture(e.pointerId); } catch (err) {}
+      });
+      deck.addEventListener("pointermove", function (e) {
+        onPointerMove(e.clientX);
+      });
+      deck.addEventListener("pointerup", onPointerUp);
+      deck.addEventListener("pointercancel", onPointerUp);
+    }
+
+    root.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        step(-1);
+        startAuto();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        step(1);
+        startAuto();
+      }
+    });
+    if (!root.hasAttribute("tabindex")) root.setAttribute("tabindex", "0");
+
+    render();
+
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              root.classList.add("is-in");
+              startAuto();
+              io.unobserve(root);
+            }
+          });
+        },
+        { threshold: 0.25 }
+      );
+      io.observe(root);
+    } else {
+      root.classList.add("is-in");
+      startAuto();
+    }
   }
 
   var updateStory = initMergedStory();
