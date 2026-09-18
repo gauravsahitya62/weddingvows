@@ -32,3 +32,19 @@ add_action('template_redirect', function () {
         exit;
     }
 }, 1);
+
+/**
+ * Restore Portfolio rewrite rules once after registering the CPT.
+ *
+ * Without a rewrite refresh, WordPress can keep treating /portfolio/ as a
+ * missing route until permalinks are manually saved in wp-admin.
+ */
+function wvn_portfolio_rewrite_guard() {
+    if (get_option('wvn_portfolio_rewrite_v2') === '1') {
+        return;
+    }
+
+    flush_rewrite_rules(false);
+    update_option('wvn_portfolio_rewrite_v2', '1', false);
+}
+add_action('init', 'wvn_portfolio_rewrite_guard', 99);
