@@ -469,10 +469,18 @@ $service_count = count($services);
   </section>
   <section class="wvn-home-seo-copy" aria-labelledby="wvn-home-seo-heading">
     <div class="wvn-home-seo-copy__inner">
-      <p class="wvn-kicker">Wedding planning in Udaipur</p>
-      <h2 id="wvn-home-seo-heading">Wedding &amp; Event Planner in Udaipur</h2>
-      <p>Wedding Vows by Nikhil plans destination weddings and events in Udaipur, from palace celebrations and lakeside ceremonies to intimate and large multi-day weddings. Our team coordinates venue sourcing, wedding décor and design, guest hospitality, production and on-ground execution.</p>
-      <p>Planning a destination wedding in Udaipur? Explore our <a href="<?php echo esc_url(home_url('/weddings-in-udaipur/')); ?>">Udaipur wedding planning guide</a>, compare <a href="<?php echo esc_url(home_url('/wedding-venues-udaipur/')); ?>">wedding venues in Udaipur</a>, review <a href="<?php echo esc_url(home_url('/udaipur-wedding-cost/')); ?>">Udaipur wedding costs</a>, or see our <a href="<?php echo esc_url(home_url('/portfolio/')); ?>">real wedding portfolio</a>.</p>
+      <p class="wvn-home-seo-copy__eyebrow">Wedding planning in Udaipur</p>
+      <h2 id="wvn-home-seo-heading">Wedding &amp; Event Planner <em>in Udaipur</em></h2>
+      <p class="wvn-home-seo-copy__lede">Wedding Vows by Nikhil plans destination weddings and events in Udaipur, from palace celebrations and lakeside ceremonies to intimate and large multi-day weddings. Our team coordinates venue sourcing, wedding décor and design, guest hospitality, production and on-ground execution.</p>
+      <nav class="wvn-home-seo-copy__links" aria-label="Continue exploring">
+        <p class="wvn-home-seo-copy__prompt">Planning a destination wedding in Udaipur?</p>
+        <ul>
+          <li><a href="<?php echo esc_url(home_url('/weddings-in-udaipur/')); ?>">Udaipur wedding planning guide</a></li>
+          <li><a href="<?php echo esc_url(home_url('/wedding-venues-udaipur/')); ?>">Wedding venues in Udaipur</a></li>
+          <li><a href="<?php echo esc_url(home_url('/udaipur-wedding-cost/')); ?>">Udaipur wedding costs</a></li>
+          <li><a href="<?php echo esc_url(home_url('/portfolio/')); ?>">Real wedding portfolio</a></li>
+        </ul>
+      </nav>
     </div>
   </section>
 </main>
