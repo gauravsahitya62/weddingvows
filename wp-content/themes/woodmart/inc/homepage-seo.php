@@ -69,6 +69,7 @@ function wvn_homepage_seo_content() {
 }
 add_action('wp_footer', 'wvn_homepage_seo_content', 8);
 
+
 function wvn_homepage_about_schema() {
     if (!is_front_page()) {
         return;
