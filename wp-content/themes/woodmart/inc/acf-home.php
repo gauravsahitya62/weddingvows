@@ -429,6 +429,177 @@ function wvn_register_home_fields() {
                 'wrapper' => array('width' => '50'),
             ),
             array(
+                'key' => 'field_wvn_tab_cinematic',
+                'label' => 'Cinematic',
+                'type' => 'tab',
+            ),
+            array(
+                'key' => 'field_wvn_cin_note',
+                'label' => 'Cinematic homepage scroll',
+                'name' => '',
+                'type' => 'message',
+                'message' => 'Controls the Story mosaic → VOWS reveal → Testimonials coverflow on the homepage. Leave a field empty to keep the built-in fallback.',
+            ),
+            array(
+                'key' => 'field_wvn_cin_story_film',
+                'label' => 'Story film (under mosaic)',
+                'name' => 'home_cin_story_film',
+                'type' => 'file',
+                'return_format' => 'array',
+                'mime_types' => 'mp4,webm,mov',
+                'instructions' => 'Background film while the mosaic is on screen. Prefer landscape 16:9.',
+                'wrapper' => array('width' => '50'),
+            ),
+            array(
+                'key' => 'field_wvn_cin_story_poster',
+                'label' => 'Story film poster',
+                'name' => 'home_cin_story_poster',
+                'type' => 'image',
+                'return_format' => 'array',
+                'preview_size' => 'medium',
+                'wrapper' => array('width' => '50'),
+            ),
+            array(
+                'key' => 'field_wvn_cin_mosaic',
+                'label' => 'Mosaic tiles (6 images)',
+                'name' => 'home_cin_mosaic',
+                'type' => 'gallery',
+                'return_format' => 'array',
+                'preview_size' => 'medium',
+                'min' => 0,
+                'max' => 6,
+                'instructions' => 'Upload up to 6 images. First 3 = top row, last 3 = bottom row.',
+            ),
+            array(
+                'key' => 'field_wvn_cin_start_eyebrow',
+                'label' => 'Story card eyebrow',
+                'name' => 'home_cin_start_eyebrow',
+                'type' => 'text',
+                'default_value' => '▷ The Story We Create',
+            ),
+            array(
+                'key' => 'field_wvn_cin_start_heading',
+                'label' => 'Story card heading',
+                'name' => 'home_cin_start_heading',
+                'type' => 'text',
+                'default_value' => 'It begins with',
+                'wrapper' => array('width' => '50'),
+            ),
+            array(
+                'key' => 'field_wvn_cin_start_heading_em',
+                'label' => 'Story card heading (italic)',
+                'name' => 'home_cin_start_heading_em',
+                'type' => 'text',
+                'default_value' => 'a vision,',
+                'wrapper' => array('width' => '50'),
+            ),
+            array(
+                'key' => 'field_wvn_cin_start_sub',
+                'label' => 'Story card subtitle',
+                'name' => 'home_cin_start_sub',
+                'type' => 'textarea',
+                'rows' => 2,
+                'default_value' => 'a feeling, a dream waiting to be brought to life.',
+            ),
+            array(
+                'key' => 'field_wvn_cin_vows_film',
+                'label' => 'VOWS reveal film',
+                'name' => 'home_cin_vows_film',
+                'type' => 'file',
+                'return_format' => 'array',
+                'mime_types' => 'mp4,webm,mov',
+                'instructions' => 'Film shown through the VOWS cutout. Use a landscape clip.',
+                'wrapper' => array('width' => '50'),
+            ),
+            array(
+                'key' => 'field_wvn_cin_vows_poster',
+                'label' => 'VOWS film poster',
+                'name' => 'home_cin_vows_poster',
+                'type' => 'image',
+                'return_format' => 'array',
+                'preview_size' => 'medium',
+                'wrapper' => array('width' => '50'),
+            ),
+            array(
+                'key' => 'field_wvn_cin_vows_word',
+                'label' => 'VOWS cutout word',
+                'name' => 'home_cin_vows_word',
+                'type' => 'text',
+                'default_value' => 'Vows',
+                'wrapper' => array('width' => '33'),
+            ),
+            array(
+                'key' => 'field_wvn_cin_vows_eyebrow',
+                'label' => 'VOWS panel eyebrow',
+                'name' => 'home_cin_vows_eyebrow',
+                'type' => 'text',
+                'default_value' => 'The Vows Standard',
+                'wrapper' => array('width' => '33'),
+            ),
+            array(
+                'key' => 'field_wvn_cin_vows_cta',
+                'label' => 'VOWS button text',
+                'name' => 'home_cin_vows_cta',
+                'type' => 'text',
+                'default_value' => 'Book a Consultation',
+                'wrapper' => array('width' => '34'),
+            ),
+            array(
+                'key' => 'field_wvn_cin_vows_headline',
+                'label' => 'VOWS headline (line 1)',
+                'name' => 'home_cin_vows_headline',
+                'type' => 'text',
+                'default_value' => 'Every Vow. Every Detail.',
+                'wrapper' => array('width' => '50'),
+            ),
+            array(
+                'key' => 'field_wvn_cin_vows_headline_em',
+                'label' => 'VOWS headline (accent line)',
+                'name' => 'home_cin_vows_headline_em',
+                'type' => 'text',
+                'default_value' => 'Beautifully Kept.',
+                'wrapper' => array('width' => '50'),
+            ),
+            array(
+                'key' => 'field_wvn_cin_vows_cta_url',
+                'label' => 'VOWS button URL',
+                'name' => 'home_cin_vows_cta_url',
+                'type' => 'url',
+                'instructions' => 'Defaults to the CTA button URL if empty.',
+            ),
+            array(
+                'key' => 'field_wvn_cin_cites_eyebrow',
+                'label' => 'Testimonials eyebrow',
+                'name' => 'home_cin_cites_eyebrow',
+                'type' => 'text',
+                'default_value' => 'In Their Words',
+                'wrapper' => array('width' => '33'),
+            ),
+            array(
+                'key' => 'field_wvn_cin_cites_heading',
+                'label' => 'Testimonials heading',
+                'name' => 'home_cin_cites_heading',
+                'type' => 'text',
+                'default_value' => 'Stories whispered',
+                'wrapper' => array('width' => '33'),
+            ),
+            array(
+                'key' => 'field_wvn_cin_cites_heading_em',
+                'label' => 'Testimonials heading (italic)',
+                'name' => 'home_cin_cites_heading_em',
+                'type' => 'text',
+                'default_value' => 'after the last dance.',
+                'wrapper' => array('width' => '34'),
+            ),
+            array(
+                'key' => 'field_wvn_cin_cites_kicker',
+                'label' => 'Card kicker',
+                'name' => 'home_cin_cites_kicker',
+                'type' => 'text',
+                'default_value' => 'Couple story',
+                'instructions' => 'Small label above each testimonial quote.',
+            ),
+            array(
                 'key' => 'field_wvn_tab_quotes',
                 'label' => 'Testimonials',
                 'type' => 'tab',
@@ -459,6 +630,7 @@ function wvn_register_home_fields() {
                 'type' => 'repeater',
                 'layout' => 'block',
                 'button_label' => 'Add review',
+                'instructions' => 'Used by the cinematic testimonials coverflow. Add an image (and optional video) per review for best results.',
                 'sub_fields' => array(
                     array(
                         'key' => 'field_wvn_quote_name',
@@ -469,7 +641,7 @@ function wvn_register_home_fields() {
                     ),
                     array(
                         'key' => 'field_wvn_quote_time',
-                        'label' => 'Time',
+                        'label' => 'Time / venue',
                         'name' => 'time',
                         'type' => 'text',
                         'wrapper' => array('width' => '30'),
@@ -488,6 +660,26 @@ function wvn_register_home_fields() {
                         'name' => 'text',
                         'type' => 'textarea',
                         'rows' => 3,
+                    ),
+                    array(
+                        'key' => 'field_wvn_quote_image',
+                        'label' => 'Card image',
+                        'name' => 'image',
+                        'type' => 'image',
+                        'return_format' => 'array',
+                        'preview_size' => 'medium',
+                        'instructions' => 'Portrait or landscape photo for the coverflow card.',
+                        'wrapper' => array('width' => '50'),
+                    ),
+                    array(
+                        'key' => 'field_wvn_quote_video',
+                        'label' => 'Card video (optional)',
+                        'name' => 'video',
+                        'type' => 'file',
+                        'return_format' => 'array',
+                        'mime_types' => 'mp4,webm,mov',
+                        'instructions' => 'If set, a play button appears on the card.',
+                        'wrapper' => array('width' => '50'),
                     ),
                     array(
                         'key' => 'field_wvn_quote_tags',
@@ -802,6 +994,19 @@ function wvn_seed_home_page() {
         'home_faq_kicker'           => 'FAQs',
         'home_faq_heading'          => 'Questions, answered in advance',
         'home_faq_lede'             => 'Let your wedding planner answer the things couples ask us most — before you even have to ask.',
+        'home_cin_start_eyebrow'    => '▷ The Story We Create',
+        'home_cin_start_heading'    => 'It begins with',
+        'home_cin_start_heading_em' => 'a vision,',
+        'home_cin_start_sub'        => 'a feeling, a dream waiting to be brought to life.',
+        'home_cin_vows_word'        => 'Vows',
+        'home_cin_vows_eyebrow'     => 'The Vows Standard',
+        'home_cin_vows_headline'    => 'Every Vow. Every Detail.',
+        'home_cin_vows_headline_em' => 'Beautifully Kept.',
+        'home_cin_vows_cta'         => 'Book a Consultation',
+        'home_cin_cites_eyebrow'    => 'In Their Words',
+        'home_cin_cites_heading'    => 'Stories whispered',
+        'home_cin_cites_heading_em' => 'after the last dance.',
+        'home_cin_cites_kicker'     => 'Couple story',
     );
     foreach ($texts as $name => $value) {
         $current = get_field($name, $id);
@@ -840,3 +1045,41 @@ function wvn_seed_home_page() {
     update_option('_wvn_home_seeded_v1', '1');
 }
 add_action('acf/init', 'wvn_seed_home_page', 40);
+
+/** Fill empty cinematic text fields on existing homes (runs once). */
+function wvn_seed_cinematic_home_fields() {
+    if (!function_exists('update_field') || get_option('_wvn_home_seeded_cin_v1')) {
+        return;
+    }
+    $id = (int) get_option('page_on_front');
+    if (!$id) {
+        $page = get_page_by_path('home');
+        $id = $page ? (int) $page->ID : 0;
+    }
+    if (!$id) {
+        return;
+    }
+    $texts = array(
+        'home_cin_start_eyebrow'    => '▷ The Story We Create',
+        'home_cin_start_heading'    => 'It begins with',
+        'home_cin_start_heading_em' => 'a vision,',
+        'home_cin_start_sub'        => 'a feeling, a dream waiting to be brought to life.',
+        'home_cin_vows_word'        => 'Vows',
+        'home_cin_vows_eyebrow'     => 'The Vows Standard',
+        'home_cin_vows_headline'    => 'Every Vow. Every Detail.',
+        'home_cin_vows_headline_em' => 'Beautifully Kept.',
+        'home_cin_vows_cta'         => 'Book a Consultation',
+        'home_cin_cites_eyebrow'    => 'In Their Words',
+        'home_cin_cites_heading'    => 'Stories whispered',
+        'home_cin_cites_heading_em' => 'after the last dance.',
+        'home_cin_cites_kicker'     => 'Couple story',
+    );
+    foreach ($texts as $name => $value) {
+        $current = get_field($name, $id);
+        if ($current === null || $current === false || $current === '') {
+            update_field($name, $value, $id);
+        }
+    }
+    update_option('_wvn_home_seeded_cin_v1', '1');
+}
+add_action('acf/init', 'wvn_seed_cinematic_home_fields', 45);

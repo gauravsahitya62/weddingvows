@@ -462,44 +462,133 @@ function wvn_testimonials() {
                 $tags = array_filter(array_map('trim', explode(',', $tags)));
             }
             $items[] = array(
-                'name' => $row['name'] ?? '',
-                'time' => $row['time'] ?? '',
-                'text' => $row['text'] ?? '',
-                'tags' => $tags,
-                'dark' => !empty($row['dark']),
+                'name'  => $row['name'] ?? '',
+                'time'  => $row['time'] ?? '',
+                'text'  => $row['text'] ?? '',
+                'tags'  => $tags,
+                'dark'  => !empty($row['dark']),
+                'image' => wvn_image_url($row['image'] ?? '', ''),
+                'video' => wvn_image_url($row['video'] ?? '', ''),
             );
         }
         return $items;
     }
     return array(
         array(
-            'name' => 'Mansi & Aneel',
-            'time' => '4 months ago',
-            'text' => 'Every detail was handled before we even thought to ask. From the first venue visit to the final pheras, the team made a palace wedding feel completely stress-free.',
-            'tags' => array('On Time Service', 'Quality of Work', 'Highly Experienced'),
-            'dark' => true,
+            'name'  => 'Mansi & Aneel',
+            'time'  => '4 months ago',
+            'text'  => 'Every detail was handled before we even thought to ask. From the first venue visit to the final pheras, the team made a palace wedding feel completely stress-free.',
+            'tags'  => array('On Time Service', 'Quality of Work', 'Highly Experienced'),
+            'dark'  => true,
+            'image' => '',
+            'video' => '',
         ),
         array(
-            'name' => 'Jehana & Kanishk',
-            'time' => '8 months ago',
-            'text' => 'Nikhil and the team understood our families, our rituals, and the kind of quiet luxury we wanted. Guests are still talking about the décor.',
-            'tags' => array('Unique Ideas', 'Quality of Work'),
-            'dark' => false,
+            'name'  => 'Jehana & Kanishk',
+            'time'  => '8 months ago',
+            'text'  => 'Nikhil and the team understood our families, our rituals, and the kind of quiet luxury we wanted. Guests are still talking about the décor.',
+            'tags'  => array('Unique Ideas', 'Quality of Work'),
+            'dark'  => false,
+            'image' => '',
+            'video' => '',
         ),
         array(
-            'name' => 'Vidushi Mishra',
-            'time' => '6 months ago',
-            'text' => 'Hospitality for outstation guests was flawless. Cars, rooms, welcome details — we never had to chase anyone.',
-            'tags' => array('On Time Service', 'Highly Experienced'),
-            'dark' => false,
+            'name'  => 'Vidushi Mishra',
+            'time'  => '6 months ago',
+            'text'  => 'Hospitality for outstation guests was flawless. Cars, rooms, welcome details — we never had to chase anyone.',
+            'tags'  => array('On Time Service', 'Highly Experienced'),
+            'dark'  => false,
+            'image' => '',
+            'video' => '',
         ),
         array(
-            'name' => 'Aishwarya & Dishant',
-            'time' => '1 year ago',
-            'text' => 'We wanted maximal colour without chaos. They designed spaces that felt like us and then executed them perfectly on the ground.',
-            'tags' => array('Unique Ideas', 'Quality of Work'),
-            'dark' => true,
+            'name'  => 'Aishwarya & Dishant',
+            'time'  => '1 year ago',
+            'text'  => 'We wanted maximal colour without chaos. They designed spaces that felt like us and then executed them perfectly on the ground.',
+            'tags'  => array('Unique Ideas', 'Quality of Work'),
+            'dark'  => true,
+            'image' => '',
+            'video' => '',
         ),
+    );
+}
+
+/**
+ * Cinematic homepage story / VOWS media + copy (ACF with fallbacks).
+ */
+function wvn_cinematic_home() {
+    $gallery = wvn_gallery_images();
+    $defaults_tiles = array(
+        wvn_media('2026/08/LKY06126-scaled.jpeg'),
+        wvn_media('2026/08/IMG_5234.jpg'),
+        wvn_media('2025/04/2J0A2532-533x800-1.jpg'),
+        wvn_media('2026/08/IMG_5259-e1788187853846.jpg'),
+        wvn_media('2026/08/IMG_5222.jpg'),
+        wvn_media('2026/08/IMG_5231.jpg'),
+    );
+
+    $mosaic = array();
+    if (function_exists('get_field')) {
+        $raw = get_field('home_cin_mosaic', wvn_home_id());
+        if (is_array($raw)) {
+            foreach ($raw as $item) {
+                $url = wvn_image_url($item, '');
+                if ($url) {
+                    $mosaic[] = $url;
+                }
+            }
+        }
+    }
+    if (count($mosaic) < 6) {
+        foreach ($defaults_tiles as $url) {
+            if (count($mosaic) >= 6) {
+                break;
+            }
+            if (!in_array($url, $mosaic, true)) {
+                $mosaic[] = $url;
+            }
+        }
+    }
+    $mosaic = array_slice(array_values($mosaic), 0, 6);
+    while (count($mosaic) < 6) {
+        $mosaic[] = $gallery[count($mosaic) % max(1, count($gallery))] ?? $defaults_tiles[0];
+    }
+
+    $story_film = wvn_image_url(
+        function_exists('get_field') ? get_field('home_cin_story_film', wvn_home_id()) : null,
+        wvn_media('2026/08/Video-25994-1.mp4')
+    );
+    $story_poster = wvn_home_image('home_cin_story_poster', wvn_media('2026/08/2J0A1820-1200x800-1.jpg'));
+    $vows_film = wvn_image_url(
+        function_exists('get_field') ? get_field('home_cin_vows_film', wvn_home_id()) : null,
+        wvn_media('2026/08/vidssave.com-Anirudh-Ishita-__Wedding-Trailer__-Radisson-Blu-Palace-Resort-Spa-Udaipur-720P.mp4')
+    );
+    $vows_poster = wvn_home_image('home_cin_vows_poster', $story_poster);
+    $cta_url = wvn_home_text('home_cin_vows_cta_url', '');
+    if ($cta_url === '') {
+        $cta_url = wvn_home_text('home_cta_url', home_url('/contact-us/'));
+    }
+
+    return array(
+        'story_film'       => $story_film,
+        'story_poster'     => $story_poster,
+        'vows_film'        => $vows_film,
+        'vows_poster'      => $vows_poster,
+        'mosaic'           => $mosaic,
+        'start_eyebrow'    => wvn_home_text('home_cin_start_eyebrow', '▷ The Story We Create'),
+        'start_heading'    => wvn_home_text('home_cin_start_heading', 'It begins with'),
+        'start_heading_em' => wvn_home_text('home_cin_start_heading_em', 'a vision,'),
+        'start_sub'        => wvn_home_text('home_cin_start_sub', 'a feeling, a dream waiting to be brought to life.'),
+        'vows_word'        => wvn_home_text('home_cin_vows_word', 'Vows'),
+        'vows_eyebrow'     => wvn_home_text('home_cin_vows_eyebrow', 'The Vows Standard'),
+        'vows_headline'    => wvn_home_text('home_cin_vows_headline', 'Every Vow. Every Detail.'),
+        'vows_headline_em' => wvn_home_text('home_cin_vows_headline_em', 'Beautifully Kept.'),
+        'vows_cta'         => wvn_home_text('home_cin_vows_cta', 'Book a Consultation'),
+        'vows_cta_url'     => $cta_url,
+        'cites_eyebrow'    => wvn_home_text('home_cin_cites_eyebrow', 'In Their Words'),
+        'cites_heading'    => wvn_home_text('home_cin_cites_heading', 'Stories whispered'),
+        'cites_heading_em' => wvn_home_text('home_cin_cites_heading_em', 'after the last dance.'),
+        'cites_kicker'     => wvn_home_text('home_cin_cites_kicker', 'Couple story'),
     );
 }
 

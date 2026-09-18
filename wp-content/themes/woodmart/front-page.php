@@ -165,59 +165,62 @@ $service_count = count($services);
   </section>
 
   <?php
-  $cin_base = 'https://weddingvowsbynikhil.com/wp-content/uploads';
-  $cin_contact = wvn_home_text('home_cta_url', home_url('/contact-us/'));
+  $cin = wvn_cinematic_home();
+  $cin_tiles = $cin['mosaic'];
   ?>
-  <section class="wvn-cin-story" id="the-story-we-create" data-wvn-cin-story aria-label="The story we create">
+  <section class="wvn-cin-story" id="the-story-we-create" data-wvn-cin-story aria-label="<?php echo esc_attr($cin['start_eyebrow']); ?>">
     <div class="wvn-cin-story__sticky">
-      <!-- Early: story film under the mosaic -->
       <div class="wvn-cin-story__film" data-wvn-cin-story-film>
-        <video muted autoplay loop playsinline preload="metadata" poster="<?php echo esc_url($cin_base . '/2026/08/2J0A1820-1200x800-1.jpg'); ?>">
-          <source src="<?php echo esc_url($cin_base . '/2026/08/Video-25994-1.mp4'); ?>" type="video/mp4">
+        <video muted autoplay loop playsinline preload="metadata" poster="<?php echo esc_url($cin['story_poster']); ?>">
+          <source src="<?php echo esc_url($cin['story_film']); ?>" type="video/mp4">
         </video>
         <div class="wvn-cin-story__film-tint" aria-hidden="true"></div>
       </div>
 
-      <!-- Solid black during mosaic split — prevents video peeking through gaps -->
       <div class="wvn-cin-story__curtain" data-wvn-cin-story-curtain aria-hidden="true"></div>
 
-      <!-- After mosaic: film only visible through VOWS letter cutout (landscape trailer — not portrait 75083) -->
       <div class="wvn-cin-story__vows-film" data-wvn-cin-vows-film>
-        <video muted autoplay loop playsinline preload="metadata" poster="<?php echo esc_url($cin_base . '/2026/08/2J0A1820-1200x800-1.jpg'); ?>">
-          <source src="<?php echo esc_url($cin_base . '/2026/08/vidssave.com-Anirudh-Ishita-__Wedding-Trailer__-Radisson-Blu-Palace-Resort-Spa-Udaipur-720P.mp4'); ?>" type="video/mp4">
+        <video muted autoplay loop playsinline preload="metadata" poster="<?php echo esc_url($cin['vows_poster']); ?>">
+          <source src="<?php echo esc_url($cin['vows_film']); ?>" type="video/mp4">
         </video>
       </div>
       <div class="wvn-cin-story__vows-shade" aria-hidden="true"></div>
       <div class="wvn-cin-story__vows-mask" data-wvn-cin-vows-mask aria-hidden="true">
-        <p class="wvn-cin-story__vows-word">Vows</p>
+        <p class="wvn-cin-story__vows-word"><?php echo esc_html($cin['vows_word']); ?></p>
       </div>
 
       <div class="wvn-cin-story__tiles" data-wvn-cin-story-tiles aria-hidden="true">
-        <div class="wvn-cin-story__tile" data-row="top"><img src="<?php echo esc_url($cin_base . '/2026/08/LKY06126-scaled.jpeg'); ?>" alt="" loading="lazy" decoding="async"></div>
-        <div class="wvn-cin-story__tile" data-row="top"><img src="<?php echo esc_url($cin_base . '/2026/08/IMG_5234.jpg'); ?>" alt="" loading="lazy" decoding="async"></div>
-        <div class="wvn-cin-story__tile" data-row="top"><img src="<?php echo esc_url($cin_base . '/2025/04/2J0A2532-533x800-1.jpg'); ?>" alt="" loading="lazy" decoding="async"></div>
-        <div class="wvn-cin-story__tile" data-row="bottom"><img src="<?php echo esc_url($cin_base . '/2026/08/IMG_5259-e1788187853846.jpg'); ?>" alt="" loading="lazy" decoding="async"></div>
-        <div class="wvn-cin-story__tile" data-row="bottom"><img src="<?php echo esc_url($cin_base . '/2026/08/IMG_5222.jpg'); ?>" alt="" loading="lazy" decoding="async"></div>
-        <div class="wvn-cin-story__tile" data-row="bottom"><img src="<?php echo esc_url($cin_base . '/2026/08/IMG_5231.jpg'); ?>" alt="" loading="lazy" decoding="async"></div>
+        <?php foreach ($cin_tiles as $ti => $tile_src) : ?>
+          <div class="wvn-cin-story__tile" data-row="<?php echo $ti < 3 ? 'top' : 'bottom'; ?>">
+            <img src="<?php echo esc_url($tile_src); ?>" alt="" loading="lazy" decoding="async">
+          </div>
+        <?php endforeach; ?>
       </div>
 
       <div class="wvn-cin-story__start" data-wvn-cin-story-start>
         <div class="wvn-cin-story__card">
-          <p class="wvn-cin-story__start-eyebrow">▷ The Story We Create</p>
-          <h2 class="wvn-cin-story__start-heading">It begins with <em>a vision,</em></h2>
-          <p class="wvn-cin-story__start-sub">a feeling, a dream waiting to be brought to life.</p>
+          <p class="wvn-cin-story__start-eyebrow"><?php echo esc_html($cin['start_eyebrow']); ?></p>
+          <h2 class="wvn-cin-story__start-heading">
+            <?php echo esc_html($cin['start_heading']); ?>
+            <?php if ($cin['start_heading_em'] !== '') : ?>
+              <em><?php echo esc_html($cin['start_heading_em']); ?></em>
+            <?php endif; ?>
+          </h2>
+          <p class="wvn-cin-story__start-sub"><?php echo esc_html($cin['start_sub']); ?></p>
         </div>
       </div>
 
       <div class="wvn-cin-story__vows-caption" data-wvn-cin-vows-caption>
         <div class="wvn-cin-story__vows-panel">
-          <p class="wvn-cin-story__vows-eyebrow">The Vows Standard</p>
+          <p class="wvn-cin-story__vows-eyebrow"><?php echo esc_html($cin['vows_eyebrow']); ?></p>
           <h2 class="wvn-cin-story__vows-headline">
-            Every Vow. Every Detail.
-            <span>Beautifully Kept.</span>
+            <?php echo esc_html($cin['vows_headline']); ?>
+            <?php if ($cin['vows_headline_em'] !== '') : ?>
+              <span><?php echo esc_html($cin['vows_headline_em']); ?></span>
+            <?php endif; ?>
           </h2>
-          <a class="wvn-cin-story__vows-cta" href="<?php echo esc_url($cin_contact); ?>">
-            Book a Consultation
+          <a class="wvn-cin-story__vows-cta" href="<?php echo esc_url($cin['vows_cta_url']); ?>">
+            <?php echo esc_html($cin['vows_cta']); ?>
             <span class="wvn-cin-story__vows-cta-arrow" aria-hidden="true">↗</span>
           </a>
         </div>
@@ -236,43 +239,10 @@ $service_count = count($services);
   $cin_quotes = array_values(array_filter($quotes, function ($q) {
       return !empty($q['text']) && !empty($q['name']);
   }));
-  if (!$cin_quotes) {
-      $cin_quotes = array(
-          array(
-              'name' => 'Rinita Jain',
-              'time' => 'Family of the Bride — Taj Lalit Bagh, Udaipur',
-              'text' => 'Your dedication, creativity, meticulous planning, and calm presence ensured that every detail was perfectly executed. The wedding was everything we had hoped for and more.',
-          ),
-          array(
-              'name' => 'Aarti & Leon',
-              'time' => 'Three-Day Wedding — Aurika, Udaipur',
-              'text' => 'The decor was nothing short of magical. Every corner of our venue was transformed into a dreamy paradise, and the team anticipated our needs before we even voiced them.',
-          ),
-          array(
-              'name' => 'Naman Singh',
-              'time' => 'Destination Wedding — Udaipur',
-              'text' => 'It was even better than what we had imagined. Right from the flowers to the decor to the music, everything was spot on. You took a major burden off our shoulders.',
-          ),
-          array(
-              'name' => 'Mansi & Aneel',
-              'time' => 'Palace Wedding — Udaipur',
-              'text' => 'Every detail was handled before we even thought to ask. From the first venue visit to the final pheras, the team made a palace wedding feel completely stress-free.',
-          ),
-      );
-  }
   $cin_quotes = array_slice($cin_quotes, 0, 6);
   $cin_gallery = array_values(array_filter($gallery));
   if (!$cin_gallery) {
-      $cin_gallery = array(
-          $cin_base . '/2026/08/LKY06126-scaled.jpeg',
-          $cin_base . '/2026/08/IMG_5234.jpg',
-          $cin_base . '/2026/08/IMG_5222.jpg',
-          $cin_base . '/2026/08/IMG_5231.jpg',
-      );
-  }
-  $cin_story_videos = array();
-  foreach (array_slice($stories, 0, 6) as $st) {
-      $cin_story_videos[] = !empty($st['video']) ? $st['video'] : '';
+      $cin_gallery = $cin['mosaic'];
   }
   ?>
   <section class="wvn-cin-cites" id="testimonials" data-wvn-cin-cites aria-label="Testimonials">
@@ -283,8 +253,13 @@ $service_count = count($services);
 
     <div class="wvn-cin-cites__inner">
       <header class="wvn-cin-cites__head">
-        <p class="wvn-cin-cites__eyebrow">In Their Words</p>
-        <h2 class="wvn-cin-cites__title">Stories whispered <em>after the last dance.</em></h2>
+        <p class="wvn-cin-cites__eyebrow"><?php echo esc_html($cin['cites_eyebrow']); ?></p>
+        <h2 class="wvn-cin-cites__title">
+          <?php echo esc_html($cin['cites_heading']); ?>
+          <?php if ($cin['cites_heading_em'] !== '') : ?>
+            <em><?php echo esc_html($cin['cites_heading_em']); ?></em>
+          <?php endif; ?>
+        </h2>
       </header>
 
       <div class="wvn-cin-cites__deck" data-wvn-cin-cites-deck>
@@ -295,21 +270,23 @@ $service_count = count($services);
               if (!$meta && !empty($quote['tags']) && is_array($quote['tags'])) {
                   $meta = implode(' · ', array_slice($quote['tags'], 0, 2));
               }
-              $img = $cin_gallery[$i % count($cin_gallery)];
-              $vid = $cin_story_videos[$i] ?? '';
+              $img = !empty($quote['image']) ? $quote['image'] : ($cin_gallery[$i % count($cin_gallery)] ?? '');
+              $vid = !empty($quote['video']) ? $quote['video'] : '';
               ?>
             <article
               class="wvn-cin-cites__card<?php echo $i === 0 ? ' is-active' : ''; ?>"
               data-wvn-cin-cites-card
               data-index="<?php echo (int) $i; ?>"
-              style="--o: <?php echo (int) ($i); ?>"
+              style="--o: <?php echo (int) $i; ?>"
               role="group"
               aria-roledescription="slide"
               aria-label="<?php echo esc_attr(($i + 1) . ' of ' . count($cin_quotes)); ?>"
               <?php echo $i === 0 ? '' : ' aria-hidden="true"'; ?>
             >
               <div class="wvn-cin-cites__card-media">
-                <img src="<?php echo esc_url($img); ?>" alt="" loading="lazy" decoding="async">
+                <?php if ($img) : ?>
+                  <img src="<?php echo esc_url($img); ?>" alt="" loading="lazy" decoding="async">
+                <?php endif; ?>
                 <?php if ($vid) : ?>
                   <button type="button" class="wvn-cin-cites__play" data-wvn-cin-cites-play data-video="<?php echo esc_url($vid); ?>" aria-label="Play story video">
                     <span></span>
@@ -317,7 +294,7 @@ $service_count = count($services);
                 <?php endif; ?>
               </div>
               <div class="wvn-cin-cites__card-body">
-                <p class="wvn-cin-cites__kicker">Couple story</p>
+                <p class="wvn-cin-cites__kicker"><?php echo esc_html($cin['cites_kicker']); ?></p>
                 <blockquote class="wvn-cin-cites__quote">“<?php echo esc_html($quote['text']); ?>”</blockquote>
                 <div class="wvn-cin-cites__credit">
                   <cite class="wvn-cin-cites__name"><?php echo esc_html($quote['name']); ?></cite>
