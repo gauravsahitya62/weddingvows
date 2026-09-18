@@ -59,3 +59,12 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Homepage SEO copy: visually quiet, design-neutral support content. */
+.wvn-home-seo-copy{width:min(1080px,calc(100% - 48px));margin:0 auto;padding:72px 0 84px;color:var(--teal-text,#3a2727)}
+.wvn-home-seo-copy__inner{max-width:900px;margin:0 auto}
+.wvn-home-seo-copy h2{margin:0;color:var(--teal-text,#3a2727);font-family:var(--font,Georgia,serif);font-size:clamp(30px,4vw,52px);font-weight:400;line-height:1.08;letter-spacing:.02em}
+.wvn-home-seo-copy p:not(.wvn-kicker){margin:20px 0 0;color:var(--muted,#8a7373);font-size:15px;line-height:1.8;letter-spacing:.02em}
+.wvn-home-seo-copy a{color:inherit;text-decoration:underline;text-decoration-color:rgba(182,122,122,.55);text-underline-offset:4px}
+.wvn-home-seo-copy .wvn-kicker{margin-bottom:12px}
+@media(max-width:700px){.wvn-home-seo-copy{width:calc(100% - 28px);padding:54px 0 64px}.wvn-home-seo-copy p:not(.wvn-kicker){font-size:14px;line-height:1.72}}
