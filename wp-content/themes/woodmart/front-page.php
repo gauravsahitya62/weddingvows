@@ -382,6 +382,14 @@ $service_count = count($services);
       <?php endforeach; ?>
     </div>
   </section>
+  <section class="wvn-home-seo-copy" aria-labelledby="wvn-home-seo-heading">
+    <div class="wvn-home-seo-copy__inner">
+      <p class="wvn-kicker">Wedding planning in Udaipur</p>
+      <h2 id="wvn-home-seo-heading">Wedding &amp; Event Planner in Udaipur</h2>
+      <p>Wedding Vows by Nikhil plans destination weddings and events in Udaipur, from palace celebrations and lakeside ceremonies to intimate and large multi-day weddings. Our team coordinates venue sourcing, wedding décor and design, guest hospitality, production and on-ground execution.</p>
+      <p>Planning a destination wedding in Udaipur? Explore our <a href="<?php echo esc_url(home_url('/weddings-in-udaipur/')); ?>">Udaipur wedding planning guide</a>, compare <a href="<?php echo esc_url(home_url('/wedding-venues-udaipur/')); ?>">wedding venues in Udaipur</a>, review <a href="<?php echo esc_url(home_url('/udaipur-wedding-cost/')); ?>">Udaipur wedding costs</a>, or see our <a href="<?php echo esc_url(home_url('/portfolio/')); ?>">real wedding portfolio</a>.</p>
+    </div>
+  </section>
 </main>
 
 <?php get_footer(); ?>
