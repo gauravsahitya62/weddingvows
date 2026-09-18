@@ -201,6 +201,15 @@ function wvn_udaipur_guide_faqs() {
     );
 }
 
+function wvn_seo_homepage_override($seo) {
+    if (is_front_page()) {
+        $seo['title'] = 'Wedding & Event Planner in Udaipur | Wedding Vows by Nikhil';
+        $seo['description'] = 'Wedding planner in Udaipur for luxury destination weddings and events. Explore palace weddings, venue sourcing, décor, guest hospitality and end-to-end planning by Wedding Vows by Nikhil.';
+    }
+    return $seo;
+}
+add_filter('wvn_seo_current', 'wvn_seo_homepage_override', 20);
+
 function wvn_seo_title_parts($parts) {
     $seo = wvn_seo_current();
     if (!empty($seo['title'])) {
