@@ -32,7 +32,8 @@ function wvn_homepage_seo_schema() {
 
     $schema = array(
         '@context' => 'https://schema.org',
-        '@type' => 'WeddingPlanner',
+        '@type' => 'ProfessionalService',
+        'additionalType' => 'https://schema.org/WeddingPlanner',
         'name' => 'Wedding Vows by Nikhil',
         'url' => home_url('/'),
         'description' => 'Wedding and event planner in Udaipur for luxury destination weddings, palace celebrations, venue sourcing, décor, guest hospitality and on-ground coordination across Rajasthan.',
