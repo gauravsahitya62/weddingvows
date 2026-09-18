@@ -36,7 +36,7 @@
   }
 
   function isOverDark() {
-    const dark = document.querySelectorAll(".wvn-intro, .wvn-achieve, .wvn-showreel, .wvn-hero, .wvn-opening, .wvn-footer, .wvn-svc-hero, .wvn-svc-specials");
+    const dark = document.querySelectorAll(".wvn-intro, .wvn-achieve, .wvn-showreel, .wvn-hero, .wvn-opening, .wvn-footer, .wvn-svc-hero, .wvn-svc-specials, .wvn-cin-story");
     for (const el of dark) {
       const r = el.getBoundingClientRect();
       if (r.top < 80 && r.bottom > 50) return true;

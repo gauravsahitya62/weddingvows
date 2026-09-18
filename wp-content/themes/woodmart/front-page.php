@@ -164,32 +164,113 @@ $service_count = count($services);
     <?php endif; ?>
   </section>
 
-  <section class="wvn-quotes">
-    <p class="wvn-kicker wvn-center"><?php echo esc_html(wvn_home_text('home_quotes_kicker', 'Testimonials')); ?></p>
-    <h2 class="wvn-display wvn-center"><?php echo esc_html(wvn_home_text('home_quotes_heading', 'See what our couples say')); ?></h2>
-    <p class="wvn-lede"><?php echo esc_html(wvn_home_text('home_quotes_lede', 'Real stories from the families we’ve had the honour to celebrate with.')); ?></p>
-    <div class="wvn-masonry">
-      <?php foreach ($quotes as $quote) :
-          $text = trim($quote['text'] ?? '');
-          $is_long = mb_strlen($text) > 170;
-          ?>
-        <article class="wvn-quote<?php echo !empty($quote['dark']) ? ' is-dark' : ''; ?><?php echo $is_long ? ' has-more' : ''; ?>" data-quote-card>
-          <header>
-            <strong><?php echo esc_html($quote['name']); ?></strong>
-            <span><?php echo esc_html($quote['time']); ?></span>
-          </header>
-          <div class="wvn-stars">★★★★★</div>
-          <div class="wvn-tags">
-            <?php foreach ($quote['tags'] as $tag) : ?><span><?php echo esc_html($tag); ?></span><?php endforeach; ?>
-          </div>
-          <div class="wvn-quote-body">
-            <p><?php echo nl2br(esc_html($text)); ?></p>
-          </div>
-          <?php if ($is_long) : ?>
-            <button type="button" class="wvn-quote-toggle" data-quote-toggle aria-label="Toggle full testimonial">Read full review</button>
-          <?php endif; ?>
-        </article>
-      <?php endforeach; ?>
+  <?php
+  $cin_base = 'https://weddingvowsbynikhil.com/wp-content/uploads';
+  $cin_contact = wvn_home_text('home_cta_url', home_url('/contact-us/'));
+  ?>
+  <section class="wvn-cin-story" id="the-story-we-create" data-wvn-cin-story aria-label="The story we create">
+    <div class="wvn-cin-story__sticky">
+      <!-- Early: story film under the mosaic -->
+      <div class="wvn-cin-story__film" data-wvn-cin-story-film>
+        <video muted autoplay loop playsinline preload="metadata" poster="<?php echo esc_url($cin_base . '/2026/08/2J0A1820-1200x800-1.jpg'); ?>">
+          <source src="<?php echo esc_url($cin_base . '/2026/08/Video-25994-1.mp4'); ?>" type="video/mp4">
+        </video>
+        <div class="wvn-cin-story__film-tint" aria-hidden="true"></div>
+      </div>
+
+      <!-- Solid black during mosaic split — prevents video peeking through gaps -->
+      <div class="wvn-cin-story__curtain" data-wvn-cin-story-curtain aria-hidden="true"></div>
+
+      <!-- After mosaic: film only visible through VOWS letter cutout (landscape trailer — not portrait 75083) -->
+      <div class="wvn-cin-story__vows-film" data-wvn-cin-vows-film>
+        <video muted autoplay loop playsinline preload="metadata" poster="<?php echo esc_url($cin_base . '/2026/08/2J0A1820-1200x800-1.jpg'); ?>">
+          <source src="<?php echo esc_url($cin_base . '/2026/08/vidssave.com-Anirudh-Ishita-__Wedding-Trailer__-Radisson-Blu-Palace-Resort-Spa-Udaipur-720P.mp4'); ?>" type="video/mp4">
+        </video>
+      </div>
+      <div class="wvn-cin-story__vows-shade" aria-hidden="true"></div>
+      <div class="wvn-cin-story__vows-mask" data-wvn-cin-vows-mask aria-hidden="true">
+        <p class="wvn-cin-story__vows-word">Vows</p>
+      </div>
+
+      <div class="wvn-cin-story__tiles" data-wvn-cin-story-tiles aria-hidden="true">
+        <div class="wvn-cin-story__tile" data-row="top"><img src="<?php echo esc_url($cin_base . '/2026/08/LKY06126-scaled.jpeg'); ?>" alt="" loading="lazy" decoding="async"></div>
+        <div class="wvn-cin-story__tile" data-row="top"><img src="<?php echo esc_url($cin_base . '/2026/08/IMG_5234.jpg'); ?>" alt="" loading="lazy" decoding="async"></div>
+        <div class="wvn-cin-story__tile" data-row="top"><img src="<?php echo esc_url($cin_base . '/2025/04/2J0A2532-533x800-1.jpg'); ?>" alt="" loading="lazy" decoding="async"></div>
+        <div class="wvn-cin-story__tile" data-row="bottom"><img src="<?php echo esc_url($cin_base . '/2026/08/IMG_5259-e1788187853846.jpg'); ?>" alt="" loading="lazy" decoding="async"></div>
+        <div class="wvn-cin-story__tile" data-row="bottom"><img src="<?php echo esc_url($cin_base . '/2026/08/IMG_5222.jpg'); ?>" alt="" loading="lazy" decoding="async"></div>
+        <div class="wvn-cin-story__tile" data-row="bottom"><img src="<?php echo esc_url($cin_base . '/2026/08/IMG_5231.jpg'); ?>" alt="" loading="lazy" decoding="async"></div>
+      </div>
+
+      <div class="wvn-cin-story__start" data-wvn-cin-story-start>
+        <div class="wvn-cin-story__card">
+          <p class="wvn-cin-story__start-eyebrow">▷ The Story We Create</p>
+          <h2 class="wvn-cin-story__start-heading">It begins with <em>a vision,</em></h2>
+          <p class="wvn-cin-story__start-sub">a feeling, a dream waiting to be brought to life.</p>
+        </div>
+      </div>
+
+      <div class="wvn-cin-story__vows-caption" data-wvn-cin-vows-caption>
+        <div class="wvn-cin-story__vows-panel">
+          <p class="wvn-cin-story__vows-eyebrow">The Vows Standard</p>
+          <h2 class="wvn-cin-story__vows-headline">
+            Every Vow. Every Detail.
+            <span>Beautifully Kept.</span>
+          </h2>
+          <a class="wvn-cin-story__vows-cta" href="<?php echo esc_url($cin_contact); ?>">
+            Book a Consultation
+            <span class="wvn-cin-story__vows-cta-arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="wvn-cin-story__vignette" data-wvn-cin-story-vignette aria-hidden="true"></div>
+      <div class="wvn-cin-story__grain" aria-hidden="true"></div>
+      <div class="wvn-cin-story__cue" data-wvn-cin-story-cue aria-hidden="true">
+        <span>Scroll</span>
+        <i></i>
+      </div>
+    </div>
+  </section>
+
+  <section class="wvn-cin-cites" id="testimonials" data-wvn-cin-cites aria-label="Testimonials">
+    <div class="wvn-cin-cites__inner">
+      <p class="wvn-cin-cites__eyebrow">Testimonials</p>
+      <h2 class="wvn-cin-cites__title">
+        <span>See What</span>
+        <span>Our Couples Say</span>
+      </h2>
+      <div class="wvn-cin-cites__stars" aria-hidden="true">★★★★★</div>
+      <div class="wvn-cin-cites__stage" data-wvn-cin-cites-stage aria-live="polite">
+        <blockquote class="wvn-cin-cites__slide is-active" data-wvn-cin-cites-slide>
+          <span class="wvn-cin-cites__mark" aria-hidden="true">“</span>
+          <p class="wvn-cin-cites__quote">Your dedication, creativity, meticulous planning, and calm presence ensured that every detail was perfectly executed. The wedding was everything we had hoped for and more.</p>
+          <div class="wvn-cin-cites__rule" aria-hidden="true"></div>
+          <cite class="wvn-cin-cites__name">Rinita Jain</cite>
+          <p class="wvn-cin-cites__meta">Family of the Bride — Taj Lalit Bagh, Udaipur</p>
+        </blockquote>
+        <blockquote class="wvn-cin-cites__slide" data-wvn-cin-cites-slide hidden>
+          <span class="wvn-cin-cites__mark" aria-hidden="true">“</span>
+          <p class="wvn-cin-cites__quote">The decor was nothing short of magical. Every corner of our venue was transformed into a dreamy paradise, and the team anticipated our needs before we even voiced them.</p>
+          <div class="wvn-cin-cites__rule" aria-hidden="true"></div>
+          <cite class="wvn-cin-cites__name">Aarti &amp; Leon</cite>
+          <p class="wvn-cin-cites__meta">Three-Day Wedding — Aurika, Udaipur</p>
+        </blockquote>
+        <blockquote class="wvn-cin-cites__slide" data-wvn-cin-cites-slide hidden>
+          <span class="wvn-cin-cites__mark" aria-hidden="true">“</span>
+          <p class="wvn-cin-cites__quote">It was even better than what we had imagined. Right from the flowers to the decor to the music, everything was spot on. You took a major burden off our shoulders.</p>
+          <div class="wvn-cin-cites__rule" aria-hidden="true"></div>
+          <cite class="wvn-cin-cites__name">Naman Singh</cite>
+          <p class="wvn-cin-cites__meta">Destination Wedding — Udaipur</p>
+        </blockquote>
+      </div>
+      <div class="wvn-cin-cites__nav">
+        <button type="button" class="wvn-cin-cites__btn" data-wvn-cin-cites-prev aria-label="Previous testimonial">←</button>
+        <div class="wvn-cin-cites__pager">
+          <span class="wvn-cin-cites__count" data-wvn-cin-cites-count>01 / 03</span>
+          <div class="wvn-cin-cites__bar" aria-hidden="true"><span data-wvn-cin-cites-bar></span></div>
+        </div>
+        <button type="button" class="wvn-cin-cites__btn" data-wvn-cin-cites-next aria-label="Next testimonial">→</button>
+      </div>
     </div>
   </section>
 
