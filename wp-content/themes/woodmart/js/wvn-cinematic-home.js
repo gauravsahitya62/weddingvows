@@ -305,12 +305,8 @@
       });
     });
 
-    root.querySelectorAll("[data-wvn-cin-cites-play]").forEach(function (btn) {
-      btn.addEventListener("click", function (e) {
-        e.stopPropagation();
-        var url = btn.getAttribute("data-video");
-        if (url) window.open(url, "_blank", "noopener");
-      });
+    root.querySelectorAll(".wvn-cin-cites__card-media video").forEach(function (video) {
+      playVideo(video);
     });
 
     window.addEventListener("resize", function () {

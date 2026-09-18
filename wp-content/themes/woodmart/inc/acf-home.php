@@ -438,25 +438,48 @@ function wvn_register_home_fields() {
                 'label' => 'Cinematic homepage scroll',
                 'name' => '',
                 'type' => 'message',
-                'message' => 'Controls the Story mosaic → VOWS reveal → Testimonials coverflow on the homepage. Leave a field empty to keep the built-in fallback.',
+                'message' => 'Controls the Story mosaic → VOWS reveal → Testimonials coverflow. For Story and VOWS backgrounds, choose Video or Photo, then upload the matching media. Leave empty fields to keep built-in fallbacks.',
+            ),
+            array(
+                'key' => 'field_wvn_cin_story_media',
+                'label' => 'Story background type',
+                'name' => 'home_cin_story_media',
+                'type' => 'button_group',
+                'choices' => array(
+                    'video' => 'Video',
+                    'photo' => 'Photo',
+                ),
+                'default_value' => 'video',
+                'return_format' => 'value',
+                'layout' => 'horizontal',
             ),
             array(
                 'key' => 'field_wvn_cin_story_film',
-                'label' => 'Story film (under mosaic)',
+                'label' => 'Story video',
                 'name' => 'home_cin_story_film',
                 'type' => 'file',
                 'return_format' => 'array',
                 'mime_types' => 'mp4,webm,mov',
-                'instructions' => 'Background film while the mosaic is on screen. Prefer landscape 16:9.',
+                'instructions' => 'Background video under the mosaic. Prefer landscape 16:9.',
+                'conditional_logic' => array(
+                    array(
+                        array(
+                            'field' => 'field_wvn_cin_story_media',
+                            'operator' => '==',
+                            'value' => 'video',
+                        ),
+                    ),
+                ),
                 'wrapper' => array('width' => '50'),
             ),
             array(
                 'key' => 'field_wvn_cin_story_poster',
-                'label' => 'Story film poster',
+                'label' => 'Story photo / video poster',
                 'name' => 'home_cin_story_poster',
                 'type' => 'image',
                 'return_format' => 'array',
                 'preview_size' => 'medium',
+                'instructions' => 'Used as the full background when type is Photo, or as the video poster when type is Video.',
                 'wrapper' => array('width' => '50'),
             ),
             array(
@@ -502,22 +525,45 @@ function wvn_register_home_fields() {
                 'default_value' => 'a feeling, a dream waiting to be brought to life.',
             ),
             array(
+                'key' => 'field_wvn_cin_vows_media',
+                'label' => 'VOWS background type',
+                'name' => 'home_cin_vows_media',
+                'type' => 'button_group',
+                'choices' => array(
+                    'video' => 'Video',
+                    'photo' => 'Photo',
+                ),
+                'default_value' => 'video',
+                'return_format' => 'value',
+                'layout' => 'horizontal',
+            ),
+            array(
                 'key' => 'field_wvn_cin_vows_film',
-                'label' => 'VOWS reveal film',
+                'label' => 'VOWS video',
                 'name' => 'home_cin_vows_film',
                 'type' => 'file',
                 'return_format' => 'array',
                 'mime_types' => 'mp4,webm,mov',
                 'instructions' => 'Film shown through the VOWS cutout. Use a landscape clip.',
+                'conditional_logic' => array(
+                    array(
+                        array(
+                            'field' => 'field_wvn_cin_vows_media',
+                            'operator' => '==',
+                            'value' => 'video',
+                        ),
+                    ),
+                ),
                 'wrapper' => array('width' => '50'),
             ),
             array(
                 'key' => 'field_wvn_cin_vows_poster',
-                'label' => 'VOWS film poster',
+                'label' => 'VOWS photo / video poster',
                 'name' => 'home_cin_vows_poster',
                 'type' => 'image',
                 'return_format' => 'array',
                 'preview_size' => 'medium',
+                'instructions' => 'Used as the full background when type is Photo, or as the video poster when type is Video.',
                 'wrapper' => array('width' => '50'),
             ),
             array(
@@ -630,7 +676,7 @@ function wvn_register_home_fields() {
                 'type' => 'repeater',
                 'layout' => 'block',
                 'button_label' => 'Add review',
-                'instructions' => 'Used by the cinematic testimonials coverflow. Add an image (and optional video) per review for best results.',
+                'instructions' => 'Used by the cinematic testimonials coverflow. Choose Photo or Video per review, then upload the matching media.',
                 'sub_fields' => array(
                     array(
                         'key' => 'field_wvn_quote_name',
@@ -662,23 +708,45 @@ function wvn_register_home_fields() {
                         'rows' => 3,
                     ),
                     array(
+                        'key' => 'field_wvn_quote_media',
+                        'label' => 'Card media type',
+                        'name' => 'media',
+                        'type' => 'button_group',
+                        'choices' => array(
+                            'photo' => 'Photo',
+                            'video' => 'Video',
+                        ),
+                        'default_value' => 'photo',
+                        'return_format' => 'value',
+                        'layout' => 'horizontal',
+                    ),
+                    array(
                         'key' => 'field_wvn_quote_image',
-                        'label' => 'Card image',
+                        'label' => 'Card photo / video poster',
                         'name' => 'image',
                         'type' => 'image',
                         'return_format' => 'array',
                         'preview_size' => 'medium',
-                        'instructions' => 'Portrait or landscape photo for the coverflow card.',
+                        'instructions' => 'Shown when type is Photo, or used as poster when type is Video.',
                         'wrapper' => array('width' => '50'),
                     ),
                     array(
                         'key' => 'field_wvn_quote_video',
-                        'label' => 'Card video (optional)',
+                        'label' => 'Card video',
                         'name' => 'video',
                         'type' => 'file',
                         'return_format' => 'array',
                         'mime_types' => 'mp4,webm,mov',
-                        'instructions' => 'If set, a play button appears on the card.',
+                        'instructions' => 'Shown as a looping muted video when type is Video.',
+                        'conditional_logic' => array(
+                            array(
+                                array(
+                                    'field' => 'field_wvn_quote_media',
+                                    'operator' => '==',
+                                    'value' => 'video',
+                                ),
+                            ),
+                        ),
                         'wrapper' => array('width' => '50'),
                     ),
                     array(
@@ -1007,6 +1075,8 @@ function wvn_seed_home_page() {
         'home_cin_cites_heading'    => 'Stories whispered',
         'home_cin_cites_heading_em' => 'after the last dance.',
         'home_cin_cites_kicker'     => 'Couple story',
+        'home_cin_story_media'      => 'video',
+        'home_cin_vows_media'       => 'video',
     );
     foreach ($texts as $name => $value) {
         $current = get_field($name, $id);
@@ -1073,6 +1143,8 @@ function wvn_seed_cinematic_home_fields() {
         'home_cin_cites_heading'    => 'Stories whispered',
         'home_cin_cites_heading_em' => 'after the last dance.',
         'home_cin_cites_kicker'     => 'Couple story',
+        'home_cin_story_media'      => 'video',
+        'home_cin_vows_media'       => 'video',
     );
     foreach ($texts as $name => $value) {
         $current = get_field($name, $id);

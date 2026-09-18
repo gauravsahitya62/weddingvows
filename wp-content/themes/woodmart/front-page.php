@@ -171,18 +171,14 @@ $service_count = count($services);
   <section class="wvn-cin-story" id="the-story-we-create" data-wvn-cin-story aria-label="<?php echo esc_attr($cin['start_eyebrow']); ?>">
     <div class="wvn-cin-story__sticky">
       <div class="wvn-cin-story__film" data-wvn-cin-story-film>
-        <video muted autoplay loop playsinline preload="metadata" poster="<?php echo esc_url($cin['story_poster']); ?>">
-          <source src="<?php echo esc_url($cin['story_film']); ?>" type="video/mp4">
-        </video>
+        <?php wvn_cin_render_backdrop($cin['story_media'], $cin['story_film'], $cin['story_poster']); ?>
         <div class="wvn-cin-story__film-tint" aria-hidden="true"></div>
       </div>
 
       <div class="wvn-cin-story__curtain" data-wvn-cin-story-curtain aria-hidden="true"></div>
 
       <div class="wvn-cin-story__vows-film" data-wvn-cin-vows-film>
-        <video muted autoplay loop playsinline preload="metadata" poster="<?php echo esc_url($cin['vows_poster']); ?>">
-          <source src="<?php echo esc_url($cin['vows_film']); ?>" type="video/mp4">
-        </video>
+        <?php wvn_cin_render_backdrop($cin['vows_media'], $cin['vows_film'], $cin['vows_poster']); ?>
       </div>
       <div class="wvn-cin-story__vows-shade" aria-hidden="true"></div>
       <div class="wvn-cin-story__vows-mask" data-wvn-cin-vows-mask aria-hidden="true">
@@ -272,6 +268,7 @@ $service_count = count($services);
               }
               $img = !empty($quote['image']) ? $quote['image'] : ($cin_gallery[$i % count($cin_gallery)] ?? '');
               $vid = !empty($quote['video']) ? $quote['video'] : '';
+              $card_media = (($quote['media'] ?? '') === 'video' && $vid !== '') ? 'video' : 'photo';
               ?>
             <article
               class="wvn-cin-cites__card<?php echo $i === 0 ? ' is-active' : ''; ?>"
@@ -284,13 +281,12 @@ $service_count = count($services);
               <?php echo $i === 0 ? '' : ' aria-hidden="true"'; ?>
             >
               <div class="wvn-cin-cites__card-media">
-                <?php if ($img) : ?>
+                <?php if ($card_media === 'video') : ?>
+                  <video muted autoplay loop playsinline preload="metadata"<?php echo $img ? ' poster="' . esc_url($img) . '"' : ''; ?>>
+                    <source src="<?php echo esc_url($vid); ?>" type="video/mp4">
+                  </video>
+                <?php elseif ($img) : ?>
                   <img src="<?php echo esc_url($img); ?>" alt="" loading="lazy" decoding="async">
-                <?php endif; ?>
-                <?php if ($vid) : ?>
-                  <button type="button" class="wvn-cin-cites__play" data-wvn-cin-cites-play data-video="<?php echo esc_url($vid); ?>" aria-label="Play story video">
-                    <span></span>
-                  </button>
                 <?php endif; ?>
               </div>
               <div class="wvn-cin-cites__card-body">

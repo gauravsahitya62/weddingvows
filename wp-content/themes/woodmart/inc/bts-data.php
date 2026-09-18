@@ -461,12 +461,17 @@ function wvn_testimonials() {
             if (is_string($tags)) {
                 $tags = array_filter(array_map('trim', explode(',', $tags)));
             }
+            $media = isset($row['media']) ? (string) $row['media'] : '';
+            if ($media !== 'video' && $media !== 'photo') {
+                $media = !empty($row['video']) ? 'video' : 'photo';
+            }
             $items[] = array(
                 'name'  => $row['name'] ?? '',
                 'time'  => $row['time'] ?? '',
                 'text'  => $row['text'] ?? '',
                 'tags'  => $tags,
                 'dark'  => !empty($row['dark']),
+                'media' => $media,
                 'image' => wvn_image_url($row['image'] ?? '', ''),
                 'video' => wvn_image_url($row['video'] ?? '', ''),
             );
@@ -480,6 +485,7 @@ function wvn_testimonials() {
             'text'  => 'Every detail was handled before we even thought to ask. From the first venue visit to the final pheras, the team made a palace wedding feel completely stress-free.',
             'tags'  => array('On Time Service', 'Quality of Work', 'Highly Experienced'),
             'dark'  => true,
+            'media' => 'photo',
             'image' => '',
             'video' => '',
         ),
@@ -489,6 +495,7 @@ function wvn_testimonials() {
             'text'  => 'Nikhil and the team understood our families, our rituals, and the kind of quiet luxury we wanted. Guests are still talking about the décor.',
             'tags'  => array('Unique Ideas', 'Quality of Work'),
             'dark'  => false,
+            'media' => 'photo',
             'image' => '',
             'video' => '',
         ),
@@ -498,6 +505,7 @@ function wvn_testimonials() {
             'text'  => 'Hospitality for outstation guests was flawless. Cars, rooms, welcome details — we never had to chase anyone.',
             'tags'  => array('On Time Service', 'Highly Experienced'),
             'dark'  => false,
+            'media' => 'photo',
             'image' => '',
             'video' => '',
         ),
@@ -507,9 +515,44 @@ function wvn_testimonials() {
             'text'  => 'We wanted maximal colour without chaos. They designed spaces that felt like us and then executed them perfectly on the ground.',
             'tags'  => array('Unique Ideas', 'Quality of Work'),
             'dark'  => true,
+            'media' => 'photo',
             'image' => '',
             'video' => '',
         ),
+    );
+}
+
+/**
+ * Normalize cinematic media mode to video|photo.
+ */
+function wvn_cin_media_mode($name, $default = 'video') {
+    $mode = strtolower(trim((string) wvn_home_text($name, $default)));
+    return $mode === 'photo' ? 'photo' : 'video';
+}
+
+/**
+ * Echo a cinematic backdrop as muted looping video or still photo.
+ */
+function wvn_cin_render_backdrop($mode, $video_url, $image_url) {
+    $mode = $mode === 'photo' ? 'photo' : 'video';
+    $image_url = (string) $image_url;
+    $video_url = (string) $video_url;
+
+    if ($mode === 'photo' || $video_url === '') {
+        if ($image_url === '') {
+            return;
+        }
+        printf(
+            '<img src="%s" alt="" loading="eager" decoding="async">',
+            esc_url($image_url)
+        );
+        return;
+    }
+
+    printf(
+        '<video muted autoplay loop playsinline preload="metadata"%s><source src="%s" type="video/mp4"></video>',
+        $image_url !== '' ? ' poster="' . esc_url($image_url) . '"' : '',
+        esc_url($video_url)
     );
 }
 
@@ -554,6 +597,8 @@ function wvn_cinematic_home() {
         $mosaic[] = $gallery[count($mosaic) % max(1, count($gallery))] ?? $defaults_tiles[0];
     }
 
+    $story_media = wvn_cin_media_mode('home_cin_story_media', 'video');
+    $vows_media = wvn_cin_media_mode('home_cin_vows_media', 'video');
     $story_film = wvn_image_url(
         function_exists('get_field') ? get_field('home_cin_story_film', wvn_home_id()) : null,
         wvn_media('2026/08/Video-25994-1.mp4')
@@ -570,8 +615,10 @@ function wvn_cinematic_home() {
     }
 
     return array(
+        'story_media'      => $story_media,
         'story_film'       => $story_film,
         'story_poster'     => $story_poster,
+        'vows_media'       => $vows_media,
         'vows_film'        => $vows_film,
         'vows_poster'      => $vows_poster,
         'mosaic'           => $mosaic,
