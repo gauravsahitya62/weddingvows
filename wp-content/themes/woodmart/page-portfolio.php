@@ -27,25 +27,16 @@ $portfolio_query = new WP_Query(array(
   </div>
 
   <?php if ($portfolio_query->have_posts()) : ?>
-    <div class="wvn-portfolio-grid">
+    <div class="wvn-mosaic wvn-portfolio-mosaic">
       <?php while ($portfolio_query->have_posts()) : $portfolio_query->the_post();
           $thumb = get_the_post_thumbnail_url(get_the_ID(), 'large');
-          $excerpt = get_the_excerpt();
       ?>
-        <a class="wvn-portfolio-card" href="<?php the_permalink(); ?>">
-          <div class="wvn-portfolio-card-media">
-            <?php if ($thumb) : ?>
-              <img src="<?php echo esc_url($thumb); ?>" alt="<?php the_title_attribute(); ?>" loading="lazy" decoding="async">
-            <?php endif; ?>
-          </div>
-          <div class="wvn-portfolio-card-copy">
-            <p class="wvn-kicker">Real wedding</p>
-            <h2 class="wvn-display"><?php the_title(); ?></h2>
-            <?php if ($excerpt) : ?>
-              <p><?php echo esc_html(wp_trim_words($excerpt, 24)); ?></p>
-            <?php endif; ?>
-            <span class="wvn-portfolio-card-link">View wedding ↗</span>
-          </div>
+        <a href="<?php the_permalink(); ?>" aria-label="<?php echo esc_attr('View wedding: ' . get_the_title()); ?>">
+          <?php if ($thumb) : ?>
+            <img src="<?php echo esc_url($thumb); ?>" alt="<?php the_title_attribute(); ?>" loading="lazy" decoding="async">
+          <?php else : ?>
+            <span aria-hidden="true"></span>
+          <?php endif; ?>
         </a>
       <?php endwhile; wp_reset_postdata(); ?>
     </div>
