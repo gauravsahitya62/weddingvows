@@ -90,7 +90,6 @@ HTML;
         return;
     }
 
-    // Use an existing wedding image from the site's media library as the article context.
     if (function_exists('wvn_media') && file_exists(ABSPATH . 'wp-admin/includes/media.php')) {
         require_once ABSPATH . 'wp-admin/includes/media.php';
         require_once ABSPATH . 'wp-admin/includes/file.php';
@@ -117,3 +116,121 @@ HTML;
     update_option('_wvn_seo_journal_20260916_published', '1', false);
 }
 add_action('init', 'wvn_publish_seo_journal_20260916', 35);
+
+/**
+ * One distinct Journal article for NRI and outstation planning intent.
+ * This complements, rather than replaces, the destination-wedding authority page.
+ */
+function wvn_publish_seo_journal_20260918() {
+    if (get_option('_wvn_seo_journal_20260918_published') === '1') {
+        return;
+    }
+
+    $slug = 'nri-destination-wedding-udaipur-planning-guide';
+    $existing = get_page_by_path($slug, OBJECT, 'post');
+    if ($existing) {
+        update_option('_wvn_seo_journal_20260918_published', '1', false);
+        return;
+    }
+
+    $content = <<<'HTML'
+<p>Planning a destination wedding in Udaipur from another city or country is easier when the decisions are made in the right order: lock the dates and guest profile, shortlist the venue, build the room and travel plan, then shape the celebrations around how people will actually arrive and move through the wedding.</p>
+
+<h2>What NRI and outstation couples should decide first</h2>
+<p>The first decisions are not about flowers or stage design. Confirm your approximate guest count, wedding dates, preferred wedding style and how many nights you want guests to stay. Those four details narrow the practical venue choices quickly.</p>
+<ul>
+<li><strong>Guest count:</strong> Separate the likely room block from the total invitation list.</li>
+<li><strong>Dates:</strong> Keep a little flexibility if venue availability or flight schedules matter.</li>
+<li><strong>Wedding format:</strong> Decide whether you need a compact two-day celebration or a fuller multi-day destination experience.</li>
+<li><strong>Guest profile:</strong> Note international arrivals, elderly guests, children and anyone needing accessibility or special assistance.</li>
+</ul>
+
+<h2>Build the venue shortlist around logistics</h2>
+<p>Udaipur gives couples a choice of palace hotels, heritage properties and larger luxury resorts. For an NRI or outstation wedding, the prettiest venue is not automatically the easiest one. Compare room inventory, function-space capacity, airport transfer time, guest movement, vendor access and indoor backup before comparing décor packages.</p>
+<p>Use our <a href="/weddings-in-udaipur/">Weddings in Udaipur guide</a> as the starting point for venue, guest-count and planning considerations, then create a shortlist that fits your actual wedding week.</p>
+
+<h2>How to plan a comfortable 3-day destination wedding</h2>
+<p>International guests often arrive tired and at different times, so avoid treating the first evening as another full production day. A simple rhythm gives everyone time to settle in.</p>
+<ol>
+<li><strong>Day 1 — Arrive and settle:</strong> Airport transfers, hotel check-in, welcome desk, room drops and an easy welcome dinner.</li>
+<li><strong>Day 2 — Celebrate:</strong> Mehendi, haldi, family activities or a relaxed daytime experience followed by sangeet or another evening celebration.</li>
+<li><strong>Day 3 — Wedding:</strong> Ceremony, portraits, reception and a clear departure or farewell plan.</li>
+</ol>
+<p>If most guests are travelling long-haul, adding a recovery or sightseeing window can create a better experience than filling every available hour with formal functions.</p>
+
+<h2>Guest hospitality should be planned like a project</h2>
+<p>For a wedding planned remotely, one clear source of information prevents dozens of small questions. Give guests a digital itinerary containing the hotel address, airport transfer instructions, emergency contact, check-in details, dress guidance, function timings and local weather expectations.</p>
+<p>Keep the live guest list with room assignments and arrival times in one working document. On the wedding days, assign one hospitality lead who can make quick decisions about delayed flights, room changes and transport without pulling the couple or family into every operational issue.</p>
+
+<h2>What to arrange before flying to Udaipur</h2>
+<h3>Venue and accommodation</h3>
+<p>Confirm the room block, check-in and check-out windows, meal inclusions, venue minimums and cancellation terms. Ask where guests will gather between functions and how much walking is involved.</p>
+
+<h3>Airport and local transport</h3>
+<p>Build transfers around real arrival times rather than one fixed airport run. Keep a contact person at the airport or hotel and maintain a simple manifest so the transport team knows who has arrived.</p>
+
+<h3>Production and vendors</h3>
+<p>If you are coordinating from overseas, clarify which vendors the venue requires or recommends, what can be brought in from outside, and when production teams can access the property. This prevents late changes when the couple is already travelling.</p>
+
+<h3>Payments and approvals</h3>
+<p>Create a payment calendar before the wedding week. Keep contracts, invoices, guest information and final approvals in one shared location so decisions do not depend on messages scattered across time zones.</p>
+
+<h2>Planning an NRI wedding from a different time zone</h2>
+<p>Remote planning works best when the planner becomes the local decision layer. Agree on a regular review cadence, a single approval channel and a list of decisions that can be made on the couple's behalf within an agreed budget or brief.</p>
+<p>For larger destination weddings, schedule a venue visit before the final design is locked whenever possible. If that is not practical, use structured video walkthroughs and request measurements, floor plans, loading information and clear photographs of guest and vendor routes.</p>
+
+<h2>How much should you budget?</h2>
+<p>Do not start with a single headline number. Build the budget by venue and rooms, food and beverage, décor and production, entertainment, transport, hospitality and taxes. The guest count and number of functions can change the total much more than a small styling decision.</p>
+<p>For a broader overview, see our <a href="/udaipur-wedding-cost/">Udaipur wedding cost guide</a>. If you are comparing properties for a specific guest count, our <a href="/wedding-planner-udaipur/">Udaipur wedding planning team</a> can help turn the shortlist into a practical plan.</p>
+
+<h2>When should an NRI couple hire a local Udaipur wedding planner?</h2>
+<p>Earlier than you might expect if the wedding involves a large room block, several functions or a palace or heritage venue. Local planning support is most useful before the final venue decision, because venue rules, logistics and accommodation can shape the rest of the wedding.</p>
+<p>Wedding Vows by Nikhil works with couples and families travelling into Udaipur, coordinating venue decisions, guest hospitality, vendors and on-ground execution. <a href="/destination-wedding-planner-udaipur/">Explore destination wedding planning</a>, browse <a href="/portfolio/">real wedding stories</a>, or <a href="/contact-us/">start a consultation</a> with your approximate guest count and dates.</p>
+
+<h2>NRI and outstation wedding planning FAQ</h2>
+<h3>Can an NRI couple plan a Udaipur wedding remotely?</h3>
+<p>Yes. The key is to establish a local planning team, a shared decision process and one reliable source for contracts, guest information, budgets and timelines. Venue visits and video walkthroughs can then be used for the decisions that genuinely require them.</p>
+<h3>How many days should an NRI destination wedding in Udaipur be?</h3>
+<p>Three days is a useful starting point for many celebrations: arrival and welcome, pre-wedding functions, then the wedding. Long-haul guests may benefit from an additional recovery or sightseeing window.</p>
+<h3>What is the biggest planning mistake for an overseas couple?</h3>
+<p>Treating guest travel as an afterthought. Airport arrivals, rooms, transfers and recovery time should be built into the wedding itinerary from the beginning, because they affect every function that follows.</p>
+HTML;
+
+    $post_id = wp_insert_post(wp_slash(array(
+        'post_title' => 'NRI Destination Wedding in Udaipur: A Practical Planning Guide',
+        'post_name' => $slug,
+        'post_content' => $content,
+        'post_excerpt' => 'Planning a Udaipur destination wedding from overseas or another Indian city? A practical guide to venues, guest hospitality, travel, budgets, timelines and remote planning.',
+        'post_status' => 'publish',
+        'post_type' => 'post',
+        'comment_status' => 'closed',
+    )), true);
+
+    if (is_wp_error($post_id) || !$post_id) {
+        return;
+    }
+
+    if (function_exists('wvn_media') && file_exists(ABSPATH . 'wp-admin/includes/media.php')) {
+        require_once ABSPATH . 'wp-admin/includes/media.php';
+        require_once ABSPATH . 'wp-admin/includes/file.php';
+        require_once ABSPATH . 'wp-admin/includes/image.php';
+        $image_url = wvn_media('2025/04/2J0A0986-534x800-1.jpg');
+        if ($image_url) {
+            $image_id = media_sideload_image($image_url, $post_id, 'NRI destination wedding in Udaipur guest hospitality', 'id');
+            if (!is_wp_error($image_id) && $image_id) {
+                set_post_thumbnail($post_id, (int) $image_id);
+            }
+        }
+    }
+
+    $cat = get_category_by_slug('planning-tips');
+    if ($cat) {
+        wp_set_post_categories($post_id, array((int) $cat->term_id), false);
+    }
+
+    update_post_meta($post_id, '_yoast_wpseo_title', 'NRI Destination Wedding in Udaipur: Planning Guide');
+    update_post_meta($post_id, '_yoast_wpseo_metadesc', 'Planning a Udaipur destination wedding from overseas or another city? Plan venues, guest hospitality, travel, budgets, timelines and remote wedding coordination.');
+    update_post_meta($post_id, '_wvn_seo_focus_keyword', 'NRI destination wedding in Udaipur');
+    update_option('_wvn_seo_journal_20260918_published', '1', false);
+}
+add_action('init', 'wvn_publish_seo_journal_20260918', 36);
