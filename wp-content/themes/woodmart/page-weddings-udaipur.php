@@ -55,11 +55,18 @@ while (have_posts()) :
     );
     ?>
 <main id="content" class="wvn-page wvn-guide">
-  <p class="wvn-kicker"><?php echo esc_html($kicker); ?></p>
-  <h1><?php echo esc_html($heading); ?></h1>
-  <?php if ($lede) : ?>
-    <p class="wvn-lede"><?php echo esc_html($lede); ?></p>
-  <?php endif; ?>
+  <header class="wvn-page-hero">
+    <div class="wvn-page-hero__media" style="background-image:url('<?php echo esc_url(function_exists('wvn_hero_image') ? wvn_hero_image() : ''); ?>')" aria-hidden="true"></div>
+    <div class="wvn-page-hero__veil" aria-hidden="true"></div>
+    <div class="wvn-page-hero__grain" aria-hidden="true"></div>
+    <div class="wvn-page-hero__inner">
+      <p class="wvn-page-hero__eyebrow"><?php echo esc_html($kicker); ?></p>
+      <h1 class="wvn-display"><?php echo esc_html($heading); ?></h1>
+      <?php if ($lede) : ?>
+        <p class="wvn-page-hero__lede"><?php echo esc_html($lede); ?></p>
+      <?php endif; ?>
+    </div>
+  </header>
 
   <div class="wvn-content wvn-guide-body">
     <?php if (!empty($intro_body)) : ?>

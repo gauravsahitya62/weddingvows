@@ -1,5 +1,5 @@
 <footer class="wvn-footer">
-  <div class="wvn-footer-grid">
+  <div class="wvn-container wvn-footer-grid">
     <div>
       <h2>Wedding Vows<br>by Nikhil</h2>
       <p><?php echo esc_html(wvn_home_text('home_footer_tagline', 'Destination wedding planner in Udaipur — palace, lakeside and heritage celebrations across Rajasthan and India.')); ?></p>
@@ -42,7 +42,7 @@
       </ul>
     </div>
   </div>
-  <div class="wvn-legal">
+  <div class="wvn-container wvn-legal">
     <span>© <?php echo esc_html(date('Y')); ?> Wedding Vows By Nikhil. All rights reserved.</span>
     <span><?php echo esc_html(wvn_home_text('home_footer_address', '53, Sun city, Delhite, Behind Celebration Mall, Bhuwana, Udaipur, Rajasthan 313001')); ?></span>
     <span class="wvn-developed">Developed by <a href="https://dhventa.com/" target="_blank" rel="noopener">Dhventa</a></span>

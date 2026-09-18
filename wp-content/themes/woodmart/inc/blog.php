@@ -263,15 +263,21 @@ function wvn_render_journal() {
     $empty = is_category() ? 'No stories in this category yet.' : 'No stories in this journal yet.';
     $has_posts = have_posts();
     $show_featured = $has_posts && !is_paged() && !is_category();
+    $hero = function_exists('wvn_hero_image') ? wvn_hero_image() : '';
     ?>
 <main id="content" class="wvn-blog">
+  <header class="wvn-page-hero">
+    <div class="wvn-page-hero__media" style="background-image:url('<?php echo esc_url($hero); ?>')" aria-hidden="true"></div>
+    <div class="wvn-page-hero__veil" aria-hidden="true"></div>
+    <div class="wvn-page-hero__grain" aria-hidden="true"></div>
+    <div class="wvn-page-hero__inner">
+      <p class="wvn-page-hero__eyebrow"><?php echo esc_html($header['kicker']); ?></p>
+      <h1 class="wvn-display"><?php echo esc_html($header['heading']); ?></h1>
+      <p class="wvn-page-hero__lede"><?php echo esc_html($header['lede']); ?></p>
+    </div>
+  </header>
   <div class="wvn-blog-shell">
     <div class="wvn-blog-top">
-      <header class="wvn-blog-head">
-        <p class="wvn-kicker"><?php echo esc_html($header['kicker']); ?></p>
-        <h1 class="wvn-display"><?php echo esc_html($header['heading']); ?></h1>
-        <p><?php echo esc_html($header['lede']); ?></p>
-      </header>
       <?php wvn_blog_filters(); ?>
       <?php if ($show_featured) : the_post(); ?>
         <section class="wvn-blog-featured">

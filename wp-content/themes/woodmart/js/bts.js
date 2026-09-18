@@ -36,7 +36,7 @@
   }
 
   function isOverDark() {
-    const dark = document.querySelectorAll(".wvn-intro, .wvn-achieve, .wvn-showreel, .wvn-hero, .wvn-opening, .wvn-footer, .wvn-svc-hero, .wvn-svc-specials, .wvn-cin-story, .wvn-cin-cites");
+    const dark = document.querySelectorAll(".wvn-intro, .wvn-achieve, .wvn-showreel, .wvn-hero, .wvn-opening, .wvn-footer, .wvn-svc-hero, .wvn-svc-specials, .wvn-cin-story, .wvn-cin-cites, .wvn-money-hero, .wvn-money-proof, .wvn-money-services, .wvn-money-proof-cta, .wvn-money-final-cta, .wvn-page-hero, .wvn-wedding-hero, .wvn-cin-band, .wvn-cta-box, .wvn-contact-stage");
     for (const el of dark) {
       const r = el.getBoundingClientRect();
       if (r.top < 80 && r.bottom > 50) return true;

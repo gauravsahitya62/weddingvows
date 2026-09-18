@@ -1,0 +1,1143 @@
+/* Cinematic site layer — all pages except the homepage.
+   Mirrors homepage tokens, typography, atmosphere and motion language. */
+
+body.wvn-cin-site {
+  --wvn-oxblood: #3a2727;
+  --wvn-oxblood-deep: #2a1b1b;
+  --wvn-ink-dark: #0a0606;
+  --wvn-ivory: #f7f2eb;
+  --wvn-ivory-soft: #fbf8f3;
+  --wvn-gold: #c4a574;
+  --wvn-gold-bright: #d4b888;
+  --wvn-maroon: #6b3030;
+  --wvn-clay: #9a7b6a;
+  --wvn-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --wvn-display: "Aboreto", Georgia, serif;
+  --wvn-serif: "Cormorant Garamond", Georgia, serif;
+  --wvn-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+}
+
+/* —— Typography hierarchy (match cinematic home) —— */
+body.wvn-cin-site,
+body.wvn-cin-site input,
+body.wvn-cin-site textarea,
+body.wvn-cin-site select,
+body.wvn-cin-site button,
+body.wvn-cin-site p,
+body.wvn-cin-site li,
+body.wvn-cin-site a,
+body.wvn-cin-site span,
+body.wvn-cin-site label,
+body.wvn-cin-site summary {
+  font-family: var(--wvn-sans);
+}
+
+body.wvn-cin-site .wvn-display,
+body.wvn-cin-site h1.wvn-display,
+body.wvn-cin-site h2.wvn-display,
+body.wvn-cin-site h3.wvn-display,
+body.wvn-cin-site .wvn-wedding-title,
+body.wvn-cin-site .wvn-money-hero h1,
+body.wvn-cin-site .wvn-money-intro-copy > h2,
+body.wvn-cin-site .wvn-money-services h2,
+body.wvn-cin-site .wvn-money-faq h2,
+body.wvn-cin-site .wvn-money-final-cta h2,
+body.wvn-cin-site .wvn-money-proof-cta h2,
+body.wvn-cin-site .wvn-money-contact-card h2,
+body.wvn-cin-site .wvn-money-service-card h3,
+body.wvn-cin-site .wvn-svc-hero .wvn-display,
+body.wvn-cin-site .wvn-svc-card .wvn-display,
+body.wvn-cin-site .wvn-standard-page-header h1,
+body.wvn-cin-site .wvn-blog-head .wvn-display,
+body.wvn-cin-site .wvn-article-main .wvn-display,
+body.wvn-cin-site .wvn-portfolio > h1 {
+  font-family: var(--wvn-display) !important;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+body.wvn-cin-site .wvn-lede,
+body.wvn-cin-site .wvn-money-hero-lede,
+body.wvn-cin-site .wvn-money-section-lede,
+body.wvn-cin-site .wvn-wedding-subtitle,
+body.wvn-cin-site .wvn-svc-hero p,
+body.wvn-cin-site .wvn-article-body blockquote,
+body.wvn-cin-site .wvn-display em,
+body.wvn-cin-site h1 em,
+body.wvn-cin-site h2 em {
+  font-family: var(--wvn-serif) !important;
+  font-style: italic;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+body.wvn-cin-site .wvn-kicker,
+body.wvn-cin-site .wvn-svc-crumb,
+body.wvn-cin-site .wvn-svc-label,
+body.wvn-cin-site .wvn-money-eyebrow,
+body.wvn-cin-site .wvn-money-card-kicker,
+body.wvn-cin-site .wvn-page-hero__eyebrow {
+  font-family: var(--wvn-sans) !important;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 11px;
+  color: var(--wvn-gold);
+}
+
+/* —— Page shell —— */
+body.wvn-cin-site {
+  background: var(--wvn-ivory);
+  color: var(--wvn-oxblood);
+}
+
+body.wvn-cin-site #content {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Soft film grain over the whole page content */
+body.wvn-cin-site #content::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: overlay;
+}
+
+/* —— Shared cinematic page hero —— */
+.wvn-page-hero {
+  position: relative;
+  min-height: clamp(420px, 58vh, 640px);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  color: var(--wvn-ivory);
+  background: var(--wvn-oxblood-deep);
+}
+
+.wvn-page-hero__media {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.08);
+  will-change: transform;
+  transition: transform 1.4s var(--wvn-ease);
+}
+
+.wvn-page-hero.is-in .wvn-page-hero__media {
+  transform: scale(1);
+}
+
+.wvn-page-hero__veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(10, 6, 6, 0.78) 0%, rgba(10, 6, 6, 0.42) 48%, rgba(10, 6, 6, 0.18) 100%),
+    linear-gradient(0deg, rgba(10, 6, 6, 0.72) 0%, rgba(10, 6, 6, 0.08) 55%);
+  pointer-events: none;
+}
+
+.wvn-page-hero__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.07;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  mix-blend-mode: overlay;
+}
+
+.wvn-page-hero__inner {
+  position: relative;
+  z-index: 2;
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 120px 0 64px;
+}
+
+.wvn-page-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin: 0 0 1rem;
+  color: var(--wvn-gold);
+}
+
+.wvn-page-hero__eyebrow::before,
+.wvn-page-hero__eyebrow::after {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--wvn-gold));
+  opacity: 0.7;
+}
+
+.wvn-page-hero__eyebrow::after {
+  background: linear-gradient(90deg, var(--wvn-gold), transparent);
+}
+
+.wvn-page-hero h1 {
+  margin: 0;
+  max-width: 16ch;
+  color: var(--wvn-ivory);
+  font-size: clamp(42px, 6.2vw, 86px);
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.wvn-page-hero__lede {
+  max-width: 42ch;
+  margin: 22px 0 0;
+  color: rgba(247, 242, 235, 0.86);
+  font-family: var(--wvn-serif) !important;
+  font-style: italic;
+  font-size: clamp(18px, 1.8vw, 24px);
+  line-height: 1.45;
+}
+
+/* —— Reveal motion —— */
+body.wvn-cin-site .wvn-cin-reveal {
+  opacity: 0;
+  transform: translate3d(0, 36px, 0);
+  transition: opacity 900ms var(--wvn-ease), transform 900ms var(--wvn-ease);
+}
+
+body.wvn-cin-site .wvn-cin-reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+body.wvn-cin-site .wvn-cin-reveal[data-delay="1"] { transition-delay: 80ms; }
+body.wvn-cin-site .wvn-cin-reveal[data-delay="2"] { transition-delay: 160ms; }
+body.wvn-cin-site .wvn-cin-reveal[data-delay="3"] { transition-delay: 240ms; }
+body.wvn-cin-site .wvn-cin-reveal[data-delay="4"] { transition-delay: 320ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  body.wvn-cin-site .wvn-cin-reveal,
+  body.wvn-cin-site .wvn-page-hero__media {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* —— Money / SEO landings → cinematic —— */
+body.wvn-cin-site .wvn-money-page {
+  --money-ink: var(--wvn-oxblood);
+  --money-muted: rgba(58, 39, 39, 0.72);
+  --money-line: rgba(58, 39, 39, 0.14);
+  --money-paper: #f3ebe3;
+  --money-paper-2: #ebe1d6;
+  --money-blush: var(--wvn-maroon);
+  --money-blush-deep: #552626;
+  --money-white: var(--wvn-ivory-soft);
+  background: var(--wvn-ivory);
+}
+
+body.wvn-cin-site .wvn-money-hero {
+  min-height: clamp(620px, 88vh, 860px);
+  background: var(--wvn-ink-dark);
+}
+
+body.wvn-cin-site .wvn-money-hero-media {
+  transform: scale(1.06);
+  will-change: transform;
+}
+
+body.wvn-cin-site .wvn-money-hero.is-in .wvn-money-hero-media {
+  transform: scale(1);
+  transition: transform 1.6s var(--wvn-ease);
+}
+
+body.wvn-cin-site .wvn-money-hero-overlay {
+  background:
+    linear-gradient(90deg, rgba(10, 6, 6, 0.82) 0%, rgba(10, 6, 6, 0.48) 42%, rgba(10, 6, 6, 0.18) 100%),
+    linear-gradient(0deg, rgba(10, 6, 6, 0.7) 0%, rgba(10, 6, 6, 0.05) 58%);
+}
+
+body.wvn-cin-site .wvn-money-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  mix-blend-mode: overlay;
+}
+
+body.wvn-cin-site .wvn-money-hero .wvn-svc-crumb,
+body.wvn-cin-site .wvn-money-eyebrow {
+  color: var(--wvn-gold);
+}
+
+body.wvn-cin-site .wvn-money-btn-primary {
+  background: transparent;
+  border: 1px solid var(--wvn-gold);
+  color: var(--wvn-ivory);
+  letter-spacing: 0.14em;
+}
+
+body.wvn-cin-site .wvn-money-btn-primary:hover {
+  background: var(--wvn-gold);
+  color: var(--wvn-ink-dark);
+}
+
+body.wvn-cin-site .wvn-money-btn-ghost {
+  border-color: rgba(247, 242, 235, 0.35);
+}
+
+body.wvn-cin-site .wvn-money-proof {
+  background: var(--wvn-oxblood-deep);
+  border-bottom: 0;
+  color: var(--wvn-ivory);
+}
+
+body.wvn-cin-site .wvn-money-proof > div {
+  border-right-color: rgba(247, 242, 235, 0.12);
+}
+
+body.wvn-cin-site .wvn-money-proof strong {
+  font-family: var(--wvn-display) !important;
+  color: var(--wvn-ivory);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body.wvn-cin-site .wvn-money-proof span {
+  color: rgba(247, 242, 235, 0.55);
+}
+
+body.wvn-cin-site .wvn-money-services {
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(107, 48, 48, 0.22), transparent 60%),
+    var(--wvn-ink-dark);
+  color: var(--wvn-ivory);
+}
+
+body.wvn-cin-site .wvn-money-services h2,
+body.wvn-cin-site .wvn-money-section-head .wvn-kicker {
+  color: var(--wvn-ivory);
+}
+
+body.wvn-cin-site .wvn-money-section-head .wvn-kicker {
+  color: var(--wvn-gold);
+}
+
+body.wvn-cin-site .wvn-money-section-lede {
+  color: rgba(247, 242, 235, 0.68);
+  font-family: var(--wvn-serif) !important;
+  font-style: italic;
+}
+
+body.wvn-cin-site .wvn-money-service-card {
+  background: rgba(247, 242, 235, 0.04);
+  border: 1px solid rgba(247, 242, 235, 0.12);
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--wvn-ivory);
+}
+
+body.wvn-cin-site .wvn-money-service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: none;
+  border-color: rgba(196, 165, 116, 0.45);
+  background: rgba(247, 242, 235, 0.07);
+}
+
+body.wvn-cin-site .wvn-money-service-card::after {
+  background: rgba(196, 165, 116, 0.08);
+}
+
+body.wvn-cin-site .wvn-money-service-card .wvn-svc-label {
+  color: var(--wvn-gold);
+}
+
+body.wvn-cin-site .wvn-money-service-card > p:last-child {
+  color: rgba(247, 242, 235, 0.66);
+}
+
+body.wvn-cin-site .wvn-money-service-index {
+  color: rgba(196, 165, 116, 0.45);
+}
+
+body.wvn-cin-site .wvn-money-proof-cta,
+body.wvn-cin-site .wvn-money-final-cta {
+  background:
+    radial-gradient(ellipse 60% 80% at 20% 50%, rgba(107, 48, 48, 0.35), transparent 65%),
+    var(--wvn-oxblood-deep);
+  color: var(--wvn-ivory);
+  border-radius: 0;
+}
+
+body.wvn-cin-site .wvn-money-final-cta {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 88px clamp(24px, 6vw, 100px);
+}
+
+body.wvn-cin-site .wvn-money-final-cta-copy > p:last-child {
+  color: rgba(247, 242, 235, 0.7);
+  font-family: var(--wvn-serif) !important;
+  font-style: italic;
+}
+
+body.wvn-cin-site .wvn-money-contact-card {
+  background: var(--wvn-oxblood-deep);
+  border: 1px solid rgba(196, 165, 116, 0.28);
+  box-shadow: none;
+  color: var(--wvn-ivory);
+  border-radius: 0;
+}
+
+body.wvn-cin-site .wvn-money-contact-card h2 {
+  color: var(--wvn-ivory);
+}
+
+body.wvn-cin-site .wvn-money-contact-card > p:not(.wvn-money-card-kicker):not(.wvn-money-card-note) {
+  color: rgba(247, 242, 235, 0.7);
+}
+
+body.wvn-cin-site .wvn-money-card-btn {
+  background: transparent;
+  border: 1px solid var(--wvn-gold);
+  color: var(--wvn-ivory);
+}
+
+body.wvn-cin-site .wvn-money-card-btn:hover {
+  background: var(--wvn-gold);
+  color: var(--wvn-ink-dark);
+}
+
+body.wvn-cin-site .wvn-money-faq-grid summary {
+  font-family: var(--wvn-display) !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: clamp(18px, 1.6vw, 22px);
+}
+
+body.wvn-cin-site .wvn-money-faq-grid summary::after {
+  color: var(--wvn-gold);
+}
+
+/* —— Services page —— */
+body.wvn-cin-site .wvn-svc-page {
+  background: var(--wvn-ivory);
+}
+
+body.wvn-cin-site .wvn-svc-hero {
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(10, 6, 6, 0.28) 0%, rgba(10, 6, 6, 0.12) 38%, rgba(10, 6, 6, 0.78) 100%),
+    var(--svc-hero) center / cover no-repeat;
+}
+
+body.wvn-cin-site .wvn-svc-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  mix-blend-mode: overlay;
+}
+
+body.wvn-cin-site .wvn-svc-hero .wvn-display {
+  font-size: clamp(36px, 5.4vw, 72px);
+  letter-spacing: 0.05em;
+}
+
+body.wvn-cin-site .wvn-svc-hero p {
+  font-size: clamp(17px, 1.6vw, 22px);
+  color: rgba(247, 242, 235, 0.88);
+}
+
+body.wvn-cin-site .wvn-svc-crumb {
+  color: var(--wvn-gold);
+}
+
+body.wvn-cin-site .wvn-svc-intro,
+body.wvn-cin-site .wvn-svc-glance,
+body.wvn-cin-site .wvn-svc-why {
+  padding: 96px 0;
+}
+
+body.wvn-cin-site .wvn-svc-intro-cols p,
+body.wvn-cin-site .wvn-svc-core-head > p,
+body.wvn-cin-site .wvn-svc-glance-lede,
+body.wvn-cin-site .wvn-svc-why-lede {
+  color: rgba(58, 39, 39, 0.78);
+  font-family: var(--wvn-serif) !important;
+  font-style: italic;
+  font-size: clamp(17px, 1.5vw, 20px);
+  line-height: 1.65;
+}
+
+body.wvn-cin-site .wvn-svc-stats strong {
+  color: var(--wvn-oxblood);
+  letter-spacing: 0.06em;
+}
+
+body.wvn-cin-site .wvn-svc-card,
+body.wvn-cin-site .wvn-svc-tile {
+  border-radius: 4px;
+}
+
+body.wvn-cin-site .wvn-svc-specials {
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(107, 48, 48, 0.28), transparent 60%),
+    var(--wvn-ink-dark);
+  padding: 88px clamp(16px, 3vw, 40px);
+}
+
+body.wvn-cin-site .wvn-svc-tags span {
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+/* —— Standard / content pages —— */
+body.wvn-cin-site .wvn-content-page {
+  background: var(--wvn-ivory);
+  padding-top: 0;
+}
+
+body.wvn-cin-site .wvn-standard-page-inner {
+  padding-top: 72px;
+  padding-bottom: 120px;
+}
+
+body.wvn-cin-site .wvn-standard-page-content {
+  color: rgba(58, 39, 39, 0.78);
+  font-size: 17px;
+  line-height: 1.85;
+}
+
+body.wvn-cin-site .wvn-standard-page-content h2,
+body.wvn-cin-site .wvn-standard-page-content h3 {
+  font-family: var(--wvn-display) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--wvn-oxblood);
+}
+
+/* —— Blog / journal —— */
+body.wvn-cin-site .wvn-blog,
+body.wvn-cin-site .wvn-article {
+  background: var(--wvn-ivory);
+}
+
+body.wvn-cin-site .wvn-blog-head {
+  padding-top: 48px;
+}
+
+body.wvn-cin-site .wvn-blog-head .wvn-display {
+  font-size: clamp(40px, 5.5vw, 72px);
+}
+
+body.wvn-cin-site .wvn-blog-head p {
+  font-family: var(--wvn-serif) !important;
+  font-style: italic;
+  color: rgba(58, 39, 39, 0.72);
+  font-size: clamp(17px, 1.5vw, 21px);
+}
+
+body.wvn-cin-site .wvn-blog-card.is-featured {
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+body.wvn-cin-site .wvn-blog-grid figure {
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+body.wvn-cin-site .wvn-blog-card h2 {
+  font-family: var(--wvn-display) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: clamp(18px, 1.5vw, 22px);
+}
+
+body.wvn-cin-site .wvn-article-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+body.wvn-cin-site .wvn-article-hero img {
+  border-radius: 0;
+  transform: scale(1.04);
+  transition: transform 1.5s var(--wvn-ease);
+}
+
+body.wvn-cin-site .wvn-article-hero.is-in img {
+  transform: scale(1);
+}
+
+body.wvn-cin-site .wvn-article-body {
+  font-family: var(--wvn-sans);
+  font-size: 17px;
+  line-height: 1.85;
+  color: rgba(58, 39, 39, 0.82);
+}
+
+body.wvn-cin-site .wvn-article-body h2,
+body.wvn-cin-site .wvn-article-body h3 {
+  font-family: var(--wvn-display) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+body.wvn-cin-site .wvn-portfolio {
+  background: var(--wvn-ivory);
+  padding-top: 0;
+}
+
+body.wvn-cin-site .wvn-portfolio .wvn-story-copy {
+  color: rgba(58, 39, 39, 0.78);
+  font-family: var(--wvn-serif);
+  font-style: italic;
+  font-size: clamp(17px, 1.5vw, 20px);
+  line-height: 1.65;
+}
+
+body.wvn-cin-site .wvn-portfolio .wvn-story-copy a {
+  font-family: var(--wvn-sans);
+  font-style: normal;
+  color: var(--wvn-oxblood);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+body.wvn-cin-site .wvn-mosaic a {
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+body.wvn-cin-site .wvn-mosaic a img {
+  transition: transform 1.1s var(--wvn-ease);
+}
+
+body.wvn-cin-site .wvn-mosaic a:hover img {
+  transform: scale(1.06);
+}
+
+/* —— Wedding single —— */
+body.wvn-cin-site .wvn-wedding-single {
+  background: var(--wvn-ivory);
+}
+
+body.wvn-cin-site .wvn-wedding-hero {
+  min-height: 92vh;
+}
+
+body.wvn-cin-site .wvn-wedding-hero-overlay {
+  background:
+    linear-gradient(180deg, rgba(10, 6, 6, 0.35) 0%, rgba(10, 6, 6, 0.12) 40%, rgba(10, 6, 6, 0.88) 100%);
+}
+
+body.wvn-cin-site .wvn-wedding-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  mix-blend-mode: overlay;
+}
+
+body.wvn-cin-site .wvn-wedding-subtitle {
+  text-transform: none;
+  letter-spacing: 0.01em;
+  font-size: clamp(18px, 2vw, 26px);
+  color: rgba(247, 242, 235, 0.88);
+}
+
+body.wvn-cin-site .wvn-wedding-pill {
+  border-radius: 0;
+  letter-spacing: 0.16em;
+  border-color: rgba(196, 165, 116, 0.45);
+  background: rgba(10, 6, 6, 0.28);
+}
+
+body.wvn-cin-site .wvn-wedding-overview h2,
+body.wvn-cin-site .wvn-wedding-gallery-header h2,
+body.wvn-cin-site .wvn-wedding-event-copy h3 {
+  font-family: var(--wvn-display) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+body.wvn-cin-site .wvn-wedding-mosaic a {
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* —— Commercial / SEO landings using svc shell —— */
+body.wvn-cin-site .wvn-seo-landing,
+body.wvn-cin-site .wvn-commercial-landing {
+  background: var(--wvn-ivory);
+}
+
+body.wvn-cin-site .wvn-cta-box {
+  background: var(--wvn-oxblood-deep);
+  color: var(--wvn-ivory);
+  border-radius: 0;
+}
+
+body.wvn-cin-site .wvn-cta-box .wvn-display {
+  color: var(--wvn-ivory);
+}
+
+body.wvn-cin-site .wvn-cta-box .wvn-lede {
+  color: rgba(247, 242, 235, 0.72);
+}
+
+body.wvn-cin-site .wvn-btn {
+  border: 1px solid var(--wvn-gold);
+  background: transparent;
+  color: var(--wvn-ivory);
+  border-radius: 0;
+  letter-spacing: 0.14em;
+}
+
+body.wvn-cin-site .wvn-btn:hover {
+  background: var(--wvn-gold);
+  color: var(--wvn-ink-dark);
+}
+
+body.wvn-cin-site .wvn-acc details {
+  border-color: rgba(58, 39, 39, 0.14);
+}
+
+body.wvn-cin-site .wvn-acc summary {
+  font-family: var(--wvn-display) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* —— Dark band utility for mid-page sections —— */
+body.wvn-cin-site .wvn-cin-band {
+  position: relative;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(107, 48, 48, 0.28), transparent 60%),
+    var(--wvn-ink-dark);
+  color: var(--wvn-ivory);
+  overflow: hidden;
+}
+
+body.wvn-cin-site .wvn-cin-band .wvn-kicker,
+body.wvn-cin-site .wvn-cin-band .wvn-display {
+  color: var(--wvn-ivory);
+}
+
+body.wvn-cin-site .wvn-cin-band .wvn-kicker {
+  color: var(--wvn-gold);
+}
+
+/* —— Guide / editorial pages —— */
+body.wvn-cin-site .wvn-guide {
+  background: var(--wvn-ivory);
+  padding-top: 0;
+}
+
+body.wvn-cin-site .wvn-guide-body {
+  width: min(920px, calc(100% - 48px));
+  margin: 56px auto 100px;
+  font-size: 17px;
+  line-height: 1.85;
+  color: rgba(58, 39, 39, 0.8);
+}
+
+body.wvn-cin-site .wvn-guide-body h2,
+body.wvn-cin-site .wvn-guide-body h3 {
+  font-family: var(--wvn-display) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--wvn-oxblood);
+  margin-top: 2.4em;
+}
+
+body.wvn-cin-site .wvn-blog-shell {
+  padding-top: 36px;
+}
+
+body.wvn-cin-site .wvn-blog-filters {
+  justify-content: center;
+  margin-bottom: 36px;
+}
+
+body.wvn-cin-site .wvn-blog-filters a {
+  border-radius: 0;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+body.wvn-cin-site .wvn-blog-filters a.is-active {
+  background: var(--wvn-oxblood);
+  color: var(--wvn-ivory);
+  border-color: var(--wvn-oxblood);
+}
+
+/* —— Contact Us —— */
+.wvn-contact {
+  background: var(--wvn-ink-dark, #0a0606);
+  color: var(--wvn-ivory, #f7f2eb);
+  min-height: 100vh;
+}
+
+.wvn-contact-stage {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.wvn-contact-stage__media {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.06);
+  will-change: transform;
+}
+
+.wvn-contact-stage.is-in .wvn-contact-stage__media,
+.wvn-contact-stage .wvn-contact-stage__media {
+  animation: wvn-contact-ken 18s ease-in-out infinite alternate;
+}
+
+@keyframes wvn-contact-ken {
+  from { transform: scale(1.06) translate3d(0, 0, 0); }
+  to { transform: scale(1.12) translate3d(-1.5%, -1%, 0); }
+}
+
+.wvn-contact-stage__veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(105deg, rgba(10, 6, 6, 0.92) 0%, rgba(10, 6, 6, 0.78) 42%, rgba(10, 6, 6, 0.55) 100%),
+    linear-gradient(0deg, rgba(10, 6, 6, 0.55) 0%, transparent 45%);
+  pointer-events: none;
+}
+
+.wvn-contact-stage__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.07;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  mix-blend-mode: overlay;
+}
+
+.wvn-contact-stage__grid {
+  position: relative;
+  z-index: 2;
+  width: min(1280px, calc(100% - 48px));
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 132px 0 72px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(36px, 5vw, 72px);
+  align-items: center;
+}
+
+.wvn-contact-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin: 0 0 1.15rem;
+  font-family: var(--wvn-sans, "Plus Jakarta Sans", system-ui, sans-serif) !important;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--wvn-gold, #c4a574);
+}
+
+.wvn-contact-eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--wvn-gold, #c4a574));
+  opacity: 0.75;
+}
+
+.wvn-contact-copy .wvn-display {
+  margin: 0;
+  max-width: 11ch;
+  color: var(--wvn-ivory, #f7f2eb);
+  font-size: clamp(42px, 6vw, 78px);
+  line-height: 1.02;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.wvn-contact-copy .wvn-display em {
+  font-family: var(--wvn-serif, "Cormorant Garamond", Georgia, serif) !important;
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0.01em;
+  color: rgba(247, 242, 235, 0.92);
+}
+
+.wvn-contact-lede {
+  max-width: 34ch;
+  margin: 22px 0 0;
+  color: rgba(247, 242, 235, 0.78);
+  font-family: var(--wvn-serif, "Cormorant Garamond", Georgia, serif) !important;
+  font-style: italic;
+  font-size: clamp(18px, 1.7vw, 23px);
+  line-height: 1.45;
+}
+
+.wvn-contact-meta {
+  list-style: none;
+  margin: 42px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 22px;
+  max-width: 420px;
+}
+
+.wvn-contact-meta li {
+  display: grid;
+  gap: 6px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(247, 242, 235, 0.14);
+}
+
+.wvn-contact-meta span {
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(196, 165, 116, 0.85);
+}
+
+.wvn-contact-meta strong,
+.wvn-contact-meta a {
+  color: var(--wvn-ivory, #f7f2eb);
+  font-size: 15px;
+  line-height: 1.55;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.wvn-contact-meta a:hover {
+  color: var(--wvn-gold, #c4a574);
+}
+
+.wvn-contact-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 36px;
+}
+
+.wvn-contact-social a {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(247, 242, 235, 0.7);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(196, 165, 116, 0.35);
+  padding-bottom: 4px;
+}
+
+.wvn-contact-social a:hover {
+  color: var(--wvn-gold, #c4a574);
+  border-bottom-color: var(--wvn-gold, #c4a574);
+}
+
+.wvn-contact-panel {
+  position: relative;
+  padding: clamp(28px, 4vw, 42px);
+  background:
+    linear-gradient(160deg, rgba(247, 242, 235, 0.08), rgba(247, 242, 235, 0.03));
+  border: 1px solid rgba(247, 242, 235, 0.16);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+}
+
+.wvn-contact-panel__head {
+  margin-bottom: 28px;
+}
+
+.wvn-contact-panel__head .wvn-display {
+  margin: 0;
+  color: var(--wvn-ivory, #f7f2eb);
+  font-size: clamp(24px, 2.6vw, 34px);
+  line-height: 1.15;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.wvn-contact-form .wpcf7,
+.wvn-contact-form .wpcf7 form,
+.wvn-contact-form .contact-form {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.wvn-contact-form .wpcf7 p,
+.wvn-contact-form .contact-form p {
+  margin: 0 0 18px;
+}
+
+.wvn-contact-form label {
+  display: block;
+  margin: 0 0 8px;
+  font-family: var(--wvn-sans, "Plus Jakarta Sans", system-ui, sans-serif) !important;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(247, 242, 235, 0.62);
+}
+
+.wvn-contact-form input[type="text"],
+.wvn-contact-form input[type="email"],
+.wvn-contact-form input[type="tel"],
+.wvn-contact-form input[type="url"],
+.wvn-contact-form textarea,
+.wvn-contact-form .wpcf7 input,
+.wvn-contact-form .wpcf7 textarea {
+  width: 100%;
+  margin: 0;
+  padding: 14px 0 12px;
+  border: 0;
+  border-bottom: 1px solid rgba(247, 242, 235, 0.28);
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--wvn-ivory, #f7f2eb) !important;
+  font-family: var(--wvn-sans, "Plus Jakarta Sans", system-ui, sans-serif) !important;
+  font-size: 15px;
+  line-height: 1.4;
+  box-shadow: none !important;
+  outline: none;
+  transition: border-color 0.25s var(--wvn-ease, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+.wvn-contact-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.wvn-contact-form input:focus,
+.wvn-contact-form textarea:focus {
+  border-bottom-color: var(--wvn-gold, #c4a574) !important;
+}
+
+.wvn-contact-form input::placeholder,
+.wvn-contact-form textarea::placeholder {
+  color: rgba(247, 242, 235, 0.35);
+}
+
+.wvn-contact-form .wpcf7-submit,
+.wvn-contact-form input[type="submit"] {
+  width: auto;
+  min-width: 180px;
+  margin-top: 12px;
+  padding: 16px 28px !important;
+  border: 1px solid var(--wvn-gold, #c4a574) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--wvn-ivory, #f7f2eb) !important;
+  font-family: var(--wvn-sans, "Plus Jakarta Sans", system-ui, sans-serif) !important;
+  font-size: 11px !important;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.wvn-contact-form .wpcf7-submit:hover,
+.wvn-contact-form input[type="submit"]:hover {
+  background: var(--wvn-gold, #c4a574) !important;
+  color: var(--wvn-ink-dark, #0a0606) !important;
+  transform: translateY(-2px);
+}
+
+.wvn-contact-form .wpcf7-not-valid-tip {
+  color: #e8b4b4;
+  font-size: 12px;
+}
+
+.wvn-contact-form .wpcf7-response-output {
+  margin: 18px 0 0;
+  padding: 12px 0 0;
+  border: 0;
+  border-top: 1px solid rgba(247, 242, 235, 0.16);
+  color: rgba(247, 242, 235, 0.85);
+  font-size: 14px;
+}
+
+.wvn-contact-form .wpcf7-spinner {
+  margin-left: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wvn-contact-stage__media {
+    animation: none !important;
+  }
+}
+
+/* —— Responsive —— */
+@media (max-width: 900px) {
+  .wvn-page-hero__inner {
+    width: calc(100% - 32px);
+    padding: 108px 0 48px;
+  }
+
+  body.wvn-cin-site .wvn-money-final-cta {
+    padding: 64px 24px;
+  }
+
+  body.wvn-cin-site .wvn-guide-body {
+    width: calc(100% - 32px);
+    margin-top: 40px;
+  }
+
+  .wvn-contact-stage__grid {
+    width: calc(100% - 32px);
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 112px 0 56px;
+    align-items: start;
+  }
+
+  .wvn-contact-copy .wvn-display {
+    max-width: 14ch;
+  }
+
+  .wvn-contact-panel {
+    padding: 24px 20px;
+  }
+}
+
+@media (max-width: 520px) {
+  .wvn-contact-form .wpcf7-submit,
+  .wvn-contact-form input[type="submit"] {
+    width: 100%;
+  }
+}

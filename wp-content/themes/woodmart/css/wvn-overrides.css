@@ -1,5 +1,13 @@
 /* Wedding Vows by Nikhil — layout, footer and premium money-page refinements */
 
+/* Shared site content width — matches contact / standard pages */
+.wvn-container {
+  width: min(1280px, calc(100% - 48px));
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
 /* Wider editorial sections */
 .wvn-cta,
 .wvn-gallery,
@@ -548,14 +556,20 @@
 /* Footer */
 .wvn-footer {
   width: 100%;
+  padding-left: 0;
+  padding-right: 0;
 }
 
-.wvn-footer-grid {
-  width: min(1720px, calc(100% - 48px));
-  margin: 0 auto;
-  grid-template-columns: minmax(280px, 1.5fr) minmax(200px, 1fr) minmax(180px, 0.9fr);
-  column-gap: 64px;
-  justify-content: space-between;
+.wvn-footer-grid,
+.wvn-footer-grid.wvn-container {
+  width: min(1280px, calc(100% - 48px));
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: clamp(32px, 4vw, 64px);
+  align-items: start;
+  justify-content: stretch;
 }
 
 .wvn-footer .wvn-social {
@@ -589,11 +603,15 @@
   fill: currentColor;
 }
 
-.wvn-footer .wvn-legal {
-  width: min(1720px, calc(100% - 48px));
+.wvn-footer .wvn-legal,
+.wvn-footer .wvn-legal.wvn-container {
+  width: min(1280px, calc(100% - 48px));
   margin-left: auto;
   margin-right: auto;
+  margin-top: 40px;
+  display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 28px;
 }
 
@@ -605,6 +623,41 @@
 .wvn-footer .wvn-developed a {
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+@media (max-width: 980px) {
+  .wvn-footer {
+    padding: 64px 0 120px;
+  }
+
+  .wvn-footer-grid,
+  .wvn-footer-grid.wvn-container {
+    width: min(100%, calc(100% - 32px));
+    grid-template-columns: 1fr;
+    row-gap: 36px;
+    column-gap: 0;
+  }
+
+  .wvn-footer h2 {
+    font-size: 24px;
+  }
+
+  .wvn-footer p {
+    max-width: none;
+  }
+
+  .wvn-footer .wvn-legal,
+  .wvn-footer .wvn-legal.wvn-container {
+    width: min(100%, calc(100% - 32px));
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .wvn-footer .wvn-developed {
+    margin-left: 0;
+    white-space: normal;
+  }
 }
 
 @media (max-width: 1100px) {
@@ -670,6 +723,7 @@
 }
 
 @media (max-width: 700px) {
+  .wvn-container,
   .wvn-cta,
   .wvn-gallery,
   .wvn-stories,
@@ -754,20 +808,5 @@
   .wvn-money-final-cta {
     margin-bottom: 72px;
     padding: 32px 26px;
-  }
-
-  .wvn-footer-grid {
-    grid-template-columns: 1fr;
-    row-gap: 34px;
-  }
-
-  .wvn-footer .wvn-legal {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .wvn-footer .wvn-developed {
-    margin-left: 0;
-    white-space: normal;
   }
 }

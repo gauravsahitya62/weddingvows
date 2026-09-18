@@ -22,7 +22,20 @@ $icons = array(
     'doc'    => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 3h8l5 5v13H7z"/><path d="M15 3v5h5"/></svg>',
 );
 ?>
-<header class="wvn-header<?php echo (is_front_page() || is_page('what-we-do') || is_page_template('page-what-we-do.php')) ? '' : ' is-light'; ?>">
+<?php
+$wvn_dark_start = is_front_page()
+    || is_page('what-we-do')
+    || is_page_template('page-what-we-do.php')
+    || is_page_template('page-money-landing.php')
+    || is_page_template('page-wvn-commercial.php')
+    || is_page_template('page-seo-landing.php')
+    || is_page_template('page-event-planner-udaipur.php')
+    || is_page_template('page-weddings-udaipur.php')
+    || is_page('contact-us')
+    || is_singular('portfolio')
+    || is_singular('post');
+?>
+<header class="wvn-header<?php echo $wvn_dark_start ? '' : ' is-light'; ?>">
     <a class="wvn-logo" href="<?php echo esc_url(home_url('/')); ?>">
         <img src="<?php echo esc_url(wvn_logo_src()); ?>" alt="Wedding Vows by Nikhil — destination wedding planner in Udaipur">
     </a>

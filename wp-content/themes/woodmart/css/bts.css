@@ -1421,13 +1421,13 @@ button { font-family: inherit; cursor: pointer; }
 .wvn-footer {
   background: var(--teal-deep);
   color: var(--cream);
-  padding: 80px 24px 110px;
+  padding: 80px 0 110px;
 }
 .wvn-footer-grid {
-  width: min(1180px, 100%);
+  width: min(1280px, calc(100% - 48px));
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr;
+  grid-template-columns: 1.5fr 1fr 1fr;
   gap: 48px;
   align-items: start;
 }
@@ -1452,7 +1452,7 @@ button { font-family: inherit; cursor: pointer; }
   display: grid; place-items: center;
 }
 .wvn-legal {
-  width: min(1180px, 100%);
+  width: min(1280px, calc(100% - 48px));
   margin: 40px auto 0;
   padding-top: 22px;
   border-top: 1px solid rgba(240,237,228,0.2);
@@ -2599,6 +2599,7 @@ body.wvn-body #wpadminbar { z-index: 200; }
   .wvn-pillnav { display: none; }
   .wvn-planners-card,
   .wvn-footer-grid,
+  .wvn-footer-grid.wvn-container,
   .wvn-contact-grid,
   .wvn-showreel-row { grid-template-columns: 1fr; }
   .wvn-book { width: 72px; height: 72px; }
@@ -2702,7 +2703,8 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
   .wvn-logo img { height: 42px; }
   .wvn-mosaic { columns: 1; }
   .wvn-stories-grid { grid-template-columns: 1fr; width: min(360px, 100%); }
-  .wvn-legal { flex-direction: column; text-align: center; }
+  .wvn-legal,
+  .wvn-legal.wvn-container { flex-direction: column; text-align: left; gap: 10px; }
   .wvn-ask { min-width: 180px; font-size: 13px; }
 }
 
