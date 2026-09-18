@@ -6,8 +6,8 @@ function theme_files() {
     wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css', array(), '6.5.2');
     wp_enqueue_style('icons', get_theme_file_uri('/css/icons.min.css'), array(), null);
     wp_enqueue_style('main_styles', get_theme_file_uri('/css/app.min.css'), array(), '1.2.2');
-    wp_enqueue_style('wvn-bts', get_theme_file_uri('/css/bts.css'), array('main_styles'), '1.8.33');
-    wp_enqueue_style('wvn-overrides', get_theme_file_uri('/css/wvn-overrides.css'), array('wvn-bts'), '1.0.0');
+    wp_enqueue_style('wvn-bts', get_theme_file_uri('/css/bts.css'), array('main_styles'), '1.8.34');
+    wp_enqueue_style('wvn-overrides', get_theme_file_uri('/css/wvn-overrides.css'), array('wvn-bts'), '1.0.1');
     wp_enqueue_style('wvn-seo-growth', get_theme_file_uri('/css/wvn-seo-growth.css'), array('wvn-overrides'), '1.0.0');
     wp_enqueue_style('wvn-money-responsive', get_theme_file_uri('/css/wvn-money-responsive.css'), array('wvn-seo-growth'), '1.0.0');
     wp_enqueue_style('wvn-page-safety', get_theme_file_uri('/css/wvn-page-safety.css'), array('wvn-money-responsive'), '1.0.1');

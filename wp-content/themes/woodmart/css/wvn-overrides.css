@@ -553,8 +553,9 @@
 .wvn-footer-grid {
   width: min(1720px, calc(100% - 48px));
   margin: 0 auto;
-  grid-template-columns: minmax(240px, 1.35fr) minmax(220px, 1fr) minmax(220px, 1fr) minmax(220px, 1fr);
-  column-gap: 56px;
+  grid-template-columns: minmax(280px, 1.5fr) minmax(200px, 1fr) minmax(180px, 0.9fr);
+  column-gap: 64px;
+  justify-content: space-between;
 }
 
 .wvn-footer .wvn-social {

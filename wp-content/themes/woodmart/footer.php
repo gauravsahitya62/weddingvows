@@ -16,26 +16,6 @@
       </div>
     </div>
     <div>
-      <h4><?php echo esc_html(wvn_home_text('home_footer_explore_title', 'Explore')); ?></h4>
-      <ul>
-        <?php
-        $explore_rows = wvn_home_rows('home_footer_explore_links');
-        if (!empty($explore_rows)) :
-            foreach ($explore_rows as $item) :
-                if (empty($item['label'])) continue; ?>
-                <li><a href="<?php echo esc_url($item['url'] ?: '#'); ?>"><?php echo esc_html($item['label']); ?></a></li>
-            <?php endforeach;
-        else : ?>
-          <li><a href="<?php echo esc_url(home_url('/weddings-in-udaipur/')); ?>">Weddings in Udaipur</a></li>
-          <li><a href="<?php echo esc_url(home_url('/wedding-planner-udaipur/')); ?>">Wedding planner in Udaipur</a></li>
-          <li><a href="<?php echo esc_url(home_url('/wedding-venues-udaipur/')); ?>">Wedding venues in Udaipur</a></li>
-          <li><a href="<?php echo esc_url(home_url('/palace-wedding-venues-in-udaipur/')); ?>">Palace wedding venues</a></li>
-          <li><a href="<?php echo esc_url(home_url('/udaipur-wedding-cost/')); ?>">Udaipur wedding cost</a></li>
-          <li><a href="<?php echo esc_url(home_url('/portfolio/')); ?>">Real Udaipur weddings</a></li>
-        <?php endif; ?>
-      </ul>
-    </div>
-    <div>
       <h4><?php echo esc_html(wvn_home_text('home_footer_services_title', 'Services')); ?></h4>
       <ul>
         <?php

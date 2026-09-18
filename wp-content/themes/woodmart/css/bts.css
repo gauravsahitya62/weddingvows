@@ -1427,8 +1427,9 @@ button { font-family: inherit; cursor: pointer; }
   width: min(1180px, 100%);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1fr;
-  gap: 40px;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: 48px;
+  align-items: start;
 }
 .wvn-footer h2 {
   font-family: var(--font);
