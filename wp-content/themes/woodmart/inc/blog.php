@@ -71,6 +71,16 @@ function wvn_blog_header() {
         'heading' => 'Destination wedding notes from Udaipur',
         'lede'    => 'Real weddings, planning wisdom and destination guides — from an Udaipur studio that plans palace and lakeside celebrations across India.',
     );
+    if (is_category()) {
+        $term = get_queried_object();
+        if ($term && !is_wp_error($term)) {
+            return array(
+                'kicker'  => 'The journal',
+                'heading' => $term->name,
+                'lede'    => $term->description ?: $defaults['lede'],
+            );
+        }
+    }
     if (!$id || !function_exists('get_field')) {
         return $defaults;
     }
@@ -79,6 +89,17 @@ function wvn_blog_header() {
         'heading' => get_field('blog_heading', $id) ?: $defaults['heading'],
         'lede'    => get_field('blog_lede', $id) ?: $defaults['lede'],
     );
+}
+
+function wvn_blog_hero_image() {
+    $id = (int) get_option('page_for_posts');
+    if ($id) {
+        $thumb = get_the_post_thumbnail_url($id, 'full');
+        if ($thumb) {
+            return $thumb;
+        }
+    }
+    return function_exists('wvn_hero_image') ? wvn_hero_image() : '';
 }
 
 function wvn_register_blog_fields() {
@@ -263,7 +284,7 @@ function wvn_render_journal() {
     $empty = is_category() ? 'No stories in this category yet.' : 'No stories in this journal yet.';
     $has_posts = have_posts();
     $show_featured = $has_posts && !is_paged() && !is_category();
-    $hero = function_exists('wvn_hero_image') ? wvn_hero_image() : '';
+    $hero = wvn_blog_hero_image();
     ?>
 <main id="content" class="wvn-blog">
   <header class="wvn-page-hero">

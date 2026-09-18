@@ -11,18 +11,32 @@ while (have_posts()) :
     $prev = get_previous_post();
     $next = get_next_post();
     $next_card = wvn_next_blog_post($id);
+    $eyebrow = $cat ? ('The journal · ' . $cat->name) : 'The journal';
+    $lede = '';
+    if (!empty($meta['sub'])) {
+        $lede = $meta['sub'];
+    } elseif (has_excerpt($id)) {
+        $lede = get_the_excerpt($id);
+    }
     ?>
 <main id="content" class="wvn-article">
-  <figure class="wvn-article-hero">
-    <img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
-    <?php if (!empty($meta['overlay']) || !empty($meta['sub'])) : ?>
-      <figcaption>
-        <?php if (!empty($meta['overlay'])) : ?><strong><?php echo esc_html($meta['overlay']); ?></strong><?php endif; ?>
-        <?php if (!empty($meta['sub'])) : ?><span><?php echo esc_html($meta['sub']); ?></span><?php endif; ?>
-        <em>Wedding Vows by Nikhil</em>
-      </figcaption>
-    <?php endif; ?>
-  </figure>
+  <header class="wvn-page-hero">
+    <div class="wvn-page-hero__media" style="background-image:url('<?php echo esc_url($image); ?>')" aria-hidden="true"></div>
+    <div class="wvn-page-hero__veil" aria-hidden="true"></div>
+    <div class="wvn-page-hero__grain" aria-hidden="true"></div>
+    <div class="wvn-page-hero__inner">
+      <p class="wvn-page-hero__eyebrow"><?php echo esc_html($eyebrow); ?></p>
+      <h1 class="wvn-display"><?php the_title(); ?></h1>
+      <?php if ($lede) : ?>
+        <p class="wvn-page-hero__lede"><?php echo esc_html($lede); ?></p>
+      <?php endif; ?>
+      <p class="wvn-page-hero__meta">
+        <time datetime="<?php echo esc_attr(get_the_date('c')); ?>"><?php echo esc_html(get_the_date('M j, Y')); ?></time>
+        <span aria-hidden="true">·</span>
+        <?php echo (int) $mins; ?> min read
+      </p>
+    </div>
+  </header>
 
   <div class="wvn-article-layout">
     <article class="wvn-article-main">
@@ -34,14 +48,6 @@ while (have_posts()) :
           <span>/</span>
           <a href="<?php echo esc_url(get_category_link($cat)); ?>"><?php echo esc_html($cat->name); ?></a>
         <?php endif; ?>
-      </p>
-      <h1 class="wvn-display"><?php the_title(); ?></h1>
-      <p class="wvn-article-meta">
-        <strong>Wedding Vows by Nikhil</strong>
-        <span>•</span>
-        <time datetime="<?php echo esc_attr(get_the_date('c')); ?>"><?php echo esc_html(get_the_date('M j, Y')); ?></time>
-        <span>•</span>
-        <?php echo (int) $mins; ?> min read
       </p>
 
       <div class="wvn-article-body">

@@ -358,14 +358,99 @@ $service_count = count($services);
     </div>
   </section>
 
-  <section class="wvn-gallery">
-    <p class="wvn-kicker wvn-center"><?php echo esc_html(wvn_home_text('home_gallery_kicker', 'Gallery')); ?></p>
-    <h2 class="wvn-display wvn-center"><?php echo esc_html(wvn_home_text('home_gallery_heading', 'Moments, captured behind the scenes')); ?></h2>
-    <p class="wvn-lede"><?php echo esc_html(wvn_home_text('home_gallery_lede', 'A glimpse into the celebrations we have quietly orchestrated — from first looks to the last dance.')); ?></p>
-    <div class="wvn-mosaic">
-      <?php foreach ($gallery as $image) : ?>
-        <a href="<?php echo esc_url($image); ?>" data-wvn-lightbox><img src="<?php echo esc_url($image); ?>" alt="Destination wedding in Udaipur — Wedding Vows by Nikhil" loading="lazy" decoding="async"></a>
-      <?php endforeach; ?>
+  <?php
+  $hg = wvn_home_gallery_collage();
+  $hg_items = $hg['items'];
+  ?>
+  <section class="wvn-gallery wvn-hg" id="gallery" aria-label="<?php echo esc_attr($hg['kicker']); ?>">
+    <div class="wvn-hg__inner">
+      <header class="wvn-hg__head">
+        <p class="wvn-hg__eyebrow"><?php echo esc_html($hg['kicker']); ?></p>
+        <h2 class="wvn-hg__heading"><?php echo esc_html($hg['heading']); ?></h2>
+        <p class="wvn-hg__lede"><?php echo esc_html($hg['lede']); ?></p>
+      </header>
+
+      <?php if (count($hg['filters']) > 1) : ?>
+        <div class="wvn-hg__filters" role="tablist" aria-label="Filter gallery">
+          <?php foreach ($hg['filters'] as $fkey => $flabel) : ?>
+            <button
+              type="button"
+              class="wvn-hg__filter<?php echo $fkey === 'all' ? ' is-active' : ''; ?>"
+              role="tab"
+              aria-selected="<?php echo $fkey === 'all' ? 'true' : 'false'; ?>"
+              data-hg-filter="<?php echo esc_attr($fkey); ?>"
+            ><?php echo esc_html($flabel); ?></button>
+          <?php endforeach; ?>
+        </div>
+      <?php endif; ?>
+
+      <p class="wvn-hg__rail-hint" aria-hidden="true">
+        <span>Swipe stories</span>
+        <span data-hg-progress>01 / <?php echo esc_html(str_pad((string) max(1, count($hg_items)), 2, '0', STR_PAD_LEFT)); ?></span>
+      </p>
+
+      <div class="wvn-hg__collage wvn-mosaic" data-hg-collage>
+        <?php foreach ($hg_items as $gi => $card) :
+            $tag_str = implode(' ', $card['tags']);
+            $role = $card['role'];
+            $is_film = ($card['type'] ?? '') === 'film';
+            ?>
+          <article
+            class="wvn-hg-card wvn-hg-card--<?php echo esc_attr($role); ?><?php echo $is_film ? ' is-film' : ''; ?>"
+            data-hg-card
+            data-hg-tags="<?php echo esc_attr($tag_str); ?>"
+            style="--hg-i: <?php echo (int) $gi; ?>"
+          >
+            <?php if ($is_film) : ?>
+              <button type="button" class="wvn-hg-card__media" data-open-showreel aria-label="Play wedding film">
+                <img
+                  src="<?php echo esc_url($card['image']); ?>"
+                  alt="<?php echo esc_attr($card['alt']); ?>"
+                  loading="lazy"
+                  decoding="async"
+                >
+                <span class="wvn-hg-card__veil" aria-hidden="true"></span>
+                <span class="wvn-hg-card__play" aria-hidden="true">▶</span>
+              </button>
+            <?php else : ?>
+              <a
+                class="wvn-hg-card__media"
+                href="<?php echo esc_url($card['image']); ?>"
+                data-wvn-lightbox
+                data-caption="<?php echo esc_attr($card['title']); ?>"
+              >
+                <img
+                  src="<?php echo esc_url($card['image']); ?>"
+                  alt="<?php echo esc_attr($card['alt']); ?>"
+                  <?php echo !empty($card['eager']) ? 'fetchpriority="high" decoding="async"' : 'loading="lazy" decoding="async"'; ?>
+                >
+                <span class="wvn-hg-card__veil" aria-hidden="true"></span>
+              </a>
+            <?php endif; ?>
+
+            <div class="wvn-hg-card__meta">
+              <p class="wvn-hg-card__label"><?php echo esc_html($card['label']); ?></p>
+              <h3 class="wvn-hg-card__title"><?php echo esc_html($card['title']); ?></h3>
+              <?php if (!empty($card['story_url'])) : ?>
+                <a class="wvn-hg-card__story" href="<?php echo esc_url($card['story_url']); ?>">View story <span aria-hidden="true">→</span></a>
+              <?php elseif ($is_film) : ?>
+                <button type="button" class="wvn-hg-card__story" data-open-showreel>Watch film <span aria-hidden="true">→</span></button>
+              <?php else : ?>
+                <button type="button" class="wvn-hg-card__story" data-hg-open-lb>View moment <span aria-hidden="true">→</span></button>
+              <?php endif; ?>
+            </div>
+          </article>
+        <?php endforeach; ?>
+      </div>
+
+      <div class="wvn-hg__dots" data-hg-dots role="tablist" aria-label="Gallery stories"></div>
+
+      <div class="wvn-hg__cta">
+        <a class="wvn-hg__cta-link" href="<?php echo esc_url($hg['cta_url']); ?>">
+          <?php echo esc_html($hg['cta']); ?>
+          <span class="wvn-hg__cta-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
     </div>
   </section>
 

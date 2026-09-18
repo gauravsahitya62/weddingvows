@@ -536,6 +536,42 @@ body.wvn-cin-site .wvn-article {
   background: var(--wvn-ivory);
 }
 
+body.wvn-cin-site #content.wvn-blog,
+body.wvn-cin-site #content.wvn-article {
+  padding: 0;
+  max-width: none;
+  width: 100%;
+}
+
+body.wvn-cin-site .wvn-blog .wvn-page-hero,
+body.wvn-cin-site .wvn-article .wvn-page-hero {
+  width: 100%;
+  max-width: none;
+}
+
+.wvn-page-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0 0;
+  font-family: var(--wvn-sans) !important;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(247, 242, 235, 0.72);
+}
+
+body.wvn-cin-site .wvn-blog-shell {
+  padding-top: 48px;
+  padding-bottom: 110px;
+}
+
+body.wvn-cin-site .wvn-article-layout {
+  padding-top: 48px;
+  padding-bottom: 110px;
+}
+
 body.wvn-cin-site .wvn-blog-head {
   padding-top: 48px;
 }
@@ -566,21 +602,6 @@ body.wvn-cin-site .wvn-blog-card h2 {
   text-transform: uppercase;
   letter-spacing: 0.04em;
   font-size: clamp(18px, 1.5vw, 22px);
-}
-
-body.wvn-cin-site .wvn-article-hero {
-  position: relative;
-  overflow: hidden;
-}
-
-body.wvn-cin-site .wvn-article-hero img {
-  border-radius: 0;
-  transform: scale(1.04);
-  transition: transform 1.5s var(--wvn-ease);
-}
-
-body.wvn-cin-site .wvn-article-hero.is-in img {
-  transform: scale(1);
 }
 
 body.wvn-cin-site .wvn-article-body {

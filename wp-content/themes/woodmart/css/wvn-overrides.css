@@ -10,7 +10,7 @@
 
 /* Wider editorial sections */
 .wvn-cta,
-.wvn-gallery,
+.wvn-gallery:not(.wvn-hg),
 .wvn-stories,
 .wvn-quotes,
 .wvn-collective {
@@ -23,14 +23,14 @@
   width: 100%;
 }
 
-.wvn-gallery {
+.wvn-gallery:not(.wvn-hg) {
   padding-left: 0;
   padding-right: 0;
 }
 
-.wvn-gallery > .wvn-kicker,
-.wvn-gallery > .wvn-display,
-.wvn-gallery > .wvn-lede {
+.wvn-gallery:not(.wvn-hg) > .wvn-kicker,
+.wvn-gallery:not(.wvn-hg) > .wvn-display,
+.wvn-gallery:not(.wvn-hg) > .wvn-lede {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
@@ -725,7 +725,7 @@
 @media (max-width: 700px) {
   .wvn-container,
   .wvn-cta,
-  .wvn-gallery,
+  .wvn-gallery:not(.wvn-hg),
   .wvn-stories,
   .wvn-quotes,
   .wvn-collective,

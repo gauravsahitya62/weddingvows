@@ -36,7 +36,7 @@
   }
 
   function isOverDark() {
-    const dark = document.querySelectorAll(".wvn-intro, .wvn-achieve, .wvn-showreel, .wvn-hero, .wvn-opening, .wvn-footer, .wvn-svc-hero, .wvn-svc-specials, .wvn-cin-story, .wvn-cin-cites, .wvn-money-hero, .wvn-money-proof, .wvn-money-services, .wvn-money-proof-cta, .wvn-money-final-cta, .wvn-page-hero, .wvn-wedding-hero, .wvn-cin-band, .wvn-cta-box, .wvn-contact-stage");
+    const dark = document.querySelectorAll(".wvn-intro, .wvn-achieve, .wvn-showreel, .wvn-hero, .wvn-opening, .wvn-footer, .wvn-svc-hero, .wvn-svc-specials, .wvn-cin-story, .wvn-cin-cites, .wvn-money-hero, .wvn-money-proof, .wvn-money-services, .wvn-money-proof-cta, .wvn-money-final-cta, .wvn-page-hero, .wvn-wedding-hero, .wvn-cin-band, .wvn-cta-box, .wvn-contact-stage, .wvn-pf-hero, .wvn-pf-stories, .wvn-pf-film, .wvn-pf-cta, .wvn-pf-cites");
     for (const el of dark) {
       const r = el.getBoundingClientRect();
       if (r.top < 80 && r.bottom > 50) return true;
@@ -543,32 +543,50 @@
   });
 
   (function initLightbox() {
-    const groups = document.querySelectorAll(".wvn-mosaic, .gallery-lightbox, .wvn-wedding-collage, .wvn-wedding-mosaic");
+    const groups = document.querySelectorAll(".wvn-mosaic, .gallery-lightbox, .wvn-wedding-collage, .wvn-wedding-mosaic, .wvn-pf-card");
     if (!groups.length) return;
 
     const box = document.createElement("div");
     box.className = "wvn-lightbox";
     box.hidden = true;
-    box.innerHTML = '<div class="wvn-lb-dots"></div>'
-      + '<button class="wvn-lb-btn wvn-lb-close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6 6 18"/></svg></button>'
+    box.setAttribute("role", "dialog");
+    box.setAttribute("aria-modal", "true");
+    box.setAttribute("aria-label", "Wedding gallery");
+    box.innerHTML = '<button class="wvn-lb-btn wvn-lb-close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6 6 18"/></svg></button>'
       + '<button class="wvn-lb-btn wvn-lb-prev" type="button" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 5 8 12l7 7"/></svg></button>'
       + '<button class="wvn-lb-btn wvn-lb-next" type="button" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m9 5 7 7-7 7"/></svg></button>'
-      + '<figure class="wvn-lb-stage"><img alt=""></figure>';
+      + '<figure class="wvn-lb-stage"><img alt=""><figcaption class="wvn-lb-caption" hidden></figcaption></figure>'
+      + '<div class="wvn-lb-dots"></div>';
     document.body.appendChild(box);
 
     const img = box.querySelector("img");
+    const caption = box.querySelector(".wvn-lb-caption");
     const dots = box.querySelector(".wvn-lb-dots");
-    let urls = [];
+    let slides = [];
     let index = 0;
 
     function paint() {
-      img.src = urls[index] || "";
-      dots.innerHTML = urls.map((_, i) => '<button type="button" class="' + (i === index ? "is-on" : "") + '" aria-label="Image ' + (i + 1) + '"></button>').join("");
+      const slide = slides[index] || {};
+      img.src = slide.url || "";
+      img.alt = slide.caption || ("Wedding gallery image " + (index + 1));
+      if (slide.caption) {
+        caption.textContent = slide.caption;
+        caption.hidden = false;
+      } else {
+        caption.textContent = "";
+        caption.hidden = true;
+      }
+      dots.innerHTML = slides.map((_, i) => '<button type="button" class="' + (i === index ? "is-on" : "") + '" aria-label="Image ' + (i + 1) + '"></button>').join("");
+      box.classList.toggle("has-many", slides.length > 1);
     }
 
     function openAt(list, i) {
-      urls = list;
-      index = (i + urls.length) % urls.length;
+      slides = (list || []).map((item) => {
+        if (typeof item === "string") return { url: item, caption: "" };
+        return { url: item && item.url ? item.url : "", caption: item && item.caption ? item.caption : "" };
+      }).filter((item) => item.url);
+      if (!slides.length) return;
+      index = ((i % slides.length) + slides.length) % slides.length;
       paint();
       box.hidden = false;
       document.body.style.overflow = "hidden";
@@ -580,19 +598,38 @@
     }
 
     function step(dir) {
-      if (!urls.length) return;
-      index = (index + dir + urls.length) % urls.length;
+      if (!slides.length) return;
+      index = (index + dir + slides.length) % slides.length;
       paint();
     }
 
+    window.wvnOpenLightbox = openAt;
+
     groups.forEach((group) => {
       const items = [...group.querySelectorAll("[data-wvn-lightbox]")];
+      if (!items.length) return;
+
+      const slideList = () => items.map((item) => ({
+        url: item.getAttribute("href"),
+        caption: item.getAttribute("data-caption") || ""
+      }));
+
+      const openFrom = (i) => openAt(slideList(), i);
+
       items.forEach((link, i) => {
         link.addEventListener("click", (e) => {
           e.preventDefault();
-          openAt(items.map((item) => item.getAttribute("href")), i);
+          openFrom(i);
         });
       });
+
+      const hit = group.querySelector("[data-pf-open-gallery]");
+      if (hit) {
+        hit.addEventListener("click", (e) => {
+          e.preventDefault();
+          openFrom(0);
+        });
+      }
     });
 
     box.querySelector(".wvn-lb-close").addEventListener("click", closeLb);

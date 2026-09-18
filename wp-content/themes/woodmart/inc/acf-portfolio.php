@@ -260,7 +260,7 @@ function wvn_register_portfolio_fields() {
                 'type' => 'repeater',
                 'layout' => 'table',
                 'button_label' => 'Add Photo',
-                'instructions' => 'Highlight photographs displayed in an editorial mosaic collage with lightbox.',
+                'instructions' => 'These photos appear in the Moments mosaic on the wedding page AND in the click-to-open gallery slider on the Portfolio page. Add and reorder images here to control what guests see when they click a wedding card. Featured Image + Hero + Event photos are included automatically.',
                 'sub_fields' => array(
                     array(
                         'key' => 'field_wvn_port_gal_img',

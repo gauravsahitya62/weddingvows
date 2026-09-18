@@ -1599,7 +1599,12 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 body.wvn-body #content.wvn-blog,
-body.wvn-body #content.wvn-article,
+body.wvn-body #content.wvn-article {
+  padding: 0;
+  max-width: none;
+  margin: 0;
+  width: 100%;
+}
 body.wvn-body #content.wvn-page {
   padding: 150px 24px 96px;
 }
@@ -1608,8 +1613,10 @@ body.wvn-body #content.wvn-page {
   background: var(--cream);
 }
 .wvn-blog-shell {
-  width: min(1180px, 100%);
+  width: min(1180px, calc(100% - 48px));
   margin: 0 auto;
+  padding: 48px 0 96px;
+  box-sizing: border-box;
 }
 .wvn-blog-top {
   width: 100%;
@@ -1763,64 +1770,15 @@ body.wvn-body .wvn-blog-card.is-featured figure img {
 .wvn-article {
   background: var(--cream);
 }
-.wvn-article-hero {
-  position: relative;
-  width: min(1180px, 100%);
-  margin: 0 auto 40px;
-  border-radius: 28px;
-  overflow: hidden;
-  height: min(70svh, calc(100svh - 160px));
-  max-height: calc(100svh - 140px);
-}
-.wvn-article-hero img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.wvn-article-hero figcaption {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: #fff;
-  padding: 32px;
-  background: linear-gradient(180deg, rgba(20,12,12,0.15), rgba(20,12,12,0.45));
-}
-.wvn-article-hero strong {
-  font-family: var(--font);
-  font-size: clamp(28px, 4vw, 52px);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  font-weight: 400;
-}
-.wvn-article-hero span {
-  display: block;
-  margin-top: 10px;
-  font-size: clamp(14px, 1.6vw, 20px);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-.wvn-article-hero em {
-  display: block;
-  margin-top: 18px;
-  padding-top: 14px;
-  border-top: 1px solid rgba(255,255,255,0.55);
-  font-style: normal;
-  font-size: 12px;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-}
 .wvn-article-layout {
-  width: min(1180px, 100%);
+  width: min(1180px, calc(100% - 48px));
   margin: 0 auto;
+  padding: 48px 0 96px;
   display: grid;
   grid-template-columns: minmax(0, 1.7fr) minmax(260px, 0.7fr);
   gap: 48px 40px;
   align-items: start;
+  box-sizing: border-box;
 }
 .wvn-article-crumb {
   margin: 0 0 16px;
@@ -1996,11 +1954,21 @@ body.wvn-body .wvn-blog-card.is-featured figure img {
   .wvn-article-layout { grid-template-columns: 1fr; }
   .wvn-article-side { position: static; }
   .wvn-article-gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .wvn-blog-shell,
+  .wvn-article-layout {
+    width: min(1180px, calc(100% - 32px));
+  }
 }
 @media (max-width: 640px) {
   .wvn-article-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .wvn-article-pager { flex-direction: column; }
   .wvn-article-pager a { max-width: 100%; }
+  .wvn-blog-shell,
+  .wvn-article-layout {
+    width: min(1180px, calc(100% - 24px));
+    padding-top: 36px;
+    padding-bottom: 72px;
+  }
 }
 
 @media (max-width: 900px) {
@@ -3114,56 +3082,85 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
 .wvn-lightbox {
   position: fixed;
   inset: 0;
-  z-index: 80;
+  z-index: 9990;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(8, 6, 6, 0.92);
+  background: rgba(18, 18, 18, 0.96);
+  padding: 72px 88px 64px;
+  box-sizing: border-box;
 }
 .wvn-lightbox[hidden] { display: none; }
 .wvn-lb-stage {
   margin: 0;
-  max-width: min(78vw, 920px);
-  max-height: 78vh;
+  max-width: min(78vw, 1100px);
+  max-height: calc(100vh - 140px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
 }
 .wvn-lb-stage img {
   display: block;
   width: auto;
   height: auto;
-  max-width: min(78vw, 920px);
-  max-height: 78vh;
-  border-radius: 12px;
+  max-width: min(78vw, 1100px);
+  max-height: calc(100vh - 180px);
+  border-radius: 16px;
   object-fit: contain;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.55);
 }
+.wvn-lb-caption {
+  margin: 0;
+  max-width: 42ch;
+  text-align: center;
+  font-family: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(247, 242, 235, 0.78);
+}
+.wvn-lb-caption[hidden] { display: none; }
 .wvn-lb-btn {
   position: absolute;
-  width: 48px;
-  height: 48px;
-  border: 1px solid rgba(255, 255, 255, 0.32);
+  width: 54px;
+  height: 54px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
   border-radius: 50%;
-  background: rgba(28, 24, 24, 0.45);
+  background: transparent;
   color: #fff;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 0;
   margin: 0;
+  cursor: pointer;
+  transition: background-color .2s ease, border-color .2s ease;
+  z-index: 2;
+}
+.wvn-lb-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.85);
 }
 .wvn-lb-btn svg {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   display: block;
 }
 .wvn-lb-close { top: 22px; right: 22px; }
-.wvn-lb-prev { left: 22px; top: 50%; transform: translateY(-50%); }
-.wvn-lb-next { right: 22px; top: 50%; transform: translateY(-50%); }
+.wvn-lb-prev { left: 28px; top: 50%; transform: translateY(-50%); }
+.wvn-lb-next { right: 28px; top: 50%; transform: translateY(-50%); }
+.wvn-lightbox:not(.has-many) .wvn-lb-prev,
+.wvn-lightbox:not(.has-many) .wvn-lb-next,
+.wvn-lightbox:not(.has-many) .wvn-lb-dots { display: none; }
 .wvn-lb-dots {
   position: absolute;
-  top: 28px;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   gap: 8px;
+  z-index: 2;
 }
 .wvn-lb-dots button {
   width: 8px;
@@ -3171,16 +3168,18 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
   padding: 0;
   margin: 0;
   border: 0;
-  border-radius: 50%;
+  border-radius: 999px;
   background: rgba(255, 255, 255, 0.28);
+  cursor: pointer;
 }
-.wvn-lb-dots button.is-on { background: rgba(255, 255, 255, 0.92); }
+.wvn-lb-dots button.is-on { background: rgba(255, 255, 255, 0.92); width: 22px; }
 @media (max-width: 640px) {
+  .wvn-lightbox { padding: 64px 16px 56px; }
   .wvn-lb-stage,
-  .wvn-lb-stage img { max-width: 88vw; max-height: 72vh; }
-  .wvn-lb-prev { left: 10px; }
-  .wvn-lb-next { right: 10px; }
-  .wvn-lb-close { top: 14px; right: 12px; }
+  .wvn-lb-stage img { max-width: 92vw; max-height: 68vh; border-radius: 12px; }
+  .wvn-lb-prev { left: 10px; width: 44px; height: 44px; }
+  .wvn-lb-next { right: 10px; width: 44px; height: 44px; }
+  .wvn-lb-close { top: 14px; right: 12px; width: 44px; height: 44px; }
 }
 
 /* Weddings in Udaipur guide */

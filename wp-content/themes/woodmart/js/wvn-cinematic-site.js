@@ -26,10 +26,9 @@
     '.wvn-svc-card',
     '.wvn-svc-tile',
     '.wvn-svc-stats',
-    '.wvn-blog-head',
     '.wvn-blog-card',
-    '.wvn-article-hero',
-    '.wvn-article-main > .wvn-display',
+    '.wvn-article-layout',
+    '.wvn-article-body',
     '.wvn-wedding-hero',
     '.wvn-wedding-overview',
     '.wvn-wedding-event-section',
@@ -85,7 +84,7 @@
   /* Subtle scroll parallax on full-bleed heroes */
   if (!reduce) {
     var heroes = document.querySelectorAll(
-      '.wvn-money-hero-media, .wvn-page-hero__media, .wvn-wedding-hero, .wvn-svc-hero, .wvn-article-hero img'
+      '.wvn-money-hero-media, .wvn-page-hero__media, .wvn-wedding-hero, .wvn-svc-hero'
     );
     var ticking = false;
 
@@ -93,7 +92,7 @@
       ticking = false;
       var vh = window.innerHeight;
       heroes.forEach(function (el) {
-        var parent = el.closest('.wvn-money-hero, .wvn-page-hero, .wvn-wedding-hero, .wvn-svc-hero, .wvn-article-hero') || el;
+        var parent = el.closest('.wvn-money-hero, .wvn-page-hero, .wvn-wedding-hero, .wvn-svc-hero') || el;
         var rect = parent.getBoundingClientRect();
         if (rect.bottom < 0 || rect.top > vh) return;
         var p = (vh - rect.top) / (vh + rect.height);

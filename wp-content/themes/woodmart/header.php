@@ -32,7 +32,11 @@ $wvn_dark_start = is_front_page()
     || is_page_template('page-event-planner-udaipur.php')
     || is_page_template('page-weddings-udaipur.php')
     || is_page('contact-us')
+    || is_post_type_archive('portfolio')
+    || is_page('portfolio')
     || is_singular('portfolio')
+    || is_home()
+    || is_category()
     || is_singular('post');
 ?>
 <header class="wvn-header<?php echo $wvn_dark_start ? '' : ' is-light'; ?>">
