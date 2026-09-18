@@ -53,23 +53,6 @@ function wvn_homepage_seo_schema() {
 add_action('wp_head', 'wvn_homepage_seo_schema', 19);
 
 
-function wvn_homepage_seo_content() {
-    if (!is_front_page()) {
-        return;
-    }
-
-    echo '<section class="wvn-home-seo-copy" aria-labelledby="wvn-home-seo-heading">';
-    echo '<div class="wvn-home-seo-copy__inner">';
-    echo '<p class="wvn-kicker">Wedding planning in Udaipur</p>';
-    echo '<h2 id="wvn-home-seo-heading">Wedding &amp; Event Planner in Udaipur</h2>';
-    echo '<p>Wedding Vows by Nikhil plans destination weddings and events in Udaipur, from palace celebrations and lakeside ceremonies to intimate and large multi-day weddings. Our team coordinates venue sourcing, wedding décor and design, guest hospitality, production and on-ground execution.</p>';
-    echo '<p>Planning a destination wedding in Udaipur? Explore our <a href="' . esc_url(home_url('/weddings-in-udaipur/')) . '">Udaipur wedding planning guide</a>, compare <a href="' . esc_url(home_url('/wedding-venues-udaipur/')) . '">wedding venues in Udaipur</a>, review <a href="' . esc_url(home_url('/udaipur-wedding-cost/')) . '">Udaipur wedding costs</a>, or see our <a href="' . esc_url(home_url('/portfolio/')) . '">real wedding portfolio</a>.</p>';
-    echo '</div>';
-    echo '</section>';
-}
-add_action('wp_footer', 'wvn_homepage_seo_content', 8);
-
-
 function wvn_homepage_about_schema() {
     if (!is_front_page()) {
         return;
