@@ -214,6 +214,19 @@ body.wvn-cin-site .wvn-cin-reveal.is-in {
   transform: none;
 }
 
+/* Money / SEO landings must never render as blank (footer-only) pages */
+body.wvn-cin-site .wvn-money-page {
+  min-height: 100vh;
+}
+
+body.wvn-cin-site .wvn-money-page .wvn-cin-reveal,
+body.wvn-cin-site .wvn-seo-landing .wvn-cin-reveal,
+body.wvn-cin-site .wvn-money-page .wvn-cin-reveal.is-in,
+body.wvn-cin-site .wvn-seo-landing .wvn-cin-reveal.is-in {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
 body.wvn-cin-site .wvn-cin-reveal[data-delay="1"] { transition-delay: 80ms; }
 body.wvn-cin-site .wvn-cin-reveal[data-delay="2"] { transition-delay: 160ms; }
 body.wvn-cin-site .wvn-cin-reveal[data-delay="3"] { transition-delay: 240ms; }

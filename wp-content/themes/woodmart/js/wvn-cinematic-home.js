@@ -284,13 +284,113 @@
       startAuto();
     });
 
+    function openCiteLightbox(card) {
+      var quote = card.getAttribute("data-quote") || "";
+      var name = card.getAttribute("data-name") || "";
+      var meta = card.getAttribute("data-meta") || "";
+      var image = card.getAttribute("data-image") || "";
+      if (!quote && !image) return;
+
+      var existing = document.querySelector(".wvn-cite-lightbox");
+      if (existing) existing.remove();
+
+      var box = document.createElement("div");
+      box.className = "wvn-cite-lightbox";
+      box.setAttribute("role", "dialog");
+      box.setAttribute("aria-modal", "true");
+      box.setAttribute("aria-label", "Full testimonial");
+
+      var closeBtn = document.createElement("button");
+      closeBtn.className = "wvn-cite-lb__close";
+      closeBtn.type = "button";
+      closeBtn.setAttribute("aria-label", "Close");
+      closeBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+
+      var article = document.createElement("article");
+      article.className = "wvn-cite-lb__card";
+
+      if (image) {
+        var media = document.createElement("div");
+        media.className = "wvn-cite-lb__media";
+        var img = document.createElement("img");
+        img.src = image;
+        img.alt = "";
+        media.appendChild(img);
+        article.appendChild(media);
+      }
+
+      var body = document.createElement("div");
+      body.className = "wvn-cite-lb__body";
+
+      var kicker = document.createElement("p");
+      kicker.className = "wvn-cite-lb__kicker";
+      kicker.textContent = "In their words";
+
+      var blockquote = document.createElement("blockquote");
+      blockquote.className = "wvn-cite-lb__quote";
+      blockquote.textContent = "“" + quote + "”";
+
+      var credit = document.createElement("div");
+      credit.className = "wvn-cite-lb__credit";
+      var cite = document.createElement("cite");
+      cite.className = "wvn-cite-lb__name";
+      cite.textContent = name;
+      credit.appendChild(cite);
+      if (meta) {
+        var metaEl = document.createElement("span");
+        metaEl.className = "wvn-cite-lb__meta";
+        metaEl.textContent = meta;
+        credit.appendChild(metaEl);
+      }
+
+      body.appendChild(kicker);
+      body.appendChild(blockquote);
+      body.appendChild(credit);
+      article.appendChild(body);
+      box.appendChild(closeBtn);
+      box.appendChild(article);
+      document.body.appendChild(box);
+      document.body.style.overflow = "hidden";
+      stopAuto();
+
+      function closeLb() {
+        box.remove();
+        document.body.style.overflow = "";
+        startAuto();
+        document.removeEventListener("keydown", onKey);
+      }
+
+      function onKey(e) {
+        if (e.key === "Escape") closeLb();
+      }
+
+      closeBtn.addEventListener("click", closeLb);
+      box.addEventListener("click", function (e) {
+        if (e.target === box) closeLb();
+      });
+      document.addEventListener("keydown", onKey);
+      requestAnimationFrame(function () {
+        box.classList.add("is-open");
+      });
+    }
+
     cards.forEach(function (card) {
-      card.addEventListener("click", function () {
-        if (dragging || Math.abs(deltaX) > 8) return;
+      function activate() {
+        if (Math.abs(deltaX) > 8) return;
         var i = parseInt(card.getAttribute("data-index"), 10);
         if (!isNaN(i) && i !== index) {
           go(i);
-          startAuto();
+        }
+        openCiteLightbox(card);
+      }
+      card.addEventListener("click", function (e) {
+        e.preventDefault();
+        activate();
+      });
+      card.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          activate();
         }
       });
     });

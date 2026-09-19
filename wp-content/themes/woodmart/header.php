@@ -23,8 +23,7 @@ $icons = array(
 );
 ?>
 <?php
-$wvn_dark_start = is_front_page()
-    || is_page('what-we-do')
+$wvn_dark_start = is_page('what-we-do')
     || is_page_template('page-what-we-do.php')
     || is_page_template('page-money-landing.php')
     || is_page_template('page-wvn-commercial.php')

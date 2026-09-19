@@ -39,6 +39,7 @@ $theme_includes = array(
     '/block-styles.php',                        // Contains the Updated Block Styles
     '/cinematic-test-page.php',                // Isolated cinematic test page bootstrap.
     '/homepage-seo.php',                          // Homepage SEO metadata and schema.
+    '/seo-landing-config.php',                    // SEO / money landing page content config.
     '/portfolio-page.php',                     // Weddings / portfolio cinematic page.
 );
 foreach ($theme_includes as $file) {

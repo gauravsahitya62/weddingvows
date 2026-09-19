@@ -25,14 +25,19 @@ while (have_posts()) :
     }
     ?>
 <main id="content" class="wvn-seo-landing wvn-money-page">
-  <section class="wvn-money-hero" style="--svc-hero:url('<?php echo esc_url($page_image); ?>')">
-    <div class="wvn-money-hero-media" aria-hidden="true"></div>
+  <section class="wvn-money-hero">
+    <div class="wvn-money-hero-media" style="--svc-hero:url('<?php echo esc_url($page_image); ?>')" aria-hidden="true"></div>
     <div class="wvn-money-hero-overlay"></div>
     <div class="wvn-money-hero-inner">
       <div class="wvn-money-hero-copy">
         <p class="wvn-svc-crumb">Wedding Vows by Nikhil · Udaipur</p>
         <h1 class="wvn-display"><?php the_title(); ?></h1>
-        <?php if (!empty($config['intro'])) : ?><p class="wvn-money-hero-lede"><?php echo esc_html($config['intro']); ?></p><?php endif; ?>
+        <?php
+        $lede = !empty($config['intro']) ? $config['intro'] : get_the_excerpt();
+        if ($lede) :
+            ?>
+          <p class="wvn-money-hero-lede"><?php echo esc_html($lede); ?></p>
+        <?php endif; ?>
         <div class="wvn-money-actions">
           <a class="wvn-money-btn wvn-money-btn-primary" href="<?php echo esc_url(home_url('/contact-us/')); ?>">Plan Your Udaipur Wedding <span aria-hidden="true">↗</span></a>
           <a class="wvn-money-btn wvn-money-btn-ghost" href="<?php echo esc_url(home_url('/portfolio/')); ?>">View Real Weddings <span aria-hidden="true">→</span></a>

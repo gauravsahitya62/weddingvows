@@ -91,6 +91,19 @@ function wvn_register_home_fields() {
                 'type' => 'tab',
             ),
             array(
+                'key' => 'field_wvn_hero_media_type',
+                'label' => 'Hero media type',
+                'name' => 'home_hero_media_type',
+                'type' => 'select',
+                'choices' => array(
+                    'image' => 'Photo',
+                    'video' => 'Video',
+                ),
+                'default_value' => 'image',
+                'return_format' => 'value',
+                'instructions' => 'Choose whether the homepage hero shows a photo or a looping video.',
+            ),
+            array(
                 'key' => 'field_wvn_hero_image',
                 'label' => 'Hero image',
                 'name' => 'home_hero_image',
@@ -98,6 +111,26 @@ function wvn_register_home_fields() {
                 'return_format' => 'array',
                 'preview_size' => 'medium',
                 'library' => 'all',
+                'instructions' => 'Used when media type is Photo. Also used as the video poster/fallback.',
+            ),
+            array(
+                'key' => 'field_wvn_hero_video',
+                'label' => 'Hero video',
+                'name' => 'home_hero_video',
+                'type' => 'file',
+                'return_format' => 'array',
+                'library' => 'all',
+                'mime_types' => 'mp4,webm,mov',
+                'instructions' => 'Upload an MP4/WebM when media type is Video. Keep files under ~15MB for a smooth homepage load.',
+                'conditional_logic' => array(
+                    array(
+                        array(
+                            'field' => 'field_wvn_hero_media_type',
+                            'operator' => '==',
+                            'value' => 'video',
+                        ),
+                    ),
+                ),
             ),
             array(
                 'key' => 'field_wvn_hero_copy',

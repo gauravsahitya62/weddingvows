@@ -36,12 +36,12 @@
   }
 
   function isOverDark() {
-    const dark = document.querySelectorAll(".wvn-intro, .wvn-achieve, .wvn-showreel, .wvn-hero, .wvn-opening, .wvn-footer, .wvn-svc-hero, .wvn-svc-specials, .wvn-cin-story, .wvn-cin-cites, .wvn-money-hero, .wvn-money-proof, .wvn-money-services, .wvn-money-proof-cta, .wvn-money-final-cta, .wvn-page-hero, .wvn-wedding-hero, .wvn-cin-band, .wvn-cta-box, .wvn-contact-stage, .wvn-pf-hero, .wvn-pf-stories, .wvn-pf-film, .wvn-pf-cta, .wvn-pf-cites");
+    const dark = document.querySelectorAll(".wvn-intro, .wvn-achieve, .wvn-showreel, .wvn-footer, .wvn-svc-hero, .wvn-svc-specials, .wvn-cin-story, .wvn-money-hero, .wvn-money-proof, .wvn-money-services, .wvn-money-proof-cta, .wvn-money-final-cta, .wvn-page-hero, .wvn-wedding-hero, .wvn-cin-band, .wvn-cta-box, .wvn-contact-stage, .wvn-pf-hero, .wvn-pf-stories, .wvn-pf-film, .wvn-pf-cta, .wvn-pf-cites");
     for (const el of dark) {
       const r = el.getBoundingClientRect();
       if (r.top < 80 && r.bottom > 50) return true;
     }
-    if (document.querySelector(".wvn-opening, .wvn-hero, .wvn-svc-hero")) {
+    if (document.querySelector(".wvn-svc-hero, .wvn-page-hero, .wvn-money-hero")) {
       return window.scrollY < 80;
     }
     return false;

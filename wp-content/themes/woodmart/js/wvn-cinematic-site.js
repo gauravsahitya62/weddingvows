@@ -44,8 +44,14 @@
     '.wvn-mosaic a'
   ].join(',');
 
+  var moneyRoot = document.querySelector('.wvn-money-page, .wvn-seo-landing');
   var nodes = document.querySelectorAll(revealSel);
   nodes.forEach(function (el, i) {
+    // Money / SEO landings must stay visible — never leave content at opacity:0
+    if (moneyRoot && moneyRoot.contains(el)) {
+      el.classList.add('is-in');
+      return;
+    }
     if (!el.classList.contains('wvn-cin-reveal')) {
       el.classList.add('wvn-cin-reveal');
     }
@@ -59,8 +65,12 @@
     return r.top < window.innerHeight * 0.92 && r.bottom > 40;
   }
 
+  var animateNodes = Array.prototype.filter.call(nodes, function (el) {
+    return !(moneyRoot && moneyRoot.contains(el));
+  });
+
   if (reduce) {
-    nodes.forEach(markIn);
+    animateNodes.forEach(markIn);
   } else if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -70,7 +80,7 @@
         }
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
-    nodes.forEach(function (el) {
+    animateNodes.forEach(function (el) {
       if (inFirstScreen(el)) {
         markIn(el);
       } else {
@@ -78,7 +88,7 @@
       }
     });
   } else {
-    nodes.forEach(markIn);
+    animateNodes.forEach(markIn);
   }
 
   /* Subtle scroll parallax on full-bleed heroes */

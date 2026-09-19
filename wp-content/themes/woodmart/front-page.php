@@ -27,7 +27,27 @@ $service_count = count($services);
   <section class="wvn-opening" data-pin="opening">
     <div class="wvn-hero">
       <div class="wvn-hero-frame">
-        <img src="<?php echo esc_url(wvn_hero_image()); ?>" alt="Destination wedding in Udaipur planned by Wedding Vows by Nikhil" fetchpriority="high" decoding="async">
+        <?php
+        $hero_poster = wvn_hero_image();
+        $hero_video = function_exists('wvn_hero_video') ? wvn_hero_video() : '';
+        $hero_is_video = function_exists('wvn_hero_media_type') && wvn_hero_media_type() === 'video' && $hero_video;
+        if ($hero_is_video) :
+            ?>
+          <video
+            class="wvn-hero-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="<?php echo esc_url($hero_poster); ?>"
+            aria-label="Wedding Vows by Nikhil hero film"
+          >
+            <source src="<?php echo esc_url($hero_video); ?>" type="video/mp4">
+          </video>
+        <?php else : ?>
+          <img src="<?php echo esc_url($hero_poster); ?>" alt="Destination wedding in Udaipur planned by Wedding Vows by Nikhil" fetchpriority="high" decoding="async">
+        <?php endif; ?>
       </div>
       <div class="wvn-hero-copy"><?php echo esc_html(wvn_home_text('home_hero_copy', 'We work behind the scenes, because your wedding deserves to be planned beautifully.')); ?></div>
     </div>
@@ -274,10 +294,15 @@ $service_count = count($services);
               class="wvn-cin-cites__card<?php echo $i === 0 ? ' is-active' : ''; ?>"
               data-wvn-cin-cites-card
               data-index="<?php echo (int) $i; ?>"
+              data-quote="<?php echo esc_attr($quote['text']); ?>"
+              data-name="<?php echo esc_attr($quote['name']); ?>"
+              data-meta="<?php echo esc_attr($meta); ?>"
+              data-image="<?php echo esc_url($img); ?>"
               style="--o: <?php echo (int) $i; ?>"
-              role="group"
+              role="button"
+              tabindex="0"
               aria-roledescription="slide"
-              aria-label="<?php echo esc_attr(($i + 1) . ' of ' . count($cin_quotes)); ?>"
+              aria-label="<?php echo esc_attr('Read full story from ' . $quote['name']); ?>"
               <?php echo $i === 0 ? '' : ' aria-hidden="true"'; ?>
             >
               <div class="wvn-cin-cites__card-media">

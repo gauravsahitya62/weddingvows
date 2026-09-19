@@ -305,6 +305,16 @@ function wvn_hero_image() {
     return wvn_home_image('home_hero_image', wvn_media('2025/04/NVP_JEHANAXKANISHK_WEDDING-1450.jpg'));
 }
 
+function wvn_hero_media_type() {
+    $type = function_exists('get_field') ? (string) get_field('home_hero_media_type', wvn_home_id()) : 'image';
+    return $type === 'video' ? 'video' : 'image';
+}
+
+function wvn_hero_video() {
+    $file = function_exists('get_field') ? get_field('home_hero_video', wvn_home_id()) : null;
+    return wvn_image_url($file, '');
+}
+
 function wvn_showreel_video() {
     $file = function_exists('get_field') ? get_field('home_showreel_video', wvn_home_id()) : null;
     $url = wvn_image_url($file, '');
