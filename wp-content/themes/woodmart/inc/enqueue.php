@@ -18,13 +18,13 @@ function theme_files() {
             'wvn-cinematic-home',
             get_theme_file_uri('/css/wvn-cinematic-home.css'),
             array('wvn-page-safety'),
-            '1.3.1'
+            '1.3.2'
         );
         wp_enqueue_script(
             'wvn-cinematic-home',
             get_theme_file_uri('/js/wvn-cinematic-home.js'),
             array(),
-            '1.4.0',
+            '1.4.1',
             true
         );
         wp_enqueue_style(
