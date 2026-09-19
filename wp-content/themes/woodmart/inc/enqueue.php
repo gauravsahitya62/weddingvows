@@ -11,7 +11,7 @@ function theme_files() {
     wp_enqueue_style('wvn-seo-growth', get_theme_file_uri('/css/wvn-seo-growth.css'), array('wvn-overrides'), '1.0.3');
     wp_enqueue_style('wvn-money-responsive', get_theme_file_uri('/css/wvn-money-responsive.css'), array('wvn-seo-growth'), '1.0.1');
     wp_enqueue_style('wvn-page-safety', get_theme_file_uri('/css/wvn-page-safety.css'), array('wvn-money-responsive'), '1.0.1');
-    wp_enqueue_style('wvn-intro-editorial', get_theme_file_uri('/css/wvn-intro-editorial.css'), array('wvn-bts'), '1.1.0');
+    wp_enqueue_style('wvn-intro-editorial', get_theme_file_uri('/css/wvn-intro-editorial.css'), array('wvn-bts'), '1.2.0');
 
     if (is_front_page()) {
         wp_enqueue_style(
@@ -24,7 +24,7 @@ function theme_files() {
             'wvn-cinematic-home',
             get_theme_file_uri('/js/wvn-cinematic-home.js'),
             array(),
-            '1.3.1',
+            '1.4.0',
             true
         );
         wp_enqueue_style(
