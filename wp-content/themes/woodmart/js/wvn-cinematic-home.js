@@ -47,6 +47,53 @@
     if (p && typeof p.catch === "function") p.catch(function () {});
   }
 
+
+  function initEditorialIntro() {
+    var root = document.querySelector("[data-wvn-intro]");
+    if (!root || root.__wvnEditorialBound) return;
+    root.__wvnEditorialBound = true;
+
+    function reveal() {
+      root.classList.add("is-in");
+    }
+
+    if (reduce || !("IntersectionObserver" in window)) {
+      reveal();
+    } else {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            reveal();
+            observer.disconnect();
+          }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+      observer.observe(root);
+    }
+
+    var scape = root.querySelector("[data-wvn-intro-scape] img");
+    if (!scape || reduce) return;
+
+    var raf = 0;
+    function paint() {
+      raf = 0;
+      var rect = root.getBoundingClientRect();
+      var viewport = window.innerHeight || document.documentElement.clientHeight || 1;
+      var progress = clamp((viewport - rect.top) / (viewport + rect.height), 0, 1);
+      var offset = (progress - 0.5) * 34;
+      scape.style.setProperty("--wvn-intro-parallax", offset.toFixed(1) + "px");
+    }
+
+    function schedule() {
+      if (raf) return;
+      raf = window.requestAnimationFrame(paint);
+    }
+
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule, { passive: true });
+    schedule();
+  }
+
   /**
    * 0.00–0.14  start card
    * 0.05–0.28  mosaic splits (curtain stays solid underneath)
@@ -507,6 +554,7 @@
     }
   }
 
+  initEditorialIntro();
   var updateStory = initMergedStory();
   initCites();
   if (!updateStory) return;
