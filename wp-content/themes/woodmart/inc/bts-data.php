@@ -320,6 +320,11 @@ function wvn_home_intro() {
         $founder = preg_replace('/\s*[—\-–].*$/u', '', $sign) ?: 'Nikhil Salvi';
     }
     $role = trim(wp_strip_all_tags(wvn_home_text('home_intro_founder_role', 'Founder & Creative Director')));
+    $secondary_cta_label = trim(wp_strip_all_tags(wvn_home_text('home_intro_secondary_cta_text', '')));
+    $secondary_cta_url = wvn_home_text('home_intro_secondary_cta_url', '');
+    $layout_variant = wvn_home_text('home_intro_layout_variant', 'editorial');
+    $image_position = wvn_home_text('home_intro_image_position', 'center');
+    $main_alt = trim(wp_strip_all_tags(wvn_home_text('home_intro_art_alt', 'Bride in traditional attire at a destination wedding in Udaipur')));
 
     $title_line = trim(wp_strip_all_tags(wvn_home_text('home_intro_title_line', 'Wedding Planner')));
     $title_em = trim(wp_strip_all_tags(wvn_home_text('home_intro_title_em', 'in')));
@@ -343,7 +348,11 @@ function wvn_home_intro() {
         'founder'        => $founder,
         'founder_role'   => $role,
         'cta_label'      => trim(wp_strip_all_tags(wvn_home_text('home_intro_cta_text', 'Plan your celebration'))),
-        'cta_url'        => wvn_home_text('home_intro_cta_url', home_url('/contact-us/')),
+        'cta_url'            => wvn_home_text('home_intro_cta_url', home_url('/contact-us/')),
+        'secondary_cta_label' => $secondary_cta_label,
+        'secondary_cta_url'   => $secondary_cta_url,
+        'layout_variant'      => $layout_variant === 'minimal' ? 'minimal' : 'editorial',
+        'image_position'      => $image_position,
         'story_label'    => trim(wp_strip_all_tags(wvn_home_text('home_intro_story_text', 'Our story'))),
         'story_url'      => $story_url,
         'index_label'    => trim(wp_strip_all_tags(wvn_home_text('home_intro_index', '01'))),
@@ -359,7 +368,7 @@ function wvn_home_intro() {
         'images'         => array(
             array(
                 'url' => $img_left,
-                'alt' => 'Bride in traditional attire at a destination wedding in Udaipur',
+                'alt' => $main_alt,
                 'slot'=> 'left',
             ),
             array(
@@ -422,18 +431,21 @@ function wvn_home_intro_links() {
 /**
  * Intro image markup with dimensions / srcset when an attachment exists.
  */
-function wvn_home_intro_image_html($url, $alt, $loading = 'lazy') {
+function wvn_home_intro_image_html($url, $alt, $loading = 'lazy', $position = 'center') {
     $url = esc_url($url);
     if ($url === '') {
         return '';
     }
     $loading = ($loading === 'eager') ? 'eager' : 'lazy';
+    $allowed_positions = array('center', 'top', 'center 35%', 'bottom');
+    $position = in_array($position, $allowed_positions, true) ? $position : 'center';
     $attrs = array(
         'class'    => 'wvn-intro__img',
         'alt'      => $alt,
         'decoding' => 'async',
         'loading'  => $loading,
         'sizes'    => '(max-width: 900px) 70vw, 28vw',
+        'style'    => 'object-position:' . esc_attr($position),
     );
     if ($loading === 'eager') {
         $attrs['fetchpriority'] = 'high';
@@ -450,11 +462,12 @@ function wvn_home_intro_image_html($url, $alt, $loading = 'lazy') {
     }
     $extra = $loading === 'eager' ? ' fetchpriority="high"' : '';
     return sprintf(
-        '<img class="wvn-intro__img" src="%s" alt="%s" width="800" height="1000" decoding="async" loading="%s"%s sizes="(max-width: 900px) 70vw, 28vw">',
+        '<img class="wvn-intro__img" src="%s" alt="%s" width="800" height="1000" decoding="async" loading="%s"%s sizes="(max-width: 900px) 70vw, 28vw" style="object-position:%s">',
         $url,
         esc_attr($alt),
         esc_attr($loading),
-        $extra
+        $extra,
+        esc_attr($position)
     );
 }
 
@@ -854,19 +867,75 @@ function wvn_portfolio_images() {
     return $items;
 }
 
-function wvn_gallery_images() {
-    $rows = wvn_home_rows('home_gallery');
-    if ($rows) {
-        $items = array();
-        foreach ($rows as $row) {
-            $url = wvn_image_url($row, '');
-            if ($url) {
-                $items[] = $url;
+function wvn_gallery_category_taxonomy() {
+    return 'wvn_gallery_category';
+}
+
+function wvn_attachment_id_from_media($value) {
+    if (is_array($value)) {
+        foreach (array('ID', 'id') as $key) {
+            if (!empty($value[$key]) && is_numeric($value[$key])) {
+                return (int) $value[$key];
             }
         }
-        if ($items) {
-            return $items;
+    }
+    if (is_numeric($value)) {
+        return (int) $value;
+    }
+    if (is_string($value) && $value !== '' && function_exists('attachment_url_to_postid')) {
+        return (int) attachment_url_to_postid($value);
+    }
+    return 0;
+}
+
+function wvn_gallery_media_terms($attachment_id) {
+    $attachment_id = (int) $attachment_id;
+    if (!$attachment_id || !taxonomy_exists(wvn_gallery_category_taxonomy())) {
+        return array();
+    }
+    $terms = wp_get_object_terms($attachment_id, wvn_gallery_category_taxonomy(), array('fields' => 'all'));
+    if (is_wp_error($terms) || !$terms) {
+        return array();
+    }
+    $items = array();
+    foreach ($terms as $term) {
+        $items[] = array(
+            'slug' => sanitize_title($term->slug),
+            'name' => $term->name,
+        );
+    }
+    return $items;
+}
+
+/**
+ * Existing gallery ACF media, enriched with stable taxonomy identifiers.
+ * The ACF gallery field remains untouched, so existing attachment references survive.
+ */
+function wvn_home_gallery_media() {
+    $rows = wvn_home_rows('home_gallery');
+    $items = array();
+    foreach ($rows as $row) {
+        $url = wvn_image_url($row, '');
+        if (!$url) {
+            continue;
         }
+        $attachment_id = wvn_attachment_id_from_media($row);
+        $items[] = array(
+            'id' => $attachment_id,
+            'url' => $url,
+            'type' => 'photo',
+            'categories' => wvn_gallery_media_terms($attachment_id),
+        );
+    }
+    return $items;
+}
+
+function wvn_gallery_images() {
+    $items = wvn_home_gallery_media();
+    if ($items) {
+        return array_values(array_filter(array_map(static function ($item) {
+            return $item['url'] ?? '';
+        }, $items)));
     }
     return array(
         wvn_media('2025/04/NVP_JEHANAXKANISHK_WEDDING-1450.jpg'),
@@ -880,74 +949,74 @@ function wvn_gallery_images() {
     );
 }
 
-/**
- * Homepage cinematic gallery collage — admin-editable images enriched with real wedding stories.
- */
-function wvn_home_gallery_label_map() {
+function wvn_home_gallery_legacy_copy() {
     return array(
-        'udaipur'    => array('label' => 'Udaipur — A Royal Beginning', 'title' => 'Palace light, lakeside air'),
-        'palace'     => array('label' => 'Palace — Heritage & Grandeur', 'title' => 'Where tradition finds its stage'),
-        'lakeside'   => array('label' => 'Lakeside — Love by the Lake', 'title' => 'Vows beside still water'),
-        'sangeet'    => array('label' => 'Sangeet — Nights to Remember', 'title' => 'Music, colour, celebration'),
-        'wedding'    => array('label' => 'Wedding — Traditions in Every Detail', 'title' => 'The ceremony, held with care'),
-        'receptions' => array('label' => 'Reception — An Evening to Cherish', 'title' => 'The final toast of the night'),
-        'intimate'   => array('label' => 'Intimate — Quietly Extraordinary', 'title' => 'Fewer guests, deeper moments'),
+        'udaipur'    => 'Palace light, lakeside air',
+        'palace'     => 'Where tradition finds its stage',
+        'lakeside'   => 'Vows beside still water',
+        'sangeet'    => 'Music, colour, celebration',
+        'wedding'    => 'The ceremony, held with care',
+        'receptions' => 'The final toast of the night',
+        'intimate'   => 'Fewer guests, deeper moments',
     );
 }
 
-function wvn_home_gallery_infer_tags($haystack) {
-    $hay = strtolower((string) $haystack);
-    $map = array(
-        'udaipur'    => array('udaipur'),
-        'palace'     => array('palace', 'leela', 'oberoi', 'taj', 'fairmont', 'raffles', 'jagmandir', 'udaivilas', 'heritage'),
-        'lakeside'   => array('lake', 'lakeside', 'pichola'),
-        'sangeet'    => array('sangeet', 'mehendi', 'mehndi', 'haldi'),
-        'wedding'    => array('wedding', 'vows', 'ceremony', 'pheras'),
-        'receptions' => array('reception', 'evening', 'cocktail'),
-        'intimate'   => array('intimate', 'small', 'micro', 'quiet'),
-    );
-    $tags = array();
-    foreach ($map as $tag => $needles) {
-        foreach ($needles as $needle) {
-            if ($needle !== '' && strpos($hay, $needle) !== false) {
-                $tags[] = $tag;
-                break;
-            }
-        }
-    }
-    if (!$tags) {
-        $tags[] = 'wedding';
-        $tags[] = 'udaipur';
-    }
-    return array_values(array_unique($tags));
+function wvn_home_gallery_categories_for_url($url) {
+    $id = wvn_attachment_id_from_media($url);
+    return wvn_gallery_media_terms($id);
 }
 
+/**
+ * Homepage cinematic gallery collage — categories are explicitly assigned in wp-admin.
+ * There is deliberately no filename/title keyword inference.
+ */
 function wvn_home_gallery_collage() {
-    $images = array_values(array_filter(wvn_gallery_images()));
+    $media = wvn_home_gallery_media();
+    $images = $media ? array_values(array_filter($media, static function ($item) {
+        return !empty($item['url']);
+    })) : array();
     $weddings = function_exists('wvn_weddings') ? wvn_weddings() : array();
-    $labels = wvn_home_gallery_label_map();
+    $legacy_titles = wvn_home_gallery_legacy_copy();
     $roles = array('feature', 'stack-a', 'stack-b', 'portrait', 'wide', 'support-a', 'support-b', 'support-c');
     $items = array();
     $count = max(count($images), 6);
 
     for ($i = 0; $i < $count && $i < 10; $i++) {
-        $img = $images[$i % max(1, count($images))] ?? wvn_hero_image();
+        $source = $images[$i % max(1, count($images))] ?? array(
+            'url' => wvn_hero_image(),
+            'categories' => array(),
+        );
+        $img = $source['url'] ?? wvn_hero_image();
+        $categories = $source['categories'] ?? array();
+        $tags = array();
+        foreach ($categories as $term) {
+            if (!empty($term['slug'])) {
+                $tags[] = sanitize_title($term['slug']);
+            }
+        }
+        $tags = array_values(array_unique(array_filter($tags)));
+
         $wedding = $weddings[$i % max(1, count($weddings))] ?? null;
-        // Prefer portfolio featured images for story-linked slots when available.
         if ($wedding && !empty($wedding['image']) && $i < count($weddings) && $i > 0 && ($i % 3 === 0)) {
             $img = $wedding['image'];
+            foreach (wvn_home_gallery_categories_for_url($img) as $term) {
+                if (!empty($term['slug'])) {
+                    $tags[] = sanitize_title($term['slug']);
+                }
+            }
+            $tags = array_values(array_unique(array_filter($tags)));
         }
 
-        $hay = $img;
-        if ($wedding) {
-            $hay .= ' ' . ($wedding['title'] ?? '') . ' ' . ($wedding['venue'] ?? '');
+        $primary = $tags[0] ?? '';
+        $label = 'Uncategorized';
+        $title = $legacy_titles[$primary] ?? 'Destination wedding moment';
+        if ($primary) {
+            $term = get_term_by('slug', $primary, wvn_gallery_category_taxonomy());
+            $label = ($term && !is_wp_error($term))
+                ? $term->name
+                : ucwords(str_replace('-', ' ', $primary));
         }
-        $tags = wvn_home_gallery_infer_tags($hay);
-        $primary = $tags[0];
-        $meta = $labels[$primary] ?? $labels['wedding'];
 
-        $title = $meta['title'];
-        $label = $meta['label'];
         $story = '';
         if ($wedding && !empty($wedding['title'])) {
             $title = $wedding['title'];
@@ -956,37 +1025,44 @@ function wvn_home_gallery_collage() {
 
         $role = $roles[$i] ?? 'support-c';
         $items[] = array(
-            'image'     => $img,
-            'alt'       => $title ? ($title . ' — destination wedding by Wedding Vows by Nikhil') : 'Destination wedding photography — Wedding Vows by Nikhil',
-            'label'     => $label,
-            'title'     => $title,
+            'image' => $img,
+            'alt' => $title . ' — destination wedding by Wedding Vows by Nikhil',
+            'label' => $label,
+            'title' => $title,
             'story_url' => $story,
-            'tags'      => $tags,
-            'role'      => $role,
-            'type'      => 'photo',
-            'eager'     => $role === 'feature',
+            'tags' => $tags,
+            'role' => $role,
+            'type' => 'photo',
+            'eager' => $role === 'feature',
         );
     }
 
-    // Insert film card after portrait slot when a showreel asset exists.
     $film = function_exists('wvn_showreel_video') ? wvn_showreel_video() : '';
-    $poster = wvn_home_image('home_showreel_image', $images[4] ?? ($images[0] ?? wvn_hero_image()));
+    $poster = wvn_home_image('home_showreel_image', $images[4]['url'] ?? ($images[0]['url'] ?? wvn_hero_image()));
+    $film_field = function_exists('get_field') ? get_field('home_showreel_video', wvn_home_id()) : '';
+    $film_id = wvn_attachment_id_from_media($film_field);
+    $film_terms = wvn_gallery_media_terms($film_id);
+    $film_tags = array();
+    foreach ($film_terms as $term) {
+        if (!empty($term['slug'])) {
+            $film_tags[] = sanitize_title($term['slug']);
+        }
+    }
+
     if ($film || $poster) {
         $film_item = array(
-            'image'     => $poster,
-            'alt'       => 'Wedding film showreel — Wedding Vows by Nikhil',
-            'label'     => 'The Film',
-            'title'     => wvn_home_text('home_showreel_caption', 'The Real Story Behind a Dream Wedding'),
+            'image' => $poster,
+            'alt' => 'Wedding film showreel — Wedding Vows by Nikhil',
+            'label' => $film_terms ? implode(' · ', array_column($film_terms, 'name')) : 'The Film',
+            'title' => wvn_home_text('home_showreel_caption', 'The Real Story Behind a Dream Wedding'),
             'story_url' => '',
-            'tags'      => array('wedding', 'sangeet', 'receptions'),
-            'role'      => 'film',
-            'type'      => 'film',
-            'eager'     => false,
-            'video'     => $film,
+            'tags' => array_values(array_unique($film_tags)),
+            'role' => 'film',
+            'type' => 'film',
+            'eager' => false,
+            'video' => $film,
         );
-        // Place film as 5th visual (index 4) for balanced collage.
         array_splice($items, 4, 0, array($film_item));
-        // Re-assign roles for photos after insert.
         $ri = 0;
         foreach ($items as &$item) {
             if (($item['type'] ?? '') === 'film') {
@@ -1000,35 +1076,25 @@ function wvn_home_gallery_collage() {
         unset($item);
     }
 
-    // Filters that actually have matching cards.
-    $filter_defs = array(
-        'all'        => 'All',
-        'udaipur'    => 'Udaipur',
-        'palace'     => 'Palace',
-        'lakeside'   => 'Lakeside',
-        'sangeet'    => 'Sangeet',
-        'wedding'    => 'Wedding',
-        'receptions' => 'Receptions',
-        'intimate'   => 'Intimate',
-    );
-    $present = array('all' => true);
+    $filters = array('all' => 'All');
     foreach ($items as $item) {
-        foreach ($item['tags'] as $tag) {
-            $present[$tag] = true;
+        foreach (($item['tags'] ?? array()) as $slug) {
+            $term = get_term_by('slug', $slug, wvn_gallery_category_taxonomy());
+            if ($term && !is_wp_error($term)) {
+                $filters[$term->slug] = $term->name;
+            }
         }
     }
-    $filters = array();
-    foreach ($filter_defs as $key => $label) {
-        if (!empty($present[$key])) {
-            $filters[$key] = $label;
+    foreach ($items as $item) {
+        if (empty($item['tags'])) {
+            $filters['uncategorized'] = 'Uncategorized';
+            break;
         }
     }
 
     $kicker = wvn_home_text('home_gallery_kicker', 'Gallery');
     $heading = wvn_home_text('home_gallery_heading', 'Moments, captured beyond time');
     $lede = wvn_home_text('home_gallery_lede', 'A glimpse into the celebrations we have quietly orchestrated—from first looks to the last dance.');
-
-    // Soft-migrate prior default copy to the cinematic gallery wording.
     if ($heading === 'Moments, captured behind the scenes') {
         $heading = 'Moments, captured beyond time';
     }
@@ -1037,13 +1103,13 @@ function wvn_home_gallery_collage() {
     }
 
     return array(
-        'kicker'  => $kicker,
+        'kicker' => $kicker,
         'heading' => $heading,
-        'lede'    => $lede,
+        'lede' => $lede,
         'cta_url' => home_url('/portfolio/'),
-        'cta'     => 'View full gallery',
+        'cta' => 'View full gallery',
         'filters' => $filters,
-        'items'   => $items,
+        'items' => $items,
     );
 }
 
