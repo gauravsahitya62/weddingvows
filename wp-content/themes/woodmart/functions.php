@@ -22,6 +22,7 @@ add_action('after_setup_theme', 'theme_features');
 $theme_inc_dir = 'inc';
 $theme_includes = array(
     '/bts-data.php',
+    '/gallery-categories.php',
     '/acf-home.php',
     '/acf-portfolio.php',
     '/acf-venues.php',
