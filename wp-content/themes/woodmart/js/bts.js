@@ -36,7 +36,7 @@
   }
 
   function isOverDark() {
-    const dark = document.querySelectorAll(".wvn-intro, .wvn-achieve, .wvn-showreel, .wvn-footer, .wvn-svc-hero, .wvn-svc-specials, .wvn-cin-story, .wvn-money-hero, .wvn-money-proof, .wvn-money-services, .wvn-money-proof-cta, .wvn-money-final-cta, .wvn-page-hero, .wvn-wedding-hero, .wvn-cin-band, .wvn-cta-box, .wvn-contact-stage, .wvn-pf-hero, .wvn-pf-stories, .wvn-pf-film, .wvn-pf-cta, .wvn-pf-cites");
+    const dark = document.querySelectorAll(".wvn-achieve, .wvn-showreel, .wvn-footer, .wvn-svc-hero, .wvn-svc-specials, .wvn-cin-story, .wvn-money-hero, .wvn-money-proof, .wvn-money-services, .wvn-money-proof-cta, .wvn-money-final-cta, .wvn-page-hero, .wvn-wedding-hero, .wvn-cin-band, .wvn-cta-box, .wvn-contact-stage, .wvn-pf-hero, .wvn-pf-stories, .wvn-pf-film, .wvn-pf-cta, .wvn-pf-cites");
     for (const el of dark) {
       const r = el.getBoundingClientRect();
       if (r.top < 80 && r.bottom > 50) return true;
@@ -696,4 +696,54 @@
       if (msg) msg.textContent = "Please email us directly if this form does not send.";
     });
   });
+
+  const intro = document.querySelector("[data-wvn-intro]");
+  if (intro) {
+    const revealIntro = () => intro.classList.add("is-in");
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      revealIntro();
+    } else {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            revealIntro();
+            io.disconnect();
+          }
+        });
+      }, { threshold: 0.18, rootMargin: "0px 0px -6% 0px" });
+      io.observe(intro);
+    }
+
+    const scape = intro.querySelector("[data-wvn-intro-scape] img");
+    const shots = Array.from(intro.querySelectorAll("[data-wvn-intro-shot]"));
+    if (!reduceMotion && scape) {
+      let ticking = false;
+      const onScroll = () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const rect = intro.getBoundingClientRect();
+          const view = Math.max(window.innerHeight, 1);
+          const progress = Math.min(1, Math.max(0, 1 - rect.top / (view + rect.height * 0.35)));
+          scape.style.transform = `translate3d(0, ${progress * -28}px, 0) scale(1.05)`;
+          shots.forEach((shot, i) => {
+            const drift = (i % 2 === 0 ? -1 : 1) * progress * 10;
+            const base = shot.classList.contains("wvn-intro__shot--overlap")
+              ? "rotate(7deg)"
+              : shot.classList.contains("wvn-intro__shot--tilt")
+                ? "rotate(-5deg)"
+                : shot.classList.contains("wvn-intro__shot--wide")
+                  ? "rotate(3deg)"
+                  : "";
+            if (intro.classList.contains("is-in")) {
+              shot.style.transform = `${base} translate3d(0, ${drift}px, 0)`.trim();
+            }
+          });
+          ticking = false;
+        });
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    }
+  }
 })();

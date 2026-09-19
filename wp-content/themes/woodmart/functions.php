@@ -24,6 +24,8 @@ $theme_includes = array(
     '/bts-data.php',
     '/acf-home.php',
     '/acf-portfolio.php',
+    '/acf-venues.php',
+    '/venues.php',
     '/acf-services.php',
     '/acf-guide.php',
     '/blog.php',

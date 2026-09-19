@@ -353,9 +353,16 @@
 }
 
 .wvn-money-services > *,
-.wvn-money-faq > *,
 .wvn-money-proof-cta {
   width: min(1360px, calc(100% - 80px));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.wvn-money-faq > .wvn-money-section-head,
+.wvn-money-faq > .wvn-money-faq-grid,
+.wvn-money-faq > .wvn-money-faq-inner {
+  width: min(920px, calc(100% - 48px));
   margin-left: auto;
   margin-right: auto;
 }
@@ -365,6 +372,11 @@
   grid-template-columns: minmax(0, 1fr) 420px;
   gap: 60px;
   align-items: end;
+}
+
+.wvn-money-faq .wvn-money-section-head {
+  display: block;
+  grid-template-columns: none;
 }
 
 .wvn-money-section-lede {
@@ -481,11 +493,12 @@
 }
 
 .wvn-money-faq {
-  padding: 0 0 100px;
+  padding: 84px 0;
+  background: #f0ede4;
 }
 
 .wvn-money-faq-grid {
-  margin-top: 42px;
+  margin-top: 0;
   border-top: 1px solid var(--money-line);
 }
 
@@ -523,7 +536,7 @@
 }
 
 .wvn-money-faq-grid details p {
-  max-width: 900px;
+  max-width: none;
   margin: 0 0 24px;
   color: var(--money-muted);
   font-size: 15px;

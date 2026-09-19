@@ -130,7 +130,7 @@ function wvn_enqueue_money_page_assets() {
         'wvn-money-pages',
         get_theme_file_uri('/css/wvn-money-pages.css'),
         array('wvn-overrides'),
-        '2.0.1'
+        '2.0.2'
     );
 }
 add_action('wp_enqueue_scripts', 'wvn_enqueue_money_page_assets', 30);

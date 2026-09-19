@@ -145,13 +145,82 @@ function wvn_register_home_fields() {
                 'type' => 'tab',
             ),
             array(
+                'key' => 'field_wvn_intro_kicker',
+                'label' => 'Intro eyebrow',
+                'name' => 'home_intro_kicker',
+                'type' => 'text',
+                'default_value' => 'Wedding Vows by Nikhil',
+                'wrapper' => array('width' => '50'),
+            ),
+            array(
+                'key' => 'field_wvn_intro_heading',
+                'label' => 'Intro H1',
+                'name' => 'home_intro_heading',
+                'type' => 'text',
+                'default_value' => 'Destination Wedding Planner in Udaipur',
+                'wrapper' => array('width' => '50'),
+            ),
+            array(
+                'key' => 'field_wvn_intro_lead',
+                'label' => 'Intro lead paragraph',
+                'name' => 'home_intro_lead',
+                'type' => 'textarea',
+                'rows' => 3,
+            ),
+            array(
+                'key' => 'field_wvn_intro_subheading',
+                'label' => 'Intro H2',
+                'name' => 'home_intro_subheading',
+                'type' => 'text',
+                'default_value' => 'Thoughtfully Planned, Beautifully Yours',
+            ),
+            array(
+                'key' => 'field_wvn_intro_text',
+                'label' => 'Intro body paragraph',
+                'name' => 'home_intro_text',
+                'type' => 'textarea',
+                'rows' => 4,
+            ),
+            array(
+                'key' => 'field_wvn_intro_image',
+                'label' => 'Intro image',
+                'name' => 'home_intro_image',
+                'type' => 'image',
+                'return_format' => 'array',
+                'preview_size' => 'medium',
+                'instructions' => 'Editorial photograph beside the intro copy. Falls back to a site wedding image.',
+                'wrapper' => array('width' => '50'),
+            ),
+            array(
+                'key' => 'field_wvn_intro_image_alt',
+                'label' => 'Intro image alt text',
+                'name' => 'home_intro_image_alt',
+                'type' => 'text',
+                'wrapper' => array('width' => '50'),
+            ),
+            array(
+                'key' => 'field_wvn_intro_cta_text',
+                'label' => 'Intro CTA label',
+                'name' => 'home_intro_cta_text',
+                'type' => 'text',
+                'default_value' => 'Plan your wedding',
+                'wrapper' => array('width' => '50'),
+            ),
+            array(
+                'key' => 'field_wvn_intro_cta_url',
+                'label' => 'Intro CTA URL',
+                'name' => 'home_intro_cta_url',
+                'type' => 'url',
+                'wrapper' => array('width' => '50'),
+            ),
+            array(
                 'key' => 'field_wvn_intro_content',
-                'label' => 'Intro content',
+                'label' => 'Intro content (legacy)',
                 'name' => 'home_intro_content',
                 'type' => 'wysiwyg',
-                'instructions' => 'Use Paragraph for the kicker line, Heading 1 for the main title, and Paragraph for body copy. Switch to Text for HTML.',
+                'instructions' => 'Legacy field — the homepage now uses the structured Intro fields above. Leave empty.',
                 'tabs' => 'all',
-                'toolbar' => 'full',
+                'toolbar' => 'basic',
                 'media_upload' => 0,
                 'delay' => 0,
             ),
@@ -233,7 +302,7 @@ function wvn_register_home_fields() {
             ),
             array(
                 'key' => 'field_wvn_tab_achieve',
-                'label' => 'Achievements / Story Book',
+                'label' => 'Testimonials Book',
                 'type' => 'tab',
             ),
             array(
@@ -241,7 +310,7 @@ function wvn_register_home_fields() {
                 'label' => 'Section Heading',
                 'name' => 'home_achieve_heading',
                 'type' => 'text',
-                'instructions' => 'e.g. THE PEOPLE BEHIND THE CELEBRATION or Achievements',
+                'instructions' => 'e.g. In Their Words',
             ),
             array(
                 'key' => 'field_wvn_achieve_lede',
@@ -249,7 +318,7 @@ function wvn_register_home_fields() {
                 'name' => 'home_achieve_lede',
                 'type' => 'textarea',
                 'rows' => 3,
-                'instructions' => 'The descriptive text directly beneath the heading.',
+                'instructions' => 'Short intro above the testimonials book.',
             ),
             array(
                 'key' => 'field_wvn_press_cover',
@@ -258,13 +327,14 @@ function wvn_register_home_fields() {
                 'type' => 'image',
                 'return_format' => 'array',
                 'preview_size' => 'medium',
+                'instructions' => 'Wedding / couple photo for the book cover. Leave empty to use a gallery image.',
             ),
             array(
                 'key' => 'field_wvn_press_cover_title',
                 'label' => 'Cover title',
                 'name' => 'home_press_cover_title',
                 'type' => 'text',
-                'instructions' => 'e.g. WVN - STORY or Featured in',
+                'instructions' => 'e.g. Testimonials',
                 'wrapper' => array('width' => '50'),
             ),
             array(
@@ -1058,7 +1128,15 @@ function wvn_seed_home_page() {
     }
     $texts = array(
         'home_hero_copy'            => 'We work behind the scenes, because your wedding deserves to be planned beautifully.',
-        'home_intro_content'        => '<p>Your destination wedding planner in India</p><h1>For couples and families who want their wedding to be extraordinary. We plan weddings that are completely stress-free and design wedding spaces that speak your language — minimal or maximal, it’s yours.</h1><p>Wedding Vows by Nikhil is a young, creative team working alongside first-in-class vendors, including dedicated designers who work with local artisans to craft spaces that breathe Indian heritage in your décor.</p>',
+        'home_intro_content'        => '',
+        'home_intro_kicker'         => 'Wedding Vows by Nikhil',
+        'home_intro_heading'        => 'Destination Wedding Planner in Udaipur',
+        'home_intro_lead'           => 'Wedding Vows by Nikhil plans destination weddings in Udaipur — palace courtyards, lakeside ceremonies, and multi-day celebrations shaped around your family, rituals, and guest journey.',
+        'home_intro_subheading'     => 'Thoughtfully Planned, Beautifully Yours',
+        'home_intro_text'           => 'From venue sourcing and wedding design to décor, guest hospitality, and on-ground coordination, one studio stays with you from the first site walk to the last farewell — so every celebration feels bespoke, calm, and wholly yours.',
+        'home_intro_cta_text'       => 'Plan your wedding',
+        'home_intro_cta_url'        => home_url('/contact-us/'),
+        'home_intro_image_alt'      => 'Udaipur destination wedding celebration planned by Wedding Vows by Nikhil',
         'home_collective_kicker'    => 'WVN Wedding Collective',
         'home_collective_heading'   => 'Before we tell you our story, let our weddings speak for us.',
         'home_planner_heading'      => 'Meet the planner',
@@ -1067,13 +1145,13 @@ function wvn_seed_home_page() {
         'home_planner_sign'         => 'Nikhil Salvi — Founder',
         'home_planner_link_text'    => 'Book a consultation ↗',
         'home_planner_link_url'     => home_url('/contact-us/'),
-        'home_achieve_heading'      => 'Achievements',
-        'home_achieve_lede'         => 'We offer complete destination wedding planning, so you only ever deal with one team — from the first venue visit to the final farewell.',
-        'home_press_cover_title'    => 'Featured in',
+        'home_achieve_heading'      => 'In Their Words',
+        'home_achieve_lede'         => 'Real stories from the couples and families we’ve celebrated with — open the book to read more.',
+        'home_press_cover_title'    => 'Testimonials',
         'home_press_cover_note'     => 'Tap to open',
         'home_press_end_brand'      => 'Wedding Vows by Nikhil',
-        'home_press_end_title'      => 'The story continues in person',
-        'home_press_end_text'       => 'Press coverage is only a glimpse. The work is in the rooms, the timing, and the people who stay with you until the last farewell.',
+        'home_press_end_title'      => 'Your celebration, in their words',
+        'home_press_end_text'       => 'These are the moments families remember — the calm before pheras, the guests who felt looked after, and the details that made the day feel entirely theirs.',
         'home_services_kicker'      => 'What we do',
         'home_services_heading'     => 'End-to-end, one team',
         'home_services_lede'        => 'We offer complete destination wedding planning, so you only ever deal with one team — from the first venue visit to the final farewell.',
@@ -1104,10 +1182,10 @@ function wvn_seed_home_page() {
         'home_cin_vows_headline'    => 'Every Vow. Every Detail.',
         'home_cin_vows_headline_em' => 'Beautifully Kept.',
         'home_cin_vows_cta'         => 'Book a Consultation',
-        'home_cin_cites_eyebrow'    => 'In Their Words',
-        'home_cin_cites_heading'    => 'Stories whispered',
-        'home_cin_cites_heading_em' => 'after the last dance.',
-        'home_cin_cites_kicker'     => 'Couple story',
+        'home_cin_cites_eyebrow'    => 'Venues we love',
+        'home_cin_cites_heading'    => 'Palaces, lakes',
+        'home_cin_cites_heading_em' => '& lawns for your day.',
+        'home_cin_cites_kicker'     => 'Venue',
         'home_cin_story_media'      => 'video',
         'home_cin_vows_media'       => 'video',
     );
@@ -1172,10 +1250,10 @@ function wvn_seed_cinematic_home_fields() {
         'home_cin_vows_headline'    => 'Every Vow. Every Detail.',
         'home_cin_vows_headline_em' => 'Beautifully Kept.',
         'home_cin_vows_cta'         => 'Book a Consultation',
-        'home_cin_cites_eyebrow'    => 'In Their Words',
-        'home_cin_cites_heading'    => 'Stories whispered',
-        'home_cin_cites_heading_em' => 'after the last dance.',
-        'home_cin_cites_kicker'     => 'Couple story',
+        'home_cin_cites_eyebrow'    => 'Venues we love',
+        'home_cin_cites_heading'    => 'Palaces, lakes',
+        'home_cin_cites_heading_em' => '& lawns for your day.',
+        'home_cin_cites_kicker'     => 'Venue',
         'home_cin_story_media'      => 'video',
         'home_cin_vows_media'       => 'video',
     );
@@ -1188,3 +1266,149 @@ function wvn_seed_cinematic_home_fields() {
     update_option('_wvn_home_seeded_cin_v1', '1');
 }
 add_action('acf/init', 'wvn_seed_cinematic_home_fields', 45);
+
+/**
+ * Retheme Achievements / Nikhil story book into a testimonials pressbook (once).
+ */
+function wvn_seed_testimonials_book_v1() {
+    if (!function_exists('update_field') || get_option('_wvn_testimonials_book_v1') === '1') {
+        return;
+    }
+    $id = (int) get_option('page_on_front');
+    if (!$id) {
+        $page = get_page_by_path('home');
+        $id = $page ? (int) $page->ID : 0;
+    }
+    if (!$id) {
+        return;
+    }
+
+    $legacy = array(
+        'home_achieve_heading'   => array('Achievements', 'THE PEOPLE BEHIND YOUR CELEBRATION', 'The People Behind Your Celebration'),
+        'home_achieve_lede'      => array(
+            'We offer complete destination wedding planning, so you only ever deal with one team — from the first venue visit to the final farewell.',
+            'BEHIND EVERY CELEBRATION IS A DEDICATED TEAM BRINGING EVERY DETAIL TO LIFE - WITH CARE, CREATIVITY, AND SEAMLESS EXECUTION.',
+        ),
+        'home_press_cover_title' => array('Featured in', 'WVN - STORY', 'WVN — STORY', 'WVN-STORY'),
+        'home_press_end_title'   => array('The story continues in person'),
+        'home_press_end_text'    => array(
+            'Press coverage is only a glimpse. The work is in the rooms, the timing, and the people who stay with you until the last farewell.',
+        ),
+    );
+    $next = array(
+        'home_achieve_heading'   => 'In Their Words',
+        'home_achieve_lede'      => 'Real stories from the couples and families we’ve celebrated with — open the book to read more.',
+        'home_press_cover_title' => 'Testimonials',
+        'home_press_cover_note'  => 'Tap to open',
+        'home_press_end_brand'   => 'Wedding Vows by Nikhil',
+        'home_press_end_title'   => 'Your celebration, in their words',
+        'home_press_end_text'    => 'These are the moments families remember — the calm before pheras, the guests who felt looked after, and the details that made the day feel entirely theirs.',
+    );
+
+    foreach ($next as $name => $value) {
+        $current = get_field($name, $id);
+        $current_s = is_string($current) ? trim($current) : '';
+        $is_empty = ($current === null || $current === false || $current_s === '');
+        $is_legacy = isset($legacy[$name]) && in_array($current_s, $legacy[$name], true);
+        if ($is_empty || $is_legacy) {
+            update_field($name, $value, $id);
+        }
+    }
+
+    // Drop founder cover so the book uses wedding imagery.
+    $cover = get_field('home_press_cover', $id);
+    $cover_url = '';
+    if (is_array($cover) && !empty($cover['url'])) {
+        $cover_url = $cover['url'];
+    } elseif (is_numeric($cover)) {
+        $cover_url = (string) wp_get_attachment_url((int) $cover);
+    } elseif (is_string($cover)) {
+        $cover_url = $cover;
+    }
+    $founder = function_exists('wvn_founder_image') ? wvn_founder_image() : '';
+    if ($founder && $cover_url && untrailingslashit($cover_url) === untrailingslashit($founder)) {
+        update_field('home_press_cover', '', $id);
+    }
+
+    update_option('_wvn_testimonials_book_v1', '1');
+}
+add_action('acf/init', 'wvn_seed_testimonials_book_v1', 46);
+
+/**
+ * Ivory editorial intro upgrade (collage layout).
+ */
+function wvn_seed_editorial_intro_v2() {
+    if (!function_exists('update_field') || get_option('_wvn_intro_editorial_v2') === '1') {
+        return;
+    }
+    $id = (int) get_option('page_on_front');
+    if (!$id) {
+        $page = get_page_by_path('home');
+        $id = $page ? (int) $page->ID : 0;
+    }
+    if (!$id) {
+        return;
+    }
+
+    $fields = array(
+        'home_intro_content'       => '',
+        'home_intro_kicker'        => 'The Art of Celebration',
+        'home_intro_heading'       => 'Wedding Planner in Udaipur for Celebrations Beyond the Ordinary',
+        'home_intro_heading_accent'=> 'Beyond the Ordinary',
+        'home_intro_lead'          => 'Wedding Vows by Nikhil creates thoughtfully planned destination weddings in Udaipur, bringing together beautiful settings, meaningful traditions, and carefully considered details. From palace celebrations to intimate gatherings, every wedding is shaped around your story.',
+        'home_intro_cta_text'      => 'Plan your celebration',
+        'home_intro_cta_url'       => home_url('/contact-us/'),
+        'home_intro_story_text'    => 'Our story',
+        'home_intro_story_url'     => home_url('/portfolio/'),
+        'home_intro_founder'       => 'Nikhil Salvi',
+        'home_intro_founder_role'  => 'Founder & Creative Director',
+    );
+    foreach ($fields as $name => $value) {
+        update_field($name, $value, $id);
+    }
+    update_option('_wvn_intro_editorial_v2', '1', false);
+}
+add_action('acf/init', 'wvn_seed_editorial_intro_v2', 56);
+
+/**
+ * Luxury editorial hero copy refresh (once).
+ */
+function wvn_seed_editorial_intro_v3() {
+    if (!function_exists('update_field') || get_option('_wvn_intro_editorial_v3') === '1') {
+        return;
+    }
+    $id = (int) get_option('page_on_front');
+    if (!$id) {
+        $page = get_page_by_path('home');
+        $id = $page ? (int) $page->ID : 0;
+    }
+    if (!$id) {
+        return;
+    }
+
+    $fields = array(
+        'home_intro_kicker'         => 'The Art of Celebration',
+        'home_intro_title_line'     => 'Wedding Planner',
+        'home_intro_title_em'       => 'in',
+        'home_intro_title_place'    => 'Udaipur',
+        'home_intro_subheading'     => 'Celebrations Beyond the Ordinary',
+        'home_intro_lead'           => 'At Wedding Vows by Nikhil, we create thoughtfully planned destination weddings in Udaipur, where royal heritage, breathtaking backdrops, and meaningful details come together to craft experiences that feel uniquely yours.',
+        'home_intro_cta_text'       => 'Plan your celebration',
+        'home_intro_story_text'     => 'Our story',
+        'home_intro_founder'        => 'Nikhil Salvi',
+        'home_intro_founder_role'   => 'Founder & Creative Director',
+        'home_intro_index'         => '01',
+        'home_intro_index_meta'     => 'People / Places / Precious Moments',
+        'home_intro_note_left'      => 'A celebration shaped by place',
+        'home_intro_note_right'     => 'Extraordinary Celebrations in Extraordinary Places',
+        'home_intro_note_detail'    => 'Beautiful Details / Meaningful Memories',
+        'home_intro_location'       => 'Udaipur / India',
+        'home_intro_scroll'         => 'Scroll to discover',
+        'home_intro_footer_mark'    => 'Love lives here',
+    );
+    foreach ($fields as $name => $value) {
+        update_field($name, $value, $id);
+    }
+    update_option('_wvn_intro_editorial_v3', '1', false);
+}
+add_action('acf/init', 'wvn_seed_editorial_intro_v3', 57);

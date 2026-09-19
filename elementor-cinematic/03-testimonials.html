@@ -1,0 +1,303 @@
+<!-- ============================================================
+  WVN SECTION 3 — "TESTIMONIALS" (editorial quote carousel)
+  Paste into one Elementor HTML widget. Requires Google Fonts link once.
+  ============================================================ -->
+<style>
+  .wvn-cites {
+    --wvn-oxblood: #3a2727;
+    --wvn-ivory: #f6f1ea;
+    --wvn-gold: #c4a574;
+    --wvn-maroon: #6b3030;
+    --wvn-clay: #9a7b6a;
+    --wvn-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --wvn-display: "Aboreto", Georgia, serif;
+    --wvn-serif: "Cormorant Garamond", Georgia, serif;
+    --wvn-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: clamp(6rem, 12vw, 9rem) 1.25rem;
+    background: var(--wvn-ivory);
+    color: var(--wvn-oxblood);
+    border-top: 1px solid rgba(58, 39, 39, 0.1);
+    font-family: var(--wvn-sans);
+  }
+
+  .wvn-cites *,
+  .wvn-cites *::before,
+  .wvn-cites *::after {
+    box-sizing: border-box;
+  }
+
+  .wvn-cites__inner {
+    width: min(900px, 100%);
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .wvn-cites__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    margin: 0 0 1.35rem;
+    font-family: var(--wvn-sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--wvn-maroon);
+  }
+
+  .wvn-cites__eyebrow::before {
+    content: "";
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--wvn-maroon);
+    opacity: 0.85;
+  }
+
+  .wvn-cites__title {
+    margin: 0 0 2.25rem;
+    font-family: var(--wvn-display);
+    font-weight: 400;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.15;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--wvn-oxblood);
+  }
+
+  .wvn-cites__title span {
+    display: block;
+  }
+
+  .wvn-cites__stars {
+    display: flex;
+    justify-content: center;
+    gap: 0.28rem;
+    margin: 0 0 1.35rem;
+    font-size: 14px;
+    line-height: 1;
+    color: var(--wvn-gold);
+    letter-spacing: 0.08em;
+  }
+
+  .wvn-cites__stage {
+    position: relative;
+    min-height: 11rem;
+    overflow: hidden;
+  }
+
+  .wvn-cites__slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+    pointer-events: none;
+    transition: opacity 600ms var(--wvn-ease), transform 600ms var(--wvn-ease);
+  }
+
+  .wvn-cites__slide.is-active {
+    position: relative;
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    pointer-events: auto;
+  }
+
+  .wvn-cites__slide.is-leave {
+    position: absolute;
+    opacity: 0;
+    transform: translate3d(0, -24px, 0);
+  }
+
+  .wvn-cites__quote {
+    margin: 0;
+    max-width: 38rem;
+    font-family: var(--wvn-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+    line-height: 1.45;
+    color: rgba(58, 39, 39, 0.9);
+  }
+
+  .wvn-cites__name {
+    margin: 1.5rem 0 0.4rem;
+    font-family: var(--wvn-display);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--wvn-maroon);
+  }
+
+  .wvn-cites__meta {
+    margin: 0;
+    font-family: var(--wvn-sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--wvn-clay);
+  }
+
+  .wvn-cites__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.15rem;
+    margin-top: 2.5rem;
+  }
+
+  .wvn-cites__btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(58, 39, 39, 0.2);
+    background: transparent;
+    color: var(--wvn-oxblood);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    padding: 0;
+    font-size: 1.15rem;
+    line-height: 1;
+    transition: background 0.4s var(--wvn-ease), color 0.4s var(--wvn-ease), border-color 0.4s var(--wvn-ease);
+  }
+
+  .wvn-cites__btn:hover {
+    background: var(--wvn-maroon);
+    border-color: var(--wvn-maroon);
+    color: var(--wvn-ivory);
+  }
+
+  .wvn-cites__count {
+    min-width: 5.5rem;
+    font-family: var(--wvn-display);
+    font-size: 13px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--wvn-clay);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wvn-cites__slide {
+      transition: none !important;
+    }
+  }
+</style>
+
+<section class="wvn-cites" id="wvn-cites" data-wvn-cites aria-label="Testimonials">
+  <div class="wvn-cites__inner">
+    <p class="wvn-cites__eyebrow">Testimonials</p>
+    <h2 class="wvn-cites__title">
+      <span>See What</span>
+      <span>Our Couples Say</span>
+    </h2>
+
+    <div class="wvn-cites__stars" aria-hidden="true">★★★★★</div>
+
+    <div class="wvn-cites__stage" data-wvn-cites-stage aria-live="polite">
+      <blockquote class="wvn-cites__slide is-active" data-wvn-cites-slide>
+        <p class="wvn-cites__quote">“Your dedication, creativity, meticulous planning, and calm presence ensured that every detail was perfectly executed. The wedding was everything we had hoped for and more.”</p>
+        <cite class="wvn-cites__name">Rinita Jain</cite>
+        <p class="wvn-cites__meta">Family of the Bride — Taj Lalit Bagh, Udaipur</p>
+      </blockquote>
+      <blockquote class="wvn-cites__slide" data-wvn-cites-slide hidden>
+        <p class="wvn-cites__quote">“The decor was nothing short of magical. Every corner of our venue was transformed into a dreamy paradise, and the team anticipated our needs before we even voiced them.”</p>
+        <cite class="wvn-cites__name">Aarti &amp; Leon</cite>
+        <p class="wvn-cites__meta">Three-Day Wedding — Aurika, Udaipur</p>
+      </blockquote>
+      <blockquote class="wvn-cites__slide" data-wvn-cites-slide hidden>
+        <p class="wvn-cites__quote">“It was even better than what we had imagined. Right from the flowers to the decor to the music, everything was spot on. You took a major burden off our shoulders.”</p>
+        <cite class="wvn-cites__name">Naman Singh</cite>
+        <p class="wvn-cites__meta">Destination Wedding — Udaipur</p>
+      </blockquote>
+    </div>
+
+    <div class="wvn-cites__nav">
+      <button type="button" class="wvn-cites__btn" data-wvn-cites-prev aria-label="Previous testimonial">←</button>
+      <span class="wvn-cites__count" data-wvn-cites-count>01 / 03</span>
+      <button type="button" class="wvn-cites__btn" data-wvn-cites-next aria-label="Next testimonial">→</button>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var root = document.querySelector("[data-wvn-cites]");
+  if (!root || root.__wvnBound) return;
+  root.__wvnBound = true;
+
+  var slides = Array.prototype.slice.call(root.querySelectorAll("[data-wvn-cites-slide]"));
+  var prev = root.querySelector("[data-wvn-cites-prev]");
+  var next = root.querySelector("[data-wvn-cites-next]");
+  var count = root.querySelector("[data-wvn-cites-count]");
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var index = 0;
+  var busy = false;
+  var timer = null;
+  var total = slides.length;
+
+  function pad(n) {
+    return (n < 10 ? "0" : "") + n;
+  }
+
+  function setCount() {
+    count.textContent = pad(index + 1) + " / " + pad(total);
+  }
+
+  function go(dir) {
+    if (busy || total < 2) return;
+    busy = true;
+    var from = slides[index];
+    index = (index + dir + total) % total;
+    var to = slides[index];
+
+    from.classList.remove("is-active");
+    from.classList.add("is-leave");
+    to.hidden = false;
+    to.classList.remove("is-leave");
+    /* force reflow so enter transition runs */
+    void to.offsetWidth;
+    to.classList.add("is-active");
+    setCount();
+
+    window.setTimeout(function () {
+      from.classList.remove("is-leave");
+      from.hidden = true;
+      busy = false;
+    }, reduce ? 0 : 620);
+  }
+
+  function stopAuto() {
+    if (timer) {
+      window.clearInterval(timer);
+      timer = null;
+    }
+  }
+
+  function startAuto() {
+    stopAuto();
+    if (reduce) return;
+    timer = window.setInterval(function () { go(1); }, 7000);
+  }
+
+  prev.addEventListener("click", function () { go(-1); startAuto(); });
+  next.addEventListener("click", function () { go(1); startAuto(); });
+  root.addEventListener("mouseenter", stopAuto);
+  root.addEventListener("mouseleave", startAuto);
+  root.addEventListener("focusin", stopAuto);
+  root.addEventListener("focusout", function (e) {
+    if (!root.contains(e.relatedTarget)) startAuto();
+  });
+
+  setCount();
+  startAuto();
+})();
+</script>

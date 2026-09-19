@@ -12,11 +12,16 @@
   width: 100%;
   margin: 0;
   padding: clamp(72px, 9vw, 110px) 0 clamp(64px, 8vw, 96px);
-  background:
-    radial-gradient(ellipse 70% 55% at 50% 0%, rgba(154, 107, 107, 0.08), transparent 58%),
-    linear-gradient(180deg, #f0ede4 0%, #f7f2ea 100%);
-  color: var(--wvn-oxblood);
+  background: #f0ede4 !important;
+  color: #3a2727 !important;
   overflow: hidden;
+}
+
+/* Keep cream even when site theme toggle is dark */
+[data-theme="dark"] .wvn-home-seo-copy,
+body.wvn-body .wvn-home-seo-copy {
+  background: #f0ede4 !important;
+  color: #3a2727 !important;
 }
 
 .wvn-home-seo-copy__inner {
@@ -34,11 +39,13 @@
   font-weight: 500;
   letter-spacing: 0.28em !important;
   text-transform: uppercase !important;
-  color: var(--wvn-gold);
+  color: #9a7b6a !important;
 }
 
 .wvn-home-seo-copy h2,
-.wvn-home-seo-copy #wvn-home-seo-heading {
+.wvn-home-seo-copy #wvn-home-seo-heading,
+body.wvn-body .wvn-home-seo-copy h2,
+body.wvn-body .wvn-home-seo-copy #wvn-home-seo-heading {
   margin: 0 auto;
   max-width: 16ch;
   font-family: var(--wvn-display) !important;
@@ -47,21 +54,23 @@
   line-height: 1.12;
   letter-spacing: 0.06em !important;
   text-transform: uppercase !important;
-  color: var(--wvn-oxblood) !important;
+  color: #3a2727 !important;
   text-wrap: balance;
 }
 
-.wvn-home-seo-copy h2 em {
+.wvn-home-seo-copy h2 em,
+body.wvn-body .wvn-home-seo-copy h2 em {
   display: inline;
   font-family: var(--wvn-serif) !important;
   font-style: italic;
   font-weight: 400;
   letter-spacing: 0.02em !important;
   text-transform: none !important;
-  color: rgba(58, 39, 39, 0.78);
+  color: rgba(58, 39, 39, 0.78) !important;
 }
 
-.wvn-home-seo-copy__lede {
+.wvn-home-seo-copy__lede,
+body.wvn-body .wvn-home-seo-copy__lede {
   margin: 22px auto 0;
   max-width: 46em;
   font-family: var(--wvn-serif) !important;
@@ -71,7 +80,7 @@
   line-height: 1.55;
   letter-spacing: 0.01em !important;
   text-transform: none !important;
-  color: rgba(58, 39, 39, 0.72);
+  color: rgba(58, 39, 39, 0.72) !important;
 }
 
 .wvn-home-seo-copy__links {
@@ -81,14 +90,15 @@
   max-width: 52em;
 }
 
-.wvn-home-seo-copy__prompt {
+.wvn-home-seo-copy__prompt,
+body.wvn-body .wvn-home-seo-copy__prompt {
   margin: 0 0 18px;
   font-family: var(--wvn-sans) !important;
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.18em !important;
   text-transform: uppercase !important;
-  color: rgba(58, 39, 39, 0.55);
+  color: rgba(58, 39, 39, 0.55) !important;
 }
 
 .wvn-home-seo-copy__links ul {
@@ -101,13 +111,15 @@
   list-style: none;
 }
 
-.wvn-home-seo-copy__links a {
+.wvn-home-seo-copy__links a,
+body.wvn-body .wvn-home-seo-copy__links a {
   display: inline-flex;
   align-items: center;
   min-height: 42px;
   padding: 10px 16px;
-  border: 1px solid rgba(58, 39, 39, 0.22);
+  border: 1px solid rgba(58, 39, 39, 0.22) !important;
   border-radius: 999px;
+  background: transparent !important;
   font-family: var(--wvn-sans) !important;
   font-size: 11px;
   font-weight: 500;
@@ -119,10 +131,12 @@
 }
 
 .wvn-home-seo-copy__links a:hover,
-.wvn-home-seo-copy__links a:focus-visible {
-  border-color: var(--wvn-rose);
-  background: rgba(154, 107, 107, 0.1);
-  color: var(--wvn-rose) !important;
+.wvn-home-seo-copy__links a:focus-visible,
+body.wvn-body .wvn-home-seo-copy__links a:hover,
+body.wvn-body .wvn-home-seo-copy__links a:focus-visible {
+  border-color: #9a6b6b !important;
+  background: rgba(154, 107, 107, 0.1) !important;
+  color: #9a6b6b !important;
   outline: none;
 }
 

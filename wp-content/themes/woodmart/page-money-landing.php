@@ -132,27 +132,29 @@ while (have_posts()) :
 
   <?php if (!empty($config['faqs']) || $is_event) : ?>
   <section class="wvn-money-faq">
-    <div class="wvn-money-section-head">
-      <div>
-        <p class="wvn-kicker">FAQs</p>
-        <h2>Questions, answered</h2>
+    <div class="wvn-money-faq-inner">
+      <div class="wvn-money-section-head">
+        <div>
+          <p class="wvn-kicker">FAQs</p>
+          <h2>Questions, answered</h2>
+        </div>
+        <p class="wvn-money-section-lede">Straight answers to the questions couples ask before choosing a planning team in Udaipur.</p>
       </div>
-      <p class="wvn-money-section-lede">Straight answers to the questions couples ask before choosing a planning team in Udaipur.</p>
-    </div>
-    <div class="wvn-money-faq-grid">
-      <?php
-      $faqs = !empty($config['faqs']) ? $config['faqs'] : array(
-        array('q' => 'What does an event planner in Udaipur handle?', 'a' => 'Venue sourcing, planning timelines, décor and production, entertainment, guest hospitality, vendor management and event-day execution.'),
-        array('q' => 'Do you only plan weddings?', 'a' => 'Weddings and destination celebrations are our core work, with selected private and destination events supported when the scope fits our planning and production approach.'),
-        array('q' => 'Why hire a local event planner in Udaipur?', 'a' => 'A local team can work directly with venues, vendors, production teams and guest logistics in the city, reducing coordination gaps around the event.'),
-        array('q' => 'Can you manage planning and event-day execution?', 'a' => 'Yes. We can coordinate the planning scope before the event and run a detailed event-day schedule so vendors, timelines and guest movement remain aligned.'),
-      );
-      foreach ($faqs as $faq) : ?>
-        <details>
-          <summary><?php echo esc_html($faq['q']); ?><span aria-hidden="true">+</span></summary>
-          <p><?php echo esc_html($faq['a']); ?></p>
-        </details>
-      <?php endforeach; ?>
+      <div class="wvn-money-faq-grid">
+        <?php
+        $faqs = !empty($config['faqs']) ? $config['faqs'] : array(
+          array('q' => 'What does an event planner in Udaipur handle?', 'a' => 'Venue sourcing, planning timelines, décor and production, entertainment, guest hospitality, vendor management and event-day execution.'),
+          array('q' => 'Do you only plan weddings?', 'a' => 'Weddings and destination celebrations are our core work, with selected private and destination events supported when the scope fits our planning and production approach.'),
+          array('q' => 'Why hire a local event planner in Udaipur?', 'a' => 'A local team can work directly with venues, vendors, production teams and guest logistics in the city, reducing coordination gaps around the event.'),
+          array('q' => 'Can you manage planning and event-day execution?', 'a' => 'Yes. We can coordinate the planning scope before the event and run a detailed event-day schedule so vendors, timelines and guest movement remain aligned.'),
+        );
+        foreach ($faqs as $faq) : ?>
+          <details>
+            <summary><?php echo esc_html($faq['q']); ?></summary>
+            <p><?php echo esc_html($faq['a']); ?></p>
+          </details>
+        <?php endforeach; ?>
+      </div>
     </div>
   </section>
   <?php endif; ?>

@@ -1,0 +1,393 @@
+<!-- ============================================================
+  WVN SECTION 1 — "THE STORY WE CREATE" (pinned mosaic film reveal)
+  Paste into one Elementor HTML widget. Requires Google Fonts link once.
+  ============================================================ -->
+<style>
+  .wvn-story {
+    --wvn-oxblood: #3a2727;
+    --wvn-ivory: #f6f1ea;
+    --wvn-gold: #c4a574;
+    --wvn-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --wvn-display: "Aboreto", Georgia, serif;
+    --wvn-serif: "Cormorant Garamond", Georgia, serif;
+    --wvn-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+    position: relative;
+    width: 100%;
+    height: 340vh;
+    margin: 0;
+    padding: 0;
+    background: var(--wvn-oxblood);
+    color: var(--wvn-ivory);
+    font-family: var(--wvn-sans);
+    isolation: isolate;
+  }
+
+  .wvn-story *,
+  .wvn-story *::before,
+  .wvn-story *::after {
+    box-sizing: border-box;
+  }
+
+  .wvn-story__sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .wvn-story__film {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    transform: scale(1.18);
+    transform-origin: center center;
+    will-change: transform;
+  }
+
+  .wvn-story__film video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .wvn-story__film-tint {
+    position: absolute;
+    inset: 0;
+    background: rgba(58, 39, 39, 0.35);
+    pointer-events: none;
+  }
+
+  .wvn-story__end {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .wvn-story__end-eyebrow {
+    margin: 0 0 1.25rem;
+    font-family: var(--wvn-sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--wvn-gold);
+    opacity: 0;
+    will-change: opacity;
+  }
+
+  .wvn-story__end-line {
+    margin: 0;
+    max-width: 18ch;
+    font-family: var(--wvn-display);
+    font-weight: 400;
+    font-size: clamp(1.9rem, 4.5vw, 3.75rem);
+    line-height: 1.15;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--wvn-ivory);
+  }
+
+  .wvn-story__end-line .wvn-story__word {
+    display: inline-block;
+    opacity: 0;
+    transform: translate3d(0, 34px, 0);
+    will-change: opacity, transform;
+    margin-right: 0.28em;
+  }
+
+  .wvn-story__end-line .wvn-story__word:last-child {
+    margin-right: 0;
+  }
+
+  .wvn-story__tiles {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 0;
+    will-change: opacity;
+  }
+
+  .wvn-story__tile {
+    position: relative;
+    overflow: hidden;
+    will-change: transform, opacity;
+  }
+
+  .wvn-story__tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1);
+    transform-origin: center center;
+    will-change: transform;
+  }
+
+  .wvn-story__start {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    pointer-events: none;
+    will-change: opacity, transform;
+  }
+
+  .wvn-story__card {
+    max-width: min(560px, 92vw);
+    padding: clamp(1.75rem, 4vw, 3rem);
+    border-radius: 24px;
+    border: 1px solid rgba(246, 241, 234, 0.1);
+    background: rgba(58, 39, 39, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    text-align: center;
+  }
+
+  .wvn-story__start-eyebrow {
+    margin: 0 0 1rem;
+    font-family: var(--wvn-sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--wvn-gold);
+  }
+
+  .wvn-story__start-heading {
+    margin: 0;
+    font-family: var(--wvn-display);
+    font-weight: 400;
+    font-size: clamp(2.2rem, 5vw, 3.75rem);
+    line-height: 1.12;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--wvn-ivory);
+  }
+
+  .wvn-story__start-heading em {
+    font-family: var(--wvn-serif);
+    font-style: italic;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0.01em;
+    color: var(--wvn-gold);
+  }
+
+  .wvn-story__start-sub {
+    margin: 1rem 0 0;
+    font-family: var(--wvn-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+    line-height: 1.45;
+    color: rgba(246, 241, 234, 0.8);
+  }
+
+  @media (max-width: 767px) {
+    .wvn-story__tiles {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+    }
+
+    .wvn-story__end-line {
+      max-width: 14ch;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wvn-story {
+      height: auto;
+      min-height: 100vh;
+    }
+
+    .wvn-story__sticky {
+      position: relative;
+      height: auto;
+      min-height: 100vh;
+    }
+
+    .wvn-story__tiles {
+      display: none;
+    }
+
+    .wvn-story__start {
+      display: none;
+    }
+
+    .wvn-story__film {
+      transform: none !important;
+    }
+
+    .wvn-story__end-eyebrow,
+    .wvn-story__end-line .wvn-story__word {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+</style>
+
+<section class="wvn-story" id="wvn-story" data-wvn-story aria-label="The story we create">
+  <div class="wvn-story__sticky">
+    <div class="wvn-story__film" data-wvn-story-film>
+      <video
+        muted
+        autoplay
+        loop
+        playsinline
+        preload="metadata"
+        poster="https://weddingvowsbynikhil.com/wp-content/uploads/2026/08/2J0A1820-1200x800-1.jpg"
+      >
+        <source src="https://weddingvowsbynikhil.com/wp-content/uploads/2026/08/Video-25994-1.mp4" type="video/mp4">
+      </video>
+      <div class="wvn-story__film-tint" aria-hidden="true"></div>
+    </div>
+
+    <div class="wvn-story__end" aria-hidden="true">
+      <p class="wvn-story__end-eyebrow" data-wvn-story-end-eyebrow>▷ The Story We Create</p>
+      <p class="wvn-story__end-line" data-wvn-story-end-line></p>
+    </div>
+
+    <div class="wvn-story__tiles" data-wvn-story-tiles aria-hidden="true">
+      <div class="wvn-story__tile" data-row="top"><img src="https://weddingvowsbynikhil.com/wp-content/uploads/2026/08/LKY06126-scaled.jpeg" alt="" loading="lazy" decoding="async"></div>
+      <div class="wvn-story__tile" data-row="top"><img src="https://weddingvowsbynikhil.com/wp-content/uploads/2026/08/IMG_5234.jpg" alt="" loading="lazy" decoding="async"></div>
+      <div class="wvn-story__tile" data-row="top"><img src="https://weddingvowsbynikhil.com/wp-content/uploads/2025/04/2J0A2532-533x800-1.jpg" alt="" loading="lazy" decoding="async"></div>
+      <div class="wvn-story__tile" data-row="bottom"><img src="https://weddingvowsbynikhil.com/wp-content/uploads/2026/08/IMG_5259-e1788187853846.jpg" alt="" loading="lazy" decoding="async"></div>
+      <div class="wvn-story__tile" data-row="bottom"><img src="https://weddingvowsbynikhil.com/wp-content/uploads/2026/08/IMG_5222.jpg" alt="" loading="lazy" decoding="async"></div>
+      <div class="wvn-story__tile" data-row="bottom"><img src="https://weddingvowsbynikhil.com/wp-content/uploads/2026/08/IMG_5231.jpg" alt="" loading="lazy" decoding="async"></div>
+    </div>
+
+    <div class="wvn-story__start" data-wvn-story-start>
+      <div class="wvn-story__card">
+        <p class="wvn-story__start-eyebrow">▷ The Story We Create</p>
+        <h2 class="wvn-story__start-heading">It begins with <em>a vision,</em></h2>
+        <p class="wvn-story__start-sub">a feeling, a dream waiting to be brought to life.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var root = document.querySelector("[data-wvn-story]");
+  if (!root || root.__wvnBound) return;
+  root.__wvnBound = true;
+
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var film = root.querySelector("[data-wvn-story-film]");
+  var tilesWrap = root.querySelector("[data-wvn-story-tiles]");
+  var tiles = Array.prototype.slice.call(root.querySelectorAll(".wvn-story__tile"));
+  var start = root.querySelector("[data-wvn-story-start]");
+  var endEyebrow = root.querySelector("[data-wvn-story-end-eyebrow]");
+  var endLine = root.querySelector("[data-wvn-story-end-line]");
+  var video = root.querySelector(".wvn-story__film video");
+
+  var sentence = "Because true luxury lies in the art of making every moment matter.";
+  var words = sentence.split(/\s+/);
+  endLine.innerHTML = words.map(function (w) {
+    return '<span class="wvn-story__word">' + w + "</span>";
+  }).join("");
+  var wordEls = Array.prototype.slice.call(endLine.querySelectorAll(".wvn-story__word"));
+
+  function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function easeOutCubic(t) {
+    var u = clamp(t, 0, 1);
+    return 1 - Math.pow(1 - u, 3);
+  }
+  function rangeProgress(p, a, b) {
+    if (b === a) return p >= b ? 1 : 0;
+    return easeOutCubic(clamp((p - a) / (b - a), 0, 1));
+  }
+
+  function isMobile() {
+    return window.matchMedia("(max-width: 767px)").matches;
+  }
+
+  function playVideo() {
+    if (!video) return;
+    var p = video.play();
+    if (p && typeof p.catch === "function") p.catch(function () {});
+  }
+
+  if (reduce) {
+    playVideo();
+    return;
+  }
+
+  var ticking = false;
+
+  function update() {
+    ticking = false;
+    var rect = root.getBoundingClientRect();
+    var wh = root.offsetHeight;
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    var p = clamp(-rect.top / Math.max(1, wh - vh), 0, 1);
+
+    /* Film scale 1.18 → 1 over 0 → 0.62 */
+    var filmT = rangeProgress(p, 0, 0.62);
+    film.style.transform = "scale(" + lerp(1.18, 1, filmT).toFixed(4) + ")";
+
+    /* Start card fade out 0.08 → 0.28 */
+    var startT = rangeProgress(p, 0.08, 0.28);
+    start.style.opacity = String(1 - startT);
+    start.style.transform = "translate3d(0," + lerp(0, -60, startT).toFixed(2) + "px,0)";
+    start.style.visibility = startT >= 0.999 ? "hidden" : "visible";
+
+    /* Tiles part 0.06 → 0.5 */
+    var tileMove = rangeProgress(p, 0.06, 0.5);
+    var tileFade = rangeProgress(p, 0.34, 0.55);
+    var mobile = isMobile();
+    var imgScale = lerp(1, 1.14, tileMove);
+
+    tiles.forEach(function (tile, i) {
+      var up = mobile ? i < 3 : tile.getAttribute("data-row") === "top";
+      var y = lerp(0, up ? -135 : 135, tileMove);
+      tile.style.transform = "translate3d(0," + y.toFixed(2) + "%,0)";
+      tile.style.opacity = String(1 - tileFade);
+      var img = tile.querySelector("img");
+      if (img) img.style.transform = "scale(" + imgScale.toFixed(4) + ")";
+    });
+    tilesWrap.style.pointerEvents = tileFade >= 0.999 ? "none" : "auto";
+
+    /* End eyebrow 0.6 → 0.78 */
+    endEyebrow.style.opacity = String(rangeProgress(p, 0.6, 0.78));
+
+    /* Words 0.6 → 0.92 */
+    var n = wordEls.length || 1;
+    wordEls.forEach(function (el, i) {
+      var a = 0.6 + (i / n) * 0.28;
+      var b = 0.64 + ((i + 1) / n) * 0.28;
+      var t = rangeProgress(p, a, b);
+      el.style.opacity = String(t);
+      el.style.transform = "translate3d(0," + lerp(34, 0, t).toFixed(2) + "px,0)";
+    });
+  }
+
+  function onScroll() {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  }
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
+  playVideo();
+  update();
+})();
+</script>

@@ -286,6 +286,178 @@ function wvn_home_intro_html() {
     return $html;
 }
 
+/**
+ * Structured homepage intro — ivory editorial collage + crawlable SEO copy.
+ */
+function wvn_home_intro() {
+    $gallery = function_exists('wvn_gallery_images') ? array_values(array_filter(wvn_gallery_images())) : array();
+    $pick = function ($i, $fallback) use ($gallery) {
+        return !empty($gallery[$i]) ? $gallery[$i] : wvn_media($fallback);
+    };
+
+    $img_left = wvn_home_image('home_intro_image_left', $pick(2, '2025/04/2J0A2532-533x800-1.jpg'));
+    $img_right_top = wvn_home_image('home_intro_image_right_top', $pick(5, '2025/04/2J0A0986-534x800-1.jpg'));
+    $img_right_bot = wvn_home_image('home_intro_image_right_bot', $pick(3, '2025/04/2J0A1820-1200x800-1.jpg'));
+    $img_left_bot = wvn_home_image('home_intro_image_left_bot', $pick(4, '2025/04/2J0A1818.jpg'));
+    $img_scape = wvn_home_image('home_intro_landscape', $pick(1, '2025/04/2J0A7886-1200x800-1.jpg'));
+    // Single-image ACF fallback for older installs.
+    $legacy = wvn_home_image('home_intro_image', '');
+    if ($legacy) {
+        $img_left = $img_left ?: $legacy;
+    }
+
+    $story_url = wvn_home_text('home_intro_story_url', '');
+    if ($story_url === '') {
+        $story_page = get_page_by_path('portfolio');
+        $story_url = ($story_page && $story_page->post_status === 'publish')
+            ? get_permalink($story_page)
+            : (get_post_type_archive_link('portfolio') ?: home_url('/portfolio/'));
+    }
+
+    $founder = trim(wp_strip_all_tags(wvn_home_text('home_intro_founder', '')));
+    if ($founder === '') {
+        $sign = trim(wp_strip_all_tags(wvn_home_text('home_planner_sign', 'Nikhil Salvi — Founder')));
+        $founder = preg_replace('/\s*[—\-–].*$/u', '', $sign) ?: 'Nikhil Salvi';
+    }
+    $role = trim(wp_strip_all_tags(wvn_home_text('home_intro_founder_role', 'Founder & Creative Director')));
+
+    $title_line = trim(wp_strip_all_tags(wvn_home_text('home_intro_title_line', 'Wedding Planner')));
+    $title_em = trim(wp_strip_all_tags(wvn_home_text('home_intro_title_em', 'in')));
+    $title_place = trim(wp_strip_all_tags(wvn_home_text('home_intro_title_place', 'Udaipur')));
+    $heading = trim(implode(' ', array_filter(array($title_line, $title_em, $title_place))));
+    if ($heading === '') {
+        $heading = 'Wedding Planner in Udaipur';
+    }
+
+    return array(
+        'eyebrow'        => trim(wp_strip_all_tags(wvn_home_text('home_intro_kicker', 'The Art of Celebration'))),
+        'title_line'     => $title_line !== '' ? $title_line : 'Wedding Planner',
+        'title_em'       => $title_em !== '' ? $title_em : 'in',
+        'title_place'    => $title_place !== '' ? $title_place : 'Udaipur',
+        'heading'        => $heading,
+        'subhead'        => trim(wp_strip_all_tags(wvn_home_text('home_intro_subheading', 'Celebrations Beyond the Ordinary'))),
+        'lead'           => trim(wp_strip_all_tags(wvn_home_text(
+            'home_intro_lead',
+            'At Wedding Vows by Nikhil, we create thoughtfully planned destination weddings in Udaipur, where royal heritage, breathtaking backdrops, and meaningful details come together to craft experiences that feel uniquely yours.'
+        ))),
+        'founder'        => $founder,
+        'founder_role'   => $role,
+        'cta_label'      => trim(wp_strip_all_tags(wvn_home_text('home_intro_cta_text', 'Plan your celebration'))),
+        'cta_url'        => wvn_home_text('home_intro_cta_url', home_url('/contact-us/')),
+        'story_label'    => trim(wp_strip_all_tags(wvn_home_text('home_intro_story_text', 'Our story'))),
+        'story_url'      => $story_url,
+        'index_label'    => trim(wp_strip_all_tags(wvn_home_text('home_intro_index', '01'))),
+        'index_meta'     => trim(wp_strip_all_tags(wvn_home_text('home_intro_index_meta', 'People / Places / Precious Moments'))),
+        'note_left'      => trim(wp_strip_all_tags(wvn_home_text('home_intro_note_left', 'A celebration shaped by place'))),
+        'note_right'     => trim(wp_strip_all_tags(wvn_home_text('home_intro_note_right', 'Extraordinary Celebrations in Extraordinary Places'))),
+        'note_detail'    => trim(wp_strip_all_tags(wvn_home_text('home_intro_note_detail', 'Beautiful Details / Meaningful Memories'))),
+        'location'       => trim(wp_strip_all_tags(wvn_home_text('home_intro_location', 'Udaipur / India'))),
+        'scroll_label'   => trim(wp_strip_all_tags(wvn_home_text('home_intro_scroll', 'Scroll to discover'))),
+        'footer_mark'    => trim(wp_strip_all_tags(wvn_home_text('home_intro_footer_mark', 'Love lives here'))),
+        'landscape'      => $img_scape,
+        'landscape_alt'  => 'Udaipur lakeside palace setting for a destination wedding',
+        'images'         => array(
+            array(
+                'url' => $img_left,
+                'alt' => 'Bride in traditional attire at a destination wedding in Udaipur',
+                'slot'=> 'left',
+            ),
+            array(
+                'url' => $img_right_top,
+                'alt' => 'Palace wedding ceremony in Udaipur',
+                'slot'=> 'right-top',
+            ),
+            array(
+                'url' => $img_left_bot,
+                'alt' => 'Wedding décor detail from an Udaipur celebration',
+                'slot'=> 'left-bot',
+            ),
+            array(
+                'url' => $img_right_bot,
+                'alt' => 'Guests celebrating at a destination wedding in Udaipur',
+                'slot'=> 'right-bot',
+            ),
+        ),
+    );
+}
+
+/**
+ * Contextual intro links — only published pages (or portfolio archive).
+ */
+function wvn_home_intro_links() {
+    $candidates = array(
+        array('slug' => 'weddings-in-udaipur', 'label' => 'Weddings in Udaipur guide'),
+        array('slug' => 'wedding-venues-udaipur', 'label' => 'wedding venues in Udaipur'),
+        array('slug' => 'udaipur-wedding-cost', 'label' => 'Udaipur wedding costs'),
+        array('slug' => 'portfolio', 'label' => 'real wedding portfolio'),
+        array('slug' => 'contact-us', 'label' => 'book a consultation'),
+    );
+
+    $links = array();
+    $seen = array();
+    foreach ($candidates as $item) {
+        $slug = $item['slug'];
+        $url = '';
+        $page = get_page_by_path($slug);
+        if ($page && $page->post_status === 'publish') {
+            $url = get_permalink($page);
+        } elseif ($slug === 'portfolio') {
+            $archive = get_post_type_archive_link('portfolio');
+            if ($archive) {
+                $url = $archive;
+            }
+        }
+        if (!$url || isset($seen[$url])) {
+            continue;
+        }
+        $seen[$url] = true;
+        $links[] = array(
+            'url'   => $url,
+            'label' => $item['label'],
+        );
+    }
+    return $links;
+}
+
+/**
+ * Intro image markup with dimensions / srcset when an attachment exists.
+ */
+function wvn_home_intro_image_html($url, $alt, $loading = 'lazy') {
+    $url = esc_url($url);
+    if ($url === '') {
+        return '';
+    }
+    $loading = ($loading === 'eager') ? 'eager' : 'lazy';
+    $attrs = array(
+        'class'    => 'wvn-intro__img',
+        'alt'      => $alt,
+        'decoding' => 'async',
+        'loading'  => $loading,
+        'sizes'    => '(max-width: 900px) 70vw, 28vw',
+    );
+    if ($loading === 'eager') {
+        $attrs['fetchpriority'] = 'high';
+    }
+    $attachment_id = 0;
+    if (function_exists('attachment_url_to_postid')) {
+        $uploads = wp_upload_dir();
+        if (!empty($uploads['baseurl']) && strpos($url, $uploads['baseurl']) === 0) {
+            $attachment_id = (int) attachment_url_to_postid($url);
+        }
+    }
+    if ($attachment_id) {
+        return wp_get_attachment_image($attachment_id, 'large', false, $attrs);
+    }
+    $extra = $loading === 'eager' ? ' fetchpriority="high"' : '';
+    return sprintf(
+        '<img class="wvn-intro__img" src="%s" alt="%s" width="800" height="1000" decoding="async" loading="%s"%s sizes="(max-width: 900px) 70vw, 28vw">',
+        $url,
+        esc_attr($alt),
+        esc_attr($loading),
+        $extra
+    );
+}
+
 function wvn_home_image($name, $default = '') {
     if (!function_exists('get_field')) {
         return $default;
@@ -642,10 +814,10 @@ function wvn_cinematic_home() {
         'vows_headline_em' => wvn_home_text('home_cin_vows_headline_em', 'Beautifully Kept.'),
         'vows_cta'         => wvn_home_text('home_cin_vows_cta', 'Book a Consultation'),
         'vows_cta_url'     => $cta_url,
-        'cites_eyebrow'    => wvn_home_text('home_cin_cites_eyebrow', 'In Their Words'),
-        'cites_heading'    => wvn_home_text('home_cin_cites_heading', 'Stories whispered'),
-        'cites_heading_em' => wvn_home_text('home_cin_cites_heading_em', 'after the last dance.'),
-        'cites_kicker'     => wvn_home_text('home_cin_cites_kicker', 'Couple story'),
+        'cites_eyebrow'    => wvn_home_text('home_cin_cites_eyebrow', 'Venues we love'),
+        'cites_heading'    => wvn_home_text('home_cin_cites_heading', 'Palaces, lakes'),
+        'cites_heading_em' => wvn_home_text('home_cin_cites_heading_em', '& lawns for your day.'),
+        'cites_kicker'     => wvn_home_text('home_cin_cites_kicker', 'Venue'),
     );
 }
 
@@ -970,26 +1142,65 @@ function wvn_press_logos() {
 }
 
 function wvn_pressbook_sheets() {
-    $pages = wvn_press_pages();
+    $gallery = array_values(array_filter(function_exists('wvn_gallery_images') ? wvn_gallery_images() : array()));
+    $quotes = array_values(array_filter(wvn_testimonials(), function ($q) {
+        return !empty($q['text']) && !empty($q['name']);
+    }));
+
+    $pages = array();
+    foreach ($quotes as $i => $q) {
+        $img = !empty($q['image']) ? $q['image'] : '';
+        if (!$img && $gallery) {
+            $img = $gallery[$i % count($gallery)];
+        }
+        if (!$img) {
+            $img = function_exists('wvn_hero_image') ? wvn_hero_image() : '';
+        }
+        $meta = trim((string) ($q['time'] ?? ''));
+        if ($meta === '' && !empty($q['tags']) && is_array($q['tags'])) {
+            $meta = implode(' · ', array_slice($q['tags'], 0, 2));
+        }
+        $pages[] = array(
+            'brand' => $meta !== '' ? $meta : 'Couple story',
+            'title' => $q['name'],
+            'image' => $img,
+            'text'  => '“' . trim($q['text']) . '”',
+            'quote' => true,
+        );
+    }
+
     $end = array(
         'brand' => wvn_home_text('home_press_end_brand', 'Wedding Vows by Nikhil'),
-        'title' => wvn_home_text('home_press_end_title', 'The story continues in person'),
+        'title' => wvn_home_text('home_press_end_title', 'Your celebration, in their words'),
         'image' => '',
-        'text'  => wvn_home_text('home_press_end_text', 'Press coverage is only a glimpse. The work is in the rooms, the timing, and the people who stay with you until the last farewell.'),
+        'text'  => wvn_home_text('home_press_end_text', 'These are the moments families remember — the calm before pheras, the guests who felt looked after, and the details that made the day feel entirely theirs.'),
         'small' => 'Tap the arrows or the page to close',
         'end'   => true,
     );
+
+    $cover_fallback = $gallery ? $gallery[0] : (function_exists('wvn_hero_image') ? wvn_hero_image() : '');
+    $cover_image = wvn_home_image('home_press_cover', $cover_fallback);
+    $founder = function_exists('wvn_founder_image') ? wvn_founder_image() : '';
+    // Keep the book on wedding imagery, not the founder portrait.
+    if ($founder && $cover_image && $cover_image === $founder && $cover_fallback) {
+        $cover_image = $cover_fallback;
+    }
     $cover = array(
-        'image' => wvn_home_image('home_press_cover', wvn_founder_image()),
-        'title' => wvn_home_text('home_press_cover_title', 'Featured in'),
+        'image' => $cover_image ?: $cover_fallback,
+        'title' => wvn_home_text('home_press_cover_title', 'Testimonials'),
         'note'  => wvn_home_text('home_press_cover_note', 'Tap to open'),
     );
+
+    if (!$pages) {
+        $pages[] = $end;
+    }
+
     $sheets = array();
-    $first = $pages ? array_shift($pages) : $end;
+    $first = array_shift($pages);
     $sheets[] = array(
         'cover' => true,
         'front' => $cover,
-        'back'  => $first,
+        'back'  => $first ?: $end,
     );
     while ($pages) {
         $front = array_shift($pages);
@@ -1008,15 +1219,28 @@ function wvn_press_leaf($leaf) {
         return;
     }
     $end = !empty($leaf['end']);
+    $quote = !empty($leaf['quote']);
+    $alt = $leaf['title'] ?? ($leaf['brand'] ?? '');
     ?>
-    <div class="wvn-pressbook-leaf<?php echo $end ? ' wvn-pressbook-end' : ''; ?>">
-      <?php if (!empty($leaf['brand'])) : ?><p class="wvn-pressbook-brand"><?php echo esc_html($leaf['brand']); ?></p><?php endif; ?>
-      <?php if (!empty($leaf['title'])) : ?><h3><?php echo esc_html($leaf['title']); ?></h3><?php endif; ?>
-      <?php if (!empty($leaf['image'])) : ?><img src="<?php echo esc_url($leaf['image']); ?>" alt="<?php echo esc_attr($leaf['title'] ?: $leaf['brand']); ?>"><?php endif; ?>
-      <?php if (!empty($leaf['text'])) : ?>
-        <?php foreach (preg_split('/\n\s*\n/', trim($leaf['text'])) as $para) : ?>
-          <p><?php echo nl2br(esc_html(trim($para))); ?></p>
-        <?php endforeach; ?>
+    <div class="wvn-pressbook-leaf<?php echo $end ? ' wvn-pressbook-end' : ''; ?><?php echo $quote ? ' wvn-pressbook-leaf--quote' : ''; ?>">
+      <?php if ($quote) : ?>
+        <?php if (!empty($leaf['image'])) : ?><img src="<?php echo esc_url($leaf['image']); ?>" alt="<?php echo esc_attr($alt); ?>"><?php endif; ?>
+        <?php if (!empty($leaf['title'])) : ?><h3><?php echo esc_html($leaf['title']); ?></h3><?php endif; ?>
+        <?php if (!empty($leaf['brand'])) : ?><p class="wvn-pressbook-brand"><?php echo esc_html($leaf['brand']); ?></p><?php endif; ?>
+        <?php if (!empty($leaf['text'])) : ?>
+          <?php foreach (preg_split('/\n\s*\n/', trim($leaf['text'])) as $para) : ?>
+            <p><?php echo nl2br(esc_html(trim($para))); ?></p>
+          <?php endforeach; ?>
+        <?php endif; ?>
+      <?php else : ?>
+        <?php if (!empty($leaf['brand'])) : ?><p class="wvn-pressbook-brand"><?php echo esc_html($leaf['brand']); ?></p><?php endif; ?>
+        <?php if (!empty($leaf['title'])) : ?><h3><?php echo esc_html($leaf['title']); ?></h3><?php endif; ?>
+        <?php if (!empty($leaf['image'])) : ?><img src="<?php echo esc_url($leaf['image']); ?>" alt="<?php echo esc_attr($alt); ?>"><?php endif; ?>
+        <?php if (!empty($leaf['text'])) : ?>
+          <?php foreach (preg_split('/\n\s*\n/', trim($leaf['text'])) as $para) : ?>
+            <p><?php echo nl2br(esc_html(trim($para))); ?></p>
+          <?php endforeach; ?>
+        <?php endif; ?>
       <?php endif; ?>
       <?php if (!empty($leaf['small'])) : ?><small><?php echo esc_html($leaf['small']); ?></small><?php endif; ?>
     </div>

@@ -198,6 +198,8 @@
     var dragging = false;
     var startX = 0;
     var deltaX = 0;
+    var tapCard = null;
+    var openedFromTap = false;
 
     if (!total) return;
 
@@ -374,23 +376,35 @@
       });
     }
 
-    cards.forEach(function (card) {
-      function activate() {
-        if (Math.abs(deltaX) > 8) return;
-        var i = parseInt(card.getAttribute("data-index"), 10);
-        if (!isNaN(i) && i !== index) {
-          go(i);
-        }
-        openCiteLightbox(card);
+    function openFromCard(card) {
+      if (!card) return;
+      var url = card.getAttribute("data-url");
+      if (url) {
+        window.location.href = url;
+        return;
       }
+      var i = parseInt(card.getAttribute("data-index"), 10);
+      if (!isNaN(i) && i !== index) {
+        go(i);
+      }
+      openCiteLightbox(card);
+    }
+
+    cards.forEach(function (card) {
       card.addEventListener("click", function (e) {
         e.preventDefault();
-        activate();
+        e.stopPropagation();
+        if (openedFromTap) {
+          openedFromTap = false;
+          return;
+        }
+        openFromCard(card);
       });
+
       card.addEventListener("keydown", function (e) {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          activate();
+          openFromCard(card);
         }
       });
     });
@@ -413,10 +427,14 @@
       render();
     }, { passive: true });
 
-    function onPointerDown(x) {
+    function onPointerDown(e) {
       dragging = true;
-      startX = x;
+      startX = e.clientX;
       deltaX = 0;
+      openedFromTap = false;
+      tapCard = e.target && e.target.closest
+        ? e.target.closest("[data-wvn-cin-cites-card]")
+        : null;
       if (deck) deck.classList.add("is-dragging");
       stopAuto();
     }
@@ -430,16 +448,22 @@
       if (!dragging) return;
       dragging = false;
       if (deck) deck.classList.remove("is-dragging");
-      if (Math.abs(deltaX) > 48) step(deltaX < 0 ? 1 : -1);
+      var moved = Math.abs(deltaX) > 48;
+      if (moved) {
+        step(deltaX < 0 ? 1 : -1);
+      } else if (tapCard) {
+        openFromCard(tapCard);
+        openedFromTap = true;
+      }
       deltaX = 0;
+      tapCard = null;
       startAuto();
     }
 
     if (deck) {
       deck.addEventListener("pointerdown", function (e) {
         if (e.button && e.button !== 0) return;
-        onPointerDown(e.clientX);
-        try { deck.setPointerCapture(e.pointerId); } catch (err) {}
+        onPointerDown(e);
       });
       deck.addEventListener("pointermove", function (e) {
         onPointerMove(e.clientX);

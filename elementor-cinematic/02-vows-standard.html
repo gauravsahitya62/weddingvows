@@ -1,0 +1,296 @@
+<!-- ============================================================
+  WVN SECTION 2 — "THE VOWS STANDARD" (giant text-mask zoom over film)
+  Paste into one Elementor HTML widget. Requires Google Fonts link once.
+  ============================================================ -->
+<style>
+  .wvn-vows {
+    --wvn-oxblood: #3a2727;
+    --wvn-ivory: #f6f1ea;
+    --wvn-gold: #c4a574;
+    --wvn-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --wvn-display: "Aboreto", Georgia, serif;
+    --wvn-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+    position: relative;
+    width: 100%;
+    height: 260vh;
+    margin: 0;
+    padding: 0;
+    background: var(--wvn-oxblood);
+    color: var(--wvn-ivory);
+    font-family: var(--wvn-sans);
+    isolation: isolate;
+  }
+
+  .wvn-vows *,
+  .wvn-vows *::before,
+  .wvn-vows *::after {
+    box-sizing: border-box;
+  }
+
+  .wvn-vows__sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .wvn-vows__film {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .wvn-vows__film video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .wvn-vows__mask {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    mix-blend-mode: multiply;
+    transform: scale(1);
+    transform-origin: center center;
+    will-change: transform, opacity;
+    pointer-events: none;
+  }
+
+  .wvn-vows__word {
+    margin: 0;
+    font-family: var(--wvn-display);
+    font-weight: 400;
+    font-size: 27vw;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: #fff;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .wvn-vows__caption {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    text-align: center;
+    opacity: 0;
+    transform: translate3d(0, 44px, 0);
+    will-change: opacity, transform;
+    pointer-events: none;
+  }
+
+  .wvn-vows__caption.is-live {
+    pointer-events: auto;
+  }
+
+  .wvn-vows__eyebrow {
+    margin: 0 0 1.1rem;
+    font-family: var(--wvn-sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--wvn-gold);
+  }
+
+  .wvn-vows__headline {
+    margin: 0;
+    font-family: var(--wvn-display);
+    font-weight: 400;
+    font-size: clamp(2.2rem, 5vw, 3.75rem);
+    line-height: 1.12;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--wvn-ivory);
+  }
+
+  .wvn-vows__headline span {
+    display: block;
+    color: var(--wvn-gold);
+  }
+
+  .wvn-vows__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-top: 1.75rem;
+    padding: 16px 32px;
+    border-radius: 999px;
+    border: none;
+    background: var(--wvn-ivory);
+    color: var(--wvn-oxblood);
+    font-family: var(--wvn-sans);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.45s var(--wvn-ease), color 0.45s var(--wvn-ease);
+  }
+
+  .wvn-vows__cta-arrow {
+    display: inline-block;
+    transition: transform 0.45s var(--wvn-ease);
+  }
+
+  .wvn-vows__cta:hover {
+    background: var(--wvn-gold);
+    color: var(--wvn-oxblood);
+  }
+
+  .wvn-vows__cta:hover .wvn-vows__cta-arrow {
+    transform: translate3d(3px, -3px, 0);
+  }
+
+  @media (max-width: 767px) {
+    .wvn-vows__word {
+      font-size: 34vw;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wvn-vows {
+      height: auto;
+      min-height: 100vh;
+    }
+
+    .wvn-vows__sticky {
+      position: relative;
+      height: auto;
+      min-height: 100vh;
+    }
+
+    .wvn-vows__mask {
+      display: none !important;
+    }
+
+    .wvn-vows__caption {
+      opacity: 1 !important;
+      transform: none !important;
+      pointer-events: auto;
+      background: rgba(58, 39, 39, 0.35);
+    }
+  }
+</style>
+
+<section class="wvn-vows" id="wvn-vows" data-wvn-vows aria-label="The Vows Standard">
+  <div class="wvn-vows__sticky">
+    <div class="wvn-vows__film">
+      <video
+        muted
+        autoplay
+        loop
+        playsinline
+        preload="metadata"
+        poster="https://weddingvowsbynikhil.com/wp-content/uploads/2026/08/KRN09702-scaled.jpeg"
+      >
+        <source src="https://weddingvowsbynikhil.com/wp-content/uploads/2026/08/Video-75083.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <div class="wvn-vows__mask" data-wvn-vows-mask aria-hidden="true">
+      <p class="wvn-vows__word">Vows</p>
+    </div>
+
+    <div class="wvn-vows__caption" data-wvn-vows-caption>
+      <p class="wvn-vows__eyebrow">The Vows Standard</p>
+      <h2 class="wvn-vows__headline">
+        Every Vow. Every Detail.
+        <span>Beautifully Kept.</span>
+      </h2>
+      <a class="wvn-vows__cta" href="#contact">
+        Book a Consultation
+        <span class="wvn-vows__cta-arrow" aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var root = document.querySelector("[data-wvn-vows]");
+  if (!root || root.__wvnBound) return;
+  root.__wvnBound = true;
+
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var mask = root.querySelector("[data-wvn-vows-mask]");
+  var caption = root.querySelector("[data-wvn-vows-caption]");
+  var video = root.querySelector(".wvn-vows__film video");
+
+  function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function easeOutCubic(t) {
+    var u = clamp(t, 0, 1);
+    return 1 - Math.pow(1 - u, 3);
+  }
+  function rangeProgress(p, a, b) {
+    if (b === a) return p >= b ? 1 : 0;
+    return easeOutCubic(clamp((p - a) / (b - a), 0, 1));
+  }
+
+  function playVideo() {
+    if (!video) return;
+    var p = video.play();
+    if (p && typeof p.catch === "function") p.catch(function () {});
+  }
+
+  if (reduce) {
+    playVideo();
+    caption.classList.add("is-live");
+    return;
+  }
+
+  var ticking = false;
+
+  function update() {
+    ticking = false;
+    var rect = root.getBoundingClientRect();
+    var wh = root.offsetHeight;
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    var p = clamp(-rect.top / Math.max(1, wh - vh), 0, 1);
+
+    /* Mask scale 1 → 24 over 0.04 → 0.78 */
+    var scaleT = rangeProgress(p, 0.04, 0.78);
+    var scale = lerp(1, 24, scaleT);
+    mask.style.transform = "scale(" + scale.toFixed(4) + ")";
+
+    /* Mask fade 0.72 → 0.9 */
+    var fadeT = rangeProgress(p, 0.72, 0.9);
+    mask.style.opacity = String(1 - fadeT);
+
+    /* Caption opacity 0.8 → 0.95, y 0.8 → 0.98 */
+    var capOp = rangeProgress(p, 0.8, 0.95);
+    var capY = rangeProgress(p, 0.8, 0.98);
+    caption.style.opacity = String(capOp);
+    caption.style.transform = "translate3d(0," + lerp(44, 0, capY).toFixed(2) + "px,0)";
+    if (capOp > 0.05) caption.classList.add("is-live");
+    else caption.classList.remove("is-live");
+  }
+
+  function onScroll() {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  }
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
+  playVideo();
+  update();
+})();
+</script>

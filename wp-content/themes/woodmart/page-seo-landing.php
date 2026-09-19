@@ -118,7 +118,6 @@ while (have_posts()) :
 
   <?php if (!empty($config['faqs'])) : ?>
   <section class="wvn-money-faq">
-    <div class="wvn-money-faq-visual" style="background-image:url('<?php echo esc_url($page_image); ?>')" aria-hidden="true"></div>
     <div class="wvn-money-faq-inner">
       <p class="wvn-kicker">Questions, answered</p>
       <h2 class="wvn-display">Planning an Udaipur wedding?</h2>

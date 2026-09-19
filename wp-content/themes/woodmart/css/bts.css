@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   --cream: #f0ede4;
   --cream-2: #f7f2ea;
   --cream-3: #e7e1d3;
@@ -367,80 +367,12 @@ button { font-family: inherit; cursor: pointer; }
   pointer-events: none;
 }
 
-/* Intro slides over the pinned hero */
+/* Intro editorial styles live in css/wvn-intro-editorial.css */
 .wvn-intro {
   position: relative;
   z-index: 2;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background: var(--teal-deep);
-  color: var(--cream);
-  padding: 120px 24px 110px;
-  text-align: center;
 }
 
-.wvn-intro .wvn-intro-body {
-  width: min(980px, 100%);
-  margin: 0 auto;
-}
-.wvn-intro .wvn-intro-body > *:first-child { margin-top: 0; }
-.wvn-intro .wvn-intro-body .wvn-kicker,
-.wvn-intro .wvn-intro-body > p:first-child {
-  color: var(--champagne);
-  font-size: 12px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  margin: 0 0 14px;
-  max-width: none;
-}
-.wvn-intro .wvn-intro-body h1,
-.wvn-intro .wvn-intro-body h2,
-.wvn-intro .wvn-intro-body .wvn-display {
-  color: var(--cream);
-  font-family: var(--font);
-  font-size: clamp(20px, 2.2vw, 28px);
-  font-weight: 400;
-  max-width: 980px;
-  margin: 0 auto;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  line-height: 1.35;
-}
-.wvn-intro .wvn-intro-body h3,
-.wvn-intro .wvn-intro-body h4 {
-  color: var(--cream);
-  font-family: var(--font);
-  font-size: clamp(16px, 1.6vw, 20px);
-  font-weight: 400;
-  margin: 24px auto 0;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-.wvn-intro .wvn-intro-body p {
-  max-width: 760px;
-  margin: 28px auto 0;
-  color: rgba(240,237,228,0.72);
-  font-size: 15px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.wvn-intro .wvn-intro-body > p:first-child { margin-top: 0; }
-.wvn-intro .wvn-intro-body p + p { margin-top: 16px; }
-.wvn-intro .wvn-intro-body a {
-  color: inherit;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.wvn-intro .wvn-intro-body ul,
-.wvn-intro .wvn-intro-body ol {
-  max-width: 760px;
-  margin: 20px auto 0;
-  padding-left: 1.2em;
-  text-align: left;
-  color: rgba(240,237,228,0.72);
-}
 
 /* Pinned scroll sections */
 .wvn-pin {
@@ -790,6 +722,48 @@ button { font-family: inherit; cursor: pointer; }
   height: 100%;
   object-fit: cover;
   filter: grayscale(1);
+}
+.wvn-pressbook--testimonials .wvn-pressbook-sheet.is-cover .is-front img {
+  filter: none;
+}
+.wvn-pressbook-leaf--quote {
+  gap: 0;
+  justify-content: flex-start;
+  text-align: center;
+}
+.wvn-pressbook-leaf--quote img {
+  flex: 0 0 auto;
+  width: 100%;
+  min-height: 0;
+  height: auto !important;
+  max-height: 38%;
+  aspect-ratio: 3 / 2;
+  margin: 0 0 14px;
+  object-fit: cover;
+}
+.wvn-pressbook-leaf--quote h3 {
+  margin: 0 0 4px;
+  font-size: clamp(15px, 1.4vw, 19px);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+.wvn-pressbook-leaf--quote .wvn-pressbook-brand {
+  margin: 0 0 12px;
+  letter-spacing: 0.14em;
+}
+.wvn-pressbook-leaf--quote p:not(.wvn-pressbook-brand) {
+  flex: 0 1 auto;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: clamp(18px, 2.1vw, 28px);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  margin: 0;
+  max-width: 34ch;
+  margin-inline: auto;
 }
 .wvn-pressbook-sheet.is-cover .is-front span,
 .wvn-pressbook-sheet.is-cover .is-front small {
@@ -1414,7 +1388,7 @@ button { font-family: inherit; cursor: pointer; }
   color: #f0ede4;
   font-size: 22px;
 }
-.wvn-acc details[open] summary::after { content: "–"; }
+.wvn-acc details[open] summary::after { content: "â€“"; }
 .wvn-acc p { margin: 0 0 18px; color: rgba(240, 237, 228, 0.88); }
 
 /* Footer */
@@ -1606,7 +1580,16 @@ body.wvn-body #content.wvn-article {
   width: 100%;
 }
 body.wvn-body #content.wvn-page {
-  padding: 150px 24px 96px;
+  padding: 0;
+  max-width: none;
+  margin: 0;
+  width: 100%;
+}
+body.wvn-body #content.wvn-page > .wvn-page-hero,
+body.wvn-body #content.wvn-page > .wvn-money-hero {
+  width: 100%;
+  max-width: none;
+  margin: 0;
 }
 .wvn-blog,
 .wvn-article {
@@ -2626,6 +2609,16 @@ body.wvn-body #wpadminbar { z-index: 200; }
     height: 110px !important;
   }
   .wvn-pressbook-leaf p { font-size: 13px; }
+  .wvn-pressbook-leaf--quote img {
+    height: 100px !important;
+    max-height: 32%;
+    margin-bottom: 10px;
+  }
+  .wvn-pressbook-leaf--quote p:not(.wvn-pressbook-brand) {
+    font-size: clamp(16px, 4.2vw, 22px);
+    line-height: 1.32;
+    max-width: none;
+  }
 }
 
 /* Legacy ACF blocks, restyled to match the new site */
@@ -3255,7 +3248,19 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
   gap: 12px;
 }
 .wvn-guide-faq {
-  padding-top: 24px;
+  width: min(920px, calc(100% - 48px));
+  margin: 24px auto 0;
+  padding: 48px 0 24px;
+  box-sizing: border-box;
+}
+.wvn-guide-faq > .wvn-display {
+  margin: 0;
+  text-align: left;
+}
+.wvn-guide-faq .wvn-acc {
+  width: 100%;
+  max-width: none;
+  margin: 28px 0 0;
 }
 .wvn-guide .wvn-cta {
   padding-left: 0;

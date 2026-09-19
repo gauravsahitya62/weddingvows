@@ -49,7 +49,7 @@ while (have_posts()) :
           </li>
           <li>
             <span>Phone</span>
-            <a href="tel:+919660809000">+91 96608 09000</a>
+            <a href="tel:+918739905690">+91 8739905690</a>
           </li>
           <li>
             <span>WhatsApp</span>

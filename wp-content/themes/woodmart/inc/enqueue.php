@@ -1,29 +1,30 @@
 <?php
 /* Load Theme Files */
 function theme_files() {
-    wp_enqueue_style('wvn-fonts', 'https://fonts.googleapis.com/css2?family=Aboreto&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap', array(), null);
+    wp_enqueue_style('wvn-fonts', 'https://fonts.googleapis.com/css2?family=Aboreto&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap', array(), null);
     wp_enqueue_style('font', 'https://use.typekit.net/mgk5doc.css', array(), null);
     wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css', array(), '6.5.2');
     wp_enqueue_style('icons', get_theme_file_uri('/css/icons.min.css'), array(), null);
     wp_enqueue_style('main_styles', get_theme_file_uri('/css/app.min.css'), array(), '1.2.2');
-    wp_enqueue_style('wvn-bts', get_theme_file_uri('/css/bts.css'), array('main_styles'), '1.8.40');
-    wp_enqueue_style('wvn-overrides', get_theme_file_uri('/css/wvn-overrides.css'), array('wvn-bts'), '1.0.6');
-    wp_enqueue_style('wvn-seo-growth', get_theme_file_uri('/css/wvn-seo-growth.css'), array('wvn-overrides'), '1.0.1');
-    wp_enqueue_style('wvn-money-responsive', get_theme_file_uri('/css/wvn-money-responsive.css'), array('wvn-seo-growth'), '1.0.0');
+    wp_enqueue_style('wvn-bts', get_theme_file_uri('/css/bts.css'), array('main_styles'), '1.8.48');
+    wp_enqueue_style('wvn-overrides', get_theme_file_uri('/css/wvn-overrides.css'), array('wvn-bts'), '1.0.7');
+    wp_enqueue_style('wvn-seo-growth', get_theme_file_uri('/css/wvn-seo-growth.css'), array('wvn-overrides'), '1.0.3');
+    wp_enqueue_style('wvn-money-responsive', get_theme_file_uri('/css/wvn-money-responsive.css'), array('wvn-seo-growth'), '1.0.1');
     wp_enqueue_style('wvn-page-safety', get_theme_file_uri('/css/wvn-page-safety.css'), array('wvn-money-responsive'), '1.0.1');
+    wp_enqueue_style('wvn-intro-editorial', get_theme_file_uri('/css/wvn-intro-editorial.css'), array('wvn-bts'), '1.1.0');
 
     if (is_front_page()) {
         wp_enqueue_style(
             'wvn-cinematic-home',
             get_theme_file_uri('/css/wvn-cinematic-home.css'),
             array('wvn-page-safety'),
-            '1.2.6'
+            '1.3.1'
         );
         wp_enqueue_script(
             'wvn-cinematic-home',
             get_theme_file_uri('/js/wvn-cinematic-home.js'),
             array(),
-            '1.2.6',
+            '1.3.1',
             true
         );
         wp_enqueue_style(
@@ -44,13 +45,29 @@ function theme_files() {
             'wvn-cinematic-site',
             get_theme_file_uri('/css/wvn-cinematic-site.css'),
             array('wvn-page-safety'),
-            '1.0.5'
+            '1.0.6'
         );
         wp_enqueue_script(
             'wvn-cinematic-site',
             get_theme_file_uri('/js/wvn-cinematic-site.js'),
             array(),
-            '1.0.5',
+            '1.0.6',
+            true
+        );
+    }
+
+    if (is_singular('venue')) {
+        wp_enqueue_style(
+            'wvn-venue',
+            get_theme_file_uri('/css/wvn-venue.css'),
+            array('wvn-page-safety'),
+            '1.0.0'
+        );
+        wp_enqueue_script(
+            'wvn-venue',
+            get_theme_file_uri('/js/wvn-venue.js'),
+            array(),
+            '1.0.0',
             true
         );
     }
@@ -98,7 +115,7 @@ function theme_files() {
     wp_enqueue_script('jqueryui', 'https://code.jquery.com/jquery-3.6.3.min.js', array('jquery'), '3.6.3', true);
     wp_enqueue_script('bootstrap-scripts', get_theme_file_uri('js/bootstrap.min.js'), array('jquery'), '1.1', true);
     wp_enqueue_script('custom-scripts', get_theme_file_uri('js/scripts.js'), array('jquery', 'swiper'), '3.6.3', true);
-    wp_enqueue_script('wvn-bts', get_theme_file_uri('/js/bts.js'), array(), '1.7.9', true);
+    wp_enqueue_script('wvn-bts', get_theme_file_uri('/js/bts.js'), array(), '1.8.1', true);
     wp_localize_script('wvn-bts', 'wvnAjax', array('url' => admin_url('admin-ajax.php')));
     wp_enqueue_style('owl-carousel-css', 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css', array(), '2.3.4');
     wp_enqueue_script('owl-carousel-js', 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js', array('jquery'), '2.3.4', true);

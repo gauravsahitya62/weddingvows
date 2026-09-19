@@ -25,9 +25,22 @@ body.wvn-mobile-open .wvn-mobile-panel{display:block}
 .wvn-money-page .wvn-money-actions{display:flex;flex-wrap:wrap;gap:12px}
 .wvn-money-page .wvn-money-btn{box-sizing:border-box;max-width:100%}
 
-/* Hero */
-.wvn-money-page .wvn-money-hero{min-height:min(760px,76vh)}
-.wvn-money-page .wvn-money-hero-media{background-position:center center}
+/* Hero — always edge-to-edge */
+.wvn-money-page .wvn-money-hero{
+  width:100%;
+  max-width:none;
+  margin:0;
+  min-height:min(760px,76vh);
+  overflow:hidden;
+}
+.wvn-money-page .wvn-money-hero-media{
+  inset:0;
+  width:100%;
+  height:100%;
+  background-position:center center;
+  background-size:cover;
+  transform:none;
+}
 .wvn-money-page .wvn-money-hero-copy{max-width:900px;min-width:0}
 .wvn-money-page .wvn-money-hero h1,.wvn-money-page .wvn-money-hero-lede{overflow-wrap:anywhere}
 
@@ -50,17 +63,70 @@ body.wvn-mobile-open .wvn-mobile-panel{display:block}
 .wvn-money-page .wvn-money-service-card>p:last-child{color:#6e5d5d}
 
 /* FAQ */
-.wvn-money-page .wvn-money-faq{width:100%;padding:0;background:#6e3f3f;color:#fff;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:stretch}
-.wvn-money-faq-visual{min-height:560px;background-position:center;background-size:cover;position:relative;min-width:0}
-.wvn-money-faq-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(54,30,30,.06),rgba(54,30,30,.34))}
-.wvn-money-page .wvn-money-faq-inner{width:min(720px,calc(100% - 64px));margin:0 auto;padding:96px 0 92px;min-width:0}
-.wvn-money-page .wvn-money-faq .wvn-kicker{color:#e8c0c0}
-.wvn-money-page .wvn-money-faq h2{color:#fff;margin:0 0 28px;overflow-wrap:anywhere}
-.wvn-money-page .wvn-money-faq-grid{margin-top:0;border-top:1px solid rgba(255,255,255,.28)}
-.wvn-money-page .wvn-money-faq-grid details{border-bottom:1px solid rgba(255,255,255,.28)}
-.wvn-money-page .wvn-money-faq-grid summary{color:#fff;font-family:var(--font,Georgia,serif);font-size:20px;padding:22px 42px 22px 0;overflow-wrap:anywhere}
-.wvn-money-page .wvn-money-faq-grid summary::after{color:#e7b3b3}
-.wvn-money-page .wvn-money-faq-grid details p{color:rgba(255,255,255,.78);margin-bottom:22px;overflow-wrap:anywhere}
+/* FAQ — heading and items share one column (no side-by-side split) */
+.wvn-money-page .wvn-money-faq{
+  width:100%;
+  padding:84px 0;
+  background:#f0ede4;
+  color:#2d2020;
+  display:block;
+}
+.wvn-money-faq-visual{
+  display:none;
+}
+.wvn-money-page .wvn-money-faq-inner,
+.wvn-money-page .wvn-money-faq > .wvn-money-section-head,
+.wvn-money-page .wvn-money-faq > .wvn-money-faq-grid{
+  width:min(920px,calc(100% - 48px));
+  margin-left:auto;
+  margin-right:auto;
+  padding:0;
+  min-width:0;
+  box-sizing:border-box;
+}
+.wvn-money-page .wvn-money-faq-inner .wvn-money-section-head{
+  display:block;
+  grid-template-columns:none;
+  margin-bottom:28px;
+}
+.wvn-money-page .wvn-money-faq-inner > .wvn-kicker{
+  margin:0 0 12px;
+}
+.wvn-money-page .wvn-money-faq-inner > h2{
+  margin:0 0 28px;
+}
+.wvn-money-page .wvn-money-faq .wvn-money-section-head{
+  display:block;
+  grid-template-columns:none;
+  margin-bottom:28px;
+}
+.wvn-money-page .wvn-money-faq .wvn-money-section-lede{
+  margin-top:14px;
+  max-width:42ch;
+}
+.wvn-money-page .wvn-money-faq .wvn-kicker{color:#a86d6d}
+.wvn-money-page .wvn-money-faq h2{color:#2d2020;margin:0}
+.wvn-money-page .wvn-money-faq-grid{
+  margin-top:0;
+  border-top:1px solid rgba(45,32,32,.14);
+}
+.wvn-money-page .wvn-money-faq-grid details{
+  border-bottom:1px solid rgba(45,32,32,.14);
+  background:transparent;
+}
+.wvn-money-page .wvn-money-faq-grid summary{
+  color:#2d2020;
+  font-family:var(--font,Georgia,serif);
+  font-size:20px;
+  padding:22px 42px 22px 0;
+  overflow-wrap:anywhere;
+}
+.wvn-money-page .wvn-money-faq-grid summary::after{color:#a86d6d}
+.wvn-money-page .wvn-money-faq-grid details p{
+  color:#6e5d5d;
+  margin-bottom:22px;
+  overflow-wrap:anywhere;
+}
 
 .wvn-money-page .wvn-money-final-cta{margin-top:0;border-radius:0;background:#fffdf9;border-top:1px solid rgba(45,32,32,.1);border-bottom:1px solid rgba(45,32,32,.1);box-sizing:border-box}
 
@@ -79,9 +145,9 @@ body.wvn-mobile-open .wvn-mobile-panel{display:block}
   .wvn-money-intro-media{order:-1;min-height:440px}
   .wvn-money-intro-media img{min-height:440px}
   .wvn-money-page .wvn-money-services-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .wvn-money-page .wvn-money-faq{grid-template-columns:1fr}
-  .wvn-money-faq-visual{min-height:360px}
-  .wvn-money-page .wvn-money-faq-inner{width:min(100%,calc(100% - 44px));padding:72px 0 74px}
+  .wvn-money-page .wvn-money-faq-inner,
+  .wvn-money-page .wvn-money-faq > .wvn-money-section-head,
+  .wvn-money-page .wvn-money-faq > .wvn-money-faq-grid{width:min(100%,calc(100% - 44px))}
 }
 
 /* Mobile */
@@ -108,14 +174,14 @@ body.wvn-mobile-open .wvn-mobile-panel{display:block}
   .wvn-money-page .wvn-money-content{font-size:15px;line-height:1.72}
   .wvn-money-page .wvn-money-contact-card{width:100%;max-width:none;padding:24px;margin-top:30px}
   .wvn-money-page .wvn-money-services{padding:62px 0}
-  .wvn-money-page .wvn-money-services>*,.wvn-money-page .wvn-money-faq>*,.wvn-money-page .wvn-money-proof-cta{width:calc(100% - 32px)}
+  .wvn-money-page .wvn-money-services>*,.wvn-money-page .wvn-money-proof-cta{width:calc(100% - 32px)}
   .wvn-money-page .wvn-money-section-head{grid-template-columns:1fr;gap:16px}
   .wvn-money-page .wvn-money-services-grid{grid-template-columns:1fr;gap:12px;margin-top:30px}
   .wvn-money-page .wvn-money-service-card{min-height:0;padding:24px}
   .wvn-money-page .wvn-money-service-card .wvn-svc-label{margin-top:28px}
-  .wvn-money-page .wvn-money-faq{grid-template-columns:1fr}
-  .wvn-money-faq-visual{min-height:280px}
-  .wvn-money-page .wvn-money-faq-inner{width:calc(100% - 32px);padding:40px 0 54px}
+  .wvn-money-page .wvn-money-faq-inner,
+  .wvn-money-page .wvn-money-faq > .wvn-money-section-head,
+  .wvn-money-page .wvn-money-faq > .wvn-money-faq-grid{width:calc(100% - 32px)}
   .wvn-money-page .wvn-money-faq summary{font-size:18px;padding-right:34px}
   .wvn-money-page .wvn-money-faq-grid details p{font-size:14px}
   .wvn-money-page .wvn-money-proof-cta,.wvn-money-page .wvn-money-final-cta{width:calc(100% - 32px);margin-left:auto;margin-right:auto;padding:32px 22px;flex-direction:column;align-items:stretch}

@@ -89,6 +89,51 @@ function custom_post_type_events() {
 }
 add_action('init', 'custom_post_type_events');
 
+function wvn_register_venue_post_type() {
+    register_post_type('venue', array(
+        'labels' => array(
+            'name'               => __('Venues'),
+            'singular_name'      => __('Venue'),
+            'menu_name'          => __('Venues'),
+            'name_admin_bar'     => __('Venue'),
+            'add_new'            => __('Add New'),
+            'add_new_item'       => __('Add New Venue'),
+            'edit_item'          => __('Edit Venue'),
+            'new_item'           => __('New Venue'),
+            'view_item'          => __('View Venue'),
+            'view_items'         => __('View Venues'),
+            'search_items'       => __('Search Venues'),
+            'not_found'          => __('No venues found'),
+            'not_found_in_trash' => __('No venues found in Trash'),
+            'all_items'          => __('All Venues'),
+        ),
+        'public'              => true,
+        'publicly_queryable'  => true,
+        'show_ui'             => true,
+        'show_in_menu'        => true,
+        'show_in_nav_menus'   => true,
+        'show_in_rest'        => true,
+        'has_archive'         => 'venues',
+        'rewrite'             => array(
+            'slug'       => 'venues',
+            'with_front' => false,
+        ),
+        'supports'            => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
+        'menu_position'       => 6,
+        'menu_icon'           => 'dashicons-building',
+    ));
+}
+add_action('init', 'wvn_register_venue_post_type', 5);
+
+function wvn_venue_rewrite_flush_once() {
+    if (get_option('wvn_venue_rewrite_v1') === '1') {
+        return;
+    }
+    flush_rewrite_rules(false);
+    update_option('wvn_venue_rewrite_v1', '1', false);
+}
+add_action('init', 'wvn_venue_rewrite_flush_once', 99);
+
 function remove_custom_post_type_obituaries() {
     global $wp_post_types;
 

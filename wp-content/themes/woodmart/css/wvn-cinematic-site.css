@@ -260,13 +260,13 @@ body.wvn-cin-site .wvn-money-hero {
 }
 
 body.wvn-cin-site .wvn-money-hero-media {
-  transform: scale(1.06);
-  will-change: transform;
+  transform: none;
+  will-change: auto;
 }
 
 body.wvn-cin-site .wvn-money-hero.is-in .wvn-money-hero-media {
-  transform: scale(1);
-  transition: transform 1.6s var(--wvn-ease);
+  transform: none;
+  transition: none;
 }
 
 body.wvn-cin-site .wvn-money-hero-overlay {
@@ -431,15 +431,25 @@ body.wvn-cin-site .wvn-money-card-btn:hover {
   color: var(--wvn-ink-dark);
 }
 
+body.wvn-cin-site .wvn-money-faq {
+  background: #f0ede4;
+  color: var(--wvn-oxblood);
+}
+
 body.wvn-cin-site .wvn-money-faq-grid summary {
   font-family: var(--wvn-display) !important;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   font-size: clamp(18px, 1.6vw, 22px);
+  color: var(--wvn-oxblood);
 }
 
 body.wvn-cin-site .wvn-money-faq-grid summary::after {
-  color: var(--wvn-gold);
+  color: var(--wvn-maroon);
+}
+
+body.wvn-cin-site .wvn-money-faq-grid details p {
+  color: rgba(58, 39, 39, 0.72);
 }
 
 /* —— Services page —— */

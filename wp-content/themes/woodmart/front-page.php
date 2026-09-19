@@ -16,10 +16,10 @@ $weddings = wvn_weddings();
 $services = wvn_services();
 $faqs = wvn_faqs();
 $quotes = wvn_testimonials();
+$venues_home = function_exists('wvn_venues_for_home') ? wvn_venues_for_home(8) : array();
 $gallery = wvn_gallery_images();
 $stories = wvn_stories();
 $press_sheets = array_reverse(wvn_pressbook_sheets());
-$press_logos = wvn_press_logos();
 $service_count = count($services);
 ?>
 
@@ -52,9 +52,131 @@ $service_count = count($services);
       <div class="wvn-hero-copy"><?php echo esc_html(wvn_home_text('home_hero_copy', 'We work behind the scenes, because your wedding deserves to be planned beautifully.')); ?></div>
     </div>
     <div class="wvn-hero-travel" aria-hidden="true"></div>
-    <section class="wvn-intro">
-      <div class="wvn-intro-body">
-        <?php echo wvn_home_intro_html(); ?>
+    <?php
+    $intro = function_exists('wvn_home_intro') ? wvn_home_intro() : array();
+    $intro_images = !empty($intro['images']) && is_array($intro['images']) ? $intro['images'] : array();
+    $intro_by_slot = array();
+    foreach ($intro_images as $img) {
+        if (!empty($img['slot'])) {
+            $intro_by_slot[$img['slot']] = $img;
+        }
+    }
+    $intro_title_line = $intro['title_line'] ?? 'Wedding Planner';
+    $intro_title_em = $intro['title_em'] ?? 'in';
+    $intro_title_place = $intro['title_place'] ?? 'Udaipur';
+    ?>
+    <section class="wvn-intro" aria-labelledby="wvn-intro-heading" data-wvn-intro>
+      <?php if (!empty($intro['landscape'])) : ?>
+        <div class="wvn-intro__scape" data-wvn-intro-scape aria-hidden="true">
+          <img src="<?php echo esc_url($intro['landscape']); ?>" alt="" decoding="async" loading="lazy">
+        </div>
+      <?php endif; ?>
+      <div class="wvn-intro__veil" aria-hidden="true"></div>
+
+      <div class="wvn-intro__stage">
+        <aside class="wvn-intro__rail wvn-intro__rail--left">
+          <?php if (!empty($intro['index_label']) || !empty($intro['index_meta'])) : ?>
+            <p class="wvn-intro__index">
+              <?php if (!empty($intro['index_label'])) : ?><span><?php echo esc_html($intro['index_label']); ?></span><?php endif; ?>
+              <?php if (!empty($intro['index_meta'])) : ?><small><?php echo esc_html($intro['index_meta']); ?></small><?php endif; ?>
+            </p>
+          <?php endif; ?>
+          <?php if (!empty($intro_by_slot['left']['url'])) : ?>
+            <figure class="wvn-intro__shot wvn-intro__shot--arch" data-wvn-intro-shot>
+              <?php echo wvn_home_intro_image_html($intro_by_slot['left']['url'], $intro_by_slot['left']['alt'] ?? '', 'eager'); ?>
+            </figure>
+          <?php endif; ?>
+          <?php if (!empty($intro_by_slot['left-bot']['url'])) : ?>
+            <figure class="wvn-intro__shot wvn-intro__shot--overlap" data-wvn-intro-shot>
+              <?php echo wvn_home_intro_image_html($intro_by_slot['left-bot']['url'], $intro_by_slot['left-bot']['alt'] ?? '', 'lazy'); ?>
+            </figure>
+          <?php endif; ?>
+          <?php if (!empty($intro['note_left'])) : ?>
+            <p class="wvn-intro__note wvn-intro__note--left"><?php echo esc_html($intro['note_left']); ?></p>
+          <?php endif; ?>
+        </aside>
+
+        <div class="wvn-intro__copy" data-wvn-intro-copy>
+          <div class="wvn-intro__bloom" aria-hidden="true">
+            <svg viewBox="0 0 48 48" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M24 6c1.8 6.2 5.8 10.2 12 12-6.2 1.8-10.2 5.8-12 12-1.8-6.2-5.8-10.2-12-12 6.2-1.8 10.2-5.8 12-12Z" stroke="currentColor" stroke-width="1.2"/>
+              <circle cx="24" cy="24" r="2.2" fill="currentColor"/>
+            </svg>
+          </div>
+          <?php if (!empty($intro['eyebrow'])) : ?>
+            <p class="wvn-intro__eyebrow"><?php echo esc_html($intro['eyebrow']); ?></p>
+          <?php endif; ?>
+          <h1 id="wvn-intro-heading" class="wvn-intro__title">
+            <span class="wvn-intro__title-line"><?php echo esc_html($intro_title_line); ?></span>
+            <span class="wvn-intro__title-line">
+              <em class="wvn-intro__accent"><?php echo esc_html($intro_title_em); ?></em>
+              <?php echo esc_html(' ' . $intro_title_place); ?>
+            </span>
+          </h1>
+          <?php if (!empty($intro['subhead'])) : ?>
+            <p class="wvn-intro__sub"><?php echo esc_html($intro['subhead']); ?></p>
+          <?php endif; ?>
+          <?php if (!empty($intro['lead'])) : ?>
+            <p class="wvn-intro__lead"><?php echo esc_html($intro['lead']); ?></p>
+          <?php endif; ?>
+          <?php if (!empty($intro['founder'])) : ?>
+            <p class="wvn-intro__founder">
+              <strong><?php echo esc_html($intro['founder']); ?></strong>
+              <?php if (!empty($intro['founder_role'])) : ?>
+                <span><?php echo esc_html($intro['founder_role']); ?></span>
+              <?php endif; ?>
+            </p>
+          <?php endif; ?>
+          <div class="wvn-intro__actions">
+            <?php if (!empty($intro['cta_url']) && !empty($intro['cta_label'])) : ?>
+              <a class="wvn-intro__cta" href="<?php echo esc_url($intro['cta_url']); ?>">
+                <span class="wvn-intro__cta-label"><?php echo esc_html($intro['cta_label']); ?></span>
+                <span class="wvn-intro__cta-arrow" aria-hidden="true">→</span>
+              </a>
+            <?php endif; ?>
+            <?php if (!empty($intro['story_url']) && !empty($intro['story_label'])) : ?>
+              <a class="wvn-intro__story" href="<?php echo esc_url($intro['story_url']); ?>"><?php echo esc_html($intro['story_label']); ?> ↗</a>
+            <?php endif; ?>
+          </div>
+        </div>
+
+        <aside class="wvn-intro__rail wvn-intro__rail--right">
+          <div class="wvn-intro__paper" aria-hidden="true"></div>
+          <?php if (!empty($intro_by_slot['right-top']['url'])) : ?>
+            <figure class="wvn-intro__shot wvn-intro__shot--tilt" data-wvn-intro-shot>
+              <?php echo wvn_home_intro_image_html($intro_by_slot['right-top']['url'], $intro_by_slot['right-top']['alt'] ?? '', 'lazy'); ?>
+            </figure>
+          <?php endif; ?>
+          <?php if (!empty($intro['note_right'])) : ?>
+            <p class="wvn-intro__note wvn-intro__note--right"><?php echo esc_html($intro['note_right']); ?></p>
+          <?php endif; ?>
+          <?php if (!empty($intro_by_slot['right-bot']['url'])) : ?>
+            <figure class="wvn-intro__shot wvn-intro__shot--wide" data-wvn-intro-shot>
+              <?php echo wvn_home_intro_image_html($intro_by_slot['right-bot']['url'], $intro_by_slot['right-bot']['alt'] ?? '', 'lazy'); ?>
+            </figure>
+          <?php endif; ?>
+          <?php if (!empty($intro['note_detail'])) : ?>
+            <p class="wvn-intro__meta"><?php echo esc_html($intro['note_detail']); ?></p>
+          <?php endif; ?>
+        </aside>
+      </div>
+
+      <div class="wvn-intro__ground">
+        <?php if (!empty($intro['location'])) : ?>
+          <p class="wvn-intro__place"><?php echo esc_html($intro['location']); ?></p>
+        <?php endif; ?>
+        <?php if (!empty($intro['scroll_label'])) : ?>
+          <p class="wvn-intro__scroll">
+            <span class="wvn-intro__scroll-line" aria-hidden="true"></span>
+            <?php echo esc_html($intro['scroll_label']); ?>
+          </p>
+        <?php endif; ?>
+        <?php if (!empty($intro['footer_mark'])) : ?>
+          <p class="wvn-intro__mark">
+            <span class="wvn-intro__mark-line" aria-hidden="true"></span>
+            <?php echo esc_html($intro['footer_mark']); ?>
+          </p>
+        <?php endif; ?>
       </div>
     </section>
   </section>
@@ -94,10 +216,10 @@ $service_count = count($services);
     </div>
   </section>
 
-  <section class="wvn-achieve">
-    <h2 class="wvn-display"><?php echo esc_html(wvn_home_text('home_achieve_heading', 'Achievements')); ?></h2>
-    <p class="wvn-lede"><?php echo esc_html(wvn_home_text('home_achieve_lede', 'We offer complete destination wedding planning, so you only ever deal with one team — from the first venue visit to the final farewell.')); ?></p>
-    <div class="wvn-pressbook" data-book>
+  <section class="wvn-achieve" aria-label="Testimonials">
+    <h2 class="wvn-display"><?php echo esc_html(wvn_home_text('home_achieve_heading', 'In Their Words')); ?></h2>
+    <p class="wvn-lede"><?php echo esc_html(wvn_home_text('home_achieve_lede', 'Real stories from the couples and families we’ve celebrated with — open the book to read more.')); ?></p>
+    <div class="wvn-pressbook wvn-pressbook--testimonials" data-book>
       <div class="wvn-pressbook-frame">
         <div class="wvn-pressbook-3d">
           <div class="wvn-pressbook-base" aria-hidden="true"></div>
@@ -120,14 +242,9 @@ $service_count = count($services);
         </div>
       </div>
       <div class="wvn-pressbook-controls">
-        <button type="button" data-book-prev aria-label="Previous page">‹</button>
-        <button type="button" data-book-next aria-label="Next page">›</button>
+        <button type="button" data-book-prev aria-label="Previous testimonial">‹</button>
+        <button type="button" data-book-next aria-label="Next testimonial">›</button>
       </div>
-    </div>
-    <div class="wvn-logos">
-      <?php foreach ($press_logos as $logo) : ?>
-        <span><?php echo esc_html($logo); ?></span>
-      <?php endforeach; ?>
     </div>
   </section>
 
@@ -252,16 +369,38 @@ $service_count = count($services);
   </section>
 
   <?php
-  $cin_quotes = array_values(array_filter($quotes, function ($q) {
-      return !empty($q['text']) && !empty($q['name']);
+  $cin_venues = array_values(array_filter($venues_home, function ($q) {
+      return !empty($q['name']) && !empty($q['image']);
   }));
-  $cin_quotes = array_slice($cin_quotes, 0, 6);
-  $cin_gallery = array_values(array_filter($gallery));
-  if (!$cin_gallery) {
-      $cin_gallery = $cin['mosaic'];
+  if (!$cin_venues) {
+      // Fallback: keep slider populated until venues are published in admin.
+      $cin_quotes = array_values(array_filter($quotes, function ($q) {
+          return !empty($q['text']) && !empty($q['name']);
+      }));
+      $cin_quotes = array_slice($cin_quotes, 0, 6);
+      $cin_gallery = array_values(array_filter($gallery));
+      if (!$cin_gallery) {
+          $cin_gallery = $cin['mosaic'];
+      }
+      foreach ($cin_quotes as $i => $quote) {
+          $meta = trim($quote['time'] ?? '');
+          if (!$meta && !empty($quote['tags']) && is_array($quote['tags'])) {
+              $meta = implode(' · ', array_slice($quote['tags'], 0, 2));
+          }
+          $img = !empty($quote['image']) ? $quote['image'] : ($cin_gallery[$i % max(1, count($cin_gallery))] ?? '');
+          $cin_venues[] = array(
+              'name'  => $quote['name'],
+              'text'  => $quote['text'],
+              'meta'  => $meta,
+              'image' => $img,
+              'url'   => '',
+              'kicker'=> $cin['cites_kicker'],
+          );
+      }
   }
+  $cin_venues = array_slice($cin_venues, 0, 8);
   ?>
-  <section class="wvn-cin-cites" id="testimonials" data-wvn-cin-cites aria-label="Testimonials">
+  <section class="wvn-cin-cites" id="venues" data-wvn-cin-cites aria-label="Venues">
     <div class="wvn-cin-cites__atmosphere" aria-hidden="true">
       <div class="wvn-cin-cites__glow"></div>
       <div class="wvn-cin-cites__grain"></div>
@@ -281,48 +420,48 @@ $service_count = count($services);
       <div class="wvn-cin-cites__deck" data-wvn-cin-cites-deck>
         <div class="wvn-cin-cites__rail" aria-hidden="true"></div>
         <div class="wvn-cin-cites__stage" data-wvn-cin-cites-stage>
-          <?php foreach ($cin_quotes as $i => $quote) :
-              $meta = trim($quote['time'] ?? '');
-              if (!$meta && !empty($quote['tags']) && is_array($quote['tags'])) {
-                  $meta = implode(' · ', array_slice($quote['tags'], 0, 2));
-              }
-              $img = !empty($quote['image']) ? $quote['image'] : ($cin_gallery[$i % count($cin_gallery)] ?? '');
-              $vid = !empty($quote['video']) ? $quote['video'] : '';
-              $card_media = (($quote['media'] ?? '') === 'video' && $vid !== '') ? 'video' : 'photo';
+          <?php foreach ($cin_venues as $i => $venue) :
+              $meta = trim($venue['meta'] ?? '');
+              $img = $venue['image'] ?? '';
+              $url = $venue['url'] ?? '';
+              $kicker = !empty($venue['kicker']) ? $venue['kicker'] : $cin['cites_kicker'];
+              $blurb = $venue['text'] ?? '';
               ?>
             <article
               class="wvn-cin-cites__card<?php echo $i === 0 ? ' is-active' : ''; ?>"
               data-wvn-cin-cites-card
               data-index="<?php echo (int) $i; ?>"
-              data-quote="<?php echo esc_attr($quote['text']); ?>"
-              data-name="<?php echo esc_attr($quote['name']); ?>"
+              data-quote="<?php echo esc_attr($blurb); ?>"
+              data-name="<?php echo esc_attr($venue['name']); ?>"
               data-meta="<?php echo esc_attr($meta); ?>"
               data-image="<?php echo esc_url($img); ?>"
+              <?php if ($url) : ?>data-url="<?php echo esc_url($url); ?>"<?php endif; ?>
               style="--o: <?php echo (int) $i; ?>"
               role="button"
               tabindex="0"
               aria-roledescription="slide"
-              aria-label="<?php echo esc_attr('Read full story from ' . $quote['name']); ?>"
+              aria-label="<?php echo esc_attr('View venue: ' . $venue['name']); ?>"
               <?php echo $i === 0 ? '' : ' aria-hidden="true"'; ?>
             >
               <div class="wvn-cin-cites__card-media">
-                <?php if ($card_media === 'video') : ?>
-                  <video muted autoplay loop playsinline preload="metadata"<?php echo $img ? ' poster="' . esc_url($img) . '"' : ''; ?>>
-                    <source src="<?php echo esc_url($vid); ?>" type="video/mp4">
-                  </video>
-                <?php elseif ($img) : ?>
+                <?php if ($img) : ?>
                   <img src="<?php echo esc_url($img); ?>" alt="" loading="lazy" decoding="async">
                 <?php endif; ?>
               </div>
               <div class="wvn-cin-cites__card-body">
-                <p class="wvn-cin-cites__kicker"><?php echo esc_html($cin['cites_kicker']); ?></p>
-                <blockquote class="wvn-cin-cites__quote">“<?php echo esc_html($quote['text']); ?>”</blockquote>
-                <div class="wvn-cin-cites__credit">
-                  <cite class="wvn-cin-cites__name"><?php echo esc_html($quote['name']); ?></cite>
-                  <?php if ($meta) : ?>
+                <p class="wvn-cin-cites__kicker"><?php echo esc_html($kicker); ?></p>
+                <p class="wvn-cin-cites__venue-title"><?php echo esc_html($venue['name']); ?></p>
+                <?php if ($blurb !== '') : ?>
+                  <blockquote class="wvn-cin-cites__quote"><?php echo esc_html($blurb); ?></blockquote>
+                <?php endif; ?>
+                <?php if ($url) : ?>
+                  <span class="wvn-cin-cites__cta" aria-hidden="true">View venue</span>
+                <?php endif; ?>
+                <?php if ($meta) : ?>
+                  <div class="wvn-cin-cites__credit">
                     <span class="wvn-cin-cites__meta"><?php echo esc_html($meta); ?></span>
-                  <?php endif; ?>
-                </div>
+                  </div>
+                <?php endif; ?>
               </div>
             </article>
           <?php endforeach; ?>
@@ -330,20 +469,20 @@ $service_count = count($services);
       </div>
 
       <div class="wvn-cin-cites__nav">
-        <button type="button" class="wvn-cin-cites__btn" data-wvn-cin-cites-prev aria-label="Previous story">←</button>
-        <div class="wvn-cin-cites__dots" data-wvn-cin-cites-dots role="tablist" aria-label="Choose a story">
-          <?php foreach ($cin_quotes as $i => $quote) : ?>
+        <button type="button" class="wvn-cin-cites__btn" data-wvn-cin-cites-prev aria-label="Previous venue">←</button>
+        <div class="wvn-cin-cites__dots" data-wvn-cin-cites-dots role="tablist" aria-label="Choose a venue">
+          <?php foreach ($cin_venues as $i => $venue) : ?>
             <button
               type="button"
               class="wvn-cin-cites__dot<?php echo $i === 0 ? ' is-active' : ''; ?>"
               data-wvn-cin-cites-dot
               data-index="<?php echo (int) $i; ?>"
-              aria-label="Go to story <?php echo (int) ($i + 1); ?>"
+              aria-label="Go to venue <?php echo (int) ($i + 1); ?>"
               <?php echo $i === 0 ? ' aria-current="true"' : ''; ?>
             ></button>
           <?php endforeach; ?>
         </div>
-        <button type="button" class="wvn-cin-cites__btn" data-wvn-cin-cites-next aria-label="Next story">→</button>
+        <button type="button" class="wvn-cin-cites__btn" data-wvn-cin-cites-next aria-label="Next venue">→</button>
       </div>
     </div>
   </section>

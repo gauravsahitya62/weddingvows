@@ -63,7 +63,21 @@ body.wvn-body .wvn-cin-cites__quote {
 }
 
 body.wvn-body .wvn-cin-cites__name {
+  color: var(--wvn-ivory) !important;
+}
+
+body.wvn-body .wvn-cin-cites__venue-title {
+  font-family: var(--wvn-display) !important;
   color: var(--wvn-oxblood) !important;
+  text-transform: none !important;
+  letter-spacing: 0.02em !important;
+}
+
+body.wvn-body .wvn-cin-cites__cta {
+  font-family: var(--wvn-sans) !important;
+  color: var(--wvn-ivory) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.16em !important;
 }
 
 body.wvn-body .wvn-cin-story__start-eyebrow,
@@ -849,18 +863,43 @@ body.wvn-body .wvn-cin-cites__meta {
   color: var(--wvn-maroon);
 }
 
+.wvn-cin-cites__venue-title {
+  margin: 0 0 0.55rem;
+  font-family: var(--wvn-display);
+  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  color: var(--wvn-oxblood);
+}
+
 .wvn-cin-cites__quote {
   margin: 0;
   font-family: var(--wvn-serif);
   font-style: italic;
   font-weight: 400;
-  font-size: clamp(0.98rem, 2.4vw, 1.18rem);
+  font-size: clamp(0.92rem, 2.2vw, 1.08rem);
   line-height: 1.45;
   color: rgba(58, 39, 39, 0.9);
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.wvn-cin-cites__cta {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 0.85rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  background: var(--wvn-oxblood);
+  color: var(--wvn-ivory);
+  font-family: var(--wvn-sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 .wvn-cin-cites__credit {
@@ -897,9 +936,8 @@ body.wvn-body .wvn-cin-cites__meta {
   background: rgba(58, 39, 39, 0.08);
   color: rgba(58, 39, 39, 0.65);
   max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
+  line-height: 1.35;
 }
 
 .wvn-cin-cites__nav {
@@ -1129,5 +1167,28 @@ body.wvn-body .wvn-cin-cites__meta {
     min-height: 220px;
     max-height: 38vh;
   }
+}
+
+/* Force cream on homepage SEO bridge (overrides any dark-theme bleed) */
+body.wvn-body .wvn-home-seo-copy {
+  background: #f0ede4 !important;
+  color: #3a2727 !important;
+}
+body.wvn-body .wvn-home-seo-copy h2,
+body.wvn-body .wvn-home-seo-copy #wvn-home-seo-heading,
+body.wvn-body .wvn-home-seo-copy__lede,
+body.wvn-body .wvn-home-seo-copy__prompt,
+body.wvn-body .wvn-home-seo-copy__links a {
+  color: #3a2727 !important;
+}
+body.wvn-body .wvn-home-seo-copy h2 em {
+  color: rgba(58, 39, 39, 0.78) !important;
+}
+body.wvn-body .wvn-home-seo-copy__eyebrow {
+  color: #9a7b6a !important;
+}
+body.wvn-body .wvn-home-seo-copy__links a {
+  border-color: rgba(58, 39, 39, 0.22) !important;
+  background: transparent !important;
 }
 
