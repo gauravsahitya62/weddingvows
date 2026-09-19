@@ -65,7 +65,7 @@ $service_count = count($services);
     $intro_title_em = $intro['title_em'] ?? 'in';
     $intro_title_place = $intro['title_place'] ?? 'Udaipur';
     ?>
-    <section class="wvn-intro" aria-labelledby="wvn-intro-heading" data-wvn-intro>
+    <section class="wvn-intro<?php echo ($intro['layout_variant'] ?? 'editorial') === 'minimal' ? ' is-minimal-notes' : ''; ?>" aria-labelledby="wvn-intro-heading" data-wvn-intro>
       <?php if (!empty($intro['landscape'])) : ?>
         <div class="wvn-intro__scape" data-wvn-intro-scape aria-hidden="true">
           <img src="<?php echo esc_url($intro['landscape']); ?>" alt="" decoding="async" loading="lazy">
@@ -75,7 +75,7 @@ $service_count = count($services);
 
       <div class="wvn-intro__stage">
         <aside class="wvn-intro__rail wvn-intro__rail--left">
-          <?php if (!empty($intro['index_label']) || !empty($intro['index_meta'])) : ?>
+          <?php if (($intro['layout_variant'] ?? 'editorial') !== 'minimal' && (!empty($intro['index_label']) || !empty($intro['index_meta']))) : ?>
             <p class="wvn-intro__index">
               <?php if (!empty($intro['index_label'])) : ?><span><?php echo esc_html($intro['index_label']); ?></span><?php endif; ?>
               <?php if (!empty($intro['index_meta'])) : ?><small><?php echo esc_html($intro['index_meta']); ?></small><?php endif; ?>
@@ -83,7 +83,7 @@ $service_count = count($services);
           <?php endif; ?>
           <?php if (!empty($intro_by_slot['left']['url'])) : ?>
             <figure class="wvn-intro__shot wvn-intro__shot--arch" data-wvn-intro-shot>
-              <?php echo wvn_home_intro_image_html($intro_by_slot['left']['url'], $intro_by_slot['left']['alt'] ?? '', 'eager'); ?>
+              <?php echo wvn_home_intro_image_html($intro_by_slot['left']['url'], $intro_by_slot['left']['alt'] ?? '', 'eager', $intro['image_position'] ?? 'center'); ?>
             </figure>
           <?php endif; ?>
           <?php if (!empty($intro_by_slot['left-bot']['url'])) : ?>
@@ -91,7 +91,7 @@ $service_count = count($services);
               <?php echo wvn_home_intro_image_html($intro_by_slot['left-bot']['url'], $intro_by_slot['left-bot']['alt'] ?? '', 'lazy'); ?>
             </figure>
           <?php endif; ?>
-          <?php if (!empty($intro['note_left'])) : ?>
+          <?php if (($intro['layout_variant'] ?? 'editorial') !== 'minimal' && !empty($intro['note_left'])) : ?>
             <p class="wvn-intro__note wvn-intro__note--left"><?php echo esc_html($intro['note_left']); ?></p>
           <?php endif; ?>
         </aside>
@@ -137,6 +137,9 @@ $service_count = count($services);
             <?php if (!empty($intro['story_url']) && !empty($intro['story_label'])) : ?>
               <a class="wvn-intro__story" href="<?php echo esc_url($intro['story_url']); ?>"><?php echo esc_html($intro['story_label']); ?> ↗</a>
             <?php endif; ?>
+            <?php if (!empty($intro['secondary_cta_url']) && !empty($intro['secondary_cta_label'])) : ?>
+              <a class="wvn-intro__story" href="<?php echo esc_url($intro['secondary_cta_url']); ?>"><?php echo esc_html($intro['secondary_cta_label']); ?> ↗</a>
+            <?php endif; ?>
           </div>
         </div>
 
@@ -147,7 +150,7 @@ $service_count = count($services);
               <?php echo wvn_home_intro_image_html($intro_by_slot['right-top']['url'], $intro_by_slot['right-top']['alt'] ?? '', 'lazy'); ?>
             </figure>
           <?php endif; ?>
-          <?php if (!empty($intro['note_right'])) : ?>
+          <?php if (($intro['layout_variant'] ?? 'editorial') !== 'minimal' && !empty($intro['note_right'])) : ?>
             <p class="wvn-intro__note wvn-intro__note--right"><?php echo esc_html($intro['note_right']); ?></p>
           <?php endif; ?>
           <?php if (!empty($intro_by_slot['right-bot']['url'])) : ?>
@@ -155,23 +158,23 @@ $service_count = count($services);
               <?php echo wvn_home_intro_image_html($intro_by_slot['right-bot']['url'], $intro_by_slot['right-bot']['alt'] ?? '', 'lazy'); ?>
             </figure>
           <?php endif; ?>
-          <?php if (!empty($intro['note_detail'])) : ?>
+          <?php if (($intro['layout_variant'] ?? 'editorial') !== 'minimal' && !empty($intro['note_detail'])) : ?>
             <p class="wvn-intro__meta"><?php echo esc_html($intro['note_detail']); ?></p>
           <?php endif; ?>
         </aside>
       </div>
 
       <div class="wvn-intro__ground">
-        <?php if (!empty($intro['location'])) : ?>
+        <?php if (($intro['layout_variant'] ?? 'editorial') !== 'minimal' && !empty($intro['location'])) : ?>
           <p class="wvn-intro__place"><?php echo esc_html($intro['location']); ?></p>
         <?php endif; ?>
-        <?php if (!empty($intro['scroll_label'])) : ?>
+        <?php if (($intro['layout_variant'] ?? 'editorial') !== 'minimal' && !empty($intro['scroll_label'])) : ?>
           <p class="wvn-intro__scroll">
             <span class="wvn-intro__scroll-line" aria-hidden="true"></span>
             <?php echo esc_html($intro['scroll_label']); ?>
           </p>
         <?php endif; ?>
-        <?php if (!empty($intro['footer_mark'])) : ?>
+        <?php if (($intro['layout_variant'] ?? 'editorial') !== 'minimal' && !empty($intro['footer_mark'])) : ?>
           <p class="wvn-intro__mark">
             <span class="wvn-intro__mark-line" aria-hidden="true"></span>
             <?php echo esc_html($intro['footer_mark']); ?>
