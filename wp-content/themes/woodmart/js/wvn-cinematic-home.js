@@ -298,6 +298,16 @@
         if (on) dot.setAttribute("aria-current", "true");
         else dot.removeAttribute("aria-current");
       });
+
+      /* Active testimonial controls deck height so long reviews remain fully readable. */
+      if (deck && cards[index]) {
+        var activeHeight = Math.ceil(cards[index].scrollHeight || 0);
+        if (activeHeight) {
+          var deckHeight = Math.max(activeHeight + 48, vw < 640 ? 500 : 560);
+          deck.style.minHeight = deckHeight + "px";
+          deck.style.height = deckHeight + "px";
+        }
+      }
     }
 
     function go(to) {
@@ -472,6 +482,7 @@
 
     window.addEventListener("resize", function () {
       render();
+      window.requestAnimationFrame(render);
     }, { passive: true });
 
     function onPointerDown(e) {
