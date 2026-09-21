@@ -1,0 +1,133 @@
+/* Editorial testimonials page */
+.wvn-testimonials-page {
+  background: var(--cream, #f4efe6);
+  color: var(--teal-deep, #18201d);
+  min-height: 100vh;
+}
+.wvn-testimonials-hero {
+  width: min(960px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: clamp(120px, 15vw, 180px) 0 80px;
+  text-align: center;
+}
+.wvn-testimonials-hero .wvn-display {
+  margin: 10px 0 18px;
+}
+.wvn-testimonials-hero .wvn-display em {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+}
+.wvn-testimonials-hero .wvn-lede {
+  max-width: 620px;
+  margin: 0 auto;
+  line-height: 1.75;
+  color: rgba(24, 32, 29, .72);
+}
+.wvn-testimonials-list {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+  padding-bottom: 120px;
+}
+.wvn-testimonial-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: clamp(520px, 68vw, 760px);
+  background: #f8f3eb;
+  border-top: 1px solid rgba(24, 32, 29, .12);
+}
+.wvn-testimonial-detail.image-right .wvn-testimonial-detail__image {
+  order: 2;
+}
+.wvn-testimonial-detail.image-right .wvn-testimonial-detail__content {
+  order: 1;
+}
+.wvn-testimonial-detail__image {
+  min-height: 100%;
+  overflow: hidden;
+}
+.wvn-testimonial-detail__image img {
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+.wvn-testimonial-detail__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(42px, 7vw, 92px);
+  background: #f8f3eb;
+}
+.wvn-testimonial-detail__eyebrow {
+  margin: 0 0 18px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  color: rgba(24, 32, 29, .52);
+}
+.wvn-testimonial-detail__content h2 {
+  margin: 0 0 28px;
+  font-family: var(--font, Arial, sans-serif);
+  font-size: clamp(28px, 3.8vw, 54px);
+  line-height: 1.04;
+  font-weight: 400;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.wvn-testimonial-detail__content blockquote {
+  margin: 0;
+  max-width: 24ch;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: clamp(22px, 2.6vw, 36px);
+  line-height: 1.42;
+  color: rgba(24, 32, 29, .92);
+}
+.wvn-testimonial-detail__rule {
+  width: 58px;
+  height: 1px;
+  margin: 36px 0 16px;
+  background: rgba(24, 32, 29, .35);
+}
+.wvn-testimonial-detail__signature {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(24, 32, 29, .55);
+}
+.wvn-testimonial-empty {
+  padding: 100px 20px;
+  text-align: center;
+}
+@media (max-width: 760px) {
+  .wvn-testimonials-list {
+    width: min(100% - 24px, 640px);
+  }
+  .wvn-testimonial-detail,
+  .wvn-testimonial-detail.image-right {
+    grid-template-columns: 1fr;
+  }
+  .wvn-testimonial-detail.image-right .wvn-testimonial-detail__image,
+  .wvn-testimonial-detail.image-right .wvn-testimonial-detail__content {
+    order: initial;
+  }
+  .wvn-testimonial-detail__image img {
+    min-height: 360px;
+    aspect-ratio: 4 / 3;
+  }
+  .wvn-testimonial-detail__content {
+    padding: 42px 28px 52px;
+  }
+  .wvn-testimonial-detail__content blockquote {
+    max-width: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wvn-testimonial-detail__image img {
+    scroll-behavior: auto;
+  }
+}
