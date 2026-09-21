@@ -18,7 +18,7 @@ function theme_files() {
             'wvn-cinematic-home',
             get_theme_file_uri('/css/wvn-cinematic-home.css'),
             array('wvn-page-safety'),
-            '1.3.2'
+            '1.3.3'
         );
         wp_enqueue_script(
             'wvn-cinematic-home',
