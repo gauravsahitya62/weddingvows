@@ -502,6 +502,16 @@
     });
     prevBtn?.addEventListener("click", prevPage);
     nextBtn?.addEventListener("click", nextPage);
+    function updateQuoteScrollState() {
+      pressbook.querySelectorAll(".wvn-pressbook-quote-scroll").forEach((scroll) => {
+        scroll.classList.toggle("is-fit", scroll.scrollHeight <= scroll.clientHeight + 1);
+      });
+    }
+
+    updateQuoteScrollState();
+    window.addEventListener("resize", updateQuoteScrollState, { passive: true });
+    window.requestAnimationFrame(updateQuoteScrollState);
+
     pressbook.querySelector(".wvn-pressbook-3d")?.addEventListener("click", (e) => {
       if (!pressbook.classList.contains("is-open") || busy) return;
       if (e.target.closest("[data-book-toggle]")) return;
