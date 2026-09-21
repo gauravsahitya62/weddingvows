@@ -1212,3 +1212,54 @@ body.wvn-body .wvn-home-seo-copy__links a {
 @media (min-width:901px){.wvn-cin-cites__deck{--card-w:clamp(300px,25vw,380px);--card-h:540px}}
 @media (max-width:900px){.wvn-cin-cites__deck{--card-w:min(340px,78vw);--card-h:500px}}
 @media (max-width:640px){.wvn-cin-cites__deck{--card-w:min(300px,82vw);--card-h:500px}.wvn-cin-cites__card{border-radius:20px;grid-template-rows:56% 44%}.wvn-cin-cites__card-body{padding:1rem 1.05rem 1.1rem}.wvn-cin-cites__venue-title{min-height:2.4em;font-size:1.04rem}.wvn-cin-cites__quote{min-height:4.65em;max-height:4.65em;font-size:.95rem}}
+
+
+/* Story media hardening — uploaded ACF video must always behave as a contained background layer. */
+.wvn-cin-story__film video,
+.wvn-cin-story__vows-film video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  border: 0;
+  object-fit: cover;
+  object-position: center center;
+}
+
+@media (max-width: 767px) {
+  .wvn-cin-story {
+    width: 100%;
+    max-width: 100vw;
+    min-width: 0;
+    overflow: clip;
+  }
+
+  .wvn-cin-story__sticky,
+  .wvn-cin-story__film,
+  .wvn-cin-story__vows-film,
+  .wvn-cin-story__tiles,
+  .wvn-cin-story__start,
+  .wvn-cin-story__vows-caption {
+    width: 100%;
+    max-width: 100vw;
+    min-width: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .wvn-cin-story__start {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .wvn-cin-story__card,
+  .wvn-cin-story__vows-panel {
+    max-width: calc(100vw - 32px);
+  }
+}
