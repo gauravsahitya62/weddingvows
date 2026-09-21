@@ -72,7 +72,8 @@ function wvn_register_home_fields() {
     }
     wp_reset_postdata();
 
-    acf_add_local_field_group(array(
+    acf_add_local_field_group(array
+    (
         'key' => 'group_wvn_home',
         'title' => 'Homepage content',
         'style' => 'default',
@@ -1402,8 +1403,8 @@ function wvn_register_home_fields() {
                 'type' => 'text',
                 'default_value' => '53, Sun city, Delhite, Behind Celebration Mall, Bhuwana, Udaipur, Rajasthan 313001',
             ),
-        ),
-    ));
+    ),
+)
 }
 add_action('acf/init', 'wvn_register_home_fields');
 
