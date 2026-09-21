@@ -141,8 +141,6 @@ function wvn_register_home_fields() {
             ),
             array(
                 'key' => 'field_wvn_tab_intro',
-            array(
-                'key' => 'field_wvn_tab_intro',
                 'label' => 'The Art of Celebration',
                 'type' => 'tab',
             ),
