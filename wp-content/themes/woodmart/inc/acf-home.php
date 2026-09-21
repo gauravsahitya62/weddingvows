@@ -415,7 +415,8 @@ function wvn_register_home_fields() {
                 'name' => '',
                 'type' => 'message',
                 'message' => 'Legacy intro fields have been removed from this tab. Existing saved values remain untouched in the database.',
-                array(
+            ),
+            array(
                 'key' => 'field_wvn_home_seo_group',
                 'label' => 'Homepage SEO / Explore Section',
                 'name' => '',
