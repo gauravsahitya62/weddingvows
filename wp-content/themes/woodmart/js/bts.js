@@ -502,28 +502,6 @@
     });
     prevBtn?.addEventListener("click", prevPage);
     nextBtn?.addEventListener("click", nextPage);
-    function updateQuoteScrollState() {
-      const refresh = () => {
-        pressbook.querySelectorAll(".wvn-pressbook-quote-scroll").forEach((scroll) => {
-          const overflowing = scroll.scrollHeight > scroll.clientHeight + 1;
-          scroll.classList.toggle("is-fit", !overflowing);
-        });
-      };
-
-      refresh();
-      window.requestAnimationFrame(refresh);
-      if (document.fonts?.ready) {
-        document.fonts.ready.then(refresh).catch(() => {});
-      }
-
-      pressbook.querySelectorAll(".wvn-pressbook-quote-scroll").forEach((scroll) => {
-        if (scroll.__wvnQuoteObserver) return;
-        const ro = new ResizeObserver(refresh);
-        ro.observe(scroll);
-        scroll.__wvnQuoteObserver = ro;
-      });
-    }
-
     pressbook.querySelector(".wvn-pressbook-3d")?.addEventListener("click", (e) => {
       if (!pressbook.classList.contains("is-open") || busy) return;
       if (e.target.closest("[data-book-toggle]")) return;
