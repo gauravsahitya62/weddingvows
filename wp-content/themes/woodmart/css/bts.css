@@ -3270,3 +3270,27 @@ body.wvn-body .contact-form-wrapper { background: transparent; padding-top: 20px
   .wvn-guide-table td:last-child { white-space: normal; }
 }
 
+
+
+/* Testimonial book dynamic quote scrolling */
+.wvn-pressbook--testimonials .wvn-pressbook-leaf--quote {
+  display:flex;
+  flex-direction:column;
+  min-height:0;
+}
+.wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-quote-scroll {
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+  overflow-x:hidden;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(107,62,62,.45) transparent;
+  padding-right:8px;
+}
+.wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-quote-scroll::-webkit-scrollbar{width:5px}
+.wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-quote-scroll::-webkit-scrollbar-track{background:transparent}
+.wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-quote-scroll::-webkit-scrollbar-thumb{background:rgba(107,62,62,.42);border-radius:999px}
+.wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-quote-scroll.is-fit{overflow-y:visible;padding-right:0}
+@media(max-width:640px){.wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-quote-scroll{padding-right:6px}}
