@@ -504,7 +504,7 @@
     nextBtn?.addEventListener("click", nextPage);
     pressbook.querySelector(".wvn-pressbook-3d")?.addEventListener("click", (e) => {
       if (!pressbook.classList.contains("is-open") || busy) return;
-      if (e.target.closest("[data-book-toggle]")) return;
+      if (e.target.closest("[data-book-toggle], .wvn-pressbook-read-more")) return;
       if (flipped >= sheets.length) {
         nextPage();
         return;
