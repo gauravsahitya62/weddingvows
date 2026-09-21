@@ -1230,8 +1230,10 @@ function wvn_pressbook_sheets() {
             'brand' => $meta !== '' ? $meta : 'Couple story',
             'title' => $q['name'],
             'image' => $img,
-            'text'  => '“' . trim($q['text']) . '”',
+            'text'  => wvn_testimonial_excerpt($q['text'], 42),
             'quote' => true,
+            'read_more_url' => wvn_testimonial_page_url($i),
+            'read_more_label' => 'Read more',
         );
     }
 
@@ -1294,9 +1296,12 @@ function wvn_press_leaf($leaf) {
         <?php if (!empty($leaf['title'])) : ?><h3><?php echo esc_html($leaf['title']); ?></h3><?php endif; ?>
         <?php if (!empty($leaf['brand'])) : ?><p class="wvn-pressbook-brand"><?php echo esc_html($leaf['brand']); ?></p><?php endif; ?>
         <?php if (!empty($leaf['text'])) : ?>
-          <?php foreach (preg_split('/\n\s*\n/', trim($leaf['text'])) as $para) : ?>
-            <p><?php echo nl2br(esc_html(trim($para))); ?></p>
-          <?php endforeach; ?>
+          <p class="wvn-pressbook-quote-text"><?php echo esc_html($leaf['text']); ?></p>
+        <?php endif; ?>
+        <?php if (!empty($leaf['read_more_url'])) : ?>
+          <a class="wvn-pressbook-read-more" href="<?php echo esc_url($leaf['read_more_url']); ?>">
+            <?php echo esc_html($leaf['read_more_label'] ?? 'Read more'); ?> <span aria-hidden="true">↗</span>
+          </a>
         <?php endif; ?>
       <?php else : ?>
         <?php if (!empty($leaf['brand'])) : ?><p class="wvn-pressbook-brand"><?php echo esc_html($leaf['brand']); ?></p><?php endif; ?>
