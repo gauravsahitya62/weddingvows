@@ -734,11 +734,11 @@ button { font-family: inherit; cursor: pointer; }
 .wvn-pressbook-leaf--quote img {
   flex: 0 0 auto;
   width: 100%;
+  height: clamp(90px, 25vh, 190px) !important;
   min-height: 0;
-  height: auto !important;
-  max-height: 38%;
+  max-height: none;
   aspect-ratio: 3 / 2;
-  margin: 0 0 14px;
+  margin: 0 0 12px;
   object-fit: cover;
 }
 .wvn-pressbook-leaf--quote h3 {
@@ -749,21 +749,35 @@ button { font-family: inherit; cursor: pointer; }
   line-height: 1.2;
 }
 .wvn-pressbook-leaf--quote .wvn-pressbook-brand {
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   letter-spacing: 0.14em;
 }
-.wvn-pressbook-leaf--quote p:not(.wvn-pressbook-brand) {
-  flex: 0 1 auto;
+.wvn-pressbook-quote-text {
+  flex: 0 0 auto;
   font-family: "Cormorant Garamond", Georgia, serif;
   font-style: italic;
-  font-size: clamp(18px, 2.1vw, 28px);
+  font-size: clamp(16px, 1.75vw, 23px);
   font-weight: 400;
-  line-height: 1.35;
+  line-height: 1.32;
   letter-spacing: 0.01em;
   text-transform: none;
-  margin: 0;
+  margin: 0 auto !important;
   max-width: 34ch;
-  margin-inline: auto;
+}
+.wvn-pressbook-read-more {
+  margin: auto auto 0;
+  padding-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #1b1b1b;
+  font-family: var(--font);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(27, 27, 27, .35);
 }
 .wvn-pressbook-sheet.is-cover .is-front span,
 .wvn-pressbook-sheet.is-cover .is-front small {
