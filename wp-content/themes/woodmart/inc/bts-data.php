@@ -647,6 +647,42 @@ function wvn_faqs() {
     );
 }
 
+function wvn_testimonial_page_url($index = 0) {
+    $page = get_page_by_path('testimonials');
+    if ($page && $page->post_status === 'publish') {
+        return add_query_arg('testimonial', max(0, (int) $index), get_permalink($page));
+    }
+    return home_url('/testimonials/');
+}
+
+function wvn_testimonial_excerpt($text, $words = 42) {
+    $text = trim(wp_strip_all_tags((string) $text));
+    if ($text === '') {
+        return '';
+    }
+    return '“' . wp_trim_words($text, max(10, (int) $words), '…') . '”';
+}
+
+function wvn_testimonials_page_setup() {
+    $page = get_page_by_path('testimonials');
+    if (!$page) {
+        $page_id = wp_insert_post(array(
+            'post_title' => 'Testimonials',
+            'post_name' => 'testimonials',
+            'post_status' => 'publish',
+            'post_type' => 'page',
+            'post_content' => '',
+        ));
+        if (!is_wp_error($page_id) && $page_id) {
+            $page = get_post($page_id);
+        }
+    }
+    if ($page && !is_wp_error($page)) {
+        update_post_meta((int) $page->ID, '_wp_page_template', 'page-testimonials.php');
+    }
+}
+add_action('init', 'wvn_testimonials_page_setup', 31);
+
 function wvn_testimonials() {
     $rows = wvn_home_rows('home_quotes');
     if ($rows) {
