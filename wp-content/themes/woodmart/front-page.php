@@ -634,18 +634,32 @@ $service_count = count($services);
       <?php endforeach; ?>
     </div>
   </section>
+  <?php
+  $seo_eyebrow = wvn_home_text('home_seo_eyebrow', 'Wedding planning in Udaipur');
+  $seo_title = wvn_home_text('home_seo_title', 'Wedding & Event Planner');
+  $seo_title_em = wvn_home_text('home_seo_title_em', 'in Udaipur');
+  $seo_lede = wvn_home_text('home_seo_lede', 'Wedding Vows by Nikhil plans destination weddings and events in Udaipur, from palace celebrations and lakeside ceremonies to intimate and large multi-day weddings. Our team coordinates venue sourcing, wedding décor and design, guest hospitality, production and on-ground execution.');
+  $seo_prompt = wvn_home_text('home_seo_prompt', 'Planning a destination wedding in Udaipur?');
+  $seo_links = array(
+      array('label' => wvn_home_text('home_seo_link1_label', 'Udaipur wedding planning guide'), 'url' => wvn_home_text('home_seo_link1_url', home_url('/weddings-in-udaipur/'))),
+      array('label' => wvn_home_text('home_seo_link2_label', 'Wedding venues in Udaipur'), 'url' => wvn_home_text('home_seo_link2_url', home_url('/wedding-venues-udaipur/'))),
+      array('label' => wvn_home_text('home_seo_link3_label', 'Udaipur wedding costs'), 'url' => wvn_home_text('home_seo_link3_url', home_url('/udaipur-wedding-cost/'))),
+      array('label' => wvn_home_text('home_seo_link4_label', 'Real wedding portfolio'), 'url' => wvn_home_text('home_seo_link4_url', home_url('/portfolio/'))),
+  );
+  ?>
   <section class="wvn-home-seo-copy" aria-labelledby="wvn-home-seo-heading">
     <div class="wvn-home-seo-copy__inner">
-      <p class="wvn-home-seo-copy__eyebrow">Wedding planning in Udaipur</p>
-      <h2 id="wvn-home-seo-heading">Wedding &amp; Event Planner <em>in Udaipur</em></h2>
-      <p class="wvn-home-seo-copy__lede">Wedding Vows by Nikhil plans destination weddings and events in Udaipur, from palace celebrations and lakeside ceremonies to intimate and large multi-day weddings. Our team coordinates venue sourcing, wedding décor and design, guest hospitality, production and on-ground execution.</p>
+      <p class="wvn-home-seo-copy__eyebrow"><?php echo esc_html($seo_eyebrow); ?></p>
+      <h2 id="wvn-home-seo-heading"><?php echo esc_html($seo_title); ?> <em><?php echo esc_html($seo_title_em); ?></em></h2>
+      <p class="wvn-home-seo-copy__lede"><?php echo esc_html($seo_lede); ?></p>
       <nav class="wvn-home-seo-copy__links" aria-label="Continue exploring">
-        <p class="wvn-home-seo-copy__prompt">Planning a destination wedding in Udaipur?</p>
+        <p class="wvn-home-seo-copy__prompt"><?php echo esc_html($seo_prompt); ?></p>
         <ul>
-          <li><a href="<?php echo esc_url(home_url('/weddings-in-udaipur/')); ?>">Udaipur wedding planning guide</a></li>
-          <li><a href="<?php echo esc_url(home_url('/wedding-venues-udaipur/')); ?>">Wedding venues in Udaipur</a></li>
-          <li><a href="<?php echo esc_url(home_url('/udaipur-wedding-cost/')); ?>">Udaipur wedding costs</a></li>
-          <li><a href="<?php echo esc_url(home_url('/portfolio/')); ?>">Real wedding portfolio</a></li>
+          <?php foreach ($seo_links as $link) : ?>
+            <?php if (!empty($link['label']) && !empty($link['url'])) : ?>
+              <li><a href="<?php echo esc_url($link['url']); ?>"><?php echo esc_html($link['label']); ?></a></li>
+            <?php endif; ?>
+          <?php endforeach; ?>
         </ul>
       </nav>
     </div>
