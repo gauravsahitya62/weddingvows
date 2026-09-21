@@ -522,7 +522,6 @@ function wvn_register_home_fields() {
                 'label' => 'Collective',
                 'type' => 'tab',
             ),
-            ),
             array(
                 'key' => 'field_wvn_collective_kicker',
                 'label' => 'Kicker',
