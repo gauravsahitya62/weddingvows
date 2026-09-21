@@ -780,10 +780,21 @@ function wvn_cin_render_backdrop($mode, $video_url, $image_url) {
         return;
     }
 
+    $type = 'video/mp4';
+    $path = wp_parse_url($video_url, PHP_URL_PATH);
+    $ext = strtolower(pathinfo((string) $path, PATHINFO_EXTENSION));
+    if ($ext === 'webm') {
+        $type = 'video/webm';
+    } elseif ($ext === 'mov') {
+        $type = 'video/quicktime';
+    }
+
     printf(
-        '<video muted autoplay loop playsinline preload="metadata"%s><source src="%s" type="video/mp4"></video>',
+        '<video class="wvn-cin-video" muted autoplay loop playsinline preload="auto"%s src="%s"><source src="%s" type="%s"></video>',
         $image_url !== '' ? ' poster="' . esc_url($image_url) . '"' : '',
-        esc_url($video_url)
+        esc_url($video_url),
+        esc_url($video_url),
+        esc_attr($type)
     );
 }
 
