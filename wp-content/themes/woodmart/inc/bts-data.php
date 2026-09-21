@@ -1025,6 +1025,20 @@ function wvn_home_gallery_collage() {
     $weddings = function_exists('wvn_weddings') ? wvn_weddings() : array();
     $legacy_titles = wvn_home_gallery_legacy_copy();
     $roles = array('feature', 'stack-a', 'stack-b', 'portrait', 'wide', 'support-a', 'support-b', 'support-c');
+    $editor_items = wvn_home_rows('home_gallery_items');
+    $editor_map = array();
+
+    foreach ($editor_items as $row) {
+        $row_img = wvn_image_url($row['image'] ?? '', '');
+        if ($row_img) {
+            $editor_map[$row_img] = $row;
+            $id = wvn_attachment_id_from_media($row['image'] ?? '');
+            if ($id) {
+                $editor_map['id:' . $id] = $row;
+            }
+        }
+    }
+
     $items = array();
     $count = max(count($images), 6);
 
@@ -1032,16 +1046,23 @@ function wvn_home_gallery_collage() {
         $source = $images[$i % max(1, count($images))] ?? array(
             'url' => wvn_hero_image(),
             'categories' => array(),
+            'id' => 0,
         );
         $img = $source['url'] ?? wvn_hero_image();
         $categories = $source['categories'] ?? array();
         $tags = array();
+
         foreach ($categories as $term) {
             if (!empty($term['slug'])) {
                 $tags[] = sanitize_title($term['slug']);
             }
         }
         $tags = array_values(array_unique(array_filter($tags)));
+
+        $editor = $editor_map[$img] ?? null;
+        if (!$editor && !empty($source['id'])) {
+            $editor = $editor_map['id:' . (int) $source['id']] ?? null;
+        }
 
         $wedding = $weddings[$i % max(1, count($weddings))] ?? null;
         if ($wedding && !empty($wedding['image']) && $i < count($weddings) && $i > 0 && ($i % 3 === 0)) {
@@ -1057,6 +1078,7 @@ function wvn_home_gallery_collage() {
         $primary = $tags[0] ?? '';
         $label = 'Uncategorized';
         $title = $legacy_titles[$primary] ?? 'Destination wedding moment';
+
         if ($primary) {
             $term = get_term_by('slug', $primary, wvn_gallery_category_taxonomy());
             $label = ($term && !is_wp_error($term))
@@ -1070,10 +1092,22 @@ function wvn_home_gallery_collage() {
             $story = $wedding['url'] ?? '';
         }
 
+        if (is_array($editor)) {
+            if (!empty($editor['label'])) {
+                $label = $editor['label'];
+            }
+            if (!empty($editor['title'])) {
+                $title = $editor['title'];
+            }
+            if (!empty($editor['url'])) {
+                $story = $editor['url'];
+            }
+        }
+
         $role = $roles[$i] ?? 'support-c';
         $items[] = array(
             'image' => $img,
-            'alt' => $title . ' — destination wedding by Wedding Vows by Nikhil',
+            'alt' => (!empty($editor['alt']) ? $editor['alt'] : $title . ' — destination wedding by Wedding Vows by Nikhil'),
             'label' => $label,
             'title' => $title,
             'story_url' => $story,
@@ -1153,13 +1187,12 @@ function wvn_home_gallery_collage() {
         'kicker' => $kicker,
         'heading' => $heading,
         'lede' => $lede,
-        'cta_url' => home_url('/portfolio/'),
-        'cta' => 'View full gallery',
+        'cta_url' => wvn_home_text('home_gallery_cta_url', home_url('/portfolio/')),
+        'cta' => wvn_home_text('home_gallery_cta', 'View full gallery'),
         'filters' => $filters,
         'items' => $items,
     );
 }
-
 function wvn_stories() {
     $gallery = wvn_gallery_images();
     $defaults = array(
