@@ -56,6 +56,15 @@ function theme_files() {
         );
     }
 
+    if (is_page_template('page-testimonials.php') || is_page('testimonials')) {
+        wp_enqueue_style(
+            'wvn-testimonials',
+            get_theme_file_uri('/css/wvn-testimonials.css'),
+            array('wvn-page-safety'),
+            '1.0.0'
+        );
+    }
+
     if (is_singular('venue')) {
         wp_enqueue_style(
             'wvn-venue',
