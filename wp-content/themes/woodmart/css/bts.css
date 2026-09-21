@@ -726,7 +726,7 @@ button { font-family: inherit; cursor: pointer; }
 .wvn-pressbook--testimonials .wvn-pressbook-sheet.is-cover .is-front img {
   filter: none;
 }
-.wvn-pressbook-leaf--quote {
+.wvn-pressbook--testimonials .wvn-pressbook-leaf--quote {
   gap: 0;
   justify-content: flex-start;
   text-align: center;
