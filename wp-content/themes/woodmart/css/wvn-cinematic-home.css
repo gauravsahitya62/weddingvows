@@ -1263,3 +1263,27 @@ body.wvn-body .wvn-home-seo-copy__links a {
     max-width: calc(100vw - 32px);
   }
 }
+
+
+/* Uploaded cinematic videos: normalize WordPress/Smush-injected media sizing. */
+.wvn-cin-story__film video,
+.wvn-cin-story__vows-film video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  min-width: 0;
+  min-height: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  object-fit: cover;
+  object-position: center center;
+}
+.wvn-cin-story__film video source,
+.wvn-cin-story__vows-film video source {
+  display: none;
+}
