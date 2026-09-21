@@ -1294,11 +1294,9 @@ function wvn_press_leaf($leaf) {
         <?php if (!empty($leaf['title'])) : ?><h3><?php echo esc_html($leaf['title']); ?></h3><?php endif; ?>
         <?php if (!empty($leaf['brand'])) : ?><p class="wvn-pressbook-brand"><?php echo esc_html($leaf['brand']); ?></p><?php endif; ?>
         <?php if (!empty($leaf['text'])) : ?>
-          <div class="wvn-pressbook-quote-scroll">
-            <?php foreach (preg_split('/\n\s*\n/', trim($leaf['text'])) as $para) : ?>
-              <p><?php echo nl2br(esc_html(trim($para))); ?></p>
-            <?php endforeach; ?>
-          </div>
+          <?php foreach (preg_split('/\n\s*\n/', trim($leaf['text'])) as $para) : ?>
+            <p><?php echo nl2br(esc_html(trim($para))); ?></p>
+          <?php endforeach; ?>
         <?php endif; ?>
       <?php else : ?>
         <?php if (!empty($leaf['brand'])) : ?><p class="wvn-pressbook-brand"><?php echo esc_html($leaf['brand']); ?></p><?php endif; ?>
