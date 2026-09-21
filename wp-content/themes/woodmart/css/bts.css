@@ -731,7 +731,7 @@ button { font-family: inherit; cursor: pointer; }
   justify-content: flex-start;
   text-align: center;
 }
-.wvn-pressbook-leaf--quote img {
+.wvn-pressbook--testimonials .wvn-pressbook-leaf--quote img {
   flex: 0 0 auto;
   width: 100%;
   height: clamp(90px, 25vh, 190px) !important;
@@ -741,18 +741,18 @@ button { font-family: inherit; cursor: pointer; }
   margin: 0 0 12px;
   object-fit: cover;
 }
-.wvn-pressbook-leaf--quote h3 {
+.wvn-pressbook--testimonials .wvn-pressbook-leaf--quote h3 {
   margin: 0 0 4px;
   font-size: clamp(15px, 1.4vw, 19px);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   line-height: 1.2;
 }
-.wvn-pressbook-leaf--quote .wvn-pressbook-brand {
+.wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-brand {
   margin: 0 0 10px;
   letter-spacing: 0.14em;
 }
-.wvn-pressbook-quote-text {
+.wvn-pressbook--testimonials .wvn-pressbook-quote-text {
   flex: 0 0 auto;
   font-family: "Cormorant Garamond", Georgia, serif;
   font-style: italic;
@@ -764,7 +764,7 @@ button { font-family: inherit; cursor: pointer; }
   margin: 0 auto !important;
   max-width: 34ch;
 }
-.wvn-pressbook-read-more {
+.wvn-pressbook--testimonials .wvn-pressbook-read-more {
   margin: auto auto 0;
   padding-top: 12px;
   display: inline-flex;
