@@ -1491,7 +1491,7 @@ function wvn_register_home_fields() {
                 'default_value' => '53, Sun city, Delhite, Behind Celebration Mall, Bhuwana, Udaipur, Rajasthan 313001',
             ),
     ),
-)
+));
 }
 add_action('acf/init', 'wvn_register_home_fields');
 
