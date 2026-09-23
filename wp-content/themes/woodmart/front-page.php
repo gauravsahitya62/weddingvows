@@ -593,6 +593,7 @@ $service_count = count($services);
             $tag_str = implode(' ', $card['tags']);
             $role = $card['role'];
             $is_film = ($card['type'] ?? '') === 'film';
+            $is_video = ($card['type'] ?? '') === 'video';
             ?>
           <article
             class="wvn-hg-card wvn-hg-card--<?php echo esc_attr($role); ?><?php echo $is_film ? ' is-film' : ''; ?>"
@@ -611,6 +612,20 @@ $service_count = count($services);
                 <span class="wvn-hg-card__veil" aria-hidden="true"></span>
                 <span class="wvn-hg-card__play" aria-hidden="true">▶</span>
               </button>
+            <?php elseif ($is_video) : ?>
+              <div class="wvn-hg-card__media wvn-hg-card__media--video">
+                <video
+                  src="<?php echo esc_url($card['video']); ?>"
+                  <?php echo !empty($card['image']) ? 'poster="' . esc_url($card['image']) . '"' : ''; ?>
+                  muted
+                  autoplay
+                  loop
+                  playsinline
+                  preload="metadata"
+                  aria-label="<?php echo esc_attr($card['alt']); ?>"
+                ></video>
+                <span class="wvn-hg-card__veil" aria-hidden="true"></span>
+              </div>
             <?php else : ?>
               <a
                 class="wvn-hg-card__media"
@@ -634,6 +649,8 @@ $service_count = count($services);
                 <a class="wvn-hg-card__story" href="<?php echo esc_url($card['story_url']); ?>">View story <span aria-hidden="true">→</span></a>
               <?php elseif ($is_film) : ?>
                 <button type="button" class="wvn-hg-card__story" data-open-showreel>Watch film <span aria-hidden="true">→</span></button>
+              <?php elseif ($is_video) : ?>
+                <span class="wvn-hg-card__story">Watch film <span aria-hidden="true">→</span></span>
               <?php else : ?>
                 <button type="button" class="wvn-hg-card__story" data-hg-open-lb>View moment <span aria-hidden="true">→</span></button>
               <?php endif; ?>
