@@ -518,6 +518,36 @@ function wvn_register_home_fields() {
                 'wrapper' => array('width' => '50'),
             ),
             array(
+                'key' => 'field_wvn_home_seo_cards_tab',
+                'label' => 'SEO / Explore Cards',
+                'type' => 'tab',
+            ),
+            array(
+                'key' => 'field_wvn_home_seo_resources',
+                'label' => 'Homepage SEO pill links',
+                'name' => 'home_seo_resources',
+                'type' => 'repeater',
+                'layout' => 'table',
+                'button_label' => 'Add pill link',
+                'min' => 0,
+                'max' => 10,
+                'instructions' => 'Manage the small pill links shown below the four SEO cards.',
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_wvn_home_seo_resource_label',
+                        'label' => 'Label',
+                        'name' => 'label',
+                        'type' => 'text',
+                    ),
+                    array(
+                        'key' => 'field_wvn_home_seo_resource_url',
+                        'label' => 'URL',
+                        'name' => 'url',
+                        'type' => 'url',
+                    ),
+                ),
+            ),
+            array(
                 'key' => 'field_wvn_home_seo_topics',
                 'label' => 'Homepage SEO topic cards',
                 'name' => 'home_seo_topics',
@@ -1782,6 +1812,15 @@ function wvn_seed_home_page() {
             $logos[] = array('label' => $label);
         }
         update_field('home_press_logos', $logos, $id);
+    }
+    if (!wvn_home_rows('home_seo_resources')) {
+        update_field('home_seo_resources', array(
+            array('label' => 'Destination wedding planner in Udaipur', 'url' => home_url('/destination-wedding-planner-udaipur/')),
+            array('label' => 'Event planner in Udaipur', 'url' => home_url('/event-planner-udaipur/')),
+            array('label' => 'Luxury wedding planner in Udaipur', 'url' => home_url('/luxury-wedding-planner-udaipur/')),
+            array('label' => 'Palace wedding venues in Udaipur', 'url' => home_url('/palace-wedding-venues-in-udaipur/')),
+            array('label' => 'Weddings in Udaipur guide', 'url' => home_url('/weddings-in-udaipur/')),
+        ), $id);
     }
     if (!wvn_home_rows('home_seo_topics')) {
         update_field('home_seo_topics', array(
