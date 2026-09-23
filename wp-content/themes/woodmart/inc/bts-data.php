@@ -746,6 +746,7 @@ function wvn_testimonials() {
                         'label' => trim((string) ($section['label'] ?? '')),
                         'title' => trim((string) ($section['title'] ?? '')),
                         'text'  => trim(wp_strip_all_tags((string) ($section['text'] ?? ''))),
+                        'layout' => (($section['layout'] ?? '') === 'image_right') ? 'image_right' : 'image_left',
                         'media' => $section_media,
                         'image' => wvn_image_url($section['image'] ?? '', ''),
                         'video' => wvn_file_url($section['video'] ?? '', ''),
