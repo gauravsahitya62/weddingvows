@@ -1446,3 +1446,69 @@ body.wvn-body .wvn-home-seo-copy__links a {
     line-height: 1.3;
   }
 }
+
+
+/* Final venue-card metadata fit.
+ * Reserve real space for the credit row instead of allowing the 58/42 media
+ * split to push it below the cream card body.
+ */
+.wvn-cin-cites__card {
+  grid-template-rows: 52% 48%;
+}
+
+.wvn-cin-cites__card-body {
+  grid-template-rows: auto auto minmax(3.9em, 1fr) auto auto;
+  min-height: 0;
+  overflow: hidden;
+  padding: .95rem 1.25rem 1rem;
+}
+
+.wvn-cin-cites__quote {
+  min-height: 3.9em;
+  max-height: 4.65em;
+  -webkit-line-clamp: 3;
+  line-height: 1.45;
+  overflow: hidden;
+}
+
+.wvn-cin-cites__cta {
+  margin-top: .3rem;
+}
+
+.wvn-cin-cites__credit {
+  min-height: 0;
+  height: auto;
+  margin-top: .35rem;
+  padding-top: .4rem;
+  overflow: visible;
+}
+
+.wvn-cin-cites__credit .wvn-cin-cites__meta {
+  max-width: 100%;
+  min-width: 0;
+  white-space: normal;
+  overflow: hidden;
+  line-height: 1.25;
+}
+
+@media (max-width: 640px) {
+  .wvn-cin-cites__card {
+    grid-template-rows: 54% 46%;
+  }
+
+  .wvn-cin-cites__card-body {
+    grid-template-rows: auto auto minmax(3.6em, 1fr) auto auto;
+    padding: .8rem .95rem .85rem;
+  }
+
+  .wvn-cin-cites__quote {
+    min-height: 3.6em;
+    max-height: 4.35em;
+    line-height: 1.4;
+  }
+
+  .wvn-cin-cites__credit {
+    margin-top: .25rem;
+    padding-top: .3rem;
+  }
+}
