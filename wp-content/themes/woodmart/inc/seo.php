@@ -435,6 +435,59 @@ function wvn_seo_json_ld() {
         ),
     );
 
+    // Homepage topical entity map: connect the primary Udaipur wedding intent
+    // with the site's dedicated venue, planning and cost resources.
+    if (is_front_page()) {
+        $homepage_links = array(
+            array('name' => 'Destination Wedding Planner in Udaipur', 'url' => home_url('/destination-wedding-planner-udaipur/')),
+            array('name' => 'Wedding Planner in Udaipur', 'url' => home_url('/wedding-planner-udaipur/')),
+            array('name' => 'Event Planner in Udaipur', 'url' => home_url('/event-planner-udaipur/')),
+            array('name' => 'Luxury Wedding Planner in Udaipur', 'url' => home_url('/luxury-wedding-planner-udaipur/')),
+            array('name' => 'Wedding Venues in Udaipur', 'url' => home_url('/wedding-venues-udaipur/')),
+            array('name' => 'Udaipur Wedding Cost Guide', 'url' => home_url('/udaipur-wedding-cost/')),
+            array('name' => 'Palace Wedding Venues in Udaipur', 'url' => home_url('/palace-wedding-venues-in-udaipur/')),
+            array('name' => 'Weddings in Udaipur Guide', 'url' => home_url('/weddings-in-udaipur/')),
+        );
+        $link_items = array();
+        foreach ($homepage_links as $position => $link) {
+            $link_items[] = array(
+                '@type' => 'ListItem',
+                'position' => $position + 1,
+                'name' => $link['name'],
+                'url' => $link['url'],
+            );
+        }
+        $graph[] = array(
+            '@type' => 'ItemList',
+            'name' => 'Udaipur Wedding Planning Resources',
+            'description' => 'Wedding planning, venue and cost resources for destination weddings and events in Udaipur.',
+            'itemListElement' => $link_items,
+        );
+
+        if (function_exists('wvn_venues_for_home')) {
+            $home_venues = array_values(array_filter(wvn_venues_for_home(8), function ($venue) {
+                return !empty($venue['name']);
+            }));
+            $venue_items = array();
+            foreach ($home_venues as $position => $venue) {
+                $venue_items[] = array(
+                    '@type' => 'ListItem',
+                    'position' => $position + 1,
+                    'name' => $venue['name'],
+                    'url' => !empty($venue['url']) ? $venue['url'] : home_url('/wedding-venues-udaipur/'),
+                );
+            }
+            if ($venue_items) {
+                $graph[] = array(
+                    '@type' => 'ItemList',
+                    'name' => 'Wedding Venues in Udaipur',
+                    'description' => 'Palaces, heritage properties and luxury resorts presented by Wedding Vows by Nikhil for Udaipur celebrations.',
+                    'itemListElement' => $venue_items,
+                );
+            }
+        }
+    }
+
     $crumbs = array(
         array('name' => 'Home', 'url' => home_url('/')),
     );
