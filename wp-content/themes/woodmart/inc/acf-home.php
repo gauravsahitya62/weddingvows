@@ -518,6 +518,47 @@ function wvn_register_home_fields() {
                 'wrapper' => array('width' => '50'),
             ),
             array(
+                'key' => 'field_wvn_home_seo_topics',
+                'label' => 'Homepage SEO topic cards',
+                'name' => 'home_seo_topics',
+                'type' => 'repeater',
+                'layout' => 'block',
+                'button_label' => 'Add SEO topic card',
+                'min' => 4,
+                'max' => 4,
+                'instructions' => 'Manage the four SEO content cards shown in the homepage SEO section. Each card can have its own heading, description, link label and destination URL.',
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_wvn_home_seo_topic_heading',
+                        'label' => 'Card heading',
+                        'name' => 'heading',
+                        'type' => 'text',
+                    ),
+                    array(
+                        'key' => 'field_wvn_home_seo_topic_text',
+                        'label' => 'Card description',
+                        'name' => 'text',
+                        'type' => 'textarea',
+                        'rows' => 3,
+                    ),
+                    array(
+                        'key' => 'field_wvn_home_seo_topic_link',
+                        'label' => 'Link label',
+                        'name' => 'link_label',
+                        'type' => 'text',
+                        'wrapper' => array('width' => '50'),
+                    ),
+                    array(
+                        'key' => 'field_wvn_home_seo_topic_url',
+                        'label' => 'Link URL',
+                        'name' => 'link_url',
+                        'type' => 'url',
+                        'wrapper' => array('width' => '50'),
+                    ),
+                ),
+            ),
+
+            array(
                 'key' => 'field_wvn_tab_collective',
                 'label' => 'Collective',
                 'type' => 'tab',
@@ -1738,6 +1779,34 @@ function wvn_seed_home_page() {
         }
         update_field('home_press_logos', $logos, $id);
     }
+    if (!wvn_home_rows('home_seo_topics')) {
+        update_field('home_seo_topics', array(
+            array(
+                'heading' => 'Wedding & Event Planner in Udaipur',
+                'text' => 'Plan mehendi, haldi, sangeet, wedding ceremonies and receptions with one local team managing vendors, design, production and the wedding-day schedule.',
+                'link_label' => 'Wedding planning services →',
+                'link_url' => home_url('/wedding-planner-udaipur/'),
+            ),
+            array(
+                'heading' => 'Luxury & Palace Weddings in Udaipur',
+                'text' => 'Compare palace, heritage and luxury resort settings around Lake Pichola and Udaipur based on guest count, room blocks, functions and celebration style.',
+                'link_label' => 'Explore wedding venues →',
+                'link_url' => home_url('/wedding-venues-udaipur/'),
+            ),
+            array(
+                'heading' => 'Udaipur Destination Wedding Cost',
+                'text' => 'Understand the main budget drivers — venue and rooms, catering, décor, production, photography and planning — before you shortlist your venue and wedding season.',
+                'link_label' => 'See the cost guide →',
+                'link_url' => home_url('/udaipur-wedding-cost/'),
+            ),
+            array(
+                'heading' => 'Real Udaipur Wedding Stories',
+                'text' => 'Explore real celebrations, venues and couple stories to see how a destination wedding comes together from the first planning conversation to the final farewell.',
+                'link_label' => 'View real weddings →',
+                'link_url' => home_url('/portfolio/'),
+            ),
+        ), $id);
+    }
     update_option('_wvn_home_seeded_v1', '1');
 }
 add_action('acf/init', 'wvn_seed_home_page', 40);
@@ -2012,3 +2081,40 @@ function wvn_seed_editorial_intro_v3() {
     update_option('_wvn_intro_editorial_v3', '1', false);
 }
 add_action('acf/init', 'wvn_seed_editorial_intro_v3', 57);
+
+/** Seed homepage gallery cards from the existing rendered gallery once, so every card is editable in wp-admin. */
+function wvn_seed_home_gallery_cards_v1() {
+    if (!function_exists('update_field') || get_option('_wvn_home_gallery_cards_seeded_v1')) {
+        return;
+    }
+    $id = (int) get_option('page_on_front');
+    if (!$id) {
+        $page = get_page_by_path('home');
+        $id = $page ? (int) $page->ID : 0;
+    }
+    if (!$id || wvn_home_rows('home_gallery_cards')) {
+        update_option('_wvn_home_gallery_cards_seeded_v1', '1');
+        return;
+    }
+    $source = function_exists('wvn_home_gallery_collage') ? wvn_home_gallery_collage() : array();
+    $cards = array();
+    foreach (array_slice($source['items'] ?? array(), 0, 10) as $item) {
+        $image_id = !empty($item['image']) && function_exists('attachment_url_to_postid') ? attachment_url_to_postid($item['image']) : 0;
+        $video_id = !empty($item['video']) && function_exists('attachment_url_to_postid') ? attachment_url_to_postid($item['video']) : 0;
+        $cards[] = array(
+            'media' => (($item['type'] ?? 'photo') === 'video') ? 'video' : 'photo',
+            'image' => $image_id ?: '',
+            'video' => $video_id ?: '',
+            'label' => $item['label'] ?? '',
+            'title' => $item['title'] ?? '',
+            'text' => $item['text'] ?? '',
+            'url' => $item['story_url'] ?? '',
+            'alt' => $item['alt'] ?? '',
+        );
+    }
+    if ($cards) {
+        update_field('home_gallery_cards', $cards, $id);
+    }
+    update_option('_wvn_home_gallery_cards_seeded_v1', '1');
+}
+add_action('acf/init', 'wvn_seed_home_gallery_cards_v1', 50);
