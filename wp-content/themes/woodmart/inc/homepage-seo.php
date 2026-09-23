@@ -17,7 +17,7 @@ add_filter('wpseo_twitter_title', 'wvn_homepage_seo_title', 40);
 
 function wvn_homepage_seo_description($value) {
     if (is_front_page()) {
-        return 'Destination wedding planner in Udaipur for palace, lakeside and luxury weddings. Wedding Vows by Nikhil plans venues, décor, guest hospitality, production and on-ground wedding execution.';
+        return 'Destination wedding planner in Udaipur for palace, lakeside and luxury weddings. Wedding Vows by Nikhil handles venues, décor, hospitality and planning.';
     }
     return $value;
 }
