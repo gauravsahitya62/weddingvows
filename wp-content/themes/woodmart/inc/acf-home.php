@@ -1155,6 +1155,19 @@ function wvn_register_home_fields() {
                         'instructions' => 'These sections control the individual testimonial page. Each row becomes one horizontal IMAGE/TEXT or TEXT/IMAGE story section. Add as many sections as needed.',
                         'sub_fields' => array(
                             array(
+                                'key' => 'field_wvn_story_section_layout',
+                                'label' => 'Section layout',
+                                'name' => 'layout',
+                                'type' => 'select',
+                                'choices' => array(
+                                    'image_left' => 'Image left · Text right',
+                                    'image_right' => 'Text left · Image right',
+                                ),
+                                'default_value' => 'image_left',
+                                'return_format' => 'value',
+                                'wrapper' => array('width' => '100'),
+                            ),
+                            array(
                                 'key' => 'field_wvn_story_section_label',
                                 'label' => 'Section label',
                                 'name' => 'label',
