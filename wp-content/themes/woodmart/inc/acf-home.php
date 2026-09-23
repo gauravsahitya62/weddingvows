@@ -1799,6 +1799,91 @@ function wvn_seed_testimonials_book_v1() {
 add_action('acf/init', 'wvn_seed_testimonials_book_v1', 46);
 
 /**
+ * Seed editable testimonial story sections for existing reviews once.
+ * Existing review text/media is split into presentation-ready sections only
+ * when the new repeater is empty; subsequent admin edits are preserved.
+ */
+function wvn_seed_testimonial_story_sections_v1() {
+    if (!function_exists('get_field') || !function_exists('update_field') || get_option('_wvn_testimonial_story_sections_v1') === '1') {
+        return;
+    }
+
+    $id = (int) get_option('page_on_front');
+    if (!$id) {
+        $page = get_page_by_path('home');
+        $id = $page ? (int) $page->ID : 0;
+    }
+    if (!$id) {
+        return;
+    }
+
+    $rows = get_field('home_quotes', $id);
+    if (!is_array($rows) || !$rows) {
+        update_option('_wvn_testimonial_story_sections_v1', '1');
+        return;
+    }
+
+    foreach ($rows as &$row) {
+        if (!empty($row['story_sections']) && is_array($row['story_sections'])) {
+            continue;
+        }
+
+        $text = trim(wp_strip_all_tags((string) ($row['text'] ?? '')));
+        if ($text === '') {
+            $row['story_sections'] = array();
+            continue;
+        }
+
+        $sentences = preg_split('/(?<=[.!?])\s+/u', $text, -1, PREG_SPLIT_NO_EMPTY);
+        if (!is_array($sentences)) {
+            $sentences = array($text);
+        }
+
+        $chunks = array();
+        if (count($sentences) <= 2) {
+            $chunks[] = $text;
+        } else {
+            $target = max(1, (int) ceil(count($sentences) / 3));
+            foreach (array(
+                trim(implode(' ', array_slice($sentences, 0, $target))),
+                trim(implode(' ', array_slice($sentences, $target, $target))),
+                trim(implode(' ', array_slice($sentences, $target * 2)))
+            ) as $chunk) {
+                if ($chunk !== '') {
+                    $chunks[] = $chunk;
+                }
+            }
+        }
+
+        $media = (($row['media'] ?? '') === 'video' && !empty($row['video'])) ? 'video' : 'photo';
+        $labels = array('Their story', 'The feeling', 'The details', 'A lasting memory');
+        $tags = $row['tags'] ?? array();
+        if (is_string($tags)) {
+            $tags = array_filter(array_map('trim', explode(',', $tags)));
+        }
+
+        $sections = array();
+        foreach ($chunks as $i => $chunk) {
+            $sections[] = array(
+                'label' => $labels[$i] ?? 'Their story',
+                'title' => $i === 0 ? ($row['name'] ?? 'Their story') : ($tags[$i - 1] ?? 'A moment worth remembering'),
+                'text' => $chunk,
+                'media' => ($media === 'video' && $i === 1) ? 'video' : 'photo',
+                'image' => $row['image'] ?? '',
+                'video' => ($media === 'video' && $i === 1) ? ($row['video'] ?? '') : '',
+                'meta' => $row['time'] ?? '',
+            );
+        }
+        $row['story_sections'] = $sections;
+    }
+    unset($row);
+
+    update_field('home_quotes', $rows, $id);
+    update_option('_wvn_testimonial_story_sections_v1', '1');
+}
+add_action('acf/init', 'wvn_seed_testimonial_story_sections_v1', 47);
+
+/**
  * Ivory editorial intro upgrade (collage layout).
  */
 function wvn_seed_editorial_intro_v2() {
