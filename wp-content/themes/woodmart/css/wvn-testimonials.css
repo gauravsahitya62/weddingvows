@@ -551,3 +551,158 @@
     transition: none;
   }
 }
+
+
+/* Horizontal editorial story sections — desktop keeps the complete story within
+ * one viewport-height frame instead of creating tall, portrait-like panels.
+ */
+.wvn-testimonial-story-sections {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  gap: clamp(24px, 4vw, 56px);
+}
+
+.wvn-testimonial-story-section {
+  width: 100%;
+  height: min(100svh, 860px);
+  min-height: 620px;
+  max-height: 860px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  overflow: hidden;
+  border-top: 1px solid var(--wvn-story-line);
+}
+
+.wvn-testimonial-story-section__media {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  background: #e8ded2;
+}
+
+.wvn-testimonial-story-section__media img,
+.wvn-testimonial-story-section__media video {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+  display: block;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.wvn-testimonial-story-section__content {
+  height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+  justify-content: center;
+  padding: clamp(42px, 5vw, 76px);
+  overflow: hidden;
+}
+
+.wvn-testimonial-story-section__eyebrow {
+  margin-bottom: 12px;
+  font-size: 9px;
+}
+
+.wvn-testimonial-story-section__content h2 {
+  margin-bottom: 18px;
+  font-size: clamp(25px, 3.15vw, 44px);
+  line-height: 1.05;
+}
+
+.wvn-testimonial-story-section__content blockquote {
+  max-width: 31ch;
+  font-size: clamp(20px, 2.05vw, 29px);
+  line-height: 1.38;
+}
+
+.wvn-testimonial-story-section__rule {
+  margin: 24px 0 12px;
+  width: 46px;
+}
+
+.wvn-testimonial-story-section__meta {
+  font-size: 9px;
+  letter-spacing: .13em;
+}
+
+/* Keep the first image sharp and stable: don't artificially enlarge it beyond
+ * its rendered viewport box and avoid the previous tall-panel scaling.
+ */
+.wvn-testimonial-story-section__media img {
+  transform: none;
+  image-rendering: auto;
+}
+
+@media (min-width: 901px) {
+  .wvn-testimonial-story-section.is-reversed .wvn-testimonial-story-section__media {
+    order: 2;
+  }
+
+  .wvn-testimonial-story-section.is-reversed .wvn-testimonial-story-section__content {
+    order: 1;
+  }
+}
+
+@media (max-width: 900px) {
+  .wvn-testimonial-story-sections {
+    width: 100%;
+    gap: 28px;
+  }
+
+  .wvn-testimonial-story-section,
+  .wvn-testimonial-story-section.is-reversed {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    grid-template-columns: 1fr;
+    overflow: visible;
+  }
+
+  .wvn-testimonial-story-section.is-reversed .wvn-testimonial-story-section__media,
+  .wvn-testimonial-story-section.is-reversed .wvn-testimonial-story-section__content {
+    order: initial;
+  }
+
+  .wvn-testimonial-story-section__media,
+  .wvn-testimonial-story-section__media img,
+  .wvn-testimonial-story-section__media video {
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .wvn-testimonial-story-section__content {
+    height: auto;
+    min-height: 0;
+    padding: 42px 32px 52px;
+    overflow: visible;
+  }
+
+  .wvn-testimonial-story-section__content h2 {
+    font-size: clamp(26px, 5vw, 36px);
+  }
+
+  .wvn-testimonial-story-section__content blockquote {
+    max-width: none;
+    font-size: clamp(21px, 4vw, 27px);
+  }
+}
+
+@media (max-width: 680px) {
+  .wvn-testimonial-story-sections {
+    gap: 20px;
+  }
+
+  .wvn-testimonial-story-section__content {
+    padding: 36px 24px 46px;
+  }
+
+  .wvn-testimonial-story-section__content blockquote {
+    font-size: 22px;
+    line-height: 1.4;
+  }
+}
