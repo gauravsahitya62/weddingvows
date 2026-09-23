@@ -118,11 +118,6 @@ $service_count = count($services);
               <?php echo wvn_home_intro_image_html($intro_by_slot['left']['url'], $intro_by_slot['left']['alt'] ?? '', 'eager', $intro['image_position'] ?? 'center'); ?>
             </figure>
           <?php endif; ?>
-          <?php if (!empty($intro_by_slot['left-bot']['url'])) : ?>
-            <figure class="wvn-intro__shot wvn-intro__shot--overlap" data-wvn-intro-shot>
-              <?php echo wvn_home_intro_image_html($intro_by_slot['left-bot']['url'], $intro_by_slot['left-bot']['alt'] ?? '', 'lazy'); ?>
-            </figure>
-          <?php endif; ?>
           <?php if (($intro['layout_variant'] ?? 'editorial') !== 'minimal' && !empty($intro['note_left'])) : ?>
             <p class="wvn-intro__note wvn-intro__note--left"><?php echo esc_html($intro['note_left']); ?></p>
           <?php endif; ?>
@@ -184,11 +179,6 @@ $service_count = count($services);
           <?php endif; ?>
           <?php if (($intro['layout_variant'] ?? 'editorial') !== 'minimal' && !empty($intro['note_right'])) : ?>
             <p class="wvn-intro__note wvn-intro__note--right"><?php echo esc_html($intro['note_right']); ?></p>
-          <?php endif; ?>
-          <?php if (!empty($intro_by_slot['right-bot']['url'])) : ?>
-            <figure class="wvn-intro__shot wvn-intro__shot--wide" data-wvn-intro-shot>
-              <?php echo wvn_home_intro_image_html($intro_by_slot['right-bot']['url'], $intro_by_slot['right-bot']['alt'] ?? '', 'lazy'); ?>
-            </figure>
           <?php endif; ?>
           <?php if (($intro['layout_variant'] ?? 'editorial') !== 'minimal' && !empty($intro['note_detail'])) : ?>
             <p class="wvn-intro__meta"><?php echo esc_html($intro['note_detail']); ?></p>
