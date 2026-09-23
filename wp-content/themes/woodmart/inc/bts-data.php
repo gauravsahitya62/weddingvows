@@ -648,18 +648,30 @@ function wvn_faqs() {
 }
 
 function wvn_testimonial_page_url($index = 0) {
+    $index = max(0, (int) $index);
+    $quotes = function_exists('wvn_testimonials') ? wvn_testimonials() : array();
+
+    if (isset($quotes[$index]) && function_exists('wvn_testimonial_detail_url')) {
+        return wvn_testimonial_detail_url($quotes[$index], $index);
+    }
+
     $page = get_page_by_path('testimonials');
     if ($page && $page->post_status === 'publish') {
-        return add_query_arg('testimonial', max(0, (int) $index), get_permalink($page));
+        return add_query_arg('testimonial', $index, get_permalink($page));
     }
     return home_url('/testimonials/');
 }
 
-function wvn_testimonial_excerpt($text, $words = 42) {
+function wvn_testimonial_excerpt($text, $words = 28) {
     $text = trim(wp_strip_all_tags((string) $text));
     if ($text === '') {
         return '';
     }
+
+    if (function_exists('wvn_testimonial_excerpt_plain')) {
+        return '“' . wvn_testimonial_excerpt_plain($text, 165) . '”';
+    }
+
     return '“' . wp_trim_words($text, max(10, (int) $words), '…') . '”';
 }
 
