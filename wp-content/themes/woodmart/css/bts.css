@@ -3385,3 +3385,148 @@ body.wvn-body .wvn-cin-story .wvn-pressbook-read-more {
     margin-top: 16px !important;
   }
 }
+
+
+/* Testimonials pressbook: responsive-safe open-book layout.
+ * Desktop uses a true two-page spread; mobile keeps each page tall enough
+ * for the excerpt and Read more action instead of clipping the text.
+ */
+.wvn-pressbook--testimonials .wvn-pressbook-frame {
+  overflow: visible;
+}
+.wvn-pressbook--testimonials .wvn-pressbook-leaf--quote {
+  min-height: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+.wvn-pressbook--testimonials .wvn-pressbook-leaf--quote img {
+  flex: 0 0 auto;
+}
+.wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-quote-text {
+  flex: 0 1 auto;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  min-height: 0;
+}
+.wvn-pressbook--testimonials .wvn-pressbook-read-more {
+  flex: 0 0 auto;
+  margin-top: auto;
+  padding-bottom: 4px;
+}
+
+@media (max-width: 980px) {
+  .wvn-pressbook--testimonials {
+    --book-open-w: min(96vw, 700px);
+    --book-open-h: auto;
+  }
+
+  .wvn-pressbook--testimonials.is-open .wvn-pressbook-frame {
+    height: clamp(440px, 72vw, 560px);
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-leaf {
+    overflow: hidden;
+    padding: 16px 14px 18px;
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote img {
+    width: 100% !important;
+    height: clamp(96px, 21vw, 138px) !important;
+    max-height: none;
+    object-fit: cover;
+    margin: 0 0 10px;
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote h3 {
+    font-size: clamp(15px, 2.8vw, 19px);
+    line-height: 1.16;
+    margin-bottom: 4px;
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-brand {
+    font-size: 9px;
+    margin-bottom: 9px;
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-quote-text {
+    -webkit-line-clamp: 5;
+    font-size: clamp(15px, 2.7vw, 20px);
+    line-height: 1.28;
+    max-width: 32ch;
+    margin: 0 auto !important;
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-read-more {
+    font-size: 9px;
+    min-height: 34px;
+  }
+}
+
+@media (max-width: 640px) {
+  .wvn-achieve {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .wvn-achieve .wvn-display {
+    font-size: 22px;
+    letter-spacing: .2em;
+  }
+
+  .wvn-achieve .wvn-lede {
+    max-width: 34ch;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.55;
+  }
+
+  .wvn-pressbook--testimonials {
+    --book-closed-w: min(270px, 88vw);
+    --book-closed-h: 390px;
+    --book-open-w: min(98vw, 620px);
+  }
+
+  .wvn-pressbook--testimonials.is-open .wvn-pressbook-frame {
+    width: min(98vw, 620px);
+    height: 600px;
+    max-height: none;
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-sheet {
+    width: 50%;
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote {
+    padding: 14px 12px 16px;
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote img {
+    height: 118px !important;
+    margin-bottom: 10px;
+    border-radius: 6px;
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote h3 {
+    font-size: 15px;
+    letter-spacing: .045em;
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-brand {
+    font-size: 8px;
+    letter-spacing: .1em;
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-quote-text {
+    -webkit-line-clamp: 7;
+    font-size: 17px;
+    line-height: 1.34;
+    max-width: none;
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-read-more {
+    font-size: 8px;
+    letter-spacing: .12em;
+  }
+}
