@@ -15,6 +15,38 @@ endif;
 $weddings = wvn_weddings();
 $services = wvn_services();
 $faqs = wvn_faqs();
+
+/* Search-demand FAQ layer: answer the cost, venue and destination-planning
+ * questions already appearing in Search Console without stuffing the page.
+ */
+$homepage_search_faqs = array(
+    array(
+        'q' => 'How much does a destination wedding in Udaipur cost?',
+        'a' => 'The budget depends on guest count, venue, room block, number of functions, catering, décor and production. Our Udaipur wedding cost guide explains the main cost components and typical planning ranges before you shortlist a venue.',
+    ),
+    array(
+        'q' => 'What are the best wedding venues in Udaipur for a destination wedding?',
+        'a' => 'Udaipur offers lake palaces, heritage properties and luxury resorts. The right venue depends on your guest count, room requirements, ceremony spaces, number of functions and whether you want a palace, lakeside or resort setting.',
+    ),
+    array(
+        'q' => 'What does a wedding planner in Udaipur handle?',
+        'a' => 'A full-service Udaipur wedding planner can coordinate venue sourcing, vendor selection, décor and design, guest hospitality, transport, entertainment, production, timelines and on-ground execution across the wedding weekend.',
+    ),
+    array(
+        'q' => 'How early should I book a destination wedding planner in Udaipur?',
+        'a' => 'For popular palace and luxury resort dates, it is sensible to begin planning well ahead of the wedding season. Earlier planning gives you more choice of venue dates, room blocks, artists, décor teams and guest logistics.',
+    ),
+);
+$existing_faq_questions = array_map(function ($faq) {
+    return strtolower(trim((string) ($faq['q'] ?? '')));
+}, is_array($faqs) ? $faqs : array());
+foreach ($homepage_search_faqs as $search_faq) {
+    if (!in_array(strtolower($search_faq['q']), $existing_faq_questions, true)) {
+        $faqs[] = $search_faq;
+        $existing_faq_questions[] = strtolower($search_faq['q']);
+    }
+}
+
 $quotes = wvn_testimonials();
 $venues_home = function_exists('wvn_venues_for_home') ? wvn_venues_for_home(8) : array();
 $gallery = wvn_gallery_images();
