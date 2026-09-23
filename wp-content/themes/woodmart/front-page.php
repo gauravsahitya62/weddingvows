@@ -684,15 +684,21 @@ $service_count = count($services);
   ?>
   <section class="wvn-home-seo-copy" aria-labelledby="wvn-home-seo-heading">
     <div class="wvn-home-seo-copy__inner">
-      <p class="wvn-home-seo-copy__eyebrow">Destination wedding planning in Udaipur</p>
+      <?php
+      $seo_eyebrow = wvn_home_text('home_seo_eyebrow', 'Destination wedding planning in Udaipur');
+      $seo_title = wvn_home_text('home_seo_title', 'Destination Wedding Planner');
+      $seo_title_em = wvn_home_text('home_seo_title_em', 'in Udaipur');
+      $seo_lede = wvn_home_text('home_seo_lede', 'Wedding Vows by Nikhil is a Udaipur-based destination wedding planner and event planning studio for couples celebrating in Rajasthan. From palace and lakeside weddings to luxury resort celebrations, we handle venue sourcing, wedding décor and design, guest hospitality, entertainment, production, transport, timelines and complete on-ground coordination.');
+      ?>
+      <p class="wvn-home-seo-copy__eyebrow"><?php echo esc_html($seo_eyebrow); ?></p>
 
       <h2 id="wvn-home-seo-heading">
-        Destination Wedding Planner
-        <em>in Udaipur</em>
+        <?php echo esc_html($seo_title); ?>
+        <em><?php echo esc_html($seo_title_em); ?></em>
       </h2>
 
       <p class="wvn-home-seo-copy__lede">
-        Wedding Vows by Nikhil is a Udaipur-based destination wedding planner and event planning studio for couples celebrating in Rajasthan. From palace and lakeside weddings to luxury resort celebrations, we handle venue sourcing, wedding décor and design, guest hospitality, entertainment, production, transport, timelines and complete on-ground coordination.
+        <?php echo esc_html($seo_lede); ?>
       </p>
 
       <?php
@@ -740,12 +746,24 @@ $service_count = count($services);
         <?php endforeach; ?>
       </div>
 
+      <?php
+      $seo_resources = wvn_home_rows('home_seo_resources');
+      if (!$seo_resources) {
+          $seo_resources = array(
+              array('label' => 'Destination wedding planner in Udaipur', 'url' => home_url('/destination-wedding-planner-udaipur/')),
+              array('label' => 'Event planner in Udaipur', 'url' => home_url('/event-planner-udaipur/')),
+              array('label' => 'Luxury wedding planner in Udaipur', 'url' => home_url('/luxury-wedding-planner-udaipur/')),
+              array('label' => 'Palace wedding venues in Udaipur', 'url' => home_url('/palace-wedding-venues-in-udaipur/')),
+              array('label' => 'Weddings in Udaipur guide', 'url' => home_url('/weddings-in-udaipur/')),
+          );
+      }
+      ?>
       <nav class="wvn-home-seo-copy__links" aria-label="Udaipur wedding planning resources">
-        <a href="<?php echo esc_url(home_url('/destination-wedding-planner-udaipur/')); ?>">Destination wedding planner in Udaipur</a>
-        <a href="<?php echo esc_url(home_url('/event-planner-udaipur/')); ?>">Event planner in Udaipur</a>
-        <a href="<?php echo esc_url(home_url('/luxury-wedding-planner-udaipur/')); ?>">Luxury wedding planner in Udaipur</a>
-        <a href="<?php echo esc_url(home_url('/palace-wedding-venues-in-udaipur/')); ?>">Palace wedding venues in Udaipur</a>
-        <a href="<?php echo esc_url(home_url('/weddings-in-udaipur/')); ?>">Weddings in Udaipur guide</a>
+        <?php foreach ($seo_resources as $resource) : ?>
+          <?php if (!empty($resource['url']) && !empty($resource['label'])) : ?>
+            <a href="<?php echo esc_url($resource['url']); ?>"><?php echo esc_html($resource['label']); ?></a>
+          <?php endif; ?>
+        <?php endforeach; ?>
       </nav>
     </div>
   </section>
