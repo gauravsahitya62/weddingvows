@@ -697,8 +697,9 @@ function wvn_register_home_fields() {
                     ),
                     array(
                         'key' => 'field_wvn_press_title',
-                        'label' => 'Title',
+                        'label' => 'Card name',
                         'name' => 'title',
+                        'instructions' => 'The main name displayed on the gallery card.',
                         'type' => 'text',
                         'wrapper' => array('width' => '70'),
                     ),
@@ -1425,6 +1426,7 @@ function wvn_register_home_fields() {
                 'name' => 'home_gallery_cards',
                 'type' => 'repeater',
                 'layout' => 'block',
+                'collapsed' => 'field_wvn_gallery_card_title',
                 'button_label' => 'Add gallery item',
                 'instructions' => 'Manage every homepage gallery card here. Choose Photo or Video, upload the media, and edit the label, title, story URL and alt text.',
                 'sub_fields' => array(
@@ -1472,8 +1474,9 @@ function wvn_register_home_fields() {
                     ),
                     array(
                         'key' => 'field_wvn_gallery_card_label',
-                        'label' => 'Label / category',
+                        'label' => 'Category',
                         'name' => 'label',
+                        'instructions' => 'The small category label shown above the card name, e.g. Wedding Story, Udaipur, or Destination Wedding.',
                         'type' => 'text',
                         'wrapper' => array('width' => '50'),
                     ),
@@ -1494,8 +1497,9 @@ function wvn_register_home_fields() {
                     ),
                     array(
                         'key' => 'field_wvn_gallery_card_url',
-                        'label' => 'Story URL',
+                        'label' => 'View story link',
                         'name' => 'url',
+                        'instructions' => 'Destination for the View story link. Leave empty if this card should not link to a story.',
                         'type' => 'url',
                         'wrapper' => array('width' => '50'),
                     ),
