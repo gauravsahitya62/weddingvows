@@ -137,9 +137,12 @@ if ($current) {
             <video
               src="<?php echo esc_url($section_video); ?>"
               <?php if ($section_image !== '') : ?>poster="<?php echo esc_url($section_image); ?>"<?php endif; ?>
+              autoplay
+              muted
+              loop
               playsinline
               controls
-              preload="metadata"
+              preload="auto"
               aria-label="<?php echo esc_attr($section_title . ' testimonial film'); ?>"
             ></video>
           <?php else : ?>
