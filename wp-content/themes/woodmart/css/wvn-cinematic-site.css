@@ -734,6 +734,57 @@ body.wvn-cin-site .wvn-commercial-landing {
   background: var(--wvn-ivory);
 }
 
+/* Secondary-page editorial sections use the same cream paper system as the rest of the site. */
+body.wvn-cin-site .wvn-svc-core {
+  background: var(--wvn-ivory);
+  color: var(--wvn-oxblood);
+}
+
+body.wvn-cin-site .wvn-svc-core .wvn-svc-card.is-intro {
+  background: var(--wvn-ivory-soft);
+  color: var(--wvn-oxblood);
+  border: 1px solid rgba(58, 39, 39, 0.14);
+}
+
+body.wvn-cin-site .wvn-svc-core .wvn-svc-card.is-intro .wvn-display {
+  color: var(--wvn-oxblood);
+}
+
+body.wvn-cin-site .wvn-svc-core .wvn-svc-card.is-intro .wvn-svc-label {
+  color: var(--wvn-maroon);
+  opacity: 1;
+}
+
+body.wvn-cin-site .wvn-svc-core .wvn-svc-card.is-intro p {
+  color: rgba(58, 39, 39, 0.78);
+}
+
+body.wvn-cin-site .wvn-cta-box {
+  background: var(--wvn-ivory-soft);
+  color: var(--wvn-oxblood);
+  border: 1px solid rgba(58, 39, 39, 0.14);
+}
+
+body.wvn-cin-site .wvn-cta-box .wvn-display {
+  color: var(--wvn-oxblood);
+}
+
+body.wvn-cin-site .wvn-cta-box .wvn-lede {
+  color: rgba(58, 39, 39, 0.72);
+}
+
+body.wvn-cin-site .wvn-btn {
+  background: var(--wvn-oxblood);
+  border-color: var(--wvn-oxblood);
+  color: var(--wvn-ivory);
+}
+
+body.wvn-cin-site .wvn-btn:hover {
+  background: var(--wvn-maroon);
+  border-color: var(--wvn-maroon);
+  color: var(--wvn-ivory);
+}
+
 body.wvn-cin-site .wvn-cta-box {
   background: var(--wvn-oxblood-deep);
   color: var(--wvn-ivory);
