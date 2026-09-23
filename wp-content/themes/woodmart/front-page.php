@@ -283,6 +283,46 @@ $service_count = count($services);
     </div>
   </section>
 
+  <?php
+  $partner_rows = function_exists('wvn_home_rows') ? wvn_home_rows('home_partner_logos') : array();
+  if ($partner_rows) :
+      $partner_heading = wvn_home_text('home_partner_logos_heading', 'Brand collaborations');
+      $partner_lede = wvn_home_text('home_partner_logos_lede', 'We’ve proudly collaborated with some of the most celebrated names in the wedding and luxury space.');
+      $partner_loop = array_merge($partner_rows, $partner_rows);
+  ?>
+  <section class="wvn-partner-strip" aria-label="<?php echo esc_attr($partner_heading); ?>">
+    <div class="wvn-partner-strip__inner">
+      <div class="wvn-partner-strip__copy">
+        <p class="wvn-kicker"><?php echo esc_html($partner_heading); ?></p>
+        <?php if ($partner_lede !== '') : ?><p class="wvn-partner-strip__lede"><?php echo esc_html($partner_lede); ?></p><?php endif; ?>
+      </div>
+      <div class="wvn-partner-strip__viewport" aria-label="<?php echo esc_attr($partner_heading); ?>">
+        <div class="wvn-partner-strip__track">
+          <?php foreach ($partner_loop as $index => $partner) :
+              $logo = function_exists('wvn_image_url') ? wvn_image_url($partner['logo'] ?? '', '') : '';
+              $name = trim((string) ($partner['name'] ?? ''));
+              $url = trim((string) ($partner['url'] ?? ''));
+              if ($logo === '') {
+                  continue;
+              }
+              $is_clone = $index >= count($partner_rows);
+              $alt = $name !== '' ? $name : 'Partner logo';
+          ?>
+            <?php if ($url !== '' && !$is_clone) : ?>
+              <a class="wvn-partner-strip__logo" href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr($name !== '' ? $name : 'Partner website'); ?>">
+                <img src="<?php echo esc_url($logo); ?>" alt="<?php echo esc_attr($alt); ?>" loading="lazy" decoding="async">
+              </a>
+            <?php else : ?>
+              <span class="wvn-partner-strip__logo" aria-hidden="<?php echo $is_clone ? 'true' : 'false'; ?>">
+                <img src="<?php echo esc_url($logo); ?>" alt="<?php echo esc_attr($alt); ?>" loading="lazy" decoding="async">
+              </span>
+            <?php endif; ?>
+          <?php endforeach; ?>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="wvn-services wvn-pin" data-pin="services">
     <div class="wvn-pin-sticky wvn-services-sticky">
       <div class="wvn-services-bgs" aria-hidden="true">
