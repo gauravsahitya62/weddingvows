@@ -247,6 +247,35 @@ function wvn_image_url($value, $default = '') {
     return $default;
 }
 
+/**
+ * Resolve an ACF file field to its actual attachment URL.
+ * This is intentionally separate from wvn_image_url(), which uses image
+ * metadata and can return an image URL for a numeric attachment ID.
+ */
+function wvn_file_url($value, $default = '') {
+    if (is_array($value)) {
+        if (!empty($value['url'])) {
+            return (string) $value['url'];
+        }
+        if (!empty($value['ID'])) {
+            $url = wp_get_attachment_url((int) $value['ID']);
+            if ($url) {
+                return $url;
+            }
+        }
+    }
+    if (is_numeric($value)) {
+        $url = wp_get_attachment_url((int) $value);
+        if ($url) {
+            return $url;
+        }
+    }
+    if (is_string($value) && $value !== '') {
+        return $value;
+    }
+    return $default;
+}
+
 function wvn_home_text($name, $default = '') {
     if (!function_exists('get_field')) {
         return $default;
@@ -708,6 +737,22 @@ function wvn_testimonials() {
             if ($media !== 'video' && $media !== 'photo') {
                 $media = !empty($row['video']) ? 'video' : 'photo';
             }
+            $story_sections = array();
+            if (!empty($row['story_sections']) && is_array($row['story_sections'])) {
+                foreach ($row['story_sections'] as $section) {
+                    $section_media = isset($section['media']) ? (string) $section['media'] : 'photo';
+                    $section_media = $section_media === 'video' ? 'video' : 'photo';
+                    $story_sections[] = array(
+                        'label' => trim((string) ($section['label'] ?? '')),
+                        'title' => trim((string) ($section['title'] ?? '')),
+                        'text'  => trim(wp_strip_all_tags((string) ($section['text'] ?? ''))),
+                        'media' => $section_media,
+                        'image' => wvn_image_url($section['image'] ?? '', ''),
+                        'video' => wvn_file_url($section['video'] ?? '', ''),
+                        'meta'  => trim((string) ($section['meta'] ?? '')),
+                    );
+                }
+            }
             $items[] = array(
                 'name'  => $row['name'] ?? '',
                 'time'  => $row['time'] ?? '',
@@ -716,7 +761,8 @@ function wvn_testimonials() {
                 'dark'  => !empty($row['dark']),
                 'media' => $media,
                 'image' => wvn_image_url($row['image'] ?? '', ''),
-                'video' => wvn_image_url($row['video'] ?? '', ''),
+                'video' => wvn_file_url($row['video'] ?? '', ''),
+                'story_sections' => $story_sections,
             );
         }
         return $items;
