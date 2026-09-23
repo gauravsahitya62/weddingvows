@@ -56,6 +56,9 @@ add_action('acf/init', 'hfm_acf_init_standard_blocks');
 require_once get_theme_file_path($theme_inc_dir . '/acf-custom-blocks.php');
 add_action('acf/init', 'hfm_acf_init_custom_blocks');
 
+/* Stable testimonial detail routes / SEO helpers live outside the large shared data file. */
+require_once get_theme_file_path($theme_inc_dir . '/testimonial-pages.php');
+
 @ini_set('upload_max_size', '256M');
 @ini_set('post_max_size', '256M');
 @ini_set('max_execution_time', '300');
