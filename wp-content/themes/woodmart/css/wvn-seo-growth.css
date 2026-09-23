@@ -87,7 +87,20 @@ body.wvn-body .wvn-home-seo-copy__lede {
   margin: 36px auto 0;
   padding-top: 28px;
   border-top: 1px solid rgba(58, 39, 39, 0.14);
-  max-width: 52em;
+  width: 100%;
+  max-width: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.wvn-home-seo-copy__links::-webkit-scrollbar {
+  display: none;
 }
 
 .wvn-home-seo-copy__prompt,
@@ -103,7 +116,7 @@ body.wvn-body .wvn-home-seo-copy__prompt {
 
 .wvn-home-seo-copy__links ul {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
   gap: 10px;
   margin: 0;
@@ -160,12 +173,15 @@ body.wvn-body .wvn-home-seo-copy__links a:focus-visible {
     line-height: 1.5;
   }
 
-  .wvn-home-seo-copy__links ul {
+  .wvn-home-seo-copy__links {
     flex-direction: column;
     align-items: stretch;
+    overflow-x: visible;
+    gap: 10px;
   }
 
   .wvn-home-seo-copy__links a {
     justify-content: center;
+    width: 100%;
   }
 }
