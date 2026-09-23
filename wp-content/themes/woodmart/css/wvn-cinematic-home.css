@@ -1358,3 +1358,91 @@ body.wvn-body .wvn-home-seo-copy__links a {
 .wvn-cin-cites__card-body > .wvn-cin-cites__credit {
   flex-shrink: 0;
 }
+
+
+/* Venue card content fit: keep the location/guest metadata inside the visible
+ * cream panel instead of letting the flex stack push it below the card.
+ */
+.wvn-cin-cites__card {
+  overflow: hidden;
+}
+
+.wvn-cin-cites__card-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+  align-content: stretch;
+  justify-content: initial;
+  gap: 0;
+  overflow: hidden;
+  padding: 1.05rem 1.25rem 1.15rem;
+}
+
+.wvn-cin-cites__kicker {
+  margin: 0 0 .35rem;
+}
+
+.wvn-cin-cites__venue-title {
+  margin: 0 0 .35rem;
+}
+
+.wvn-cin-cites__quote {
+  min-height: 0;
+  max-height: none;
+  margin: 0;
+  padding: .15rem 0 .2rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  align-self: start;
+}
+
+.wvn-cin-cites__cta {
+  margin-top: .35rem;
+  align-self: start;
+}
+
+.wvn-cin-cites__credit {
+  width: 100%;
+  min-width: 0;
+  margin-top: .5rem;
+  padding-top: .55rem;
+  align-self: end;
+  box-sizing: border-box;
+}
+
+.wvn-cin-cites__credit .wvn-cin-cites__meta {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 640px) {
+  .wvn-cin-cites__card-body {
+    padding: .9rem 1rem 1rem;
+  }
+
+  .wvn-cin-cites__quote {
+    -webkit-line-clamp: 3;
+    font-size: .93rem;
+    line-height: 1.45;
+  }
+
+  .wvn-cin-cites__cta {
+    margin-top: .25rem;
+  }
+
+  .wvn-cin-cites__credit {
+    margin-top: .4rem;
+    padding-top: .45rem;
+  }
+
+  .wvn-cin-cites__meta {
+    font-size: 8px;
+    line-height: 1.3;
+  }
+}
