@@ -1287,3 +1287,74 @@ body.wvn-body .wvn-home-seo-copy__links a {
 .wvn-cin-story__vows-film video source {
   display: none;
 }
+
+
+/* Final responsive hardening for homepage venue cards.
+ * The visual deck remains centered, but the section/card height now follows
+ * the actual content so lower metadata and CTA cannot be clipped.
+ */
+.wvn-cin-cites {
+  overflow: visible;
+}
+.wvn-cin-cites__deck {
+  min-height: calc(var(--card-h) + 86px);
+  padding-bottom: 26px;
+  box-sizing: border-box;
+}
+.wvn-cin-cites__stage {
+  min-height: var(--card-h);
+  height: var(--card-h);
+}
+.wvn-cin-cites__card {
+  overflow: visible;
+  height: var(--card-h);
+  min-height: var(--card-h);
+  max-height: none;
+  grid-template-rows: 56% 44%;
+}
+.wvn-cin-cites__card-media {
+  overflow: hidden;
+}
+.wvn-cin-cites__card-body {
+  overflow: visible;
+  min-height: 0;
+  box-sizing: border-box;
+}
+.wvn-cin-cites__quote {
+  flex: 0 0 auto;
+}
+.wvn-cin-cites__credit {
+  flex: 0 0 auto;
+}
+.wvn-cin-cites__nav {
+  position: relative;
+  z-index: 2;
+  margin-top: 1rem;
+}
+
+@media (max-width: 900px) {
+  .wvn-cin-cites__deck {
+    min-height: calc(var(--card-h) + 82px);
+  }
+  .wvn-cin-cites__stage {
+    min-height: var(--card-h);
+    height: var(--card-h);
+  }
+}
+
+@media (max-width: 640px) {
+  .wvn-cin-cites__deck {
+    min-height: calc(var(--card-h) + 78px);
+  }
+  .wvn-cin-cites__card {
+    grid-template-rows: 55% 45%;
+  }
+}
+
+/* Keep venue cards contained even when a long title/meta value is supplied. */
+.wvn-cin-cites__card-body > .wvn-cin-cites__venue-title,
+.wvn-cin-cites__card-body > .wvn-cin-cites__quote,
+.wvn-cin-cites__card-body > .wvn-cin-cites__cta,
+.wvn-cin-cites__card-body > .wvn-cin-cites__credit {
+  flex-shrink: 0;
+}
