@@ -3530,3 +3530,48 @@ body.wvn-body .wvn-cin-story .wvn-pressbook-read-more {
     letter-spacing: .12em;
   }
 }
+
+
+/* Final testimonial teaser typography fit.
+ * The excerpt itself is intentionally clamped, but it must end on a complete
+ * line and never occupy the same flex space as the Read More control.
+ */
+.wvn-pressbook--testimonials .wvn-pressbook-leaf--quote {
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+.wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-quote-text {
+  flex: 0 0 auto !important;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  width: min(100%, 34ch);
+  max-height: 4.2em;
+  margin: 0 auto !important;
+  line-height: 1.4;
+}
+
+.wvn-pressbook--testimonials .wvn-pressbook-read-more {
+  flex: 0 0 auto;
+  margin: auto auto 0 !important;
+}
+
+@media (max-width: 980px) {
+  .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-quote-text {
+    -webkit-line-clamp: 3;
+    max-height: 4.2em;
+    line-height: 1.4;
+    font-size: clamp(15px, 2.5vw, 19px);
+  }
+}
+
+@media (max-width: 640px) {
+  .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-quote-text {
+    -webkit-line-clamp: 3;
+    max-height: 4.35em;
+    font-size: 16px;
+    line-height: 1.45;
+  }
+}
