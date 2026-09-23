@@ -145,11 +145,11 @@ body.wvn-body .wvn-home-seo-copy__lede {
   border-top: 1px solid rgba(58, 39, 39, 0.14);
   width: 100%;
   max-width: none;
-  display: flex;
+  display: flex !important;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start !important;
   gap: 12px;
-  flex-wrap: nowrap;
+  flex-wrap: nowrap !important;
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -250,14 +250,18 @@ body.wvn-body .wvn-home-seo-copy__links a:focus-visible {
   }
 
   .wvn-home-seo-copy__links {
-    flex-direction: column;
-    align-items: stretch;
-    overflow-x: visible;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start !important;
+    overflow-x: auto;
     gap: 10px;
+    flex-wrap: nowrap !important;
   }
 
   .wvn-home-seo-copy__links a {
     justify-content: center;
-    width: 100%;
+    width: auto;
+    flex: 0 0 auto;
+    white-space: nowrap;
   }
 }
