@@ -569,20 +569,6 @@ $service_count = count($services);
         <p class="wvn-hg__lede"><?php echo esc_html($hg['lede']); ?></p>
       </header>
 
-      <?php if (count($hg['filters']) > 1) : ?>
-        <div class="wvn-hg__filters" role="tablist" aria-label="Filter gallery">
-          <?php foreach ($hg['filters'] as $fkey => $flabel) : ?>
-            <button
-              type="button"
-              class="wvn-hg__filter<?php echo $fkey === 'all' ? ' is-active' : ''; ?>"
-              role="tab"
-              aria-selected="<?php echo $fkey === 'all' ? 'true' : 'false'; ?>"
-              data-hg-filter="<?php echo esc_attr($fkey); ?>"
-            ><?php echo esc_html($flabel); ?></button>
-          <?php endforeach; ?>
-        </div>
-      <?php endif; ?>
-
       <p class="wvn-hg__rail-hint" aria-hidden="true">
         <span>Swipe stories</span>
         <span data-hg-progress>01 / <?php echo esc_html(str_pad((string) max(1, count($hg_items)), 2, '0', STR_PAD_LEFT)); ?></span>
@@ -709,30 +695,49 @@ $service_count = count($services);
         Wedding Vows by Nikhil is a Udaipur-based destination wedding planner and event planning studio for couples celebrating in Rajasthan. From palace and lakeside weddings to luxury resort celebrations, we handle venue sourcing, wedding décor and design, guest hospitality, entertainment, production, transport, timelines and complete on-ground coordination.
       </p>
 
+      <?php
+      $seo_topics = wvn_home_rows('home_seo_topics');
+      if (!$seo_topics) {
+          $seo_topics = array(
+              array(
+                  'heading' => 'Wedding & Event Planner in Udaipur',
+                  'text' => 'Plan mehendi, haldi, sangeet, wedding ceremonies and receptions with one local team managing vendors, design, production and the wedding-day schedule.',
+                  'link_label' => 'Wedding planning services →',
+                  'link_url' => home_url('/wedding-planner-udaipur/'),
+              ),
+              array(
+                  'heading' => 'Luxury & Palace Weddings in Udaipur',
+                  'text' => 'Compare palace, heritage and luxury resort settings around Lake Pichola and Udaipur based on guest count, room blocks, functions and celebration style.',
+                  'link_label' => 'Explore wedding venues →',
+                  'link_url' => home_url('/wedding-venues-udaipur/'),
+              ),
+              array(
+                  'heading' => 'Udaipur Destination Wedding Cost',
+                  'text' => 'Understand the main budget drivers — venue and rooms, catering, décor, production, photography and planning — before you shortlist your venue and wedding season.',
+                  'link_label' => 'See the cost guide →',
+                  'link_url' => home_url('/udaipur-wedding-cost/'),
+              ),
+              array(
+                  'heading' => 'Real Udaipur Wedding Stories',
+                  'text' => 'Explore real celebrations, venues and couple stories to see how a destination wedding comes together from the first planning conversation to the final farewell.',
+                  'link_label' => 'View real weddings →',
+                  'link_url' => home_url('/portfolio/'),
+              ),
+          );
+      }
+      ?>
       <div class="wvn-home-seo-copy__topics">
-        <article>
-          <h3>Wedding &amp; Event Planner in Udaipur</h3>
-          <p>Plan mehendi, haldi, sangeet, wedding ceremonies and receptions with one local team managing vendors, design, production and the wedding-day schedule.</p>
-          <a href="<?php echo esc_url(home_url('/wedding-planner-udaipur/')); ?>">Wedding planning services <span aria-hidden="true">→</span></a>
-        </article>
-
-        <article>
-          <h3>Luxury &amp; Palace Weddings in Udaipur</h3>
-          <p>Compare palace, heritage and luxury resort settings around Lake Pichola and Udaipur based on guest count, room blocks, functions and celebration style.</p>
-          <a href="<?php echo esc_url(home_url('/wedding-venues-udaipur/')); ?>">Explore wedding venues <span aria-hidden="true">→</span></a>
-        </article>
-
-        <article>
-          <h3>Udaipur Destination Wedding Cost</h3>
-          <p>Understand the main budget drivers — venue and rooms, catering, décor, production, photography and planning — before you shortlist your venue and wedding season.</p>
-          <a href="<?php echo esc_url(home_url('/udaipur-wedding-cost/')); ?>">See the cost guide <span aria-hidden="true">→</span></a>
-        </article>
-
-        <article>
-          <h3>Real Udaipur Wedding Stories</h3>
-          <p>Explore real celebrations, venues and couple stories to see how a destination wedding comes together from the first planning conversation to the final farewell.</p>
-          <a href="<?php echo esc_url(home_url('/portfolio/')); ?>">View real weddings <span aria-hidden="true">→</span></a>
-        </article>
+        <?php foreach (array_slice($seo_topics, 0, 4) as $topic) : ?>
+          <article class="wvn-home-seo-card">
+            <h3><?php echo esc_html($topic['heading'] ?? ''); ?></h3>
+            <p><?php echo esc_html($topic['text'] ?? ''); ?></p>
+            <?php if (!empty($topic['link_url'])) : ?>
+              <a href="<?php echo esc_url($topic['link_url']); ?>">
+                <?php echo esc_html($topic['link_label'] ?? 'Explore →'); ?>
+              </a>
+            <?php endif; ?>
+          </article>
+        <?php endforeach; ?>
       </div>
 
       <nav class="wvn-home-seo-copy__links" aria-label="Udaipur wedding planning resources">
