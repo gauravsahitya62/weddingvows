@@ -1652,3 +1652,18 @@ body.wvn-body .wvn-home-seo-copy__links a {
     gap: 14px;
   }
 }
+
+
+.wvn-hg-card__media--video video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wvn-hg-card__text {
+  margin: .45rem 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  opacity: .72;
+}
