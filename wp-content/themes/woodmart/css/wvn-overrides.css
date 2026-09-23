@@ -823,3 +823,115 @@
     padding: 32px 26px;
   }
 }
+
+
+
+/* Homepage partner / brand collaboration logo scroller */
+.wvn-partner-strip {
+  background: #f5f0e8;
+  border-top: 1px solid rgba(42,31,31,.12);
+  border-bottom: 1px solid rgba(42,31,31,.12);
+  padding: 28px 0;
+  overflow: hidden;
+}
+.wvn-partner-strip__inner {
+  width: min(1280px, calc(100% - 56px));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(240px, .8fr) minmax(0, 2fr);
+  gap: 40px;
+  align-items: center;
+}
+.wvn-partner-strip__copy {
+  min-width: 0;
+}
+.wvn-partner-strip__copy .wvn-kicker {
+  margin: 0 0 10px;
+  color: #6b3e3e;
+}
+.wvn-partner-strip__lede {
+  margin: 0;
+  max-width: 34ch;
+  color: #4b3d3d;
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.wvn-partner-strip__viewport {
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+.wvn-partner-strip__viewport::-webkit-scrollbar {
+  display: none;
+}
+.wvn-partner-strip__track {
+  display: flex;
+  align-items: center;
+  gap: clamp(36px, 5vw, 78px);
+  width: max-content;
+  padding: 8px 28px 8px 18px;
+}
+.wvn-partner-strip__logo {
+  flex: 0 0 auto;
+  width: 132px;
+  min-width: 132px;
+  height: 58px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: .72;
+  transition: opacity .25s ease, transform .25s ease;
+  text-decoration: none;
+}
+.wvn-partner-strip__logo:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+.wvn-partner-strip__logo img {
+  display: block;
+  width: auto;
+  max-width: 132px;
+  height: auto;
+  max-height: 50px;
+  object-fit: contain;
+}
+@media (max-width: 900px) {
+  .wvn-partner-strip {
+    padding: 24px 0;
+  }
+  .wvn-partner-strip__inner {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    width: 100%;
+  }
+  .wvn-partner-strip__copy {
+    width: calc(100% - 40px);
+    margin: 0 auto;
+    text-align: left;
+  }
+  .wvn-partner-strip__lede {
+    max-width: 42ch;
+  }
+  .wvn-partner-strip__viewport {
+    width: 100%;
+  }
+  .wvn-partner-strip__track {
+    gap: 28px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .wvn-partner-strip__logo {
+    width: 116px;
+    min-width: 116px;
+    height: 54px;
+  }
+  .wvn-partner-strip__logo img {
+    max-width: 116px;
+    max-height: 46px;
+  }
+}
