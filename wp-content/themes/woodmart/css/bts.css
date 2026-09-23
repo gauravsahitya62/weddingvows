@@ -3620,3 +3620,44 @@ body.wvn-body {
     height: 26px;
   }
 }
+
+/* Mobile testimonial cards: text-only, consistent teaser height. */
+@media (max-width: 640px) {
+  .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote > img {
+    display: none !important;
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote {
+    min-height: 100%;
+    justify-content: flex-start;
+    padding: 28px 20px 24px;
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote h3 {
+    min-height: 2.4em;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-brand {
+    min-height: 1.4em;
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-quote-text {
+    width: 100%;
+    min-height: 4.35em;
+    max-height: 4.35em;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+    font-size: 16px;
+    line-height: 1.45;
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-read-more {
+    margin-top: auto !important;
+    min-height: 40px;
+    align-self: center;
+  }
+}
