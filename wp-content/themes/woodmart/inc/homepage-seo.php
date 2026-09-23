@@ -6,7 +6,7 @@
 
 function wvn_homepage_seo_title($value) {
     if (is_front_page()) {
-        return 'Wedding & Event Planner in Udaipur | Wedding Vows by Nikhil';
+        return 'Destination Wedding Planner in Udaipur | Wedding & Event Planner';
     }
     return $value;
 }
@@ -17,7 +17,7 @@ add_filter('wpseo_twitter_title', 'wvn_homepage_seo_title', 40);
 
 function wvn_homepage_seo_description($value) {
     if (is_front_page()) {
-        return 'Wedding planner in Udaipur for luxury destination weddings and events. Explore palace weddings, venue sourcing, décor, guest hospitality and end-to-end planning by Wedding Vows by Nikhil.';
+        return 'Destination wedding planner in Udaipur for palace, lakeside and luxury weddings. Wedding Vows by Nikhil plans venues, décor, guest hospitality, production and on-ground wedding execution.';
     }
     return $value;
 }
@@ -36,7 +36,7 @@ function wvn_homepage_seo_schema() {
         'additionalType' => 'https://schema.org/WeddingPlanner',
         'name' => 'Wedding Vows by Nikhil',
         'url' => home_url('/'),
-        'description' => 'Wedding and event planner in Udaipur for luxury destination weddings, palace celebrations, venue sourcing, décor, guest hospitality and on-ground coordination across Rajasthan.',
+        'description' => 'Destination wedding planner and event planner in Udaipur for luxury palace weddings, lakeside celebrations, venue sourcing, décor, guest hospitality and on-ground coordination across Rajasthan.',
         'areaServed' => array(
             array('@type' => 'City', 'name' => 'Udaipur'),
             array('@type' => 'AdministrativeArea', 'name' => 'Rajasthan'),
