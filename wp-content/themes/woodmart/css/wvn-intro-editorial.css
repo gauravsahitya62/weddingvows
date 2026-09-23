@@ -732,3 +732,43 @@ body.wvn-body .wvn-intro__story:focus-visible {
   .wvn-intro__sub::before,
   .wvn-intro__sub::after { display: none; }
 }
+
+/* The lower-left and lower-right Art of Celebration images were removed.
+ * Mobile must therefore use a single-column rail for the remaining
+ * primary and upper-right images instead of reserving an empty second column.
+ */
+@media (max-width: 900px) {
+  .wvn-intro__rail--left,
+  .wvn-intro__rail--right {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .wvn-intro__rail--left .wvn-intro__shot--arch,
+  .wvn-intro__rail--right .wvn-intro__shot--tilt {
+    grid-column: 1;
+    grid-row: auto;
+    width: min(100%, 430px);
+    justify-self: center;
+  }
+
+  .wvn-intro__rail--left .wvn-intro__shot--arch {
+    aspect-ratio: 4 / 5;
+  }
+
+  .wvn-intro__rail--right .wvn-intro__shot--tilt {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+@media (max-width: 640px) {
+  .wvn-intro__rail--left,
+  .wvn-intro__rail--right {
+    grid-template-columns: 1fr;
+  }
+
+  .wvn-intro__rail--left .wvn-intro__shot--arch,
+  .wvn-intro__rail--right .wvn-intro__shot--tilt {
+    width: min(100%, 360px);
+  }
+}
