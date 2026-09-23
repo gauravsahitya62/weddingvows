@@ -30,48 +30,54 @@ if ($current) {
     $text = trim(wp_strip_all_tags((string) ($q['text'] ?? '')));
     $video = !empty($q['video']) ? $q['video'] : '';
 
-    $sentences = preg_split('/(?<=[.!?])\s+/u', $text, -1, PREG_SPLIT_NO_EMPTY);
-    if (!is_array($sentences)) {
-        $sentences = array($text);
-    }
+    $story_sections = !empty($q['story_sections']) && is_array($q['story_sections']) ? array_values(array_filter($q['story_sections'], function ($section) {
+        return !empty($section['text']) || !empty($section['image']) || !empty($section['video']) || !empty($section['title']);
+    })) : array();
 
-    $chunks = array();
-    if (count($sentences) <= 2) {
-        $chunks[] = trim($text);
-    } else {
-        $target = max(1, (int) ceil(count($sentences) / 3));
-        $first = trim(implode(' ', array_slice($sentences, 0, $target)));
-        $second = trim(implode(' ', array_slice($sentences, $target, $target)));
-        $third = trim(implode(' ', array_slice($sentences, $target * 2)));
-        foreach (array($first, $second, $third) as $chunk) {
-            if ($chunk !== '') {
-                $chunks[] = $chunk;
+    // Backward-compatible fallback for testimonials created before the editable
+    // Story Sections repeater existed.
+    if (!$story_sections) {
+        $sentences = preg_split('/(?<=[.!?])\s+/u', $text, -1, PREG_SPLIT_NO_EMPTY);
+        if (!is_array($sentences)) {
+            $sentences = array($text);
+        }
+
+        $chunks = array();
+        if (count($sentences) <= 2) {
+            $chunks[] = trim($text);
+        } else {
+            $target = max(1, (int) ceil(count($sentences) / 3));
+            foreach (array(
+                trim(implode(' ', array_slice($sentences, 0, $target))),
+                trim(implode(' ', array_slice($sentences, $target, $target))),
+                trim(implode(' ', array_slice($sentences, $target * 2)))
+            ) as $chunk) {
+                if ($chunk !== '') {
+                    $chunks[] = $chunk;
+                }
             }
         }
-    }
 
-    if (!$chunks) {
-        $chunks[] = $text;
-    }
-
-    $story_images = array();
-    $story_images[] = $image;
-    if ($video !== '') {
-        $story_images[] = $image;
-    }
-    foreach ($gallery as $gallery_image) {
-        if (count($story_images) >= count($chunks)) {
-            break;
+        if (!$chunks) {
+            $chunks[] = $text;
         }
-        if ($gallery_image !== $image) {
-            $story_images[] = $gallery_image;
+
+        $story_labels = array('Their story', 'The feeling', 'The details', 'A lasting memory');
+        $story_sections = array();
+        foreach ($chunks as $story_index => $chunk) {
+            $story_sections[] = array(
+                'label' => $story_labels[$story_index] ?? 'Their story',
+                'title' => $story_index === 0 ? $q['name'] : ($tags[$story_index - 1] ?? 'A moment worth remembering'),
+                'text' => $chunk,
+                'media' => ($video !== '' && $story_index === 1) ? 'video' : 'photo',
+                'image' => $image,
+                'video' => ($video !== '' && $story_index === 1) ? $video : '',
+                'meta' => $meta,
+            );
         }
     }
-    while (count($story_images) < count($chunks)) {
-        $story_images[] = $image;
-    }
 
-    $story_labels = array('Their story', 'The feeling', 'The details', 'A lasting memory');
+    $story_sections_count = count($story_sections);
     $date_or_meta = $meta !== '' ? $meta : (!empty($tags) ? implode(' · ', array_slice($tags, 0, 2)) : 'A couple story');
     $back_url = home_url('/testimonials/');
     $detail_url = function_exists('wvn_testimonial_detail_url') ? wvn_testimonial_detail_url($q, $index) : home_url('/testimonials/');
@@ -112,38 +118,42 @@ if ($current) {
   </section>
 
   <section class="wvn-testimonial-story-sections" aria-label="Wedding story">
-    <?php foreach ($chunks as $story_index => $chunk) :
+    <?php foreach ($story_sections as $story_index => $section) :
         $reverse = $story_index % 2 === 1;
-        $story_image = $story_images[$story_index] ?? $image;
-        $has_video = $video !== '' && $story_index === 1;
+        $section_media = ($section['media'] ?? 'photo') === 'video' ? 'video' : 'photo';
+        $section_image = !empty($section['image']) ? $section['image'] : $image;
+        $section_video = !empty($section['video']) ? $section['video'] : '';
+        $section_title = !empty($section['title']) ? $section['title'] : ($q['name'] ?? 'Their story');
+        $section_label = !empty($section['label']) ? $section['label'] : 'Their story';
+        $section_text = !empty($section['text']) ? $section['text'] : $text;
+        $section_meta = !empty($section['meta']) ? $section['meta'] : $date_or_meta;
         ?>
       <article class="wvn-testimonial-story-section<?php echo $reverse ? ' is-reversed' : ''; ?>">
         <div class="wvn-testimonial-story-section__media">
-          <?php if ($has_video) : ?>
+          <?php if ($section_media === 'video' && $section_video !== '') : ?>
             <video
-              src="<?php echo esc_url($video); ?>"
-              poster="<?php echo esc_url($image); ?>"
+              src="<?php echo esc_url($section_video); ?>"
+              <?php if ($section_image !== '') : ?>poster="<?php echo esc_url($section_image); ?>"<?php endif; ?>
               playsinline
-              muted
               controls
               preload="metadata"
-              aria-label="<?php echo esc_attr($q['name'] . ' wedding testimonial film'); ?>"
+              aria-label="<?php echo esc_attr($section_title . ' testimonial film'); ?>"
             ></video>
           <?php else : ?>
             <img
-              src="<?php echo esc_url($story_image); ?>"
-              alt="<?php echo esc_attr($q['name'] . ' wedding story — ' . ($story_labels[$story_index] ?? 'Their story')); ?>"
+              src="<?php echo esc_url($section_image); ?>"
+              alt="<?php echo esc_attr($q['name'] . ' wedding story — ' . $section_label); ?>"
               loading="lazy"
               decoding="async"
             >
           <?php endif; ?>
         </div>
         <div class="wvn-testimonial-story-section__content">
-          <p class="wvn-testimonial-story-section__eyebrow"><?php echo esc_html($story_labels[$story_index] ?? 'Their story'); ?></p>
-          <h2><?php echo esc_html($story_index === 0 ? $q['name'] : ($tags[$story_index - 1] ?? 'A moment worth remembering')); ?></h2>
-          <blockquote>“<?php echo esc_html($chunk); ?>”</blockquote>
+          <p class="wvn-testimonial-story-section__eyebrow"><?php echo esc_html($section_label); ?></p>
+          <h2><?php echo esc_html($section_title); ?></h2>
+          <blockquote>“<?php echo esc_html($section_text); ?>”</blockquote>
           <div class="wvn-testimonial-story-section__rule" aria-hidden="true"></div>
-          <p class="wvn-testimonial-story-section__meta"><?php echo esc_html($date_or_meta); ?></p>
+          <p class="wvn-testimonial-story-section__meta"><?php echo esc_html($section_meta); ?></p>
         </div>
       </article>
     <?php endforeach; ?>
