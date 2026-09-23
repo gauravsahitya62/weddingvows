@@ -62,12 +62,18 @@ function theme_files() {
         );
     }
 
-    if (is_page_template('page-testimonials.php') || is_page('testimonials')) {
+    $wvn_is_testimonial_story = (
+        is_page_template('page-testimonials.php')
+        || is_page('testimonials')
+        || (function_exists('wvn_testimonial_current') && wvn_testimonial_current())
+    );
+
+    if ($wvn_is_testimonial_story) {
         wp_enqueue_style(
             'wvn-testimonials',
             get_theme_file_uri('/css/wvn-testimonials.css'),
             array('wvn-page-safety'),
-            '1.0.0'
+            '1.1.0'
         );
     }
 
