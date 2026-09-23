@@ -67,7 +67,7 @@ function theme_files() {
             'wvn-testimonials',
             get_theme_file_uri('/css/wvn-testimonials.css'),
             array('wvn-page-safety'),
-            '1.1.0'
+            '1.0.0'
         );
     }
 
