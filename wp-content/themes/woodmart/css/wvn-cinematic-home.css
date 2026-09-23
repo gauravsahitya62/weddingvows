@@ -1667,3 +1667,58 @@ body.wvn-body .wvn-home-seo-copy__links a {
   line-height: 1.5;
   opacity: .72;
 }
+
+
+/* Mobile venue carousel: show one centered venue card at a time.
+ * Keep the section compact; navigation remains available through arrows/dots
+ * and touch swiping still advances the carousel.
+ */
+@media (max-width: 640px) {
+  .wvn-cin-cites__deck {
+    --card-w: min(320px, calc(100vw - 48px));
+    --card-h: 360px;
+    min-height: 392px;
+    height: 392px !important;
+    padding: 0;
+  }
+
+  .wvn-cin-cites__stage {
+    height: 360px;
+    min-height: 360px;
+  }
+
+  .wvn-cin-cites__card {
+    width: var(--card-w);
+    height: var(--card-h);
+    min-height: var(--card-h);
+    max-height: var(--card-h);
+    border-radius: 18px;
+  }
+
+  /* On phones, don't expose the neighbouring cards. */
+  .wvn-cin-cites__card[data-abs]:not([data-abs="0"]) {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden;
+  }
+
+  .wvn-cin-cites__card-body {
+    padding: .75rem .9rem .8rem;
+  }
+
+  .wvn-cin-cites__quote {
+    min-height: 3.2em;
+    max-height: 4.1em;
+    font-size: .88rem;
+    line-height: 1.35;
+  }
+
+  .wvn-cin-cites__credit {
+    margin-top: .2rem;
+    padding-top: .25rem;
+  }
+
+  .wvn-cin-cites__nav {
+    margin-top: .35rem;
+  }
+}
