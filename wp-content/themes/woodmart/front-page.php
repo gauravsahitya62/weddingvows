@@ -322,6 +322,7 @@ $service_count = count($services);
       </div>
     </div>
   </section>
+  <?php endif; ?>
 
   <section class="wvn-services wvn-pin" data-pin="services">
     <div class="wvn-pin-sticky wvn-services-sticky">
