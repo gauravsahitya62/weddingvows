@@ -1077,6 +1077,74 @@ function wvn_home_gallery_categories_for_url($url) {
  * There is deliberately no filename/title keyword inference.
  */
 function wvn_home_gallery_collage() {
+    // New admin-managed gallery cards take precedence. Legacy image gallery remains
+    // available as a fallback so existing homepage content is preserved.
+    $managed = function_exists('wvn_home_rows') ? wvn_home_rows('home_gallery_cards') : array();
+    if ($managed) {
+        $roles = array('feature', 'stack-a', 'stack-b', 'portrait', 'wide', 'support-a', 'support-b', 'support-c');
+        $items = array();
+        $filters = array('all' => 'All');
+
+        foreach (array_slice($managed, 0, 10) as $i => $row) {
+            $media = ($row['media'] ?? 'photo') === 'video' ? 'video' : 'photo';
+            $image = wvn_image_url($row['image'] ?? '', '');
+            $video = $media === 'video' ? wvn_image_url($row['video'] ?? '', '') : '';
+            if ($media === 'video' && $video === '' && $image === '') {
+                continue;
+            }
+            if ($media === 'photo' && $image === '') {
+                continue;
+            }
+
+            $label = trim((string) ($row['label'] ?? ''));
+            $title = trim((string) ($row['title'] ?? ''));
+            $alt = trim((string) ($row['alt'] ?? ''));
+            $url = trim((string) ($row['url'] ?? ''));
+            $text = trim((string) ($row['text'] ?? ''));
+
+            if ($label === '') {
+                $label = 'Wedding story';
+            }
+            if ($title === '') {
+                $title = 'Destination wedding moment';
+            }
+            if ($alt === '') {
+                $alt = $title . ' — destination wedding by Wedding Vows by Nikhil';
+            }
+
+            $tag = sanitize_title($label);
+            if ($tag !== '') {
+                $filters[$tag] = $label;
+            }
+
+            $items[] = array(
+                'image' => $image,
+                'video' => $video,
+                'alt' => $alt,
+                'label' => $label,
+                'title' => $title,
+                'text' => $text,
+                'story_url' => $url,
+                'tags' => $tag !== '' ? array($tag) : array(),
+                'role' => $roles[$i] ?? 'support-c',
+                'type' => $media,
+                'eager' => $i === 0,
+            );
+        }
+
+        if ($items) {
+            return array(
+                'kicker' => wvn_home_text('home_gallery_kicker', 'Stories from our couples'),
+                'heading' => wvn_home_text('home_gallery_heading', 'Moments, captured beyond time'),
+                'lede' => wvn_home_text('home_gallery_lede', 'A glimpse into the celebrations we have quietly orchestrated—from first looks to the last dance.'),
+                'cta_url' => wvn_home_text('home_gallery_cta_url', home_url('/portfolio/')),
+                'cta' => wvn_home_text('home_gallery_cta', 'View full gallery'),
+                'filters' => $filters,
+                'items' => $items,
+            );
+        }
+    }
+
     $media = wvn_home_gallery_media();
     $images = $media ? array_values(array_filter($media, static function ($item) {
         return !empty($item['url']);
