@@ -1514,20 +1514,21 @@ body.wvn-body .wvn-home-seo-copy__links a {
 }
 
 
-/* Homepage topical SEO section: useful editorial content, not keyword stuffing. */
-.wvn-home-intent {
-  padding: clamp(90px, 10vw, 140px) 0;
+
+/* Single homepage SEO/editorial section. */
+.wvn-home-seo-copy {
+  padding: clamp(88px, 10vw, 140px) 0;
   background: #f7f2eb;
   color: #2f2222;
   border-top: 1px solid rgba(47,34,34,.12);
 }
 
-.wvn-home-intent__inner {
+.wvn-home-seo-copy__inner {
   width: min(1180px, calc(100% - 40px));
   margin: 0 auto;
 }
 
-.wvn-home-intent__eyebrow {
+.wvn-home-seo-copy__eyebrow {
   margin: 0 0 14px;
   font-size: 10px;
   letter-spacing: .22em;
@@ -1535,18 +1536,18 @@ body.wvn-body .wvn-home-seo-copy__links a {
   opacity: .62;
 }
 
-.wvn-home-intent h2 {
-  max-width: 900px;
+.wvn-home-seo-copy__inner > h2 {
+  max-width: 930px;
   margin: 0 0 24px;
   font-family: "Aboreto", Georgia, serif;
-  font-size: clamp(32px, 5vw, 62px);
-  line-height: 1.08;
+  font-size: clamp(34px, 5.2vw, 64px);
+  line-height: 1.05;
   font-weight: 400;
-  letter-spacing: .02em;
+  letter-spacing: .015em;
   text-transform: uppercase;
 }
 
-.wvn-home-intent h2 em {
+.wvn-home-seo-copy__inner > h2 em {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-style: italic;
   font-weight: 400;
@@ -1554,56 +1555,57 @@ body.wvn-body .wvn-home-seo-copy__links a {
   letter-spacing: .01em;
 }
 
-.wvn-home-intent__lead {
-  max-width: 850px;
-  margin: 0 0 52px;
+.wvn-home-seo-copy__lede {
+  max-width: 900px;
+  margin: 0 0 48px;
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: clamp(21px, 2.2vw, 29px);
   line-height: 1.45;
   color: rgba(47,34,34,.82);
 }
 
-.wvn-home-intent__grid {
+.wvn-home-seo-copy__topics {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1px;
-  background: rgba(47,34,34,.16);
-  border: 1px solid rgba(47,34,34,.16);
+  margin-top: 16px;
+  background: rgba(47,34,34,.14);
+  border: 1px solid rgba(47,34,34,.14);
 }
 
-.wvn-home-intent__grid article {
-  padding: clamp(28px, 4vw, 48px);
+.wvn-home-seo-copy__topics article {
+  padding: clamp(28px, 3.6vw, 46px);
   background: #f7f2eb;
 }
 
-.wvn-home-intent__grid h3 {
-  margin: 0 0 14px;
+.wvn-home-seo-copy__topics h3 {
+  margin: 0 0 12px;
   font-family: "Aboreto", Georgia, serif;
-  font-size: clamp(19px, 2vw, 27px);
-  line-height: 1.15;
+  font-size: clamp(19px, 2vw, 26px);
+  line-height: 1.16;
   font-weight: 400;
-  text-transform: uppercase;
   letter-spacing: .025em;
+  text-transform: uppercase;
 }
 
-.wvn-home-intent__grid p {
-  margin: 0 0 22px;
+.wvn-home-seo-copy__topics p {
+  margin: 0 0 20px;
   max-width: 58ch;
   font-size: 14px;
-  line-height: 1.75;
+  line-height: 1.72;
   color: rgba(47,34,34,.72);
 }
 
-.wvn-home-intent__grid a,
-.wvn-home-intent__links a {
+.wvn-home-seo-copy__topics a,
+.wvn-home-seo-copy__links a {
   color: inherit;
   text-decoration: none;
 }
 
-.wvn-home-intent__grid a {
+.wvn-home-seo-copy__topics a {
   display: inline-flex;
-  gap: 10px;
   align-items: center;
+  gap: 9px;
   font-size: 10px;
   font-weight: 600;
   letter-spacing: .14em;
@@ -1612,40 +1614,40 @@ body.wvn-body .wvn-home-seo-copy__links a {
   padding-bottom: 7px;
 }
 
-.wvn-home-intent__grid a:hover,
-.wvn-home-intent__links a:hover {
+.wvn-home-seo-copy__topics a:hover,
+.wvn-home-seo-copy__links a:hover {
   opacity: .62;
 }
 
-.wvn-home-intent__links {
+.wvn-home-seo-copy__links {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 22px;
-  margin-top: 34px;
-  padding-top: 24px;
+  gap: 11px 22px;
+  margin: 32px 0 0;
+  padding-top: 22px;
   border-top: 1px solid rgba(47,34,34,.14);
 }
 
-.wvn-home-intent__links a {
+.wvn-home-seo-copy__links a {
   font-size: 10px;
-  letter-spacing: .12em;
+  letter-spacing: .11em;
   text-transform: uppercase;
 }
 
 @media (max-width: 700px) {
-  .wvn-home-intent__inner {
+  .wvn-home-seo-copy__inner {
     width: min(100% - 28px, 640px);
   }
 
-  .wvn-home-intent__grid {
+  .wvn-home-seo-copy__topics {
     grid-template-columns: 1fr;
   }
 
-  .wvn-home-intent__lead {
+  .wvn-home-seo-copy__lede {
     margin-bottom: 34px;
   }
 
-  .wvn-home-intent__links {
+  .wvn-home-seo-copy__links {
     display: grid;
     gap: 14px;
   }
