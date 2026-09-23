@@ -33,6 +33,12 @@ function theme_files() {
             array('wvn-cinematic-home', 'wvn-bts'),
             '1.0.3'
         );
+        wp_enqueue_style(
+            'wvn-testimonial-teasers',
+            get_theme_file_uri('/css/wvn-testimonial-teasers.css'),
+            array('wvn-cinematic-home', 'wvn-bts'),
+            '1.0.0'
+        );
         wp_enqueue_script(
             'wvn-home-gallery',
             get_theme_file_uri('/js/wvn-home-gallery.js'),
@@ -61,7 +67,7 @@ function theme_files() {
             'wvn-testimonials',
             get_theme_file_uri('/css/wvn-testimonials.css'),
             array('wvn-page-safety'),
-            '1.0.0'
+            '1.1.0'
         );
     }
 
