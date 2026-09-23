@@ -1,0 +1,113 @@
+/* Homepage testimonial teaser — keep the existing 3D book, but make each leaf a concise story preview. */
+
+.wvn-achieve .wvn-pressbook-leaf--quote {
+  overflow: hidden;
+}
+
+.wvn-achieve .wvn-pressbook-leaf--quote > img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: center;
+  margin-bottom: clamp(16px, 2vw, 24px);
+}
+
+.wvn-achieve .wvn-pressbook-leaf--quote h3 {
+  margin-bottom: 8px;
+  font-family: "Aboreto", Georgia, serif;
+  font-size: clamp(20px, 2.2vw, 30px);
+  line-height: 1.12;
+  letter-spacing: .025em;
+  text-transform: uppercase;
+}
+
+.wvn-achieve .wvn-pressbook-leaf--quote .wvn-pressbook-brand {
+  margin: 0 0 12px;
+  font-size: 10px;
+  line-height: 1.5;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  opacity: .62;
+}
+
+.wvn-achieve .wvn-pressbook-leaf--quote .wvn-pressbook-quote-text {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  margin-bottom: 18px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(19px, 2vw, 26px);
+  line-height: 1.42;
+}
+
+.wvn-achieve .wvn-pressbook-read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 0;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .18em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-decoration: none;
+  touch-action: manipulation;
+  transition: opacity .35s ease, transform .35s ease;
+}
+
+.wvn-achieve .wvn-pressbook-read-more:hover,
+.wvn-achieve .wvn-pressbook-read-more:focus-visible {
+  opacity: .68;
+  transform: translateX(3px);
+}
+
+.wvn-achieve .wvn-pressbook-read-more:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 6px;
+}
+
+@media (max-width: 900px) {
+  .wvn-achieve .wvn-pressbook-leaf--quote > img {
+    aspect-ratio: 16 / 11;
+  }
+
+  .wvn-achieve .wvn-pressbook-leaf--quote .wvn-pressbook-quote-text {
+    -webkit-line-clamp: 3;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .wvn-achieve .wvn-pressbook-leaf--quote h3 {
+    font-size: 19px;
+  }
+
+  .wvn-achieve .wvn-pressbook-leaf--quote .wvn-pressbook-brand {
+    font-size: 9px;
+    letter-spacing: .14em;
+  }
+
+  .wvn-achieve .wvn-pressbook-leaf--quote .wvn-pressbook-quote-text {
+    max-width: 34ch;
+    -webkit-line-clamp: 3;
+    margin-bottom: 12px;
+    font-size: 17px;
+    line-height: 1.4;
+  }
+
+  .wvn-achieve .wvn-pressbook-read-more {
+    min-height: 46px;
+    font-size: 9px;
+    letter-spacing: .15em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wvn-achieve .wvn-pressbook-read-more {
+    transition: none;
+  }
+}
