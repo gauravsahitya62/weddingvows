@@ -119,7 +119,10 @@ if ($current) {
 
   <section class="wvn-testimonial-story-sections" aria-label="Wedding story">
     <?php foreach ($story_sections as $story_index => $section) :
-        $reverse = $story_index % 2 === 1;
+        $layout = ($section['layout'] ?? '') === 'image_right'
+            ? 'image_right'
+            : (($story_index % 2 === 1) ? 'image_right' : 'image_left');
+        $reverse = $layout === 'image_right';
         $section_media = ($section['media'] ?? 'photo') === 'video' ? 'video' : 'photo';
         $section_image = !empty($section['image']) ? $section['image'] : $image;
         $section_video = !empty($section['video']) ? $section['video'] : '';
