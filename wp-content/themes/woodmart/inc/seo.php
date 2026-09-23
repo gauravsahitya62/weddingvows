@@ -571,6 +571,25 @@ function wvn_seo_json_ld() {
         }
     } elseif (is_front_page() && function_exists('wvn_faqs')) {
         $faq_source = wvn_faqs();
+        $homepage_search_faqs = array(
+            array(
+                'q' => 'How much does a destination wedding in Udaipur cost?',
+                'a' => 'The budget depends on guest count, venue, room block, number of functions, catering, décor and production. Our Udaipur wedding cost guide explains the main cost components and typical planning ranges before you shortlist a venue.',
+            ),
+            array(
+                'q' => 'What are the best wedding venues in Udaipur for a destination wedding?',
+                'a' => 'Udaipur offers lake palaces, heritage properties and luxury resorts. The right venue depends on your guest count, room requirements, ceremony spaces, number of functions and whether you want a palace, lakeside or resort setting.',
+            ),
+            array(
+                'q' => 'What does a wedding planner in Udaipur handle?',
+                'a' => 'A full-service Udaipur wedding planner can coordinate venue sourcing, vendor selection, décor and design, guest hospitality, transport, entertainment, production, timelines and on-ground execution across the wedding weekend.',
+            ),
+            array(
+                'q' => 'How early should I book a destination wedding planner in Udaipur?',
+                'a' => 'For popular palace and luxury resort dates, it is sensible to begin planning well ahead of the wedding season. Earlier planning gives you more choice of venue dates, room blocks, artists, décor teams and guest logistics.',
+            ),
+        );
+        $faq_source = array_merge($faq_source, $homepage_search_faqs);
     } elseif (is_singular('post') && function_exists('wvn_post_meta')) {
         $faq_source = wvn_post_meta(get_the_ID())['faqs'];
     }
