@@ -733,35 +733,67 @@ $service_count = count($services);
       </p>
 
       <?php
+      /*
+       * Keep the four homepage SEO cards useful even when the ACF repeater
+       * contains empty rows. Editors can override any field in wp-admin;
+       * blank fields inherit the editorial defaults below instead of rendering
+       * an empty card. This also keeps the primary Udaipur search topics
+       * represented in crawlable, visible page content.
+       */
+      $seo_topic_defaults = array(
+          array(
+              'heading' => 'Wedding & Event Planner in Udaipur',
+              'text' => 'Wedding Vows by Nikhil is a local wedding and event planning studio in Udaipur, coordinating mehendi, haldi, sangeet, ceremonies and receptions. We manage venue sourcing, vendor coordination, décor, production, guest hospitality and the wedding-day schedule for destination celebrations.',
+              'link_label' => 'Explore wedding planning services →',
+              'link_url' => home_url('/wedding-planner-udaipur/'),
+          ),
+          array(
+              'heading' => 'Destination Wedding Planner in Udaipur',
+              'text' => 'Plan a destination wedding in Udaipur with one local team managing the details from venue shortlisting to on-ground execution. We help couples plan palace, lakeside and luxury resort weddings around Lake Pichola and across Rajasthan.',
+              'link_label' => 'Plan a destination wedding →',
+              'link_url' => home_url('/destination-wedding-planner-udaipur/'),
+          ),
+          array(
+              'heading' => 'Luxury & Palace Wedding Venues in Udaipur',
+              'text' => 'Explore Udaipur palace wedding venues, heritage properties and luxury resorts based on guest count, room blocks, ceremony spaces, functions and celebration style. Our local planning team helps you compare the practical details before choosing a venue.',
+              'link_label' => 'Explore Udaipur wedding venues →',
+              'link_url' => home_url('/wedding-venues-udaipur/'),
+          ),
+          array(
+              'heading' => 'Udaipur Destination Wedding Cost & Stories',
+              'text' => 'Understand the main Udaipur destination wedding cost drivers — venue and rooms, catering, décor, production, photography, entertainment and planning — then explore real Udaipur wedding stories to see how celebrations come together.',
+              'link_label' => 'See costs & real weddings →',
+              'link_url' => home_url('/udaipur-wedding-cost/'),
+          ),
+      );
+
       $seo_topics = wvn_home_rows('home_seo_topics');
-      if (!$seo_topics) {
-          $seo_topics = array(
-              array(
-                  'heading' => 'Wedding & Event Planner in Udaipur',
-                  'text' => 'Plan mehendi, haldi, sangeet, wedding ceremonies and receptions with one local team managing vendors, design, production and the wedding-day schedule.',
-                  'link_label' => 'Wedding planning services →',
-                  'link_url' => home_url('/wedding-planner-udaipur/'),
-              ),
-              array(
-                  'heading' => 'Luxury & Palace Weddings in Udaipur',
-                  'text' => 'Compare palace, heritage and luxury resort settings around Lake Pichola and Udaipur based on guest count, room blocks, functions and celebration style.',
-                  'link_label' => 'Explore wedding venues →',
-                  'link_url' => home_url('/wedding-venues-udaipur/'),
-              ),
-              array(
-                  'heading' => 'Udaipur Destination Wedding Cost',
-                  'text' => 'Understand the main budget drivers — venue and rooms, catering, décor, production, photography and planning — before you shortlist your venue and wedding season.',
-                  'link_label' => 'See the cost guide →',
-                  'link_url' => home_url('/udaipur-wedding-cost/'),
-              ),
-              array(
-                  'heading' => 'Real Udaipur Wedding Stories',
-                  'text' => 'Explore real celebrations, venues and couple stories to see how a destination wedding comes together from the first planning conversation to the final farewell.',
-                  'link_label' => 'View real weddings →',
-                  'link_url' => home_url('/portfolio/'),
-              ),
+      if (!is_array($seo_topics)) {
+          $seo_topics = array();
+      }
+
+      /* Normalize the four ACF rows field-by-field so existing admin edits
+       * are preserved while empty rows never produce blank homepage cards.
+       */
+      $normalized_seo_topics = array();
+      for ($seo_index = 0; $seo_index < 4; $seo_index++) {
+          $current = isset($seo_topics[$seo_index]) && is_array($seo_topics[$seo_index])
+              ? $seo_topics[$seo_index]
+              : array();
+          $default = $seo_topic_defaults[$seo_index];
+
+          $normalized_seo_topics[] = array(
+              'heading' => trim((string) ($current['heading'] ?? '')) !== ''
+                  ? $current['heading'] : $default['heading'],
+              'text' => trim((string) ($current['text'] ?? '')) !== ''
+                  ? $current['text'] : $default['text'],
+              'link_label' => trim((string) ($current['link_label'] ?? '')) !== ''
+                  ? $current['link_label'] : $default['link_label'],
+              'link_url' => trim((string) ($current['link_url'] ?? '')) !== ''
+                  ? $current['link_url'] : $default['link_url'],
           );
       }
+      $seo_topics = $normalized_seo_topics;
       ?>
       <div class="wvn-home-seo-copy__topics">
         <?php foreach (array_slice($seo_topics, 0, 4) as $topic) : ?>
