@@ -3977,3 +3977,14 @@ body.wvn-body {
     line-height: 1 !important;
   }
 }
+
+
+/* Mobile testimonial frame: fixed compact height. */
+@media (max-width: 640px) {
+  .wvn-pressbook--testimonials.is-open .wvn-pressbook-frame,
+  .wvn-pressbook--testimonials .wvn-pressbook-frame {
+    height: 350px !important;
+    min-height: 350px !important;
+    max-height: 350px !important;
+  }
+}
