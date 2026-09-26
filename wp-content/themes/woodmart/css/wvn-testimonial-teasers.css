@@ -901,3 +901,12 @@
     -webkit-line-clamp: 4;
   }
 }
+
+
+/* Remove legacy decorative quote marks that sit independently at the bottom of each page.
+   The testimonial text retains its own correctly aligned opening/closing quotation marks. */
+.wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote::before,
+.wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote::after {
+  content: none !important;
+  display: none !important;
+}
