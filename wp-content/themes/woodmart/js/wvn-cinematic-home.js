@@ -265,8 +265,11 @@
       var vw = window.innerWidth || 1200;
       var cardW = Math.min(380, vw * 0.82);
       if (vw < 900) cardW = Math.min(340, vw * 0.78);
-      if (vw < 640) cardW = Math.min(300, vw * 0.78);
-      var gap = vw < 640 ? 18 : 28;
+      if (vw < 640) {
+        var deckWidth = deck ? deck.clientWidth : Math.min(340, vw - 24);
+        cardW = Math.max(260, Math.min(340, deckWidth));
+      }
+      var gap = vw < 640 ? 14 : 28;
       var step = cardW + gap;
 
       cards.forEach(function (card, i) {
@@ -303,7 +306,8 @@
       if (deck && cards[index]) {
         var activeHeight = Math.ceil(cards[index].scrollHeight || 0);
         if (activeHeight) {
-          var deckHeight = Math.max(activeHeight + 48, vw < 640 ? 500 : 560);
+          var deckHeight = Math.max(activeHeight + 32, vw < 640 ? 460 : 560);
+          if (vw < 640) deckHeight = Math.min(deckHeight, 520);
           deck.style.minHeight = deckHeight + "px";
           deck.style.height = deckHeight + "px";
         }
