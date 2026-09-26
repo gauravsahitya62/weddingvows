@@ -410,10 +410,45 @@
     const flipMs = reduceMotion ? 0 : 1000;
 
     function stack() {
+      const mobile = window.matchMedia("(max-width: 900px)").matches;
+
+      if (mobile) {
+        /*
+         * Mobile is a single-page reader, not a two-page 3D spread.
+         * Only the currently active sheet is mounted visually. This prevents
+         * the next sheet from appearing underneath during a page turn.
+         */
+        sheets.forEach((sheet) => {
+          sheet.style.zIndex = "1";
+          sheet.style.display = "none";
+          sheet.classList.remove("is-turning");
+        });
+
+        if (pressbook.classList.contains("is-open")) {
+          const activeIndex = Math.min(
+            Math.max(flipped - 1, 0),
+            Math.max(sheets.length - 1, 0)
+          );
+          const active = sheets[activeIndex];
+          if (active) {
+            active.style.display = "block";
+            active.style.zIndex = "100";
+          }
+        } else if (sheets[0]) {
+          sheets[0].style.display = "block";
+          sheets[0].style.zIndex = "100";
+        }
+
+        if (prevBtn) prevBtn.disabled = !pressbook.classList.contains("is-open");
+        if (nextBtn) nextBtn.disabled = !pressbook.classList.contains("is-open");
+        return;
+      }
+
       sheets.forEach((sheet, i) => {
         const isFlipped = sheet.classList.contains("is-flipped");
         if (!sheet.classList.contains("is-turning")) {
           sheet.style.zIndex = isFlipped ? String(i + 1) : String(sheets.length - i + 8);
+          sheet.style.display = "";
         }
       });
       const open = pressbook.classList.contains("is-open");
@@ -425,6 +460,28 @@
       if (!sheet || busy) return;
       const already = sheet.classList.contains("is-flipped");
       if (already === shouldFlip) return;
+
+      const mobile = window.matchMedia("(max-width: 900px)").matches;
+
+      if (mobile) {
+        /*
+         * Never run the desktop 3D fold on a phone. A full-width page rotating
+         * around its left edge exposes half of the previous sheet for a frame.
+         * Mobile instead performs an atomic page swap.
+         */
+        busy = true;
+        sheets.forEach((item) => {
+          item.style.display = "none";
+          item.classList.remove("is-turning");
+        });
+        sheet.classList.toggle("is-flipped", shouldFlip);
+        sheet.style.display = "block";
+        sheet.style.zIndex = "100";
+        busy = false;
+        stack();
+        return;
+      }
+
       busy = true;
       sheet.classList.add("is-turning");
       sheet.style.zIndex = "80";
@@ -438,6 +495,17 @@
 
     function openBook() {
       if (pressbook.classList.contains("is-open") || busy) return;
+      const mobile = window.matchMedia("(max-width: 900px)").matches;
+
+      if (mobile) {
+        busy = true;
+        pressbook.classList.add("is-open");
+        flipped = 1;
+        turn(sheets[0], true);
+        stack();
+        return;
+      }
+
       busy = true;
       pressbook.classList.add("is-open");
       window.setTimeout(() => {
@@ -450,6 +518,21 @@
 
     function closeBook() {
       if (!pressbook.classList.contains("is-open") || busy) return;
+      const mobile = window.matchMedia("(max-width: 900px)").matches;
+
+      if (mobile) {
+        busy = true;
+        sheets.forEach((sheet) => {
+          sheet.classList.remove("is-flipped", "is-turning");
+          sheet.style.display = "none";
+        });
+        flipped = 0;
+        pressbook.classList.remove("is-open");
+        busy = false;
+        stack();
+        return;
+      }
+
       busy = true;
       sheets.forEach((sheet, i) => {
         if (i === 0) return;
