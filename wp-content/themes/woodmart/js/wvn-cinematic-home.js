@@ -292,6 +292,20 @@
         card.style.zIndex = String(z);
         card.dataset.abs = String(abs);
         card.dataset.far = opacity === 0 ? "1" : "0";
+
+        /*
+         * On phones render ONLY the active venue card in the layout.
+         * The previous carousel kept neighbouring cards absolutely positioned
+         * off-canvas. Even when visually transparent, those cards could extend
+         * the mobile layout and create horizontal scrolling in some browsers.
+         */
+        if (vw < 640) {
+          card.style.display = o === 0 ? "grid" : "none";
+          card.style.transform = "translate(-50%, -50%)";
+        } else {
+          card.style.display = "grid";
+        }
+
         card.classList.toggle("is-active", o === 0);
         card.setAttribute("aria-hidden", o === 0 ? "false" : "true");
       });
