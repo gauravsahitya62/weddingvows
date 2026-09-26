@@ -3988,3 +3988,14 @@ body.wvn-body {
     max-height: 350px !important;
   }
 }
+
+
+/* Approved mobile testimonial frame sizing. */
+@media (max-width: 640px) {
+  .wvn-pressbook--testimonials.is-open .wvn-pressbook-frame,
+  .wvn-pressbook--testimonials.wvn-pressbook.is-open .wvn-pressbook-frame {
+    width: calc(100vw - 32px);
+    height: min(510px, 66svh);
+    max-height: 510px;
+  }
+}
