@@ -1194,3 +1194,435 @@ body.wvn-body .wvn-intro__story {
     height: 42% !important;
   }
 }
+
+
+/* =========================================================
+   FINAL HERO — UDAIPUR EDITORIAL / DESKTOP + MOBILE
+   ========================================================= */
+.wvn-intro {
+  min-height: 100svh;
+  height: auto;
+  padding: clamp(78px, 8vh, 104px) clamp(18px, 3vw, 48px) 26px;
+  justify-content: center;
+  overflow: hidden;
+  background: #f9f4ec;
+}
+
+.wvn-intro::before {
+  inset: 14px;
+  border: 1px solid rgba(150, 110, 76, .24);
+  z-index: 8;
+}
+
+.wvn-intro::after {
+  content: "✦";
+  position: absolute;
+  top: 34px;
+  left: 50%;
+  width: auto;
+  height: auto;
+  transform: translateX(-50%);
+  background: transparent;
+  color: #8b2940;
+  font-size: 18px;
+  line-height: 1;
+  z-index: 9;
+}
+
+.wvn-intro__scape {
+  height: 48% !important;
+  bottom: 0;
+  opacity: 1;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.wvn-intro__scape::after {
+  display: block !important;
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(249,244,236,1) 0%,
+    rgba(249,244,236,.76) 7%,
+    rgba(249,244,236,.16) 28%,
+    rgba(249,244,236,0) 52%
+  ) !important;
+  pointer-events: none;
+}
+
+.wvn-intro__scape img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+  transform: none;
+  filter: saturate(.82) contrast(.98) brightness(.98);
+}
+
+.wvn-intro__veil {
+  display: none !important;
+}
+
+.wvn-intro__stage {
+  width: min(1450px, 100%);
+  min-height: 0;
+  height: auto;
+  display: grid;
+  grid-template-columns: minmax(235px, 1fr) minmax(430px, 1.35fr) minmax(235px, 1fr);
+  gap: clamp(1.2rem, 3vw, 3.4rem);
+  align-items: center;
+  position: relative;
+  z-index: 4;
+  margin: auto;
+}
+
+.wvn-intro__rail {
+  min-height: 0;
+  height: auto;
+  display: flex;
+  align-items: center;
+}
+
+.wvn-intro__rail--left { justify-content: flex-end; }
+.wvn-intro__rail--right { justify-content: flex-start; }
+
+.wvn-intro__paper,
+.wvn-intro__rail .wvn-intro__index,
+.wvn-intro__rail .wvn-intro__note,
+.wvn-intro__rail .wvn-intro__meta {
+  display: none !important;
+}
+
+.wvn-intro__shot,
+.wvn-intro__shot--arch,
+.wvn-intro__shot--tilt {
+  position: relative;
+  width: min(100%, 320px);
+  height: auto;
+  aspect-ratio: 4 / 5;
+  margin: 0 !important;
+  border: 1px solid rgba(201,163,106,.82);
+  border-radius: 170px 170px 4px 4px;
+  background: #efe2d4;
+  box-shadow: 0 20px 46px rgba(48,32,31,.15);
+  transform: none !important;
+  rotate: 0deg !important;
+  overflow: hidden;
+  opacity: 1;
+}
+
+.wvn-intro__shot::before {
+  inset: 7px;
+  border: 1px solid rgba(201,163,106,.7);
+  border-radius: 162px 162px 0 0;
+  z-index: 3;
+}
+
+.wvn-intro__shot .wvn-intro__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: none;
+  filter: none;
+}
+
+.wvn-intro__copy {
+  width: 100%;
+  max-width: 650px;
+  padding: 0;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 6;
+}
+
+.wvn-intro__bloom {
+  margin: 0 auto 10px;
+  transform: scale(.72);
+  color: #8b2940;
+}
+
+body.wvn-body .wvn-intro__eyebrow {
+  margin: 0 0 14px;
+  color: #8b2940;
+  font-size: .63rem;
+  letter-spacing: .34em;
+}
+
+body.wvn-body .wvn-intro__title {
+  margin: 0;
+  color: #30201f;
+  font-size: clamp(3.4rem, 5.2vw, 5.45rem);
+  line-height: .91;
+  letter-spacing: -.018em;
+}
+
+body.wvn-body .wvn-intro__accent {
+  color: #8b2940;
+  font-style: italic;
+}
+
+body.wvn-body .wvn-intro__sub {
+  margin: 18px auto 0;
+  color: #4d3733;
+  font-size: .61rem;
+  letter-spacing: .28em;
+}
+
+.wvn-intro__sub::before,
+.wvn-intro__sub::after {
+  width: 30px;
+  margin: 0 11px .22em;
+  background: #c9a36a;
+}
+
+body.wvn-body .wvn-intro__lead {
+  max-width: 49ch;
+  margin: 22px auto 0;
+  color: rgba(48,32,31,.74);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.05rem, 1.25vw, 1.28rem);
+  line-height: 1.42;
+}
+
+body.wvn-body .wvn-intro__founder {
+  margin: 18px 0 0;
+}
+
+body.wvn-body .wvn-intro__founder strong {
+  font-size: clamp(1.65rem, 2.4vw, 2.3rem);
+  color: #30201f;
+}
+
+body.wvn-body .wvn-intro__founder span {
+  margin-top: 3px;
+  color: #8b2940;
+  font-size: .58rem;
+  letter-spacing: .25em;
+}
+
+.wvn-intro__actions {
+  margin-top: 19px;
+  gap: 17px;
+}
+
+body.wvn-body .wvn-intro__cta {
+  padding: 12px 24px;
+  background: #8b2940;
+  border-radius: 999px;
+  box-shadow: 0 12px 25px rgba(139,41,64,.2);
+}
+
+body.wvn-body .wvn-intro__story {
+  color: #30201f;
+  font-size: .64rem;
+  letter-spacing: .19em;
+}
+
+.wvn-intro__ground {
+  position: relative;
+  z-index: 7;
+  width: min(1240px,100%);
+  margin: 12px auto 0;
+  padding-top: 10px;
+  border-top: 0;
+}
+
+.wvn-intro__place,
+.wvn-intro__scroll,
+.wvn-intro__mark {
+  color: rgba(48,32,31,.68);
+  font-size: .58rem;
+  letter-spacing: .2em;
+}
+
+.wvn-intro__scroll-line {
+  height: 1.7rem;
+  background: linear-gradient(180deg, transparent, #8b2940);
+}
+
+/* Decorative side botanical suggestion without adding assets. */
+.wvn-intro__stage::before,
+.wvn-intro__stage::after {
+  content: "✦  ❧";
+  position: absolute;
+  top: -28px;
+  color: rgba(139,41,64,.55);
+  font-family: Georgia, serif;
+  font-size: 20px;
+  letter-spacing: 8px;
+  pointer-events: none;
+}
+.wvn-intro__stage::before { left: 0; }
+.wvn-intro__stage::after {
+  right: 0;
+  transform: scaleX(-1);
+}
+
+/* Mobile: intentionally redesigned as a compact editorial card. */
+@media (max-width: 900px) {
+  .wvn-intro {
+    min-height: 0;
+    padding: 58px 14px 24px;
+    justify-content: flex-start;
+  }
+
+  .wvn-intro::before { inset: 10px; }
+  .wvn-intro::after { top: 22px; font-size: 15px; }
+
+  .wvn-intro__scape {
+    height: 34% !important;
+    top: auto;
+    bottom: 0;
+  }
+
+  .wvn-intro__scape::after {
+    background: linear-gradient(
+      180deg,
+      rgba(249,244,236,1) 0%,
+      rgba(249,244,236,.70) 14%,
+      rgba(249,244,236,0) 42%
+    ) !important;
+  }
+
+  .wvn-intro__stage {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+    column-gap: 10px;
+    row-gap: 17px;
+    align-items: start;
+  }
+
+  .wvn-intro__copy {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    max-width: 500px;
+  }
+
+  .wvn-intro__rail--left,
+  .wvn-intro__rail--right {
+    display: contents;
+    min-height: 0;
+    width: auto;
+  }
+
+  .wvn-intro__rail--left .wvn-intro__shot--arch,
+  .wvn-intro__rail--right .wvn-intro__shot--tilt {
+    grid-row: 2;
+    width: 100%;
+    max-width: none;
+    aspect-ratio: 4 / 5;
+    border-radius: 92px 92px 3px 3px;
+  }
+
+  .wvn-intro__rail--left .wvn-intro__shot--arch { grid-column: 1; }
+  .wvn-intro__rail--right .wvn-intro__shot--tilt { grid-column: 2; }
+
+  .wvn-intro__stage::before,
+  .wvn-intro__stage::after {
+    display: none;
+  }
+
+  .wvn-intro__bloom { transform: scale(.62); margin-bottom: 5px; }
+
+  body.wvn-body .wvn-intro__eyebrow {
+    font-size: .54rem;
+    letter-spacing: .28em;
+    margin-bottom: 10px;
+  }
+
+  body.wvn-body .wvn-intro__title {
+    font-size: clamp(2.45rem, 10.5vw, 3.55rem);
+    line-height: .9;
+  }
+
+  body.wvn-body .wvn-intro__sub {
+    margin-top: 13px;
+    font-size: .5rem;
+    letter-spacing: .22em;
+  }
+
+  .wvn-intro__sub::before,
+  .wvn-intro__sub::after { display: inline-block; width: 18px; margin: 0 6px .2em; }
+
+  body.wvn-body .wvn-intro__lead {
+    margin-top: 13px;
+    max-width: 44ch;
+    font-size: .98rem;
+    line-height: 1.42;
+  }
+
+  body.wvn-body .wvn-intro__founder {
+    margin-top: 13px;
+  }
+
+  body.wvn-body .wvn-intro__founder strong {
+    font-size: 1.7rem;
+  }
+
+  body.wvn-body .wvn-intro__founder span {
+    font-size: .49rem;
+    letter-spacing: .18em;
+  }
+
+  .wvn-intro__actions {
+    margin-top: 14px;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  body.wvn-body .wvn-intro__cta {
+    width: min(100%, 290px);
+    justify-content: center;
+    padding: 10px 18px;
+  }
+
+  body.wvn-body .wvn-intro__story { font-size: .55rem; }
+
+  .wvn-intro__ground {
+    width: 100%;
+    margin-top: 13px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 8px;
+    align-items: end;
+  }
+
+  .wvn-intro__place,
+  .wvn-intro__scroll,
+  .wvn-intro__mark {
+    justify-self: center;
+    font-size: .45rem;
+    letter-spacing: .13em;
+  }
+
+  .wvn-intro__place { justify-self: start; }
+  .wvn-intro__mark { justify-self: end; }
+
+  .wvn-intro__scroll-line { height: 1.2rem; }
+}
+
+@media (max-width: 430px) {
+  .wvn-intro {
+    padding-top: 52px;
+  }
+
+  .wvn-intro__stage { column-gap: 7px; }
+
+  body.wvn-body .wvn-intro__title {
+    font-size: clamp(2.18rem, 10.8vw, 2.85rem);
+  }
+
+  body.wvn-body .wvn-intro__lead {
+    font-size: .91rem;
+  }
+
+  .wvn-intro__shot--arch,
+  .wvn-intro__shot--tilt {
+    border-radius: 78px 78px 3px 3px !important;
+  }
+}
