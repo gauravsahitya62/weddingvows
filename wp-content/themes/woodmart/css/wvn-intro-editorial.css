@@ -1148,3 +1148,13 @@ body.wvn-body .wvn-intro__story {
   }
   body.wvn-body .wvn-intro__lead { font-size:.98rem; }
 }
+
+
+/* Final image alignment: keep the right editorial portrait perfectly upright. */
+@media (min-width: 1001px) {
+  .wvn-intro__rail--right .wvn-intro__shot--tilt,
+  .wvn-intro__rail--right .wvn-intro__shot--tilt:hover {
+    transform: none !important;
+    rotate: 0deg !important;
+  }
+}
