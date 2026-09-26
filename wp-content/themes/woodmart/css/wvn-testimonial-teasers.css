@@ -1193,3 +1193,16 @@
     transform: none !important;
   }
 }
+
+
+@media (max-width: 900px) {
+  /* With 3D removed, explicitly select the visible face so front/back
+     layers never overlap during a mobile page change. */
+  .wvn-achieve .wvn-pressbook-sheet.is-flipped .wvn-pressbook-face.is-front {
+    display: none !important;
+  }
+
+  .wvn-achieve .wvn-pressbook-sheet:not(.is-flipped) .wvn-pressbook-face.is-back {
+    display: none !important;
+  }
+}
