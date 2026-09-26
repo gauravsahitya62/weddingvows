@@ -807,3 +807,61 @@ body.wvn-body .wvn-intro__story:focus-visible {
     border-radius: 110px 110px 12px 12px;
   }
 }
+
+/* Mobile Art of Celebration: keep both images on one row and match treatment. */
+@media (max-width: 900px) {
+  .wvn-intro__stage {
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    column-gap:.85rem;
+    row-gap:1.25rem;
+  }
+  .wvn-intro__copy {
+    grid-column:1 / -1;
+    grid-row:1;
+    order:0;
+  }
+  .wvn-intro__rail--left,
+  .wvn-intro__rail--right {
+    display:contents;
+    width:auto;
+    min-height:0;
+  }
+  .wvn-intro__rail--left .wvn-intro__shot--arch,
+  .wvn-intro__rail--right .wvn-intro__shot--tilt {
+    position:relative;
+    grid-row:2;
+    width:100%;
+    margin:0;
+    justify-self:stretch;
+    align-self:start;
+    aspect-ratio:4 / 5;
+    border:2px solid rgba(233,222,209,.95);
+    border-radius:120px 120px 14px 14px;
+    box-shadow:var(--wvn-intro-shadow);
+    overflow:hidden;
+    transform:none !important;
+    right:auto;
+    bottom:auto;
+  }
+  .wvn-intro__rail--left .wvn-intro__shot--arch { grid-column:1; }
+  .wvn-intro__rail--right .wvn-intro__shot--tilt { grid-column:2; }
+  .wvn-intro__rail--left .wvn-intro__shot--arch .wvn-intro__img,
+  .wvn-intro__rail--right .wvn-intro__shot--tilt .wvn-intro__img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+}
+@media (max-width: 640px) {
+  .wvn-intro__stage {
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    column-gap:.7rem;
+  }
+  .wvn-intro__rail--left .wvn-intro__shot--arch,
+  .wvn-intro__rail--right .wvn-intro__shot--tilt {
+    aspect-ratio:4 / 5;
+    border-radius:110px 110px 12px 12px;
+  }
+}
