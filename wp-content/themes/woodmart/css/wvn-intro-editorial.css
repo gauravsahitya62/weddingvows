@@ -1158,3 +1158,20 @@ body.wvn-body .wvn-intro__story {
     rotate: 0deg !important;
   }
 }
+
+
+/* Background image clarity: remove the center fade/veil and preserve the source image. */
+.wvn-intro__veil {
+  display: none !important;
+}
+.wvn-intro__scape {
+  opacity: 1;
+  filter: none;
+}
+.wvn-intro__scape::after {
+  display: none !important;
+}
+.wvn-intro__scape img {
+  filter: none;
+  opacity: 1;
+}
