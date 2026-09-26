@@ -1858,3 +1858,65 @@ body.wvn-body .wvn-intro__founder strong {
     font-size: .91rem;
   }
 }
+
+
+/* =========================================================
+   HERO READABILITY — LIGHT, LOCALIZED EDITORIAL OVERLAY
+   ========================================================= */
+.wvn-intro__scape::after {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(249,244,236,.12) 0%,
+      rgba(249,244,236,.18) 28%,
+      rgba(249,244,236,.34) 54%,
+      rgba(249,244,236,.24) 76%,
+      rgba(249,244,236,.12) 100%
+    ) !important;
+}
+
+/* A soft local panel behind the typography, not a heavy full-screen wash. */
+.wvn-intro__copy {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(249,244,236,.24) 0%,
+      rgba(249,244,236,.31) 48%,
+      rgba(249,244,236,.20) 100%
+    ) !important;
+  backdrop-filter: blur(1.5px);
+  -webkit-backdrop-filter: blur(1.5px);
+  text-shadow: 0 1px 1px rgba(255,250,242,.18);
+}
+
+/* Keep the actual photograph crisp and fully visible. */
+.wvn-intro__scape img {
+  filter: saturate(.88) brightness(1.03) !important;
+  opacity: 1 !important;
+}
+
+@media (max-width: 900px) {
+  .wvn-intro__scape::after {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(249,244,236,.12) 0%,
+        rgba(249,244,236,.20) 25%,
+        rgba(249,244,236,.34) 52%,
+        rgba(249,244,236,.20) 78%,
+        rgba(249,244,236,.10) 100%
+      ) !important;
+  }
+
+  .wvn-intro__copy {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(249,244,236,.22) 0%,
+        rgba(249,244,236,.34) 50%,
+        rgba(249,244,236,.18) 100%
+      ) !important;
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+  }
+}
