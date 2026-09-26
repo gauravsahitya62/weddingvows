@@ -910,3 +910,241 @@
   content: none !important;
   display: none !important;
 }
+
+
+/* =========================================================
+   MOBILE TESTIMONIAL BOOK — FINAL RESPONSIVE PASS
+   ========================================================= */
+@media (max-width: 900px) {
+  .wvn-achieve {
+    overflow: hidden;
+    padding: 86px 12px 76px !important;
+  }
+
+  .wvn-achieve .wvn-achieve__kicker {
+    margin-bottom: 8px;
+  }
+
+  .wvn-achieve .wvn-display {
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.02;
+  }
+
+  .wvn-achieve .wvn-lede {
+    max-width: 360px;
+  }
+
+  .wvn-achieve .wvn-pressbook {
+    width: 100%;
+    --book-closed-w: min(300px, calc(100vw - 44px));
+    --book-closed-h: 410px;
+    --book-open-w: min(344px, calc(100vw - 28px));
+    --book-open-h: 470px;
+    margin: 30px auto 0;
+  }
+
+  .wvn-achieve .wvn-pressbook.is-open .wvn-pressbook-frame {
+    width: var(--book-open-w);
+    height: var(--book-open-h);
+    aspect-ratio: auto;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: visible;
+  }
+
+  .wvn-achieve .wvn-pressbook-frame {
+    max-width: 100%;
+  }
+
+  /* One complete editorial page on mobile. */
+  .wvn-achieve .wvn-pressbook-sheet {
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    transform-origin: center center !important;
+  }
+
+  .wvn-achieve .wvn-pressbook-face {
+    width: 100% !important;
+    height: 100% !important;
+    box-shadow: 0 14px 34px rgba(30,13,15,.25);
+  }
+
+  .wvn-achieve .wvn-pressbook-face::before {
+    inset: 10px !important;
+  }
+
+  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote {
+    height: 100% !important;
+    min-height: 0 !important;
+    padding: 18px 19px 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote > img {
+    flex: 0 0 145px !important;
+    width: 100% !important;
+    height: 145px !important;
+    max-height: 145px !important;
+    min-height: 145px !important;
+    margin: 0 0 14px !important;
+    aspect-ratio: 16 / 9 !important;
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+
+  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote h3 {
+    flex: 0 0 auto !important;
+    width: 100%;
+    margin: 0 0 4px !important;
+    font-size: 20px !important;
+    line-height: 1.08 !important;
+    letter-spacing: .035em !important;
+    text-align: center !important;
+  }
+
+  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-brand {
+    flex: 0 0 auto !important;
+    margin: 0 0 15px !important;
+    font-size: 7.5px !important;
+    line-height: 1.2 !important;
+    letter-spacing: .16em !important;
+    text-align: center !important;
+  }
+
+  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-quote-text {
+    position: relative !important;
+    flex: 0 0 auto !important;
+    width: 92% !important;
+    max-width: 30ch !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 104px !important;
+    overflow: hidden !important;
+    margin: 0 auto !important;
+    padding: 0 18px !important;
+    box-sizing: border-box !important;
+    font-size: 17px !important;
+    line-height: 1.32 !important;
+    text-align: center !important;
+    -webkit-line-clamp: 4 !important;
+  }
+
+  /* Quote marks are tied to the quote box, not the page corners. */
+  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-quote-text::before {
+    left: -1px !important;
+    top: -2px !important;
+    font-size: 24px !important;
+  }
+
+  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-quote-text::after {
+    right: -1px !important;
+    bottom: -8px !important;
+    font-size: 24px !important;
+  }
+
+  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-read-more {
+    flex: 0 0 auto !important;
+    align-self: center !important;
+    margin: auto auto 0 !important;
+    width: 118px !important;
+    min-width: 118px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 5px !important;
+    box-sizing: border-box !important;
+    border: 1px solid #bf8b4d !important;
+    border-radius: 999px !important;
+    font-size: 8px !important;
+    letter-spacing: .15em !important;
+    line-height: 1 !important;
+    text-align: center !important;
+  }
+
+  .wvn-achieve .wvn-pressbook-controls {
+    display: none !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .wvn-achieve {
+    padding-top: 78px !important;
+    padding-bottom: 70px !important;
+  }
+
+  .wvn-achieve .wvn-pressbook {
+    --book-closed-w: min(286px, calc(100vw - 38px));
+    --book-closed-h: 398px;
+    --book-open-w: min(340px, calc(100vw - 24px));
+    --book-open-h: 458px;
+    margin-top: 27px;
+  }
+
+  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote {
+    padding: 17px 17px 16px !important;
+  }
+
+  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote > img {
+    flex-basis: 137px !important;
+    height: 137px !important;
+    min-height: 137px !important;
+    max-height: 137px !important;
+    margin-bottom: 13px !important;
+  }
+
+  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote h3 {
+    font-size: 19px !important;
+  }
+
+  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-quote-text {
+    width: 94% !important;
+    max-width: 29ch !important;
+    font-size: 16px !important;
+    line-height: 1.31 !important;
+    max-height: 100px !important;
+  }
+
+  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-read-more {
+    width: 116px !important;
+    min-width: 116px !important;
+    height: 37px !important;
+    min-height: 37px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .wvn-achieve {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  .wvn-achieve .wvn-pressbook {
+    --book-open-w: calc(100vw - 18px);
+    --book-open-h: 440px;
+  }
+
+  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote {
+    padding: 15px 14px 14px !important;
+  }
+
+  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote > img {
+    flex-basis: 124px !important;
+    height: 124px !important;
+    min-height: 124px !important;
+    max-height: 124px !important;
+  }
+
+  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-quote-text {
+    font-size: 15px !important;
+  }
+}
