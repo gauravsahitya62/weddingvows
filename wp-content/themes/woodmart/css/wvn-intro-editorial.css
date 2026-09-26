@@ -1175,3 +1175,22 @@ body.wvn-body .wvn-intro__story {
   filter: none;
   opacity: 1;
 }
+
+
+/* Full-width Udaipur backdrop: give the landscape enough vertical space to read as a complete lower hero layer. */
+.wvn-intro__scape {
+  height: 58% !important;
+  bottom: 0;
+}
+.wvn-intro__scape img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+  transform: none;
+}
+@media (max-width: 900px) {
+  .wvn-intro__scape {
+    height: 42% !important;
+  }
+}
