@@ -1148,3 +1148,48 @@
     font-size: 15px !important;
   }
 }
+
+
+/* Mobile testimonial book is an atomic single-page reader.
+   The desktop 3D fold is intentionally disabled on phones because a
+   full-width sheet rotating around its edge exposes the previous page. */
+@media (max-width: 900px) {
+  .wvn-achieve .wvn-pressbook-frame,
+  .wvn-achieve .wvn-pressbook.is-open .wvn-pressbook-frame {
+    perspective: none !important;
+    transform: none !important;
+  }
+
+  .wvn-achieve .wvn-pressbook-3d,
+  .wvn-achieve .wvn-pressbook-sheet,
+  .wvn-achieve .wvn-pressbook-face {
+    transform-style: flat !important;
+  }
+
+  .wvn-achieve .wvn-pressbook-sheet {
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    transform: none !important;
+    transition: opacity .16s ease !important;
+  }
+
+  .wvn-achieve .wvn-pressbook-sheet.is-flipped {
+    transform: none !important;
+  }
+
+  .wvn-achieve .wvn-pressbook-face {
+    transform: none !important;
+    backface-visibility: visible !important;
+    -webkit-backface-visibility: visible !important;
+  }
+
+  .wvn-achieve .wvn-pressbook-face.is-back {
+    transform: none !important;
+  }
+
+  .wvn-achieve .wvn-pressbook-sheet.is-cover .is-front {
+    transform: none !important;
+  }
+}
