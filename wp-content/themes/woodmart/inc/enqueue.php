@@ -37,7 +37,7 @@ function theme_files() {
             'wvn-testimonial-teasers',
             get_theme_file_uri('/css/wvn-testimonial-teasers.css'),
             array('wvn-cinematic-home', 'wvn-bts'),
-            '1.3.0'
+            '1.3.1'
         );
         wp_enqueue_script(
             'wvn-home-gallery',
