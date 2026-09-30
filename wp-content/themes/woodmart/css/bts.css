@@ -3621,6 +3621,46 @@ body.wvn-body {
   }
 }
 
+/* Mobile testimonial cards: text-only, consistent teaser height. */
+@media (max-width: 640px) {
+  .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote > img {
+    display: none !important;
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote {
+    min-height: 100%;
+    justify-content: flex-start;
+    padding: 28px 20px 24px;
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote h3 {
+    min-height: 2.4em;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-brand {
+    min-height: 1.4em;
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-quote-text {
+    width: 100%;
+    min-height: 4.35em;
+    max-height: 4.35em;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+    font-size: 16px;
+    line-height: 1.45;
+  }
+
+  .wvn-pressbook--testimonials .wvn-pressbook-read-more {
+    margin-top: auto !important;
+    min-height: 40px;
+    align-self: center;
+  }
+}
 
 /* Art of Celebration mobile image parity */
 
@@ -3658,5 +3698,42 @@ body.wvn-body {
     width: min(100%, 360px);
     aspect-ratio: 4 / 5;
     border-radius: 120px 120px 14px 14px;
+  }
+}
+
+
+/* Mobile-only testimonial book open-state sizing */
+@media (max-width: 980px) {
+  .wvn-pressbook--testimonials .wvn-pressbook-frame,
+  .wvn-pressbook--testimonials .wvn-pressbook-3d {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .wvn-pressbook--testimonials.is-open .wvn-pressbook-frame,
+  .wvn-pressbook--testimonials.wvn-pressbook.is-open .wvn-pressbook-frame {
+    width: min(100%, 820px);
+    height: min(560px, 68svh);
+    max-height: 560px;
+    margin-inline: auto;
+    overflow: visible;
+  }
+
+  .wvn-pressbook--testimonials.is-open .wvn-pressbook-sheet,
+  .wvn-pressbook--testimonials.wvn-pressbook.is-open .wvn-pressbook-sheet {
+    height: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .wvn-pressbook--testimonials.is-open .wvn-pressbook-frame,
+  .wvn-pressbook--testimonials.wvn-pressbook.is-open .wvn-pressbook-frame {
+    width: calc(100vw - 32px);
+    height: min(510px, 66svh);
+    max-height: 510px;
+  }
+
+  .wvn-pressbook--testimonials.is-open .wvn-pressbook-leaf {
+    min-height: 0;
   }
 }
