@@ -113,471 +113,61 @@
 }
 
 
-/* =========================================================
-   HOMEPAGE TESTIMONIAL BOOK — REAL STORIES EDITORIAL
-   ========================================================= */
-.wvn-achieve {
-  position: relative;
-  overflow: hidden;
-  padding: clamp(78px, 9vw, 118px) 20px clamp(76px, 9vw, 112px);
-  background:
-    radial-gradient(circle at 50% 45%, rgba(122,45,53,.55), transparent 42%),
-    linear-gradient(180deg, #6e3639 0%, #5b292d 55%, #4c2025 100%);
-  color: #f6eee2;
-  isolation: isolate;
-}
-.wvn-achieve::before {
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(90deg, rgba(255,255,255,.03), transparent 20%, transparent 80%, rgba(255,255,255,.03)),
-    radial-gradient(circle at 8% 8%, rgba(203,154,91,.13), transparent 18%),
-    radial-gradient(circle at 92% 8%, rgba(203,154,91,.13), transparent 18%);
-  pointer-events:none;
-  z-index:-1;
-}
-.wvn-achieve__ornament {
-  color:#d6ad72;
-  font-size:20px;
-  line-height:1;
-  margin-bottom:10px;
-}
-.wvn-achieve__kicker {
-  margin:0 0 10px;
-  color:rgba(247,235,218,.82);
-  font-size:10px;
-  letter-spacing:.34em;
-  text-transform:uppercase;
-}
-.wvn-achieve .wvn-display {
-  max-width:900px;
-  margin:0 auto 16px;
-  color:#fbf3e7;
-  font-size:clamp(34px,5vw,66px);
-  line-height:.98;
-  letter-spacing:.04em;
-  font-family:"Aboreto", Georgia, serif;
-  font-weight:400;
-  text-transform:uppercase;
-}
-.wvn-achieve .wvn-lede {
-  max-width:720px;
-  margin:0 auto;
-  color:rgba(248,238,225,.78);
-  font-family:"Cormorant Garamond", Georgia, serif;
-  font-size:clamp(18px,1.6vw,23px);
-  line-height:1.45;
-}
-.wvn-achieve .wvn-pressbook {
-  --book-open-w:min(1120px, 94vw);
-  --book-open-h:min(650px, 69vh);
-  margin:42px auto 0;
-}
-.wvn-achieve .wvn-pressbook-frame {
-  border-radius:6px 22px 6px 6px;
-}
-.wvn-achieve .wvn-pressbook.is-open .wvn-pressbook-frame {
-  box-shadow:0 34px 70px rgba(20,7,9,.42);
-}
-.wvn-achieve .wvn-pressbook-base {
-  background:#eadfce;
-  border:1px solid rgba(202,161,100,.65);
-  box-shadow:0 30px 70px rgba(20,7,9,.42);
-}
-.wvn-achieve .wvn-pressbook-face {
-  background:
-    radial-gradient(circle at 50% 48%, rgba(255,255,255,.75), transparent 62%),
-    #f7f0e5;
-  color:#332523;
-}
-.wvn-achieve .wvn-pressbook-face::before {
-  content:"";
-  position:absolute;
-  inset:12px;
-  border:1px solid rgba(183,132,66,.38);
-  pointer-events:none;
-  z-index:4;
-}
-.wvn-achieve .wvn-pressbook-face::after {
-  background:linear-gradient(90deg, rgba(75,43,33,.08), transparent 18%, transparent 82%, rgba(75,43,33,.04));
-}
-.wvn-achieve .wvn-pressbook-face.is-back::after {
-  background:linear-gradient(270deg, rgba(75,43,33,.08), transparent 18%, transparent 82%, rgba(75,43,33,.04));
-}
-.wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote {
-  position:relative;
-  padding:clamp(26px,3vw,42px) clamp(24px,3.2vw,52px);
-  justify-content:flex-start;
-}
-.wvn-achieve .wvn-pressbook-leaf--quote::before,
-.wvn-achieve .wvn-pressbook-leaf--quote::after {
-  position:absolute;
-  color:rgba(188,132,65,.55);
-  font-family:Georgia,serif;
-  font-size:38px;
-  line-height:1;
-  z-index:2;
-}
-.wvn-achieve .wvn-pressbook-leaf--quote::before {
-  content:"“";
-  left:20px;
-  bottom:84px;
-}
-.wvn-achieve .wvn-pressbook-leaf--quote::after {
-  content:"”";
-  right:20px;
-  bottom:50px;
-}
-.wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote > img {
-  width:100% !important;
-  height:clamp(190px,30vh,255px) !important;
-  aspect-ratio:16/9;
-  border-radius:0;
-  margin:0 auto 20px;
-  object-fit:cover;
-  filter:none;
-  border:1px solid rgba(184,133,67,.28);
-}
-.wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote h3 {
-  margin:0 auto 5px;
-  color:#30201f;
-  font-size:clamp(20px,2vw,29px);
-  line-height:1.1;
-  letter-spacing:.04em;
-}
-.wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-brand {
-  margin:0 auto 12px;
-  color:#9b7650;
-  font-size:9px;
-  letter-spacing:.23em;
-}
-.wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-quote-text {
-  max-width:38ch;
-  margin:0 auto !important;
-  color:#4a3530;
-  font-size:clamp(17px,1.55vw,22px);
-  line-height:1.38;
-  -webkit-line-clamp:3;
-}
-.wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-read-more {
-  align-self:center;
-  margin:18px auto 0;
-  min-height:38px;
-  padding:9px 19px;
-  border:1px solid #b9864e;
-  border-radius:999px;
-  color:#5a382f;
-  background:rgba(255,250,242,.35);
-  letter-spacing:.17em;
-  box-shadow:none;
-}
-.wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-read-more:hover,
-.wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-read-more:focus-visible {
-  opacity:1;
-  transform:translateY(-2px);
-  background:#8a3343;
-  color:#fff7ed;
-  border-color:#8a3343;
-}
-.wvn-achieve .wvn-pressbook-sheet.is-cover .is-front {
-  background:#6a3035;
-}
-.wvn-achieve .wvn-pressbook-sheet.is-cover .is-front::before {
-  content:"REAL STORIES";
-  position:absolute;
-  top:13%;
-  left:0;
-  right:0;
-  color:#f8ead8;
-  font-family:"Cormorant Garamond",Georgia,serif;
-  font-size:12px;
-  letter-spacing:.3em;
-  z-index:3;
-}
-.wvn-achieve .wvn-pressbook-sheet.is-cover .is-front span {
-  top:42%;
-  font-family:"Aboreto",Georgia,serif;
-  font-size:28px;
-  letter-spacing:.08em;
-}
-.wvn-achieve .wvn-pressbook-sheet.is-cover .is-front small {
-  background:rgba(55,20,25,.86);
-  color:#e8cfad;
-}
-.wvn-achieve .wvn-pressbook-controls {
-  gap:18px;
-  margin-top:25px;
-}
-.wvn-achieve .wvn-pressbook-controls button {
-  width:46px;
-  height:46px;
-  background:transparent;
-  border:1px solid #caa16a;
-  color:#f7ead8;
-  font-size:24px;
-  transition:background .25s ease,color .25s ease,transform .25s ease;
-}
-.wvn-achieve .wvn-pressbook-controls button:hover:not(:disabled) {
-  background:#caa16a;
-  color:#4d2024;
-  transform:translateY(-2px);
-}
-.wvn-achieve .wvn-pressbook-controls button:disabled {
-  opacity:.3;
-}
-@media (max-width:900px) {
-  .wvn-achieve {
-    padding:64px 12px 70px;
-  }
-  .wvn-achieve .wvn-display {
-    max-width:620px;
-    font-size:clamp(31px,8vw,48px);
-  }
-  .wvn-achieve .wvn-lede {
-    max-width:520px;
-    font-size:19px;
-  }
-  .wvn-achieve .wvn-pressbook {
-    --book-open-w:min(620px, 94vw);
-    --book-open-h:clamp(540px, 76vh, 690px);
-    margin-top:32px;
-  }
-  .wvn-achieve .wvn-pressbook.is-open .wvn-pressbook-frame {
-    width:var(--book-open-w);
-    height:var(--book-open-h);
-  }
-  .wvn-achieve .wvn-pressbook-leaf--quote {
-    padding:22px 20px !important;
-  }
-  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote > img {
-    height:clamp(165px,27vh,220px) !important;
-  }
-}
-@media (max-width:640px) {
-  .wvn-achieve .wvn-display {
-    font-size:clamp(27px,9.2vw,39px);
-  }
-  .wvn-achieve .wvn-lede {
-    font-size:18px;
-    line-height:1.42;
-  }
-  .wvn-achieve .wvn-pressbook {
-    --book-closed-w:min(310px,82vw);
-    --book-closed-h:min(410px,112vw);
-    --book-open-w:calc(100vw - 24px);
-    --book-open-h:clamp(560px, 76vh, 700px);
-    margin-top:28px;
-  }
-  .wvn-achieve .wvn-pressbook-frame {
-    width:var(--book-closed-w);
-    height:var(--book-closed-h);
-  }
-  .wvn-achieve .wvn-pressbook.is-open .wvn-pressbook-frame {
-    width:var(--book-open-w);
-    height:var(--book-open-h);
-  }
-  .wvn-achieve .wvn-pressbook-leaf--quote {
-    padding:18px 16px !important;
-  }
-  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote > img {
-    height:180px !important;
-  }
-  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote h3 {
-    font-size:19px;
-  }
-  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-quote-text {
-    font-size:17px;
-    -webkit-line-clamp:3;
-  }
-}
-@media (prefers-reduced-motion:reduce) {
-  .wvn-achieve .wvn-pressbook-controls button {
-    transition:none;
-  }
-}
-
-
-/* =========================================================
-   TESTIMONIAL BOOK — FINAL POLISH
-   ========================================================= */
-.wvn-achieve .wvn-pressbook {
-  --book-open-w: min(1100px, 94vw);
-  --book-open-h: min(590px, 66vh);
-  margin-top: 38px;
-}
-.wvn-achieve .wvn-pressbook-frame {
-  overflow: hidden;
-  background: #eee3d3;
-}
-.wvn-achieve .wvn-pressbook.is-open .wvn-pressbook-frame {
-  overflow: visible;
-}
-.wvn-achieve .wvn-pressbook-base {
-  border-radius: 8px;
-}
-.wvn-achieve .wvn-pressbook-face {
-  box-shadow: 0 12px 30px rgba(48,32,31,.18);
-}
-.wvn-achieve .wvn-pressbook-face::before {
-  inset: 14px;
-}
-.wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote {
-  padding: 30px 32px 26px;
-}
-.wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote > img {
-  flex: 0 0 auto;
-  width: 100% !important;
-  height: 225px !important;
-  aspect-ratio: 16 / 9;
-  margin: 0 auto 16px;
-  border-radius: 0;
-}
-.wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote h3 {
-  margin: 0 0 4px;
-  font-size: clamp(20px, 1.8vw, 27px);
-}
-.wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-brand {
-  margin-bottom: 12px;
-}
-.wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-quote-text {
-  flex: 0 0 auto;
-  max-width: 38ch;
-  min-height: 74px;
-  margin: 0 auto !important;
-  font-size: clamp(17px, 1.45vw, 21px);
-  line-height: 1.34;
-  -webkit-line-clamp: 3;
-}
-.wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-read-more {
-  flex: 0 0 auto;
-  align-self: center;
-  margin: auto auto 0;
-  min-height: 38px;
-  padding: 8px 18px;
-  border: 1px solid #b9864e;
-  border-radius: 999px;
-  color: #5a382f;
-  background: transparent;
-  font-size: 9px;
-  letter-spacing: .17em;
-}
-.wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-read-more:hover {
-  background: #8a3343;
-  color: #fff7ed;
-  border-color: #8a3343;
-}
-
-/* Keep the spread visually balanced instead of filling the entire viewport. */
-@media (min-width: 901px) {
-  .wvn-achieve .wvn-pressbook-controls {
-    margin-top: 22px;
-  }
-}
-
-/* Mobile: compact two-page editorial spread — never stretch vertically. */
-@media (max-width: 900px) {
-  .wvn-achieve {
-    padding: 58px 10px 62px;
+/* Mobile testimonial pages: keep the existing book unchanged, but ensure the
+   excerpt and Read More action remain visible and comfortably fit inside each
+   opened page. */
+@media (max-width: 640px) {
+  .wvn-achieve .wvn-pressbook--testimonials.is-open .wvn-pressbook-leaf--quote {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 18px 16px 16px;
   }
 
-  .wvn-achieve .wvn-pressbook {
-    --book-open-w: min(620px, calc(100vw - 20px));
-    --book-open-h: 455px;
-    margin-top: 28px;
+  .wvn-achieve .wvn-pressbook--testimonials.is-open .wvn-pressbook-leaf--quote > img {
+    flex: 0 0 auto;
+    width: 100%;
+    height: 118px !important;
+    aspect-ratio: 16 / 9;
+    margin: 0 0 10px;
   }
 
-  .wvn-achieve .wvn-pressbook.is-open .wvn-pressbook-frame {
-    width: var(--book-open-w);
-    height: var(--book-open-h);
+  .wvn-achieve .wvn-pressbook--testimonials.is-open .wvn-pressbook-leaf--quote h3 {
+    flex: 0 0 auto;
+    margin: 0 0 3px;
+    font-size: 18px;
   }
 
-  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote {
-    padding: 16px 13px 13px !important;
+  .wvn-achieve .wvn-pressbook--testimonials.is-open .wvn-pressbook-leaf--quote .wvn-pressbook-brand {
+    flex: 0 0 auto;
+    margin: 0 0 8px;
+    font-size: 8px;
   }
 
-  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote::before,
-  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote::after {
-    font-size: 26px;
-  }
-
-  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote::before {
-    left: 8px;
-    bottom: 58px;
-  }
-
-  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote::after {
-    right: 8px;
-    bottom: 34px;
-  }
-
-  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote > img {
-    height: 112px !important;
-    margin-bottom: 10px;
-    border-radius: 0;
-  }
-
-  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote h3 {
-    margin-bottom: 3px;
-    font-size: clamp(16px, 4.7vw, 20px);
-    line-height: 1.08;
-  }
-
-  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote .wvn-pressbook-brand {
-    margin-bottom: 9px;
-    font-size: 7px;
-    letter-spacing: .14em;
-  }
-
-  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-quote-text {
-    min-height: 0;
-    max-width: 22ch;
-    font-size: 15px;
-    line-height: 1.27;
-    -webkit-line-clamp: 3;
-  }
-
-  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-read-more {
-    min-height: 34px;
-    margin-top: auto;
-    padding: 6px 11px;
-    font-size: 7px;
-    letter-spacing: .13em;
-    white-space: nowrap;
-  }
-
-  .wvn-achieve .wvn-pressbook-controls {
-    margin-top: 16px;
-    gap: 12px;
-  }
-
-  .wvn-achieve .wvn-pressbook-controls button {
-    width: 40px;
-    height: 40px;
-    font-size: 19px;
-  }
-}
-
-@media (max-width: 430px) {
-  .wvn-achieve .wvn-pressbook {
-    --book-open-w: calc(100vw - 16px);
-    --book-open-h: 430px;
-  }
-
-  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote {
-    padding: 14px 10px 11px !important;
-  }
-
-  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote > img {
-    height: 102px !important;
-  }
-
-  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-leaf--quote h3 {
+  .wvn-achieve .wvn-pressbook--testimonials.is-open .wvn-pressbook-leaf--quote .wvn-pressbook-quote-text {
+    flex: 0 0 auto;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    margin: 0 auto 8px !important;
+    max-width: 31ch;
     font-size: 16px;
+    line-height: 1.32;
   }
 
-  .wvn-achieve .wvn-pressbook--testimonials .wvn-pressbook-quote-text {
-    font-size: 14px;
-    line-height: 1.25;
+  .wvn-achieve .wvn-pressbook--testimonials.is-open .wvn-pressbook-read-more {
+    flex: 0 0 auto;
+    align-self: center;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    margin: auto 0 0 !important;
+    padding: 8px 14px;
+    white-space: nowrap;
+    line-height: 1;
   }
 }
