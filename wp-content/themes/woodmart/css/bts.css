@@ -3580,17 +3580,7 @@ body.wvn-body .wvn-cin-story .wvn-pressbook-read-more {
 /* Mobile viewport hardening: floating controls must never create horizontal
  * overflow or be positioned outside the visible viewport.
  */
-html {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-}
 
-body.wvn-body {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-}
 
 @media (max-width: 640px) {
   .wvn-ask {
