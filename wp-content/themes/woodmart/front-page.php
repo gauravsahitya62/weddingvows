@@ -242,8 +242,10 @@ $service_count = count($services);
   </section>
 
   <section class="wvn-achieve" aria-label="Testimonials">
-    <h2 class="wvn-display"><?php echo esc_html(wvn_home_text('home_achieve_heading', 'In Their Words')); ?></h2>
-    <p class="wvn-lede"><?php echo esc_html(wvn_home_text('home_achieve_lede', 'Real stories from the couples and families we’ve celebrated with — open the book to read more.')); ?></p>
+    <div class="wvn-achieve__ornament" aria-hidden="true">✦</div>
+    <p class="wvn-achieve__kicker"><?php echo esc_html(wvn_home_text('home_achieve_kicker', 'Real Stories')); ?></p>
+    <h2 class="wvn-display"><?php echo esc_html(wvn_home_text('home_achieve_heading', 'Love Stories in Their Own Words')); ?></h2>
+    <p class="wvn-lede"><?php echo esc_html(wvn_home_text('home_achieve_lede', 'Behind every celebration is a dedicated team bringing every detail to life — with care, creativity, and seamless execution.')); ?></p>
     <div class="wvn-pressbook wvn-pressbook--testimonials" data-book>
       <div class="wvn-pressbook-frame">
         <div class="wvn-pressbook-3d">
