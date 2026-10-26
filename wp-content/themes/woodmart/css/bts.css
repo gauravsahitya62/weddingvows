@@ -3899,4 +3899,4 @@ body.wvn-body .wvn-cin-story .wvn-pressbook-read-more {
 
 
 /* FAQ accordion: use a CSS Unicode escape to avoid mojibake on open state. */
-.wvn-acc details[open] > summary::after { content: "\\2212"; }
+.wvn-acc details[open] > summary::after { content: "\2212"; }
