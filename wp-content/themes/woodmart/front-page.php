@@ -267,8 +267,8 @@ $service_count = count($services);
         </div>
       </div>
       <div class="wvn-pressbook-controls">
-        <button type="button" data-book-prev aria-label="Previous testimonial">‹</button>
-        <button type="button" data-book-next aria-label="Next testimonial">›</button>
+        <button type="button" data-book-prev aria-label="Previous testimonial"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button type="button" data-book-next aria-label="Next testimonial"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
     </div>
   </section>
