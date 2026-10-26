@@ -2032,3 +2032,41 @@ body.wvn-body .wvn-cin-cites__card-body > .wvn-cin-cites__credit {
     --card-h: 484px;
   }
 }
+
+
+/* Mobile venue cards: media must span the full card width (no empty side column). */
+@media (max-width: 640px) {
+  body.wvn-body .wvn-cin-cites__card {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: 52% minmax(0, 48%) !important;
+    width: var(--card-w) !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  body.wvn-body .wvn-cin-cites__card-media {
+    grid-column: 1 / -1 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  body.wvn-body .wvn-cin-cites__card-media img,
+  body.wvn-body .wvn-cin-cites__card-media video {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    object-fit: cover !important;
+  }
+
+  body.wvn-body .wvn-cin-cites__card-body {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+}
