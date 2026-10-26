@@ -3896,3 +3896,7 @@ body.wvn-body .wvn-cin-story .wvn-pressbook-read-more {
     padding: 5px 12px !important;
   }
 }
+
+
+/* FAQ accordion: use a CSS Unicode escape to avoid mojibake on open state. */
+.wvn-acc details[open] > summary::after { content: "\\2212"; }
