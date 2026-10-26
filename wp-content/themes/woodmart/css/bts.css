@@ -1402,7 +1402,7 @@ button { font-family: inherit; cursor: pointer; }
   color: #f0ede4;
   font-size: 22px;
 }
-.wvn-acc details[open] summary::after { content: "â€“"; }
+.wvn-acc details[open] summary::after { content: "\2212"; }
 .wvn-acc p { margin: 0 0 18px; color: rgba(240, 237, 228, 0.88); }
 
 /* Footer */
